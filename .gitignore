@@ -16,6 +16,11 @@ out/
 # Gradle files
 .gradle/
 build/
+gradle.properties
+gradle/
+gradlew
+gradlew.bat
+settings.gradle
 
 # Local configuration file (sdk path, etc)
 local.properties
@@ -34,6 +39,7 @@ captures/
 
 # Intellij
 *.iml
+.idea
 .idea/workspace.xml
 .idea/tasks.xml
 .idea/gradle.xml
