@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import net.mindlevel.MissionsFragment.OnListFragmentInteractionListener;
 import net.mindlevel.dummy.DummyContent.DummyItem;
+import net.mindlevel.model.Mission;
 
 import java.util.List;
 
@@ -18,10 +19,10 @@ import java.util.List;
  */
 public class MyMissionsRecyclerViewAdapter extends RecyclerView.Adapter<MyMissionsRecyclerViewAdapter.ViewHolder> {
 
-    private final List<DummyItem> mValues;
+    private final List<Mission> mValues;
     private final OnListFragmentInteractionListener mListener;
 
-    public MyMissionsRecyclerViewAdapter(List<DummyItem> items, OnListFragmentInteractionListener listener) {
+    public MyMissionsRecyclerViewAdapter(List<Mission> items, OnListFragmentInteractionListener listener) {
         mValues = items;
         mListener = listener;
     }
@@ -37,7 +38,7 @@ public class MyMissionsRecyclerViewAdapter extends RecyclerView.Adapter<MyMissio
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
         holder.mIdView.setText(mValues.get(position).id);
-        holder.mContentView.setText(mValues.get(position).content);
+        holder.mContentView.setText(mValues.get(position).name);
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,7 +61,7 @@ public class MyMissionsRecyclerViewAdapter extends RecyclerView.Adapter<MyMissio
         public final View mView;
         public final TextView mIdView;
         public final TextView mContentView;
-        public DummyItem mItem;
+        public Mission mItem;
 
         public ViewHolder(View view) {
             super(view);

@@ -1,9 +1,10 @@
 package net.mindlevel.dummy;
 
+import net.mindlevel.model.Accomplishment;
+import net.mindlevel.model.Mission;
+
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Helper class for providing sample content for user interfaces created by
@@ -16,29 +17,31 @@ public class DummyContent {
     /**
      * An array of sample (dummy) items.
      */
-    public static final List<DummyItem> ITEMS = new ArrayList<DummyItem>();
-
-    /**
-     * A map of sample (dummy) items, by ID.
-     */
-    public static final Map<String, DummyItem> ITEM_MAP = new HashMap<String, DummyItem>();
+    public static final List<Accomplishment> ACCOMPLISHMENTS = new ArrayList<>();
+    public static final List<Mission> MISSIONS = new ArrayList<>();
 
     private static final int COUNT = 25;
 
     static {
         // Add some sample items.
         for (int i = 1; i <= COUNT; i++) {
-            addItem(createDummyItem(i));
+            createDummyItem(i);
         }
     }
 
-    private static void addItem(DummyItem item) {
-        ITEMS.add(item);
-        ITEM_MAP.put(item.id, item);
-    }
-
-    private static DummyItem createDummyItem(int position) {
-        return new DummyItem(String.valueOf(position), "Item " + position, makeDetails(position));
+    private static void createDummyItem(int position) {
+        ACCOMPLISHMENTS.add(
+                new Accomplishment(
+                        String.valueOf(position),
+                        "Accomplishment " + position,
+                        makeDetails(position),
+                        "http://i.imgur.com/DvpvklR.png"));
+        MISSIONS.add(
+                new Mission(
+                        String.valueOf(position),
+                        "Mission " + position,
+                        makeDetails(position),
+                        "http://i.imgur.com/DvpvklR.png"));
     }
 
     private static String makeDetails(int position) {

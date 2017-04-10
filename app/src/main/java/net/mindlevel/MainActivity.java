@@ -10,7 +10,8 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
-import net.mindlevel.dummy.DummyContent;
+import net.mindlevel.model.Accomplishment;
+import net.mindlevel.model.Mission;
 
 public class MainActivity
         extends AppCompatActivity
@@ -51,12 +52,15 @@ public class MainActivity
 
     };
 
-
     public void onFragmentInteraction(Uri uri) {
         System.out.println("Uri");
     }
 
-    public void onListFragmentInteraction(DummyContent.DummyItem item) {
+    public void onListFragmentInteraction(Accomplishment accomplishment) {
+        System.out.println("Accomplishment");
+    }
+
+    public void onListFragmentInteraction(Mission mission) {
         System.out.println("What");
     }
 

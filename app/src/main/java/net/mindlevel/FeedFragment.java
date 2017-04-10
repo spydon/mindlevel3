@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 
 import net.mindlevel.dummy.DummyContent;
 import net.mindlevel.dummy.DummyContent.DummyItem;
+import net.mindlevel.model.Accomplishment;
 
 import java.util.List;
 
@@ -69,7 +70,8 @@ public class FeedFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new MyFeedRecyclerViewAdapter(DummyContent.ITEMS, mListener));
+            recyclerView.setAdapter(
+                    new MyFeedRecyclerViewAdapter(DummyContent.ACCOMPLISHMENTS, mListener));
         }
         return view;
     }
@@ -97,13 +99,8 @@ public class FeedFragment extends Fragment {
      * fragment to allow an interaction in this fragment to be communicated
      * to the activity and potentially other fragments contained in that
      * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnListFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onListFragmentInteraction(DummyItem item);
+        void onListFragmentInteraction(Accomplishment accomplishment);
     }
 }

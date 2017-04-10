@@ -11,9 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import net.mindlevel.dummy.DummyContent;
-import net.mindlevel.dummy.DummyContent.DummyItem;
-
-import java.util.List;
+import net.mindlevel.model.Mission;
 
 /**
  * A fragment representing a list of Items.
@@ -69,7 +67,7 @@ public class MissionsFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new MyMissionsRecyclerViewAdapter(DummyContent.ITEMS, mListener));
+            recyclerView.setAdapter(new MyMissionsRecyclerViewAdapter(DummyContent.MISSIONS, mListener));
         }
         return view;
     }
@@ -103,7 +101,6 @@ public class MissionsFragment extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnListFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onListFragmentInteraction(DummyItem item);
+        void onListFragmentInteraction(Mission mission);
     }
 }
