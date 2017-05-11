@@ -8,7 +8,7 @@
     android:orientation="vertical"
     tools:context="net.mindlevel.MainActivity">
 
-    <FrameLayout
+    <android.support.v4.view.ViewPager
         android:id="@+id/content_frame"
         android:layout_width="match_parent"
         android:layout_weight="1"
