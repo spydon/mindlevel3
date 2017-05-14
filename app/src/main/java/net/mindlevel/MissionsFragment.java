@@ -67,7 +67,7 @@ public class MissionsFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new MyMissionsRecyclerViewAdapter(DummyContent.MISSIONS, mListener));
+            recyclerView.setAdapter(new MissionsRecyclerViewAdapter(DummyContent.MISSIONS, mListener));
         }
         return view;
     }

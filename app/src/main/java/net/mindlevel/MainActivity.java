@@ -2,7 +2,6 @@ package net.mindlevel;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -10,6 +9,7 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v13.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
 import android.view.MenuItem;
 
 import net.mindlevel.model.Accomplishment;
@@ -38,7 +38,7 @@ public class MainActivity
     private BottomNavigationView navigation;
     private ViewPager mViewPager;
 
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+    private BottomNavigationView.OnNavigationItemSelectedListener navigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
         @Override
@@ -68,7 +68,7 @@ public class MainActivity
             Fragment selectedFragment = (Fragment) fragments.values().toArray()[i];
             //if(selectedFragment != currentFragment) {
             //    MenuItem item = navigation.getMenu().getItem(i);
-            //    mOnNavigationItemSelectedListener.onNavigationItemSelected(item);
+            //    navigationItemSelectedListener.onNavigationItemSelected(item);
             //}
             return selectedFragment;
         }
@@ -104,25 +104,31 @@ public class MainActivity
         PagerAdapter pager = new PagerAdapter(getFragmentManager());
         //currentFragment = userFragment;
         // Bottom navigation listener
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        navigation.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
         // Swipe between fragments
         mViewPager = (ViewPager) findViewById(R.id.content_frame);
         mViewPager.setAdapter(pager);
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
+                // Do nothing
             }
 
             @Override
             public void onPageSelected(int position) {
-                MenuItem item = navigation.getMenu().getItem(position);
-                mOnNavigationItemSelectedListener.onNavigationItemSelected(item);
+                // TODO: There must be something built-in for this.
+                Menu menu = navigation.getMenu();
+                for(int i = 0; i < menu.size(); i++) {
+                    menu.getItem(i).setChecked(false);
+                }
+                MenuItem selectedItem = menu.getItem(position);
+                selectedItem.setChecked(true);
+                navigationItemSelectedListener.onNavigationItemSelected(selectedItem);
             }
 
             @Override
             public void onPageScrollStateChanged(int state) {
-
+                // Do nothing
             }
         });
     }

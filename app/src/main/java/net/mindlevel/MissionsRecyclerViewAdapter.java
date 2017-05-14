@@ -6,9 +6,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import net.mindlevel.FeedFragment.OnListFragmentInteractionListener;
+import net.mindlevel.MissionsFragment.OnListFragmentInteractionListener;
 import net.mindlevel.dummy.DummyContent.DummyItem;
-import net.mindlevel.model.Accomplishment;
+import net.mindlevel.model.Mission;
 
 import java.util.List;
 
@@ -17,12 +17,12 @@ import java.util.List;
  * specified {@link OnListFragmentInteractionListener}.
  * TODO: Replace the implementation with code for your data type.
  */
-public class MyFeedRecyclerViewAdapter extends RecyclerView.Adapter<MyFeedRecyclerViewAdapter.ViewHolder> {
+public class MissionsRecyclerViewAdapter extends RecyclerView.Adapter<MissionsRecyclerViewAdapter.ViewHolder> {
 
-    private final List<Accomplishment> mValues;
+    private final List<Mission> mValues;
     private final OnListFragmentInteractionListener mListener;
 
-    public MyFeedRecyclerViewAdapter(List<Accomplishment> items, OnListFragmentInteractionListener listener) {
+    public MissionsRecyclerViewAdapter(List<Mission> items, OnListFragmentInteractionListener listener) {
         mValues = items;
         mListener = listener;
     }
@@ -30,7 +30,7 @@ public class MyFeedRecyclerViewAdapter extends RecyclerView.Adapter<MyFeedRecycl
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.fragment_feed, parent, false);
+                .inflate(R.layout.fragment_missions, parent, false);
         return new ViewHolder(view);
     }
 
@@ -61,7 +61,7 @@ public class MyFeedRecyclerViewAdapter extends RecyclerView.Adapter<MyFeedRecycl
         public final View mView;
         public final TextView mIdView;
         public final TextView mContentView;
-        public Accomplishment mItem;
+        public Mission mItem;
 
         public ViewHolder(View view) {
             super(view);

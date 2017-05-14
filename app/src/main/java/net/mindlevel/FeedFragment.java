@@ -11,10 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import net.mindlevel.dummy.DummyContent;
-import net.mindlevel.dummy.DummyContent.DummyItem;
 import net.mindlevel.model.Accomplishment;
-
-import java.util.List;
 
 /**
  * A fragment representing a list of Items.
@@ -71,7 +68,7 @@ public class FeedFragment extends Fragment {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
             recyclerView.setAdapter(
-                    new MyFeedRecyclerViewAdapter(DummyContent.ACCOMPLISHMENTS, mListener));
+                    new FeedRecyclerViewAdapter(DummyContent.ACCOMPLISHMENTS, mListener));
         }
         return view;
     }
