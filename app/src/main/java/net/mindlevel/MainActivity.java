@@ -92,7 +92,7 @@ public class MainActivity
     public void onListFragmentInteraction(Mission mission) {
         // TODO: Check how to start non programmatically, R.id.Mission... etc
         Intent missionIntent = new Intent(this, MissionActivity.class);
-        missionIntent.putExtra("mission", missionIntent);
+        missionIntent.putExtra("mission", mission);
         startActivity(missionIntent);
     }
 
