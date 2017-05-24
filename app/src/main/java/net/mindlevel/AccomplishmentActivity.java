@@ -7,23 +7,23 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
-import net.mindlevel.model.Mission;
+import net.mindlevel.model.Accomplishment;
 
-public class MissionActivity extends AppCompatActivity {
+public class AccomplishmentActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_mission);
+        setContentView(R.layout.activity_accomplishment);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        final Mission mission = (Mission) getIntent().getSerializableExtra("mission");
+        final Accomplishment accomplishment = (Accomplishment) getIntent().getSerializableExtra("accomplishment");
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, mission.name, Snackbar.LENGTH_LONG)
+                Snackbar.make(view, accomplishment.name, Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
         });

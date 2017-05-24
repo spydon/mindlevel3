@@ -2,6 +2,7 @@ package net.mindlevel;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -36,7 +37,7 @@ public class MainActivity
     }
     private Fragment currentFragment;
     private BottomNavigationView navigation;
-    private ViewPager mViewPager;
+    private ViewPager viewPager;
 
     private BottomNavigationView.OnNavigationItemSelectedListener navigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -45,10 +46,8 @@ public class MainActivity
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             Fragment selectedFragment = fragments.get(item.getItemId());
             if(selectedFragment != currentFragment) {
-                //int fragmentOrderId = Arrays.asList(fragments.keySet().toArray()).indexOf(item.getItemId());
                 int fragmentOrderId = Arrays.asList(fragments.values().toArray()).indexOf(selectedFragment);
-                // Has to check whether it comes from swiping or bar, if it comes from the bar, do the change
-                mViewPager.setCurrentItem(fragmentOrderId, true);
+                viewPager.setCurrentItem(fragmentOrderId, true);
                 currentFragment = selectedFragment;
             }
             return true;
@@ -66,10 +65,6 @@ public class MainActivity
         public Fragment getItem(int i) {
             // i is incremental from the left
             Fragment selectedFragment = (Fragment) fragments.values().toArray()[i];
-            //if(selectedFragment != currentFragment) {
-            //    MenuItem item = navigation.getMenu().getItem(i);
-            //    navigationItemSelectedListener.onNavigationItemSelected(item);
-            //}
             return selectedFragment;
         }
 
@@ -88,11 +83,17 @@ public class MainActivity
     }
 
     public void onListFragmentInteraction(Accomplishment accomplishment) {
-        System.out.println("Accomplishment");
+        // TODO: Check how to start non programmatically, R.id.Mission... etc
+        Intent accomplishmentIntent = new Intent(this, AccomplishmentActivity.class);
+        accomplishmentIntent.putExtra("accomplishment", accomplishment);
+        startActivity(accomplishmentIntent);
     }
 
     public void onListFragmentInteraction(Mission mission) {
-        System.out.println("What");
+        // TODO: Check how to start non programmatically, R.id.Mission... etc
+        Intent missionIntent = new Intent(this, MissionActivity.class);
+        missionIntent.putExtra("mission", missionIntent);
+        startActivity(missionIntent);
     }
 
     @Override
@@ -102,13 +103,12 @@ public class MainActivity
 
         navigation = (BottomNavigationView) findViewById(R.id.navigation);
         PagerAdapter pager = new PagerAdapter(getFragmentManager());
-        //currentFragment = userFragment;
         // Bottom navigation listener
         navigation.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
         // Swipe between fragments
-        mViewPager = (ViewPager) findViewById(R.id.content_frame);
-        mViewPager.setAdapter(pager);
-        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        viewPager = (ViewPager) findViewById(R.id.content_frame);
+        viewPager.setAdapter(pager);
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
                 // Do nothing
@@ -117,6 +117,7 @@ public class MainActivity
             @Override
             public void onPageSelected(int position) {
                 // TODO: There must be something built-in for this.
+                // Currently unchecks all menu items and then checks the correct one
                 Menu menu = navigation.getMenu();
                 for(int i = 0; i < menu.size(); i++) {
                     menu.getItem(i).setChecked(false);

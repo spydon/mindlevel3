@@ -27,6 +27,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="net.mindlevel.MainActivity"/>
         </activity>
+        <activity
+            android:name=".AccomplishmentActivity"
+            android:label="@string/title_activity_accomplishment"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="net.mindlevel.MainActivity"/>
+        </activity>
     </application>
 
 </manifest>

@@ -1,6 +1,8 @@
 package net.mindlevel.model;
 
-public class Mission {
+import java.io.Serializable;
+
+public class Mission implements Serializable {
     public final String id, name, description, imageUrl;
 
     public Mission(String id, String name, String description, String imageUrl) {
@@ -9,5 +11,4 @@ public class Mission {
         this.description = description;
         this.imageUrl = imageUrl;
     }
-
 }
