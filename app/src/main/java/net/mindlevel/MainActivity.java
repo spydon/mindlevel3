@@ -1,13 +1,17 @@
 package net.mindlevel;
 
-import android.app.Fragment;
-import android.app.FragmentManager;
+// TODO: Change back to non-support lib
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.app.FragmentManager;
+//import android.app.Fragment;
+//import android.support.v13.app.FragmentStatePagerAdapter;
+//import android.app.FragmentManager;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
-import android.support.v13.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -102,7 +106,9 @@ public class MainActivity
         setContentView(R.layout.activity_main);
 
         navigation = (BottomNavigationView) findViewById(R.id.navigation);
-        PagerAdapter pager = new PagerAdapter(getFragmentManager());
+        // TODO: Remove support lib once not on S5
+        //PagerAdapter pager = new PagerAdapter(getFragmentManager());
+        PagerAdapter pager = new PagerAdapter(getSupportFragmentManager());
         // Bottom navigation listener
         navigation.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
         // Swipe between fragments
