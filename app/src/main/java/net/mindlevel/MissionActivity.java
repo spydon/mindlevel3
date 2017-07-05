@@ -6,6 +6,9 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.ImageView;
+
+import com.bumptech.glide.Glide;
 
 import net.mindlevel.model.Mission;
 
@@ -29,6 +32,9 @@ public class MissionActivity extends AppCompatActivity {
             }
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        ImageView imageView = (ImageView) findViewById(R.id.mission_image);
+        Glide.with(this).load(mission.imageUrl).into(imageView);
     }
 
 }
