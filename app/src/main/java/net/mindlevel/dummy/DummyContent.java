@@ -4,7 +4,10 @@ import net.mindlevel.model.Accomplishment;
 import net.mindlevel.model.Mission;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Helper class for providing sample content for user interfaces created by
@@ -19,10 +22,19 @@ public class DummyContent {
      */
     public static final List<Accomplishment> ACCOMPLISHMENTS = new ArrayList<>();
     public static final List<Mission> MISSIONS = new ArrayList<>();
+    public static final List<String> URLS = new ArrayList<>();
 
     private static final int COUNT = 25;
 
     static {
+        URLS.add("http://i.imgur.com/DvpvklR.png");
+        URLS.add("https://www.gstatic.com/webp/gallery/1.sm.jpg");
+        URLS.add("https://www.gstatic.com/webp/gallery/2.sm.jpg");
+        URLS.add("https://www.gstatic.com/webp/gallery/3.sm.jpg");
+        URLS.add("https://www.gstatic.com/webp/gallery/4.sm.jpg");
+        URLS.add("https://www.gstatic.com/webp/gallery/5.sm.jpg");
+        URLS.add("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT0qEm4tEK8X3SLrYJKmfW6w7T3yb4oeNiUbM8-D1X7_0EgGsixsg3bZ2g");
+        Collections.shuffle(URLS);
         // Add some sample items.
         for (int i = 1; i <= COUNT; i++) {
             createDummyItem(i);
@@ -34,12 +46,12 @@ public class DummyContent {
                 String.valueOf(position),
                 "Mission " + position,
                 makeDetails(position),
-                "http://i.imgur.com/DvpvklR.png");
+                URLS.get(position % URLS.size()));
         Accomplishment accomplishment = new Accomplishment(
                 String.valueOf(position),
-                "Accomplishment " + position,
+                "Accomplishment with a lot of text and etc " + position,
                 makeDetails(position),
-                "http://i.imgur.com/DvpvklR.png",
+                URLS.get(position % URLS.size()),
                 mission);
         MISSIONS.add(mission);
         ACCOMPLISHMENTS.add(accomplishment);
