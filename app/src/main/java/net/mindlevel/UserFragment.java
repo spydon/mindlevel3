@@ -104,7 +104,7 @@ public class UserFragment extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
+        // TODO: Update argument type and title
         void onFragmentInteraction(Uri uri);
     }
 }

@@ -30,18 +30,19 @@ public class DummyContent {
     }
 
     private static void createDummyItem(int position) {
-        ACCOMPLISHMENTS.add(
-                new Accomplishment(
-                        String.valueOf(position),
-                        "Accomplishment " + position,
-                        makeDetails(position),
-                        "http://i.imgur.com/DvpvklR.png"));
-        MISSIONS.add(
-                new Mission(
-                        String.valueOf(position),
-                        "Mission " + position,
-                        makeDetails(position),
-                        "http://i.imgur.com/DvpvklR.png"));
+        Mission mission = new Mission(
+                String.valueOf(position),
+                "Mission " + position,
+                makeDetails(position),
+                "http://i.imgur.com/DvpvklR.png");
+        Accomplishment accomplishment = new Accomplishment(
+                String.valueOf(position),
+                "Accomplishment " + position,
+                makeDetails(position),
+                "http://i.imgur.com/DvpvklR.png",
+                mission);
+        MISSIONS.add(mission);
+        ACCOMPLISHMENTS.add(accomplishment);
     }
 
     private static String makeDetails(int position) {
