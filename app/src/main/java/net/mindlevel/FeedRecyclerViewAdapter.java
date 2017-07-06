@@ -4,7 +4,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
 
 import net.mindlevel.FeedFragment.OnListFragmentInteractionListener;
 import net.mindlevel.model.Accomplishment;
@@ -35,8 +38,10 @@ public class FeedRecyclerViewAdapter extends RecyclerView.Adapter<FeedRecyclerVi
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-        holder.mIdView.setText(mValues.get(position).id);
-        holder.mContentView.setText(mValues.get(position).title);
+        //holder.mIdView.setText(mValues.get(position).id);
+        holder.mTitleView.setText(mValues.get(position).title);
+        ImageView imageView = holder.mImageView;
+        Glide.with(imageView.getContext()).load(holder.mItem.imageUrl).into(imageView);
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,20 +62,22 @@ public class FeedRecyclerViewAdapter extends RecyclerView.Adapter<FeedRecyclerVi
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
-        public final TextView mIdView;
-        public final TextView mContentView;
+        //public final TextView mIdView;
+        public final TextView mTitleView;
+        public final ImageView mImageView;
         public Accomplishment mItem;
 
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            mIdView = (TextView) view.findViewById(R.id.id);
-            mContentView = (TextView) view.findViewById(R.id.content);
+            //mIdView = (TextView) view.findViewById(R.id.id);
+            mTitleView = (TextView) view.findViewById(R.id.title);
+            mImageView = (ImageView) view.findViewById(R.id.image);
         }
 
         @Override
         public String toString() {
-            return super.toString() + " '" + mContentView.getText() + "'";
+            return super.toString() + " '" + mTitleView.getText() + "'";
         }
     }
 }
