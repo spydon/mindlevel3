@@ -8,6 +8,10 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
 
 import net.mindlevel.model.Accomplishment;
 
@@ -33,6 +37,14 @@ public class AccomplishmentActivity extends AppCompatActivity {
             }
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        ImageView imageView = (ImageView) findViewById(R.id.accomplishment_image);
+        Glide.with(this).load(accomplishment.imageUrl).into(imageView);
+
+        TextView titleView = (TextView) findViewById(R.id.accomplishment_title);
+        TextView descriptionView = (TextView) findViewById(R.id.accomplishment_description);
+        titleView.setText(accomplishment.title);
+        descriptionView.setText(accomplishment.description);
     }
 
 }

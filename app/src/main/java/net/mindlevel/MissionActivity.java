@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
@@ -35,6 +36,11 @@ public class MissionActivity extends AppCompatActivity {
 
         ImageView imageView = (ImageView) findViewById(R.id.mission_image);
         Glide.with(this).load(mission.imageUrl).into(imageView);
+
+        TextView titleView = (TextView) findViewById(R.id.mission_title);
+        TextView descriptionView = (TextView) findViewById(R.id.mission_description);
+        titleView.setText(mission.title);
+        descriptionView.setText(mission.description);
     }
 
 }

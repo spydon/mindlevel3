@@ -10,14 +10,23 @@
     tools:context="net.mindlevel.MissionActivity"
     tools:showIn="@layout/activity_mission">
 
-    <ImageView android:id="@+id/mission_image"
-               android:layout_height="wrap_content"
-               android:layout_width="fill_parent"
-               android:layout_margin="10dip"/>
+    <ImageView
+        android:id="@+id/mission_image"
+        android:adjustViewBounds="true"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_margin="10dip"/>
+
     <TextView
+        android:id="@+id/mission_title"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="Loading image from url"
+        android:layout_margin="10dip" />
+
+    <TextView
+        android:id="@+id/mission_description"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
         android:layout_margin="10dip" />
 
 </LinearLayout>

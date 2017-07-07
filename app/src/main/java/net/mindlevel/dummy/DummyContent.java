@@ -49,7 +49,7 @@ public class DummyContent {
                 URLS.get(position % URLS.size()));
         Accomplishment accomplishment = new Accomplishment(
                 String.valueOf(position),
-                "Accomplishment with a lot of text and etc " + position,
+                "Accomplishment with a " + position,
                 makeDetails(position),
                 URLS.get(position % URLS.size()),
                 mission);
