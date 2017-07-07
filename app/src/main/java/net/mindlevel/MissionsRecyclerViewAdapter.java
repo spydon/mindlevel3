@@ -4,7 +4,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
 
 import net.mindlevel.MissionsFragment.OnListFragmentInteractionListener;
 import net.mindlevel.model.Mission;
@@ -35,8 +38,11 @@ public class MissionsRecyclerViewAdapter extends RecyclerView.Adapter<MissionsRe
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-        holder.mIdView.setText(mValues.get(position).id);
-        holder.mContentView.setText(mValues.get(position).title);
+        holder.mTitleView.setText(mValues.get(position).title);
+        holder.mDescriptionView.setText(mValues.get(position).description);
+
+        ImageView imageView = holder.mImageView;
+        Glide.with(imageView.getContext()).load(holder.mItem.imageUrl).into(imageView);
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,21 +62,23 @@ public class MissionsRecyclerViewAdapter extends RecyclerView.Adapter<MissionsRe
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        public final View mView;
-        public final TextView mIdView;
-        public final TextView mContentView;
         public Mission mItem;
+        public final View mView;
+        public final ImageView mImageView;
+        public final TextView mTitleView;
+        public final TextView mDescriptionView;
 
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            mIdView = (TextView) view.findViewById(R.id.id);
-            mContentView = (TextView) view.findViewById(R.id.content);
+            mImageView = (ImageView) view.findViewById(R.id.mission_image);
+            mTitleView = (TextView) view.findViewById(R.id.mission_title);
+            mDescriptionView = (TextView) view.findViewById(R.id.mission_description);
         }
 
         @Override
         public String toString() {
-            return super.toString() + " '" + mContentView.getText() + "'";
+            return super.toString() + " '" + mTitleView.getText() + "'";
         }
     }
 }
