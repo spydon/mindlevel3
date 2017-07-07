@@ -107,6 +107,9 @@ public class MainActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Intent loginIntent = new Intent(this, LoginActivity.class);
+        startActivity(loginIntent);
+
         navigation = (BottomNavigationView) findViewById(R.id.navigation);
         // TODO: Remove support lib once not on S5
         //PagerAdapter pager = new PagerAdapter(getFragmentManager());

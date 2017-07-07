@@ -46,9 +46,9 @@ public class UploadActivity extends AppCompatActivity {
         //ImageView imageView = (ImageView) findViewById(R.id.mission_image);
         //Glide.with(this).load(mission.imageUrl).into(imageView);
 
-        //TextView titleView = (TextView) findViewById(R.id.mission_title);
+        TextView titleView = (TextView) findViewById(R.id.upload_title);
         //TextView descriptionView = (TextView) findViewById(R.id.mission_description);
-        //titleView.setText(mission.title);
+        titleView.setText(mission.title);
         //descriptionView.setText(mission.description);
     }
 
