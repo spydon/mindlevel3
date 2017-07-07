@@ -1,5 +1,6 @@
 package net.mindlevel;
 
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -19,6 +20,7 @@ public class UploadActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upload);
+
         final Mission mission = (Mission) getIntent().getSerializableExtra("mission");
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(mission.title);
@@ -42,6 +44,11 @@ public class UploadActivity extends AppCompatActivity {
             }
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        if (!getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA)){
+            // this device does not have a camera
+            takePicture.setVisibility(View.INVISIBLE);
+        }
 
         //ImageView imageView = (ImageView) findViewById(R.id.mission_image);
         //Glide.with(this).load(mission.imageUrl).into(imageView);
