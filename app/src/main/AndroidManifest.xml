@@ -36,7 +36,16 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="net.mindlevel.MainActivity"/>
         </activity>
-    </application>
+        <activity
+            android:name=".UploadActivity"
+            android:label="@string/title_activity_upload"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="net.mindlevel.MainActivity"/>
+        </activity>
+     </application>
 
     <!-- Internet Permissions -->
     <uses-permission android:name="android.permission.INTERNET" />

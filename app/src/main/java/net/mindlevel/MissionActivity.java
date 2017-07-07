@@ -1,5 +1,7 @@
 package net.mindlevel;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -25,11 +27,17 @@ public class MissionActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        final Context outerContext = this;
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, mission.title, Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                // TODO: move snackbar
+                //Snackbar.make(view, mission.title, Snackbar.LENGTH_LONG)
+                //        .setAction("Action", null).show();
+
+                Intent missionIntent = new Intent(outerContext, UploadActivity.class);
+                missionIntent.putExtra("mission", mission);
+                startActivity(missionIntent);
             }
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
