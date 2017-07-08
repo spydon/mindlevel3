@@ -7,6 +7,12 @@
     android:background="@color/background"
     android:orientation="horizontal">
 
+    <ProgressBar
+        android:id="@+id/progress"
+        android:visibility="visible"
+        android:layout_width="match_parent"
+        android:layout_height="50dp" />
+
     <ImageView
         android:id="@+id/image"
         android:adjustViewBounds="true"

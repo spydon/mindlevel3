@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -42,7 +43,10 @@ public class MissionActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         ImageView imageView = (ImageView) findViewById(R.id.image);
-        Glide.with(this).load(mission.imageUrl).into(imageView);
+        ProgressBar progressBar = (ProgressBar) findViewById(R.id.progress);
+        Glide.with(this).load(mission.imageUrl)
+                .listener(new ProgressBarController(progressBar))
+                .into(imageView);
 
         TextView titleView = (TextView) findViewById(R.id.title);
         TextView descriptionView = (TextView) findViewById(R.id.description);

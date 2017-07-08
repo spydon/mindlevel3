@@ -8,6 +8,12 @@
     android:layout_margin="5dp"
     android:orientation="vertical">
 
+    <ProgressBar
+        android:id="@+id/progress"
+        android:visibility="visible"
+        android:layout_width="match_parent"
+        android:layout_height="50dp" />
+
     <ImageView
         android:id="@+id/image"
         android:layout_height="wrap_content"

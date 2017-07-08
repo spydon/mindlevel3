@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -41,7 +42,10 @@ public class FeedRecyclerViewAdapter extends RecyclerView.Adapter<FeedRecyclerVi
         //holder.mIdView.setText(mValues.get(position).id);
         holder.mTitleView.setText(mValues.get(position).title);
         ImageView imageView = holder.mImageView;
-        Glide.with(imageView.getContext()).load(holder.mItem.imageUrl).into(imageView);
+        Glide.with(imageView.getContext())
+                .load(holder.mItem.imageUrl)
+                .listener(new ProgressBarController(holder.mProgressBar))
+                .into(imageView);
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,6 +69,7 @@ public class FeedRecyclerViewAdapter extends RecyclerView.Adapter<FeedRecyclerVi
         //public final TextView mIdView;
         public final TextView mTitleView;
         public final ImageView mImageView;
+        public final ProgressBar mProgressBar;
         public Accomplishment mItem;
 
         public ViewHolder(View view) {
@@ -73,6 +78,7 @@ public class FeedRecyclerViewAdapter extends RecyclerView.Adapter<FeedRecyclerVi
             //mIdView = (TextView) view.findViewById(R.id.id);
             mTitleView = (TextView) view.findViewById(R.id.title);
             mImageView = (ImageView) view.findViewById(R.id.image);
+            mProgressBar = (ProgressBar) view.findViewById(R.id.progress);
         }
 
         @Override
