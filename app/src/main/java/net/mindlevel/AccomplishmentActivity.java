@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -38,11 +37,11 @@ public class AccomplishmentActivity extends AppCompatActivity {
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        ImageView imageView = (ImageView) findViewById(R.id.accomplishment_image);
+        ImageView imageView = (ImageView) findViewById(R.id.image);
         Glide.with(this).load(accomplishment.imageUrl).into(imageView);
 
-        TextView titleView = (TextView) findViewById(R.id.accomplishment_title);
-        TextView descriptionView = (TextView) findViewById(R.id.accomplishment_description);
+        TextView titleView = (TextView) findViewById(R.id.title);
+        TextView descriptionView = (TextView) findViewById(R.id.description);
         titleView.setText(accomplishment.title);
         descriptionView.setText(accomplishment.description);
     }

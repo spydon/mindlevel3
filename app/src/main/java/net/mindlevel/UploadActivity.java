@@ -1,10 +1,8 @@
 package net.mindlevel;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.media.Image;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
@@ -15,11 +13,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-
 import net.mindlevel.model.Mission;
-
-import java.io.InputStream;
 
 public class UploadActivity extends AppCompatActivity {
 
@@ -62,7 +56,7 @@ public class UploadActivity extends AppCompatActivity {
         //ImageView imageView = (ImageView) findViewById(R.id.mission_image);
         //Glide.with(this).load(mission.imageUrl).into(imageView);
 
-        TextView titleView = (TextView) findViewById(R.id.upload_title);
+        TextView titleView = (TextView) findViewById(R.id.title);
         //TextView descriptionView = (TextView) findViewById(R.id.mission_description);
         titleView.setText(mission.title);
         //descriptionView.setText(mission.description);
@@ -96,7 +90,7 @@ public class UploadActivity extends AppCompatActivity {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
-            ImageView imageView = (ImageView) findViewById(R.id.upload_image);
+            ImageView imageView = (ImageView) findViewById(R.id.image);
             imageView.setImageBitmap(imageBitmap);
         } else if (requestCode == PICK_IMAGE && resultCode == RESULT_OK) {
             if (data == null) {

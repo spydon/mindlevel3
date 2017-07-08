@@ -17,20 +17,20 @@
         android:orientation="vertical">
 
         <ImageView
-            android:id="@+id/accomplishment_image"
+            android:id="@+id/image"
             android:adjustViewBounds="true"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
             android:layout_margin="10dip"/>
 
         <TextView
-            android:id="@+id/accomplishment_title"
+            android:id="@+id/title"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dip" />
 
         <TextView
-            android:id="@+id/accomplishment_description"
+            android:id="@+id/description"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dip" />

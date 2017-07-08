@@ -1,13 +1,20 @@
 package net.mindlevel;
 
+import android.graphics.drawable.Drawable;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 
 import net.mindlevel.MissionsFragment.OnListFragmentInteractionListener;
 import net.mindlevel.model.Mission;
@@ -42,7 +49,25 @@ public class MissionsRecyclerViewAdapter extends RecyclerView.Adapter<MissionsRe
         holder.mDescriptionView.setText(mValues.get(position).description);
 
         ImageView imageView = holder.mImageView;
-        Glide.with(imageView.getContext()).load(holder.mItem.imageUrl).into(imageView);
+        Glide.with(imageView.getContext())
+                .load(holder.mItem.imageUrl)
+                .listener(new RequestListener<Drawable>() {
+                    @Override
+                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target,
+                                                boolean isFirstResource) {
+                        holder.mProgressBar.setVisibility(View.GONE);
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target,
+                                                   DataSource dataSource, boolean isFirstResource) {
+                        //holder.mProgressBar.setVisibility(View.GONE);
+                        return false;
+                    }
+
+                })
+                .into(imageView);
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,13 +92,15 @@ public class MissionsRecyclerViewAdapter extends RecyclerView.Adapter<MissionsRe
         public final ImageView mImageView;
         public final TextView mTitleView;
         public final TextView mDescriptionView;
+        public final ProgressBar mProgressBar;
 
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            mImageView = (ImageView) view.findViewById(R.id.mission_image);
-            mTitleView = (TextView) view.findViewById(R.id.mission_title);
-            mDescriptionView = (TextView) view.findViewById(R.id.mission_description);
+            mImageView = (ImageView) view.findViewById(R.id.image);
+            mTitleView = (TextView) view.findViewById(R.id.title);
+            mDescriptionView = (TextView) view.findViewById(R.id.description);
+            mProgressBar = (ProgressBar) view.findViewById(R.id.progressbar);
         }
 
         @Override
