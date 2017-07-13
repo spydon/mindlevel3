@@ -139,21 +139,28 @@ public class UploadActivity extends AppCompatActivity {
         Uri path = null;
         if(resultCode == RESULT_OK) {
             if (requestCode == REQUEST_IMAGE_CAPTURE) {
-                path = Uri.fromFile(new File(mCurrentPhotoPath)); // TODO: The way used in official example, feels dirty
+                path = Uri.fromFile(new File(mCurrentPhotoPath));
 
             } else if (requestCode == PICK_IMAGE) {
                 if (data == null) {
-                    //Display an error
+                    // TODO: Display an error
                     return;
                 }
                 path = data.getData();
-                System.out.println("Tis'");
-                // Handle inputstream
-                // InputStream inputStream = getContentResolver().openInputStream(data.getData());
             }
             try {
+                double maxLength = 2048;
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), path);
                 ImageView imageView = (ImageView) findViewById(R.id.image);
+                int height = bitmap.getHeight();
+                int width = bitmap.getWidth();
+                if (width > maxLength && width > height) { // || bitmap.getWidth() > 2048) {
+                    int newHeight = (int)(height * (maxLength / width));
+                    bitmap = Bitmap.createScaledBitmap(bitmap, (int)maxLength, newHeight, true);
+                } else if (height > maxLength && height > width) {
+                    int newWidth = (int)(width * (maxLength / height));
+                    bitmap = Bitmap.createScaledBitmap(bitmap, newWidth, (int)maxLength, true);
+                }
                 imageView.setImageBitmap(bitmap);
             } catch (IOException ioe) {
                 // TODO: Handle.
