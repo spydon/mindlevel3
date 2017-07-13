@@ -136,8 +136,21 @@ public class UploadActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            Uri path = Uri.fromFile(new File(mCurrentPhotoPath)); // TODO: The way used in official example, feels dirty
+        Uri path = null;
+        if(resultCode == RESULT_OK) {
+            if (requestCode == REQUEST_IMAGE_CAPTURE) {
+                path = Uri.fromFile(new File(mCurrentPhotoPath)); // TODO: The way used in official example, feels dirty
+
+            } else if (requestCode == PICK_IMAGE) {
+                if (data == null) {
+                    //Display an error
+                    return;
+                }
+                path = data.getData();
+                System.out.println("Tis'");
+                // Handle inputstream
+                // InputStream inputStream = getContentResolver().openInputStream(data.getData());
+            }
             try {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), path);
                 ImageView imageView = (ImageView) findViewById(R.id.image);
@@ -145,13 +158,6 @@ public class UploadActivity extends AppCompatActivity {
             } catch (IOException ioe) {
                 // TODO: Handle.
             }
-        } else if (requestCode == PICK_IMAGE && resultCode == RESULT_OK) {
-            if (data == null) {
-                //Display an error
-                return;
-            }
-            // Handle inputstream
-            // InputStream inputStream = getContentResolver().openInputStream(data.getData());
         }
     }
 }
