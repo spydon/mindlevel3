@@ -2,6 +2,7 @@ package net.mindlevel.dummy;
 
 import net.mindlevel.model.Accomplishment;
 import net.mindlevel.model.Mission;
+import net.mindlevel.model.User;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -23,6 +24,7 @@ public class DummyContent {
     public static final List<Accomplishment> ACCOMPLISHMENTS = new ArrayList<>();
     public static final List<Mission> MISSIONS = new ArrayList<>();
     public static final List<String> URLS = new ArrayList<>();
+    public static final User USER = new User("spydon", "Description description", "http://i.imgur.com/DvpvklR.png");
 
     private static final int COUNT = 25;
 

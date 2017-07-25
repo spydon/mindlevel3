@@ -33,16 +33,11 @@ public class MainActivity
         FeedFragment.OnListFragmentInteractionListener,
         UserFragment.OnFragmentInteractionListener {
 
-    private static final UserFragment userFragment = new UserFragment();
-    private static final MissionsFragment missionsFragment = new MissionsFragment();
-    private static final FeedFragment feedFragment = new FeedFragment();
-    private static final LinkedHashMap<Integer, Fragment> fragments = new LinkedHashMap<>();
-    static
-    {
-        fragments.put(R.id.navigation_feed, feedFragment);
-        fragments.put(R.id.navigation_missions, missionsFragment);
-        fragments.put(R.id.navigation_profile, userFragment);
-    }
+    private final UserFragment userFragment = new UserFragment();
+    private final MissionsFragment missionsFragment = new MissionsFragment();
+    private final FeedFragment feedFragment = new FeedFragment();
+    private final LinkedHashMap<Integer, Fragment> fragments = new LinkedHashMap<>();
+
     private Fragment currentFragment;
     private BottomNavigationView navigation;
     private ViewPager viewPager;
@@ -108,6 +103,10 @@ public class MainActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        fragments.put(R.id.navigation_feed, feedFragment);
+        fragments.put(R.id.navigation_missions, missionsFragment);
+        fragments.put(R.id.navigation_profile, userFragment);
 
         SharedPreferences sharedPreferences = getSharedPreferences("session", Context.MODE_PRIVATE);
         if(sharedPreferences.getString("sessionId", "").isEmpty()) {
