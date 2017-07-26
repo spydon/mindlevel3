@@ -33,9 +33,11 @@ public class UserFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public UserFragment() {
-        // Required empty public constructor
-    }
+    /**
+     * Mandatory empty constructor for the fragment manager to instantiate the
+     * fragment (e.g. upon screen orientation changes).
+     */
+    public UserFragment() {}
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -45,18 +47,25 @@ public class UserFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        final View view = inflater.inflate(R.layout.content_user, container, false);
+        final User user = DummyContent.USER;
+        ImageView imageView = (ImageView) view.findViewById(R.id.image);
+        TextView usernameView = (TextView) view.findViewById(R.id.username);;
+        TextView scoreView = (TextView) view.findViewById(R.id.score);;
+        TextView descriptionView = (TextView) view.findViewById(R.id.description);
+        ProgressBar progressBar = (ProgressBar) view.findViewById(R.id.progress);
+
+        Glide.with(imageView.getContext())
+                .load(user.imageUrl)
+                .listener(new ProgressBarController(progressBar))
+                .into(imageView);
+
+        usernameView.setText(user.username);
+        scoreView.setText(user.score);
+        descriptionView.setText(user.description);
+
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.content_user, container, false);
-
-        // Set the adapter
-        if (view instanceof RecyclerView) {
-            Context context = view.getContext();
-            RecyclerView recyclerView = (RecyclerView) view;
-            recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            recyclerView.setAdapter(new UserRecyclerViewAdapter(DummyContent.USER, mListener));
-        }
         return view;
-
     }
 
     // TODO: Rename method, update argument and hook method into UI event
