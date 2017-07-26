@@ -76,7 +76,7 @@ public class UserRecyclerViewAdapter extends RecyclerView.Adapter<UserRecyclerVi
             super(view);
             mView = view;
             mImageView = (ImageView) view.findViewById(R.id.image);
-            mUsernameView = (TextView) view.findViewById(R.id.title);
+            mUsernameView = (TextView) view.findViewById(R.id.username);
             mDescriptionView = (TextView) view.findViewById(R.id.description);
             mProgressBar = (ProgressBar) view.findViewById(R.id.progress);
         }
