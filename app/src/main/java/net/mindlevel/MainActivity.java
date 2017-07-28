@@ -21,6 +21,7 @@ import android.view.MenuItem;
 
 import com.bumptech.glide.Glide;
 
+import net.mindlevel.api.BackendService;
 import net.mindlevel.dummy.DummyContent;
 import net.mindlevel.model.Accomplishment;
 import net.mindlevel.model.Mission;
@@ -104,6 +105,7 @@ public class MainActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        new BackendService().getUser("spydon");
 
         fragments.put(R.id.navigation_feed, feedFragment);
         fragments.put(R.id.navigation_missions, missionsFragment);

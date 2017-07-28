@@ -50,8 +50,8 @@ public class UserFragment extends Fragment {
         final View view = inflater.inflate(R.layout.content_user, container, false);
         final User user = DummyContent.USER;
         ImageView imageView = (ImageView) view.findViewById(R.id.image);
-        TextView usernameView = (TextView) view.findViewById(R.id.username);;
-        TextView scoreView = (TextView) view.findViewById(R.id.score);;
+        TextView usernameView = (TextView) view.findViewById(R.id.username);
+        TextView scoreView = (TextView) view.findViewById(R.id.score);
         TextView descriptionView = (TextView) view.findViewById(R.id.description);
         ProgressBar progressBar = (ProgressBar) view.findViewById(R.id.progress);
 
@@ -61,7 +61,7 @@ public class UserFragment extends Fragment {
                 .into(imageView);
 
         usernameView.setText(user.username);
-        scoreView.setText(user.score);
+        scoreView.setText(String.valueOf(user.score));
         descriptionView.setText(user.description);
 
         // Inflate the layout for this fragment
