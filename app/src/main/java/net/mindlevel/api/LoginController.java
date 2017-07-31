@@ -13,12 +13,9 @@ public class LoginController extends BackendService {
 
     private static LoginEndpoint endpoint;
 
-    private Context context;
-
     public LoginController(Context context) {
-        super();
+        super(context);
         this.endpoint = retrofit.create(LoginEndpoint.class);
-        this.context = context;
     }
 
 
@@ -30,12 +27,9 @@ public class LoginController extends BackendService {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
                 if(response.isSuccessful()) {
-                    SharedPreferences sharedPreferences = context.getSharedPreferences("session", Context.MODE_PRIVATE);
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putString("username", user.username);
-                    editor.putString("sessionId", response.body());
-                    editor.apply();
-                    callback.onPostExecute(true, response.body());
+                    String sessionId = response.body();
+                    addSessionState(user.username, sessionId);
+                    callback.onPostExecute(true, sessionId);
                 } else {
                     callback.onPostExecute(false, null);
                 }
@@ -48,4 +42,28 @@ public class LoginController extends BackendService {
             }
         });
     }
+
+    public void logout(final Login user, final ControllerCallback<Void> callback) {
+
+        Call<Void> logout = endpoint.logout(user);
+
+        logout.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if(response.isSuccessful()) {
+                    addSessionState(null, null);
+                    callback.onPostExecute(true, null);
+                } else {
+                    callback.onPostExecute(false, null);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                callback.onPostExecute(false, null);
+                t.printStackTrace();
+            }
+        });
+    }
+
 }

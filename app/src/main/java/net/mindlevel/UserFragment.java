@@ -1,6 +1,7 @@
 package net.mindlevel;
 
 // TODO: Change back to non-support lib
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v4.app.Fragment;
 import android.content.Context;
@@ -9,6 +10,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -16,7 +18,9 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 
 import net.mindlevel.api.ControllerCallback;
+import net.mindlevel.api.LoginController;
 import net.mindlevel.api.UserController;
+import net.mindlevel.model.Login;
 import net.mindlevel.model.User;
 
 /**
@@ -29,6 +33,7 @@ public class UserFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
     private UserController controller;
+    private LoginController loginController;
 
     private ImageView imageView;
     private TextView usernameView;
@@ -47,11 +52,27 @@ public class UserFragment extends Fragment {
         this.descriptionView = (TextView) view.findViewById(R.id.description);
         this.progressBar = (ProgressBar) view.findViewById(R.id.progress);
 
+        final Context context = getContext();
 
-        SharedPreferences sharedPreferences = getContext().getSharedPreferences("session", Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = context.getSharedPreferences("session", Context.MODE_PRIVATE);
         String username = sharedPreferences.getString("username", "");
-        this.controller = new UserController();
-        controller.getUser(username);
+        this.controller = new UserController(context);
+        this.loginController = new LoginController(context);
+        controller.getUser(username, userCallback);
+
+        Button signOutButton = (Button) view.findViewById(R.id.sign_out_button);
+        signOutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SharedPreferences sharedPreferences = context.getSharedPreferences("session", Context.MODE_PRIVATE);
+                String username = sharedPreferences.getString("username", "");
+                String sessionId = sharedPreferences.getString("sessionId", "");
+                Login login = new Login(username, "", sessionId);
+                loginController.logout(login, signOutCallback);
+            }
+        });
+
+
         return view;
     }
 
@@ -94,8 +115,14 @@ public class UserFragment extends Fragment {
         void onFragmentInteraction(Uri uri);
     }
 
+    private void userVisibility(boolean visible) {
+        imageView.setVisibility(View.GONE);
+        usernameView.setVisibility(View.GONE);
+        scoreView.setVisibility(View.GONE);
+        descriptionView.setVisibility(View.GONE);
+    }
 
-    private ControllerCallback<User> callback = new ControllerCallback<User>() {
+    private ControllerCallback<User> userCallback = new ControllerCallback<User>() {
 
         @Override
         public void onPostExecute(final Boolean success, final User user) {
@@ -110,6 +137,23 @@ public class UserFragment extends Fragment {
                 scoreView.setText(String.valueOf(user.score));
                 descriptionView.setText(user.description);
             } else {
+                loading.hide();
+                descriptionView.setText("Something went wrong.");
+            }
+        }
+    };
+
+    private ControllerCallback<Void> signOutCallback = new ControllerCallback<Void>() {
+
+        @Override
+        public void onPostExecute(final Boolean success, final Void nothing) {
+            ProgressBarController loading = new ProgressBarController(progressBar);
+            userVisibility(false);
+            if (success) {
+                Intent loginIntent = new Intent(getContext(), LoginActivity.class);
+                startActivity(loginIntent);
+            } else {
+                userVisibility(true);
                 loading.hide();
                 descriptionView.setText("Something went wrong.");
             }

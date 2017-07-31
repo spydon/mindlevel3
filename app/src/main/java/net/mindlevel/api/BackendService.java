@@ -1,47 +1,35 @@
 package net.mindlevel.api;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import net.mindlevel.api.endpoint.UserEndpoint;
-import net.mindlevel.model.User;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public abstract class BackendService {
     protected static Retrofit retrofit;
+    protected Context context;
 
-    public BackendService() {
+    public BackendService(Context context) {
+        this.context = context;
         Gson gson = new GsonBuilder()
                 .setLenient()
                 .create();
 
         retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.20.106:8080/")
+                .baseUrl("http://192.168.42.244:8080/")
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
     }
 
-    public void getUser(String username) {
-        UserEndpoint service = retrofit.create(UserEndpoint.class);
-
-        Call<User> user = service.getUser(username);
-
-        user.enqueue(new Callback<User>() {
-            @Override
-            public void onResponse(Call<User> call, Response<User> user) {
-                System.out.println(user.body().username);
-            }
-
-            @Override
-            public void onFailure(Call<User> call, Throwable t) {
-                t.printStackTrace();
-            }
-        });
+    protected void addSessionState(String username, String sessionId) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences("session", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("username", username);
+        editor.putString("sessionId", sessionId);
+        editor.apply();
     }
-
 }

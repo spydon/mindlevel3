@@ -1,5 +1,6 @@
 package net.mindlevel.api.endpoint;
 
+import net.mindlevel.model.Login;
 import net.mindlevel.model.User;
 
 import retrofit2.Call;
@@ -16,5 +17,5 @@ public interface UserEndpoint {
     Call<Boolean> updateUser(@Path("user") User user);
 
     @POST("user/{user}")
-    Call<Boolean> newUser(@Path("user") User user);
+    Call<Void> register(@Path("user") Login user);
 }

@@ -3,6 +3,7 @@ package net.mindlevel;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 
 
@@ -16,9 +17,11 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import net.mindlevel.api.ControllerCallback;
 import net.mindlevel.api.LoginController;
+import net.mindlevel.api.UserController;
 import net.mindlevel.model.Login;
 
 /**
@@ -26,7 +29,8 @@ import net.mindlevel.model.Login;
  */
 public class LoginActivity extends AppCompatActivity {
 
-    private LoginController controller;
+    private LoginController loginController;
+    private UserController userController;
 
     // UI references.
     private EditText usernameView;
@@ -39,7 +43,8 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         View innerView = findViewById(R.id.inner_login_form);
-        controller = new LoginController(innerView.getContext());
+        loginController = new LoginController(innerView.getContext());
+        userController = new UserController(innerView.getContext());
 
         // Set up the login form.
         usernameView = (EditText) findViewById(R.id.username);
@@ -49,7 +54,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
                 if (id == R.id.login || id == EditorInfo.IME_NULL) {
-                    attemptLogin();
+                    attemptLogin(false);
                     return true;
                 }
                 return false;
@@ -60,7 +65,15 @@ public class LoginActivity extends AppCompatActivity {
         signInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                attemptLogin();
+                attemptLogin(false);
+            }
+        });
+
+        Button registerButton = (Button) findViewById(R.id.register_button);
+        registerButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                attemptLogin(true);
             }
         });
 
@@ -73,7 +86,7 @@ public class LoginActivity extends AppCompatActivity {
      * If there are form errors (invalid email, missing fields, etc.), the
      * errors are presented and no actual login attempt is made.
      */
-    private void attemptLogin() {
+    private void attemptLogin(boolean isNewUser) {
         // Reset errors.
         usernameView.setError(null);
         passwordView.setError(null);
@@ -107,12 +120,18 @@ public class LoginActivity extends AppCompatActivity {
             // There was an error; don't attempt login and focus the first
             // form field with an error.
             focusView.requestFocus();
+        } else if (!isNewUser) {
+            // Show a progress spinner, and kick off a background task to
+            // perform the user login attempt.
+            showProgress(true);
+            Login login = new Login(username, password);
+            loginController.login(login, loginCallback);
         } else {
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             showProgress(true);
             Login login = new Login(username, password);
-            controller.login(login, callback);
+            userController.register(login, registerCallback);
         }
     }
 
@@ -150,7 +169,7 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    private ControllerCallback<String> callback = new ControllerCallback<String>() {
+    private ControllerCallback<String> loginCallback = new ControllerCallback<String>() {
 
         @Override
         public void onPostExecute(final Boolean success, final String response) {
@@ -158,6 +177,26 @@ public class LoginActivity extends AppCompatActivity {
 
             if (success) {
                 finish();
+            } else {
+                passwordView.setError(getString(R.string.error_incorrect_password));
+                passwordView.requestFocus();
+            }
+        }
+    };
+
+    private ControllerCallback<String> registerCallback = new ControllerCallback<String>() {
+
+        @Override
+        public void onPostExecute(final Boolean success, final String username) {
+            showProgress(false);
+
+            if (success) {
+                Context context = getApplicationContext();
+                String text = getString(R.string.successful_registration, username);
+                int duration = Toast.LENGTH_SHORT;
+
+                Toast toast = Toast.makeText(context, text, duration);
+                toast.show();
             } else {
                 passwordView.setError(getString(R.string.error_incorrect_password));
                 passwordView.requestFocus();

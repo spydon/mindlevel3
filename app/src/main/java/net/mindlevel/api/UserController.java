@@ -1,6 +1,9 @@
 package net.mindlevel.api;
 
+import android.content.Context;
+
 import net.mindlevel.api.endpoint.UserEndpoint;
+import net.mindlevel.model.Login;
 import net.mindlevel.model.User;
 
 import retrofit2.Call;
@@ -11,8 +14,8 @@ public class UserController extends BackendService {
 
     private static UserEndpoint endpoint;
 
-    public UserController() {
-        super();
+    public UserController(Context context) {
+        super(context);
         endpoint = retrofit.create(UserEndpoint.class);
     }
 
@@ -39,4 +42,25 @@ public class UserController extends BackendService {
         });
     }
 
+    public void register(final Login user, final ControllerCallback<String> callback) {
+
+        Call<Void> register = endpoint.register(user);
+
+        register.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if(response.isSuccessful()) {
+                    callback.onPostExecute(true, user.username);
+                } else {
+                    callback.onPostExecute(false, null);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                callback.onPostExecute(false, null);
+                t.printStackTrace();
+            }
+        });
+    }
 }
