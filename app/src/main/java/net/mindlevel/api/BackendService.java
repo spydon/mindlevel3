@@ -1,5 +1,6 @@
 package net.mindlevel.api;
 
+import net.mindlevel.api.endpoint.UserEndpoint;
 import net.mindlevel.model.User;
 
 import retrofit2.Call;
@@ -8,12 +9,12 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class BackendService {
-    private Retrofit retrofit;
+public abstract class BackendService {
+    protected static Retrofit retrofit;
 
     public BackendService() {
         retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.42.37:8080/")
+                .baseUrl("http://192.168.20.106:8080/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
     }

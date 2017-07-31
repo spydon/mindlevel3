@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
+import net.mindlevel.api.UserController;
 import net.mindlevel.dummy.DummyContent;
 import net.mindlevel.model.User;
 
@@ -32,12 +33,10 @@ import net.mindlevel.model.User;
 public class UserFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
+    private UserController controller;
 
-    /**
-     * Mandatory empty constructor for the fragment manager to instantiate the
-     * fragment (e.g. upon screen orientation changes).
-     */
-    public UserFragment() {}
+    public UserFragment() {
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -49,22 +48,10 @@ public class UserFragment extends Fragment {
                              Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.content_user, container, false);
         final User user = DummyContent.USER;
-        ImageView imageView = (ImageView) view.findViewById(R.id.image);
-        TextView usernameView = (TextView) view.findViewById(R.id.username);
-        TextView scoreView = (TextView) view.findViewById(R.id.score);
-        TextView descriptionView = (TextView) view.findViewById(R.id.description);
-        ProgressBar progressBar = (ProgressBar) view.findViewById(R.id.progress);
 
-        Glide.with(imageView.getContext())
-                .load(user.imageUrl)
-                .listener(new ProgressBarController(progressBar))
-                .into(imageView);
+        this.controller = new UserController(view);
+        controller.getUser(user.username);
 
-        usernameView.setText(user.username);
-        scoreView.setText(String.valueOf(user.score));
-        descriptionView.setText(user.description);
-
-        // Inflate the layout for this fragment
         return view;
     }
 
