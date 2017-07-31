@@ -3,14 +3,9 @@ package net.mindlevel;
 // TODO: Change back to non-support lib
 import android.content.SharedPreferences;
 import android.support.v4.app.Fragment;
-//import android.app.Fragment;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,10 +15,9 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
+import net.mindlevel.api.ControllerCallback;
 import net.mindlevel.api.UserController;
-import net.mindlevel.dummy.DummyContent;
 import net.mindlevel.model.User;
-
 
 /**
  * A simple {@link Fragment} subclass.
@@ -36,22 +30,28 @@ public class UserFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
     private UserController controller;
 
-    public UserFragment() {}
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
+    private ImageView imageView;
+    private TextView usernameView;
+    private TextView scoreView;
+    private TextView descriptionView;
+    private ProgressBar progressBar;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.content_user, container, false);
-        this.controller = new UserController(view);
+
+        this.imageView = (ImageView) view.findViewById(R.id.image);
+        this.usernameView = (TextView) view.findViewById(R.id.username);
+        this.scoreView = (TextView) view.findViewById(R.id.score);
+        this.descriptionView = (TextView) view.findViewById(R.id.description);
+        this.progressBar = (ProgressBar) view.findViewById(R.id.progress);
+
+
         SharedPreferences sharedPreferences = getContext().getSharedPreferences("session", Context.MODE_PRIVATE);
         String username = sharedPreferences.getString("username", "");
+        this.controller = new UserController();
         controller.getUser(username);
-
         return view;
     }
 
@@ -93,4 +93,26 @@ public class UserFragment extends Fragment {
         // TODO: Update argument type and title
         void onFragmentInteraction(Uri uri);
     }
+
+
+    private ControllerCallback<User> callback = new ControllerCallback<User>() {
+
+        @Override
+        public void onPostExecute(final Boolean success, final User user) {
+            ProgressBarController loading = new ProgressBarController(progressBar);
+            if (success) {
+                Glide.with(imageView.getContext())
+                        .load(user.image)
+                        .listener(loading)
+                        .into(imageView);
+
+                usernameView.setText(user.username);
+                scoreView.setText(String.valueOf(user.score));
+                descriptionView.setText(user.description);
+            } else {
+                loading.hide();
+                descriptionView.setText("Something went wrong.");
+            }
+        }
+    };
 }

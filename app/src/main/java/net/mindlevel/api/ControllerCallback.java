@@ -1,5 +1,5 @@
 package net.mindlevel.api;
 
-public interface ControllerCallback {
-    void onPostExecute(Boolean isSuccess);
+public interface ControllerCallback<T> {
+    void onPostExecute(Boolean isSuccess, T response);
 }

@@ -150,10 +150,10 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    private ControllerCallback callback = new ControllerCallback() {
+    private ControllerCallback<String> callback = new ControllerCallback<String>() {
 
         @Override
-        public void onPostExecute(final Boolean success) {
+        public void onPostExecute(final Boolean success, final String response) {
             showProgress(false);
 
             if (success) {

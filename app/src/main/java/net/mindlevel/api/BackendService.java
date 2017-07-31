@@ -1,5 +1,8 @@
 package net.mindlevel.api;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import net.mindlevel.api.endpoint.UserEndpoint;
 import net.mindlevel.model.User;
 
@@ -13,9 +16,13 @@ public abstract class BackendService {
     protected static Retrofit retrofit;
 
     public BackendService() {
+        Gson gson = new GsonBuilder()
+                .setLenient()
+                .create();
+
         retrofit = new Retrofit.Builder()
                 .baseUrl("http://192.168.20.106:8080/")
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
     }
 

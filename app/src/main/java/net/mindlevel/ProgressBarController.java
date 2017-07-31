@@ -17,17 +17,21 @@ public class ProgressBarController implements RequestListener<Drawable> {
         this.progressBar = progressBar;
     }
 
+    public void hide() {
+        progressBar.setVisibility(View.GONE);
+    }
+
     @Override
     public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target,
                                 boolean isFirstResource) {
-        progressBar.setVisibility(View.GONE);
+        hide();
         return false;
     }
 
     @Override
     public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target,
                                    DataSource dataSource, boolean isFirstResource) {
-        progressBar.setVisibility(View.GONE);
+        hide();
         return false;
     }
 }
