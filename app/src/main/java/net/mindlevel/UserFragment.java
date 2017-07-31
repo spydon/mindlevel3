@@ -1,6 +1,7 @@
 package net.mindlevel;
 
 // TODO: Change back to non-support lib
+import android.content.SharedPreferences;
 import android.support.v4.app.Fragment;
 //import android.app.Fragment;
 import android.content.Context;
@@ -35,8 +36,7 @@ public class UserFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
     private UserController controller;
 
-    public UserFragment() {
-    }
+    public UserFragment() {}
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -47,10 +47,10 @@ public class UserFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.content_user, container, false);
-        final User user = DummyContent.USER;
-
         this.controller = new UserController(view);
-        controller.getUser(user.username);
+        SharedPreferences sharedPreferences = getContext().getSharedPreferences("session", Context.MODE_PRIVATE);
+        String username = sharedPreferences.getString("username", "");
+        controller.getUser(username);
 
         return view;
     }

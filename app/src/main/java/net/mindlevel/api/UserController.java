@@ -45,16 +45,18 @@ public class UserController extends BackendService {
         user.enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> userResponse) {
-                User user = userResponse.body();
+                if(userResponse.isSuccessful()) {
+                    User user = userResponse.body();
 
-                Glide.with(imageView.getContext())
-                        .load(user.imageUrl)
-                        .listener(new ProgressBarController(progressBar))
-                        .into(imageView);
+                    Glide.with(imageView.getContext())
+                            .load(user.imageUrl)
+                            .listener(new ProgressBarController(progressBar))
+                            .into(imageView);
 
-                usernameView.setText(user.username);
-                scoreView.setText(String.valueOf(user.score));
-                descriptionView.setText(user.description);
+                    usernameView.setText(user.username);
+                    scoreView.setText(String.valueOf(user.score));
+                    descriptionView.setText(user.description);
+                }
             }
 
             @Override
