@@ -6,6 +6,8 @@ import android.content.SharedPreferences;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import net.mindlevel.R;
+
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -20,7 +22,7 @@ public abstract class BackendService {
                 .create();
 
         retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.42.244:8080/")
+                .baseUrl(context.getString(R.string.backend_address))
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
     }

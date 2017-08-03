@@ -40,6 +40,7 @@ public class UserFragment extends Fragment {
     private TextView scoreView;
     private TextView descriptionView;
     private ProgressBar progressBar;
+    private Button signOutButton;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -60,10 +61,11 @@ public class UserFragment extends Fragment {
         this.loginController = new LoginController(context);
         controller.getUser(username, userCallback);
 
-        Button signOutButton = (Button) view.findViewById(R.id.sign_out_button);
+        signOutButton = (Button) view.findViewById(R.id.sign_out_button);
         signOutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                signOutButton.setActivated(false);
                 SharedPreferences sharedPreferences = context.getSharedPreferences("session", Context.MODE_PRIVATE);
                 String username = sharedPreferences.getString("username", "");
                 String sessionId = sharedPreferences.getString("sessionId", "");
@@ -74,13 +76,6 @@ public class UserFragment extends Fragment {
 
 
         return view;
-    }
-
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
     }
 
     @Override
@@ -116,10 +111,12 @@ public class UserFragment extends Fragment {
     }
 
     private void userVisibility(boolean visible) {
-        imageView.setVisibility(View.GONE);
-        usernameView.setVisibility(View.GONE);
-        scoreView.setVisibility(View.GONE);
-        descriptionView.setVisibility(View.GONE);
+        int visibility = visible ? View.VISIBLE : View.GONE;
+        imageView.setVisibility(visibility);
+        usernameView.setVisibility(visibility);
+        scoreView.setVisibility(visibility);
+        descriptionView.setVisibility(visibility);
+        signOutButton.setVisibility(visibility);
     }
 
     private ControllerCallback<User> userCallback = new ControllerCallback<User>() {
@@ -149,6 +146,7 @@ public class UserFragment extends Fragment {
         public void onPostExecute(final Boolean success, final Void nothing) {
             ProgressBarController loading = new ProgressBarController(progressBar);
             userVisibility(false);
+            signOutButton.setActivated(true);
             if (success) {
                 Intent loginIntent = new Intent(getContext(), LoginActivity.class);
                 startActivity(loginIntent);

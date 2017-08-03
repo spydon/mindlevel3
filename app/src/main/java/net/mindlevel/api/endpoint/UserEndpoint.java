@@ -4,6 +4,7 @@ import net.mindlevel.model.Login;
 import net.mindlevel.model.User;
 
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
@@ -16,6 +17,6 @@ public interface UserEndpoint {
     @PUT("user/{user}")
     Call<Boolean> updateUser(@Path("user") User user);
 
-    @POST("user/{user}")
-    Call<Void> register(@Path("user") Login user);
+    @POST("user")
+    Call<Void> register(@Body Login user);
 }
