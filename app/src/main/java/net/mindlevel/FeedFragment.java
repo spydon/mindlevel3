@@ -1,6 +1,8 @@
 package net.mindlevel;
 
 // TODO: Change back to non-support lib
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.support.v4.app.Fragment;
 //import android.app.Fragment;
 import android.content.Context;
@@ -12,8 +14,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import net.mindlevel.api.AccomplishmentController;
+import net.mindlevel.api.ControllerCallback;
 import net.mindlevel.dummy.DummyContent;
 import net.mindlevel.model.Accomplishment;
+
+import java.util.List;
 
 /**
  * A fragment representing a list of Items.
@@ -26,8 +32,11 @@ public class FeedFragment extends Fragment {
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
     // TODO: Customize parameters
-    private int mColumnCount = 2;
-    private OnListFragmentInteractionListener mListener;
+    private int columnCount = 2;
+    private OnListFragmentInteractionListener listener;
+    private AccomplishmentController controller;
+    private RecyclerView recyclerView;
+    private View view, progressView;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -49,30 +58,32 @@ public class FeedFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.controller = new AccomplishmentController(getContext());
 
         if (getArguments() != null) {
-            mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
+            columnCount = getArguments().getInt(ARG_COLUMN_COUNT);
         }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_feed_list, container, false);
+        view = inflater.inflate(R.layout.fragment_feed_list, container, false);
+        recyclerView = (RecyclerView) view.findViewById(R.id.list);
 
-        // Set the adapter
-        if (view instanceof RecyclerView) {
-            Context context = view.getContext();
-            RecyclerView recyclerView = (RecyclerView) view;
-            if (mColumnCount <= 1) {
-                recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            } else {
-                recyclerView.setLayoutManager(
-                        new StaggeredGridLayoutManager(mColumnCount, StaggeredGridLayoutManager.VERTICAL));
-            }
-            recyclerView.setAdapter(
-                    new FeedRecyclerViewAdapter(DummyContent.ACCOMPLISHMENTS, mListener));
+        progressView = view.findViewById(R.id.progress);
+        Context context = getContext();
+        showProgress(true);
+
+        if (columnCount <= 1) {
+            recyclerView.setLayoutManager(new LinearLayoutManager(context));
+        } else {
+            recyclerView.setLayoutManager(
+                    new StaggeredGridLayoutManager(columnCount, StaggeredGridLayoutManager.VERTICAL));
         }
+        recyclerView.setAdapter(new FeedRecyclerViewAdapter(DummyContent.ACCOMPLISHMENTS, listener));
+
+        controller.getLatest(getLatestCallback);
         return view;
     }
 
@@ -81,7 +92,7 @@ public class FeedFragment extends Fragment {
     public void onAttach(Context context) {
         super.onAttach(context);
         if (context instanceof OnListFragmentInteractionListener) {
-            mListener = (OnListFragmentInteractionListener) context;
+            listener = (OnListFragmentInteractionListener) context;
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnListFragmentInteractionListener");
@@ -91,7 +102,7 @@ public class FeedFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
-        mListener = null;
+        listener = null;
     }
 
     /**
@@ -103,4 +114,38 @@ public class FeedFragment extends Fragment {
     public interface OnListFragmentInteractionListener {
         void onListFragmentInteraction(Accomplishment accomplishment);
     }
+
+        private void showProgress(final boolean show) {
+        int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
+
+        recyclerView.setVisibility(show ? View.GONE : View.VISIBLE);
+        recyclerView.animate().setDuration(shortAnimTime).alpha(
+                show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                recyclerView.setVisibility(show ? View.GONE : View.VISIBLE);
+            }
+        });
+
+        progressView.setVisibility(show ? View.VISIBLE : View.GONE);
+        progressView.animate().setDuration(shortAnimTime).alpha(
+                show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                progressView.setVisibility(show ? View.VISIBLE : View.GONE);
+            }
+        });
+    }
+
+    private ControllerCallback<List<Accomplishment>> getLatestCallback = new ControllerCallback<List<Accomplishment>>() {
+        @Override
+        public void onPostExecute(Boolean isSuccess, List<Accomplishment> response) {
+            showProgress(false);
+            if(isSuccess) {
+                recyclerView.setAdapter(new FeedRecyclerViewAdapter(response, listener));
+            } else {
+                // TODO: Show error
+            }
+        }
+    };
 }

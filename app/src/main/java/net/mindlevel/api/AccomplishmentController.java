@@ -13,6 +13,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -67,5 +68,25 @@ public class AccomplishmentController extends BackendService {
                 }
             }
         }
+    }
+
+    public void getLatest(final ControllerCallback<List<Accomplishment>> callback) {
+        Call<List<Accomplishment>> call = endpoint.getLatest();
+        call.enqueue(new Callback<List<Accomplishment>>() {
+            @Override
+            public void onResponse(Call<List<Accomplishment>> call, Response<List<Accomplishment>> response) {
+                if(response.isSuccessful()) {
+                    callback.onPostExecute(true, response.body());
+                } else {
+                    callback.onPostExecute(false, null);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Accomplishment>> call, Throwable t) {
+                callback.onPostExecute(false, null);
+                t.printStackTrace();
+            }
+        });
     }
 }
