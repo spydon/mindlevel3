@@ -21,6 +21,12 @@
 
     </android.support.design.widget.AppBarLayout>
 
+    <ProgressBar
+        android:id="@+id/progress"
+        android:visibility="visible"
+        android:layout_width="match_parent"
+        android:layout_height="100dp" />
+
     <include layout="@layout/content_mission"/>
 
     <android.support.design.widget.FloatingActionButton

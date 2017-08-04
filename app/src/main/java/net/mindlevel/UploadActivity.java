@@ -14,6 +14,7 @@ import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,7 +33,9 @@ public class UploadActivity extends AppCompatActivity {
 
     private AccomplishmentController controller;
     private TextView titleView, descriptionView;
+    private Button uploadButton;
     private int missionId = -1;
+    private Uri path = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,7 +81,18 @@ public class UploadActivity extends AppCompatActivity {
         titleView = (TextView) findViewById(R.id.title);
         descriptionView = (TextView) findViewById(R.id.description);
         titleView.setText(mission.title);
-        //descriptionView.setText(mission.description);
+        uploadButton = (Button) findViewById(R.id.upload_button);
+        uploadButton.setActivated(false);
+        uploadButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                uploadButton.setActivated(false);
+                Accomplishment accomplishment = new Accomplishment(0, titleView.getText().toString(),
+                        descriptionView.getText().toString(), "", missionId, 0, 0);
+                controller.add(accomplishment, path, uploadCallback);
+            }
+        });
+
     }
 
     static final int REQUEST_IMAGE_CAPTURE = 1;
@@ -146,7 +160,6 @@ public class UploadActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Uri path = null;
         if(resultCode == RESULT_OK) {
             if (requestCode == REQUEST_IMAGE_CAPTURE) {
                 path = Uri.fromFile(new File(mCurrentPhotoPath));
@@ -171,9 +184,7 @@ public class UploadActivity extends AppCompatActivity {
                     bitmap = Bitmap.createScaledBitmap(bitmap, newWidth, (int)maxLength, true);
                 }
                 imageView.setImageBitmap(bitmap);
-                Accomplishment accomplishment = new Accomplishment(0, titleView.getText().toString(),
-                        descriptionView.getText().toString(), "", missionId, 0, 0);
-                controller.add(accomplishment, path, uploadCallback);
+                uploadButton.setActivated(true);
             } catch (IOException ioe) {
                 // TODO: Handle.
             }

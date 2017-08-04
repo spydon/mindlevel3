@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/scroll"
+    android:id="@+id/mission_content"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
@@ -17,7 +17,7 @@
         android:orientation="vertical">
 
         <ProgressBar
-            android:id="@+id/progress"
+            android:id="@+id/image_progress"
             android:visibility="visible"
             android:layout_width="match_parent"
             android:layout_height="100dp" />
@@ -31,6 +31,7 @@
 
         <TextView
             android:id="@+id/title"
+            android:textStyle="bold"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dip" />

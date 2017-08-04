@@ -32,7 +32,7 @@ public class AccomplishmentActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent missionIntent = new Intent(outerContext, MissionActivity.class);
-                missionIntent.putExtra("mission", accomplishment.missionId);
+                missionIntent.putExtra("missionId", accomplishment.missionId);
                 startActivity(missionIntent);
             }
         });
