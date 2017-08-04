@@ -21,12 +21,12 @@ import java.util.List;
  */
 public class MissionsRecyclerViewAdapter extends RecyclerView.Adapter<MissionsRecyclerViewAdapter.ViewHolder> {
 
-    private final List<Mission> mValues;
-    private final OnListFragmentInteractionListener mListener;
+    private final List<Mission> missions;
+    private final OnListFragmentInteractionListener listener;
 
-    public MissionsRecyclerViewAdapter(List<Mission> items, OnListFragmentInteractionListener listener) {
-        mValues = items;
-        mListener = listener;
+    public MissionsRecyclerViewAdapter(List<Mission> missions, OnListFragmentInteractionListener listener) {
+        this.missions = missions;
+        this.listener = listener;
     }
 
     @Override
@@ -38,23 +38,23 @@ public class MissionsRecyclerViewAdapter extends RecyclerView.Adapter<MissionsRe
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        holder.mItem = mValues.get(position);
-        holder.mTitleView.setText(mValues.get(position).title);
-        holder.mDescriptionView.setText(mValues.get(position).description);
+        holder.item = missions.get(position);
+        holder.titleView.setText(missions.get(position).title);
+        holder.descriptionView.setText(missions.get(position).description);
 
-        ImageView imageView = holder.mImageView;
+        ImageView imageView = holder.imageView;
         Glide.with(imageView.getContext())
-                .load(holder.mItem.image)
-                .listener(new ProgressBarController(holder.mProgressBar))
+                .load(holder.item.image)
+                .listener(new ProgressBarController(holder.progressBar))
                 .into(imageView);
 
-        holder.mView.setOnClickListener(new View.OnClickListener() {
+        holder.view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mListener != null) {
+                if (listener != null) {
                     // Notify the active callbacks interface (the activity, if the
                     // fragment is attached to one) that an item has been selected.
-                    mListener.onListFragmentInteraction(holder.mItem);
+                    listener.onListFragmentInteraction(holder.item);
                 }
             }
         });
@@ -62,29 +62,29 @@ public class MissionsRecyclerViewAdapter extends RecyclerView.Adapter<MissionsRe
 
     @Override
     public int getItemCount() {
-        return mValues.size();
+        return missions.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        public Mission mItem;
-        public final View mView;
-        public final ImageView mImageView;
-        public final TextView mTitleView;
-        public final TextView mDescriptionView;
-        public final ProgressBar mProgressBar;
+        public Mission item;
+        public final View view;
+        public final ImageView imageView;
+        public final TextView titleView;
+        public final TextView descriptionView;
+        public final ProgressBar progressBar;
 
         public ViewHolder(View view) {
             super(view);
-            mView = view;
-            mImageView = (ImageView) view.findViewById(R.id.image);
-            mTitleView = (TextView) view.findViewById(R.id.title);
-            mDescriptionView = (TextView) view.findViewById(R.id.description);
-            mProgressBar = (ProgressBar) view.findViewById(R.id.progress);
+            this.view = view;
+            imageView = (ImageView) view.findViewById(R.id.image);
+            titleView = (TextView) view.findViewById(R.id.title);
+            descriptionView = (TextView) view.findViewById(R.id.description);
+            progressBar = (ProgressBar) view.findViewById(R.id.image_progress);
         }
 
         @Override
         public String toString() {
-            return super.toString() + " '" + mTitleView.getText() + "'";
+            return super.toString() + " '" + titleView.getText() + "'";
         }
     }
 }

@@ -16,7 +16,7 @@ import retrofit2.http.Path;
 
 public interface MissionEndpoint {
     @GET("mission")
-    Call<List<Mission>> get();
+    Call<List<Mission>> getAll();
 
     @POST("mission")
     Call<Void> add(@Body Mission mission);
