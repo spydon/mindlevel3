@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -54,8 +53,6 @@ public class UploadActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 dispathGalleryIntent();
-                Snackbar.make(view, mission.title, Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
             }
         });
 
@@ -64,8 +61,6 @@ public class UploadActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 dispatchTakePictureIntent();
-                Snackbar.make(view, mission.description, Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
             }
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -74,9 +69,6 @@ public class UploadActivity extends AppCompatActivity {
             // this device does not have a camera
             takePicture.setVisibility(View.INVISIBLE);
         }
-
-        ImageView imageView = (ImageView) findViewById(R.id.image);
-        //Glide.with(this).load(mission.imageUrl).into(imageView);
 
         titleView = (TextView) findViewById(R.id.title);
         descriptionView = (TextView) findViewById(R.id.description);
@@ -97,13 +89,6 @@ public class UploadActivity extends AppCompatActivity {
 
     static final int REQUEST_IMAGE_CAPTURE = 1;
     static final int PICK_IMAGE = 2;
-
-    //private void dispatchTakePictureIntent() {
-    //    Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-    //    if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-    //        startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
-    //    }
-    //}
 
     private void dispatchTakePictureIntent() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -128,7 +113,7 @@ public class UploadActivity extends AppCompatActivity {
         }
     }
 
-    private String mCurrentPhotoPath;
+    private String currentPhotoPath;
 
     private File createImageFile() throws IOException {
         // Create an image file name
@@ -141,7 +126,7 @@ public class UploadActivity extends AppCompatActivity {
         );
 
         // Save a file: path for use with ACTION_VIEW intents
-        mCurrentPhotoPath = image.getAbsolutePath();
+        currentPhotoPath = image.getAbsolutePath();
         return image;
     }
 
@@ -162,7 +147,7 @@ public class UploadActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(resultCode == RESULT_OK) {
             if (requestCode == REQUEST_IMAGE_CAPTURE) {
-                path = Uri.fromFile(new File(mCurrentPhotoPath));
+                path = Uri.fromFile(new File(currentPhotoPath));
             } else if (requestCode == PICK_IMAGE) {
                 if (data == null) {
                     // TODO: Display an error
@@ -176,7 +161,7 @@ public class UploadActivity extends AppCompatActivity {
                 ImageView imageView = (ImageView) findViewById(R.id.image);
                 int height = bitmap.getHeight();
                 int width = bitmap.getWidth();
-                if (width > maxLength && width > height) { // || bitmap.getWidth() > 2048) {
+                if (width > maxLength && width > height) {
                     int newHeight = (int)(height * (maxLength / width));
                     bitmap = Bitmap.createScaledBitmap(bitmap, (int)maxLength, newHeight, true);
                 } else if (height > maxLength && height > width) {
@@ -197,10 +182,8 @@ public class UploadActivity extends AppCompatActivity {
         public void onPostExecute(final Boolean success, final Void nothing) {
             if (success) {
                 Context context = getApplicationContext();
-                int duration = Toast.LENGTH_SHORT;
-
-                Toast toast = Toast.makeText(context, "Successfully uploaded accomplishment", duration);
-                toast.show();
+                Toast.makeText(context, R.string.action_upload, Toast.LENGTH_SHORT).show();
+                finish();
             } else {
                 // TODO: Handle error
             }
