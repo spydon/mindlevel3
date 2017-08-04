@@ -5,7 +5,6 @@ import net.mindlevel.model.Accomplishment;
 import java.util.List;
 
 import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -15,22 +14,18 @@ import retrofit2.http.Part;
 import retrofit2.http.Path;
 
 public interface AccomplishmentEndpoint {
+    @Multipart
     @POST("accomplishment")
-    Call<Void> add(@Body Accomplishment accomplishment);
+    Call<Void> add(
+            @Part("accomplishment") Accomplishment accomplishment,
+            @Part MultipartBody.Part image
+    );
 
     @GET("accomplishment/{id}")
     Call<Accomplishment> get(@Path("id") int id);
 
     @GET("accomplishment/{range}")
     Call<List<Accomplishment>> get(@Path("range") String range);
-
-    @Multipart
-    @POST("accomplishment/{id}/image")
-    Call<Void> addImage(
-            @Path("id") int id,
-            @Part("description") RequestBody description,
-            @Part MultipartBody.Part file
-    );
 
     @GET("accomplishment/{id}/contributor")
     Call<List<String>> getContributors(@Path("id") int id);

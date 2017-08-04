@@ -32,7 +32,7 @@ public class AccomplishmentActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent missionIntent = new Intent(outerContext, MissionActivity.class);
-                missionIntent.putExtra("mission", accomplishment.mission);
+                missionIntent.putExtra("mission", accomplishment.missionId);
                 startActivity(missionIntent);
             }
         });
@@ -41,7 +41,7 @@ public class AccomplishmentActivity extends AppCompatActivity {
         ImageView imageView = (ImageView) findViewById(R.id.image);
         ProgressBar progressBar = (ProgressBar) findViewById(R.id.progress);
         Glide.with(this)
-                .load(accomplishment.imageUrl)
+                .load(accomplishment.image)
                 .listener(new ProgressBarController(progressBar))
                 .into(imageView);
 

@@ -4,14 +4,23 @@ import java.io.Serializable;
 
 public class Accomplishment implements Serializable{
 
-    public final String id, title, description, imageUrl;
-    public final Mission mission;
+    public final String title, description, image;
+    public final int id, missionId, score;
+    public final long created;
 
-    public Accomplishment(String id, String title, String description, String imageUrl, Mission mission) {
+    public Accomplishment(int id,
+                          String title,
+                          String description,
+                          String image,
+                          int missionId,
+                          int score,
+                          long created) {
         this.id = id;
         this.title = title;
         this.description = description;
-        this.imageUrl = imageUrl;
-        this.mission = mission;
+        this.image = image;
+        this.missionId = missionId;
+        this.score = score;
+        this.created = created;
     }
 }

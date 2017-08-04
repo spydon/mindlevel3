@@ -1,5 +1,6 @@
 package net.mindlevel;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -15,7 +16,11 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import net.mindlevel.api.AccomplishmentController;
+import net.mindlevel.api.ControllerCallback;
+import net.mindlevel.model.Accomplishment;
 import net.mindlevel.model.Mission;
 
 import java.io.File;
@@ -25,12 +30,18 @@ import java.util.Date;
 
 public class UploadActivity extends AppCompatActivity {
 
+    private AccomplishmentController controller;
+    private TextView titleView, descriptionView;
+    private int missionId = -1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upload);
+        controller = new AccomplishmentController(getApplicationContext());
 
         final Mission mission = (Mission) getIntent().getSerializableExtra("mission");
+        missionId = mission.id;
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(mission.title);
         setSupportActionBar(toolbar);
@@ -61,11 +72,11 @@ public class UploadActivity extends AppCompatActivity {
             takePicture.setVisibility(View.INVISIBLE);
         }
 
-        //ImageView imageView = (ImageView) findViewById(R.id.mission_image);
+        ImageView imageView = (ImageView) findViewById(R.id.image);
         //Glide.with(this).load(mission.imageUrl).into(imageView);
 
-        TextView titleView = (TextView) findViewById(R.id.title);
-        //TextView descriptionView = (TextView) findViewById(R.id.mission_description);
+        titleView = (TextView) findViewById(R.id.title);
+        descriptionView = (TextView) findViewById(R.id.description);
         titleView.setText(mission.title);
         //descriptionView.setText(mission.description);
     }
@@ -133,14 +144,12 @@ public class UploadActivity extends AppCompatActivity {
         startActivityForResult(chooserIntent, PICK_IMAGE);
     }
 
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         Uri path = null;
         if(resultCode == RESULT_OK) {
             if (requestCode == REQUEST_IMAGE_CAPTURE) {
                 path = Uri.fromFile(new File(mCurrentPhotoPath));
-
             } else if (requestCode == PICK_IMAGE) {
                 if (data == null) {
                     // TODO: Display an error
@@ -162,9 +171,28 @@ public class UploadActivity extends AppCompatActivity {
                     bitmap = Bitmap.createScaledBitmap(bitmap, newWidth, (int)maxLength, true);
                 }
                 imageView.setImageBitmap(bitmap);
+                Accomplishment accomplishment = new Accomplishment(0, titleView.getText().toString(),
+                        descriptionView.getText().toString(), "", missionId, 0, 0);
+                controller.add(accomplishment, path, uploadCallback);
             } catch (IOException ioe) {
                 // TODO: Handle.
             }
         }
     }
+
+    private ControllerCallback<Void> uploadCallback = new ControllerCallback<Void>() {
+
+        @Override
+        public void onPostExecute(final Boolean success, final Void nothing) {
+            if (success) {
+                Context context = getApplicationContext();
+                int duration = Toast.LENGTH_SHORT;
+
+                Toast toast = Toast.makeText(context, "Successfully uploaded accomplishment", duration);
+                toast.show();
+            } else {
+                // TODO: Handle error
+            }
+        }
+    };
 }

@@ -43,7 +43,7 @@ public class FeedRecyclerViewAdapter extends RecyclerView.Adapter<FeedRecyclerVi
         holder.mTitleView.setText(mValues.get(position).title);
         ImageView imageView = holder.mImageView;
         Glide.with(imageView.getContext())
-                .load(holder.mItem.imageUrl)
+                .load(holder.mItem.image)
                 .listener(new ProgressBarController(holder.mProgressBar))
                 .into(imageView);
 

@@ -45,16 +45,17 @@ public class DummyContent {
 
     private static void createDummyItem(int position) {
         Mission mission = new Mission(
-                String.valueOf(position),
+                position,
                 "Mission " + position,
                 makeDetails(position),
-                URLS.get(position % URLS.size()));
+                URLS.get(position % URLS.size()),
+                0, "spydon", true);
         Accomplishment accomplishment = new Accomplishment(
-                String.valueOf(position),
+                position,
                 "Accomplishment with a " + position,
                 makeDetails(position),
                 URLS.get(position % URLS.size()),
-                mission);
+                mission.id, 0, 0L);
         MISSIONS.add(mission);
         ACCOMPLISHMENTS.add(accomplishment);
     }

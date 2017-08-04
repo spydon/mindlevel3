@@ -44,7 +44,7 @@ public class MissionActivity extends AppCompatActivity {
 
         ImageView imageView = (ImageView) findViewById(R.id.image);
         ProgressBar progressBar = (ProgressBar) findViewById(R.id.progress);
-        Glide.with(this).load(mission.imageUrl)
+        Glide.with(this).load(mission.image)
                 .listener(new ProgressBarController(progressBar))
                 .into(imageView);
 

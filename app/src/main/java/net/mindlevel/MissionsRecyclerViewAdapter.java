@@ -44,7 +44,7 @@ public class MissionsRecyclerViewAdapter extends RecyclerView.Adapter<MissionsRe
 
         ImageView imageView = holder.mImageView;
         Glide.with(imageView.getContext())
-                .load(holder.mItem.imageUrl)
+                .load(holder.mItem.image)
                 .listener(new ProgressBarController(holder.mProgressBar))
                 .into(imageView);
 
