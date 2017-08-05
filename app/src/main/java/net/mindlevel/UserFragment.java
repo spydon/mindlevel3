@@ -31,7 +31,7 @@ import net.mindlevel.model.User;
  */
 public class UserFragment extends Fragment {
 
-    private OnFragmentInteractionListener mListener;
+    private OnFragmentInteractionListener listener;
     private UserController controller;
     private LoginController loginController;
 
@@ -40,7 +40,7 @@ public class UserFragment extends Fragment {
     private TextView scoreView;
     private TextView descriptionView;
     private ProgressBar progressBar;
-    private Button signOutButton;
+    private Button editButton, signOutButton;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -60,6 +60,15 @@ public class UserFragment extends Fragment {
         this.controller = new UserController(context);
         this.loginController = new LoginController(context);
         controller.getUser(username, userCallback);
+
+        editButton = (Button) view.findViewById(R.id.edit_button);
+        editButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent editIntent = new Intent(context, EditUserActivity.class);
+                startActivity(editIntent);
+            }
+        });
 
         signOutButton = (Button) view.findViewById(R.id.sign_out_button);
         signOutButton.setOnClickListener(new View.OnClickListener() {
@@ -82,7 +91,7 @@ public class UserFragment extends Fragment {
     public void onAttach(Context context) {
         super.onAttach(context);
         if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
+            listener = (OnFragmentInteractionListener) context;
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
@@ -92,7 +101,7 @@ public class UserFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
-        mListener = null;
+        listener = null;
     }
 
     /**

@@ -5,24 +5,21 @@ import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
-import android.text.TextUtils;
-import android.view.KeyEvent;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import net.mindlevel.api.ControllerCallback;
-import net.mindlevel.api.LoginController;
 import net.mindlevel.api.UserController;
-import net.mindlevel.model.Login;
 import net.mindlevel.model.User;
 
 import java.io.File;
@@ -49,13 +46,40 @@ public class EditUserActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
-        View innerView = findViewById(R.id.inner_login_form);
+        setContentView(R.layout.activity_edit_user);
+        View innerView = findViewById(R.id.inner_edit_form);
         userController = new UserController(innerView.getContext());
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle(R.string.title_edit_profile);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         utils = new ImageUtil(this);
+        FloatingActionButton choosePicture = (FloatingActionButton) findViewById(R.id.choose_picture);
+        choosePicture.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                utils.dispathGalleryIntent();
+            }
+        });
+
+        FloatingActionButton takePicture = (FloatingActionButton) findViewById(R.id.take_picture);
+        takePicture.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                utils.dispatchTakePictureIntent();
+            }
+        });
+
+        if (!getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA)){
+            // this device does not have a camera
+            takePicture.setVisibility(View.INVISIBLE);
+        }
 
         passwordView1 = (EditText) findViewById(R.id.password1);
         passwordView2 = (EditText) findViewById(R.id.password2);
+        passwordView1.requestFocus();
 
         descriptionView = (EditText) findViewById(R.id.description);
 
@@ -63,7 +87,7 @@ public class EditUserActivity extends AppCompatActivity {
         applyButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                attemptLogin();
+                attemptEdit();
             }
         });
 
@@ -76,7 +100,7 @@ public class EditUserActivity extends AppCompatActivity {
      * If there are form errors (invalid password, missing fields, etc.), the
      * errors are presented and no actual edit attempt is made.
      */
-    private void attemptLogin() {
+    private void attemptEdit() {
         // Reset errors.
         passwordView1.setError(null);
         passwordView2.setError(null);

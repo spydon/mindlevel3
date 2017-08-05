@@ -43,6 +43,15 @@
                 android:value="net.mindlevel.MainActivity"/>
         </activity>
         <activity
+            android:name=".EditUserActivity"
+            android:label="@string/title_activity_edit_user"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="net.mindlevel.MainActivity"/>
+        </activity>
+        <activity
             android:name=".UploadActivity"
             android:label="@string/title_activity_upload"
             android:parentActivityName=".MainActivity"

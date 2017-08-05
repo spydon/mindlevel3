@@ -21,6 +21,7 @@
 
     <ScrollView
         android:id="@+id/edit_form"
+        android:layout_marginTop="@dimen/app_bar_height"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -33,9 +34,10 @@
             <ImageView
                 android:id="@+id/image"
                 android:adjustViewBounds="true"
+                android:layout_marginTop="@dimen/activity_horizontal_margin"
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
-                android:layout_marginBottom="2dip"/>
+                android:layout_marginBottom="6dip"/>
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
@@ -45,7 +47,7 @@
                     android:id="@+id/password1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/prompt_password"
+                    android:hint="@string/new_password"
                     android:inputType="textPassword"
                     android:maxLines="1"/>
 
@@ -59,7 +61,7 @@
                     android:id="@+id/password2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/prompt_password"
+                    android:hint="@string/repeat_password"
                     android:inputType="textPassword"
                     android:maxLines="1"/>
 
@@ -80,8 +82,8 @@
                 style="?android:textAppearanceSmall"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="@string/action_sign_in"
+                android:layout_marginTop="6dp"
+                android:text="@string/action_edit"
                 android:textStyle="bold"/>
 
         </LinearLayout>
