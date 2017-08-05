@@ -24,8 +24,8 @@
     <ProgressBar
         android:id="@+id/progress"
         android:visibility="visible"
-        android:background="@android:color/white"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_gravity="center"
+        android:layout_width="@dimen/progress_large"
+        android:layout_height="@dimen/progress_large" />
 
 </LinearLayout>

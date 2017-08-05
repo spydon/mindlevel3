@@ -38,22 +38,21 @@ public class FeedRecyclerViewAdapter extends RecyclerView.Adapter<FeedRecyclerVi
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        holder.mItem = mValues.get(position);
-        //holder.mIdView.setText(mValues.get(position).id);
-        holder.mTitleView.setText(mValues.get(position).title);
-        ImageView imageView = holder.mImageView;
+        holder.item = mValues.get(position);
+        holder.titleView.setText(mValues.get(position).title);
+        ImageView imageView = holder.imageView;
         Glide.with(imageView.getContext())
-                .load(holder.mItem.image)
-                .listener(new ProgressBarController(holder.mProgressBar))
+                .load(holder.item.image)
+                .listener(new ProgressBarController(holder.progressBar))
                 .into(imageView);
 
-        holder.mView.setOnClickListener(new View.OnClickListener() {
+        holder.view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (mListener != null) {
                     // Notify the active callbacks interface (the activity, if the
                     // fragment is attached to one) that an item has been selected.
-                    mListener.onListFragmentInteraction(holder.mItem);
+                    mListener.onListFragmentInteraction(holder.item);
                 }
             }
         });
@@ -65,25 +64,23 @@ public class FeedRecyclerViewAdapter extends RecyclerView.Adapter<FeedRecyclerVi
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        public final View mView;
-        //public final TextView mIdView;
-        public final TextView mTitleView;
-        public final ImageView mImageView;
-        public final ProgressBar mProgressBar;
-        public Accomplishment mItem;
+        public final View view;
+        public final TextView titleView;
+        public final ImageView imageView;
+        public final ProgressBar progressBar;
+        public Accomplishment item;
 
         public ViewHolder(View view) {
             super(view);
-            mView = view;
-            //mIdView = (TextView) view.findViewById(R.id.id);
-            mTitleView = (TextView) view.findViewById(R.id.title);
-            mImageView = (ImageView) view.findViewById(R.id.image);
-            mProgressBar = (ProgressBar) view.findViewById(R.id.progress);
+            this.view = view;
+            titleView = (TextView) view.findViewById(R.id.title);
+            imageView = (ImageView) view.findViewById(R.id.image);
+            progressBar = (ProgressBar) view.findViewById(R.id.progress);
         }
 
         @Override
         public String toString() {
-            return super.toString() + " '" + mTitleView.getText() + "'";
+            return super.toString() + " '" + titleView.getText() + "'";
         }
     }
 }
