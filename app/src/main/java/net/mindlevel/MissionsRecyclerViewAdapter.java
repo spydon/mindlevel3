@@ -27,6 +27,7 @@ public class MissionsRecyclerViewAdapter extends RecyclerView.Adapter<MissionsRe
     public MissionsRecyclerViewAdapter(List<Mission> missions, OnListFragmentInteractionListener listener) {
         this.missions = missions;
         this.listener = listener;
+
     }
 
     @Override
@@ -43,8 +44,9 @@ public class MissionsRecyclerViewAdapter extends RecyclerView.Adapter<MissionsRe
         holder.descriptionView.setText(missions.get(position).description);
 
         ImageView imageView = holder.imageView;
+        String url = ImageUtil.getUrl(holder.item.image);
         Glide.with(imageView.getContext())
-                .load(holder.item.image)
+                .load(url)
                 .listener(new ProgressBarController(holder.progressBar))
                 .into(imageView);
 

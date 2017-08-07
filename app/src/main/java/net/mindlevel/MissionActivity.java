@@ -101,7 +101,9 @@ public class MissionActivity extends AppCompatActivity {
                 });
 
                 ImageView imageView = (ImageView) findViewById(R.id.image);
-                Glide.with(outerContext).load(mission.image)
+                String url = ImageUtil.getUrl(mission.image);
+                Glide.with(outerContext)
+                        .load(url)
                         .listener(new ProgressBarController(imageProgressView))
                         .into(imageView);
             } else {

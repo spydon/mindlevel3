@@ -134,8 +134,9 @@ public class UserFragment extends Fragment {
         public void onPostExecute(final Boolean success, final User user) {
             ProgressBarController loading = new ProgressBarController(progressBar);
             if (success) {
+                String url = ImageUtil.getUrl(user.image);
                 Glide.with(imageView.getContext())
-                        .load(user.image)
+                        .load(url)
                         .listener(loading)
                         .into(imageView);
 

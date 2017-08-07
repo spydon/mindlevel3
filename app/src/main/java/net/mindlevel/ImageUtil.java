@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
@@ -37,9 +38,18 @@ public class ImageUtil {
     static final int PICK_IMAGE = 2;
 
     private final Activity activity;
+    private static String bucketAddress = "";
 
     public ImageUtil(Activity activity) {
         this.activity = activity;
+    }
+
+    public static String getUrl(String filename) {
+        return bucketAddress + filename;
+    }
+
+    public static void setBucketAddress(String bucketAddress) {
+        ImageUtil.bucketAddress = bucketAddress;
     }
 
     public void dispatchTakePictureIntent() {

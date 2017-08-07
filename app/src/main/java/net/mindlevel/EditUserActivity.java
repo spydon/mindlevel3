@@ -146,7 +146,7 @@ public class EditUserActivity extends AppCompatActivity {
     }
 
     private boolean isPasswordValid(String password) {
-        return password.length() > 4;
+        return password.length() > 4 || password.isEmpty();
     }
 
     private void showProgress(final boolean show) {

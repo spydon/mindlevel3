@@ -105,6 +105,7 @@ public class MainActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ImageUtil.setBucketAddress(getString(R.string.bucket_address));
 
         fragments.put(R.id.navigation_feed, feedFragment);
         fragments.put(R.id.navigation_missions, missionsFragment);
