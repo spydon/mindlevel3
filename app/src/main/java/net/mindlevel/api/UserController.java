@@ -2,6 +2,7 @@ package net.mindlevel.api;
 
 import android.content.Context;
 import android.net.Uri;
+import android.text.TextUtils;
 
 import net.mindlevel.api.endpoint.UserEndpoint;
 import net.mindlevel.model.Login;
@@ -53,12 +54,15 @@ public class UserController extends BackendService {
 
     public void update(final User user, final Uri path, final ControllerCallback<Void> callback) {
         InputStream is = null;
+        MultipartBody.Part image = null;
         try {
-            is = context.getContentResolver().openInputStream(path);
-            byte[] bytes = IOUtils.toByteArray(is);
+            if(path != null && !TextUtils.isEmpty(path.getPath())) {
+                is = context.getContentResolver().openInputStream(path);
+                byte[] bytes = IOUtils.toByteArray(is);
 
-            MultipartBody.Part image = MultipartBody.Part.createFormData("image", null, RequestBody.create
-                    (MediaType.parse("image/*"), bytes));
+                image = MultipartBody.Part.createFormData("image", null, RequestBody.create
+                        (MediaType.parse("image/*"), bytes));
+            }
             Call<Void> call = endpoint.update(user, image);
             call.enqueue(new Callback<Void>() {
                 @Override

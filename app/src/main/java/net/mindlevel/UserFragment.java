@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +23,8 @@ import net.mindlevel.api.LoginController;
 import net.mindlevel.api.UserController;
 import net.mindlevel.model.Login;
 import net.mindlevel.model.User;
+
+import static android.app.Activity.RESULT_OK;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -41,6 +44,9 @@ public class UserFragment extends Fragment {
     private TextView descriptionView;
     private ProgressBar progressBar;
     private Button editButton, signOutButton;
+    private Context context;
+
+    private final static int UPDATE_USER = 1;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -52,21 +58,19 @@ public class UserFragment extends Fragment {
         this.scoreView = (TextView) view.findViewById(R.id.score);
         this.descriptionView = (TextView) view.findViewById(R.id.description);
         this.progressBar = (ProgressBar) view.findViewById(R.id.progress);
+        this.context = getContext();
 
-        final Context context = getContext();
-
-        SharedPreferences sharedPreferences = context.getSharedPreferences("session", Context.MODE_PRIVATE);
-        String username = sharedPreferences.getString("username", "");
         this.controller = new UserController(context);
         this.loginController = new LoginController(context);
-        controller.getUser(username, userCallback);
+
+        populateUserFragment();
 
         editButton = (Button) view.findViewById(R.id.edit_button);
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent editIntent = new Intent(context, EditUserActivity.class);
-                startActivity(editIntent);
+                startActivityForResult(editIntent, UPDATE_USER);
             }
         });
 
@@ -83,8 +87,13 @@ public class UserFragment extends Fragment {
             }
         });
 
-
         return view;
+    }
+
+    private void populateUserFragment() {
+        SharedPreferences sharedPreferences = context.getSharedPreferences("session", Context.MODE_PRIVATE);
+        String username = sharedPreferences.getString("username", "");
+        controller.getUser(username, userCallback);
     }
 
     @Override
@@ -133,12 +142,16 @@ public class UserFragment extends Fragment {
         @Override
         public void onPostExecute(final Boolean success, final User user) {
             ProgressBarController loading = new ProgressBarController(progressBar);
-            if (success) {
-                String url = ImageUtil.getUrl(user.image);
-                Glide.with(imageView.getContext())
-                        .load(url)
-                        .listener(loading)
-                        .into(imageView);
+            if(success) {
+                if(!TextUtils.isEmpty(user.image)) {
+                    String url = ImageUtil.getUrl(user.image);
+                    Glide.with(imageView.getContext())
+                            .load(url)
+                            .listener(loading)
+                            .into(imageView);
+                } else {
+                    loading.hide();
+                }
 
                 usernameView.setText(user.username);
                 scoreView.setText(String.valueOf(user.score));
@@ -167,4 +180,11 @@ public class UserFragment extends Fragment {
             }
         }
     };
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(resultCode == RESULT_OK && requestCode == UPDATE_USER) {
+            populateUserFragment();
+        }
+    }
 }

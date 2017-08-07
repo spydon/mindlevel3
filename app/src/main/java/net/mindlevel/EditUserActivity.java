@@ -201,6 +201,9 @@ public class EditUserActivity extends AppCompatActivity {
 
                 Toast toast = Toast.makeText(context, text, duration);
                 toast.show();
+                //Intent returnIntent = new Intent();
+                //returnIntent.putExtra("result",result);
+                setResult(RESULT_OK);
                 finish();
             } else {
                 passwordView1.setError(getString(R.string.error_incorrect_password));
