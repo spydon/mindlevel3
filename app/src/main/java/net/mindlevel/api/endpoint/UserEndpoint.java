@@ -7,6 +7,7 @@ import okhttp3.MultipartBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Part;
@@ -16,6 +17,7 @@ public interface UserEndpoint {
     @GET("user/{user}")
     Call<User> get(@Path("user") String user);
 
+    @Multipart
     @PUT("user/{user}")
     Call<Void> update(
             @Part("user") User user,

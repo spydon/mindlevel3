@@ -48,7 +48,7 @@ public class EditUserActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_user);
         View innerView = findViewById(R.id.inner_edit_form);
-        userController = new UserController(innerView.getContext());
+        userController = new UserController(getApplicationContext());
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.title_edit_profile);
@@ -119,9 +119,9 @@ public class EditUserActivity extends AppCompatActivity {
             cancel = true;
         }
 
-        if (isPasswordValid(password1)) {
+        if (!isPasswordValid(password1)) {
             passwordView1.setError(getString(R.string.error_invalid_password));
-            focusView = passwordView2;
+            focusView = passwordView1;
             cancel = true;
         }
 
@@ -173,7 +173,6 @@ public class EditUserActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Uri path = null;
         if(resultCode == RESULT_OK) {
             if (requestCode == REQUEST_IMAGE_CAPTURE) {
                 path = Uri.fromFile(new File(utils.getPhotoPath()));

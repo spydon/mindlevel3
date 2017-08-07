@@ -51,10 +51,10 @@ public class UserController extends BackendService {
         });
     }
 
-    public void update(final User user, final Uri uri, final ControllerCallback<Void> callback) {
+    public void update(final User user, final Uri path, final ControllerCallback<Void> callback) {
         InputStream is = null;
         try {
-            is = context.getContentResolver().openInputStream(uri);
+            is = context.getContentResolver().openInputStream(path);
             byte[] bytes = IOUtils.toByteArray(is);
 
             MultipartBody.Part image = MultipartBody.Part.createFormData("image", null, RequestBody.create

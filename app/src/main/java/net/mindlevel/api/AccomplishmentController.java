@@ -31,10 +31,10 @@ public class AccomplishmentController extends BackendService {
         endpoint = retrofit.create(AccomplishmentEndpoint.class);
     }
 
-    public void add(final Accomplishment accomplishment, final Uri uri, final ControllerCallback<Void> callback) {
+    public void add(final Accomplishment accomplishment, final Uri path, final ControllerCallback<Void> callback) {
         InputStream is = null;
         try {
-            is = context.getContentResolver().openInputStream(uri);
+            is = context.getContentResolver().openInputStream(path);
             byte[] bytes = IOUtils.toByteArray(is);
 
             MultipartBody.Part image = MultipartBody.Part.createFormData("image", null, RequestBody.create
