@@ -1,6 +1,8 @@
 package net.mindlevel.model;
 
-public class User {
+import java.io.Serializable;
+
+public class User implements Serializable {
     public final String username, password, description, image;
     public final int score;
     public final long created, lastActive;

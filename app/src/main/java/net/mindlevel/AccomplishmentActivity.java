@@ -40,9 +40,8 @@ public class AccomplishmentActivity extends AppCompatActivity {
 
         ImageView imageView = (ImageView) findViewById(R.id.image);
         ProgressBar progressBar = (ProgressBar) findViewById(R.id.progress);
-        String url = ImageUtil.getUrl(accomplishment.image);
         Glide.with(this)
-                .load(url)
+                .load(accomplishment.image)
                 .listener(new ProgressBarController(progressBar))
                 .into(imageView);
 

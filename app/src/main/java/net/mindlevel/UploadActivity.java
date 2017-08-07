@@ -108,7 +108,7 @@ public class UploadActivity extends AppCompatActivity {
         public void onPostExecute(final Boolean success, final Void nothing) {
             if (success) {
                 Context context = getApplicationContext();
-                Toast.makeText(context, R.string.action_upload, Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, R.string.successful_upload, Toast.LENGTH_SHORT).show();
                 finish();
             } else {
                 // TODO: Handle error

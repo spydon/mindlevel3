@@ -16,7 +16,10 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
+
+import com.bumptech.glide.Glide;
 
 import net.mindlevel.api.ControllerCallback;
 import net.mindlevel.api.UserController;
@@ -37,17 +40,17 @@ public class EditUserActivity extends AppCompatActivity {
     private Uri path = null;
 
     // UI references.
+    private ImageView imageView;
     private EditText passwordView1;
     private EditText passwordView2;
     private EditText descriptionView;
-    private View progressView;
+    private ProgressBar progressBar;
     private View editFormView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_user);
-        View innerView = findViewById(R.id.inner_edit_form);
         userController = new UserController(getApplicationContext());
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -77,11 +80,16 @@ public class EditUserActivity extends AppCompatActivity {
             takePicture.setVisibility(View.INVISIBLE);
         }
 
+        imageView = (ImageView)findViewById(R.id.image);
+
         passwordView1 = (EditText) findViewById(R.id.password1);
         passwordView2 = (EditText) findViewById(R.id.password2);
         passwordView1.requestFocus();
 
         descriptionView = (EditText) findViewById(R.id.description);
+
+        User user = (User) getIntent().getSerializableExtra("user");
+
 
         Button applyButton = (Button) findViewById(R.id.apply_button);
         applyButton.setOnClickListener(new OnClickListener() {
@@ -92,7 +100,17 @@ public class EditUserActivity extends AppCompatActivity {
         });
 
         editFormView = findViewById(R.id.edit_form);
-        progressView = findViewById(R.id.edit_progress);
+        progressBar = (ProgressBar) findViewById(R.id.edit_progress);
+
+        descriptionView.setText(user.description);
+        if(!user.image.isEmpty()) {
+            String url = ImageUtil.getUrl(user.image);
+            Glide.with(this)
+                    .load(url)
+                    .listener(new ProgressBarController(progressBar))
+                    .into(imageView);
+
+        }
     }
 
     /**
@@ -161,12 +179,12 @@ public class EditUserActivity extends AppCompatActivity {
             }
         });
 
-        progressView.setVisibility(show ? View.VISIBLE : View.GONE);
-        progressView.animate().setDuration(shortAnimTime).alpha(
+        progressBar.setVisibility(show ? View.VISIBLE : View.GONE);
+        progressBar.animate().setDuration(shortAnimTime).alpha(
                 show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
-                progressView.setVisibility(show ? View.VISIBLE : View.GONE);
+                progressBar.setVisibility(show ? View.VISIBLE : View.GONE);
             }
         });
     }
@@ -183,7 +201,6 @@ public class EditUserActivity extends AppCompatActivity {
                 }
                 path = data.getData();
             }
-            ImageView imageView = (ImageView)findViewById(R.id.image);
             utils.setImage(path, imageView);
         }
     }
@@ -201,8 +218,6 @@ public class EditUserActivity extends AppCompatActivity {
 
                 Toast toast = Toast.makeText(context, text, duration);
                 toast.show();
-                //Intent returnIntent = new Intent();
-                //returnIntent.putExtra("result",result);
                 setResult(RESULT_OK);
                 finish();
             } else {

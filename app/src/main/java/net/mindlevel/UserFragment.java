@@ -45,6 +45,7 @@ public class UserFragment extends Fragment {
     private ProgressBar progressBar;
     private Button editButton, signOutButton;
     private Context context;
+    private User user;
 
     private final static int UPDATE_USER = 1;
 
@@ -70,6 +71,7 @@ public class UserFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent editIntent = new Intent(context, EditUserActivity.class);
+                editIntent.putExtra("user", user);
                 startActivityForResult(editIntent, UPDATE_USER);
             }
         });
@@ -137,10 +139,15 @@ public class UserFragment extends Fragment {
         signOutButton.setVisibility(visibility);
     }
 
+    private void setUser(User user) {
+        this.user = user;
+    }
+
     private ControllerCallback<User> userCallback = new ControllerCallback<User>() {
 
         @Override
         public void onPostExecute(final Boolean success, final User user) {
+            setUser(user);
             ProgressBarController loading = new ProgressBarController(progressBar);
             if(success) {
                 if(!TextUtils.isEmpty(user.image)) {

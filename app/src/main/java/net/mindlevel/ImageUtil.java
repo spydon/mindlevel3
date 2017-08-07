@@ -30,6 +30,8 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import retrofit2.http.Path;
+
 import static android.app.Activity.RESULT_OK;
 
 public class ImageUtil {
@@ -105,6 +107,16 @@ public class ImageUtil {
         chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[] {pickIntent});
 
         activity.startActivityForResult(chooserIntent, PICK_IMAGE);
+    }
+
+    protected void setImage(String image, boolean completePath, ImageView view) {
+        Uri uri;
+        if(completePath) {
+            uri = Uri.parse(image);
+        } else {
+            uri = Uri.parse(getUrl(image));
+        }
+        setImage(uri, view);
     }
 
     protected void setImage(Uri path, ImageView view) {
