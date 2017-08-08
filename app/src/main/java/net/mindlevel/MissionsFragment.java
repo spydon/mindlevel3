@@ -16,7 +16,6 @@ import android.view.ViewGroup;
 
 import net.mindlevel.api.ControllerCallback;
 import net.mindlevel.api.MissionController;
-import net.mindlevel.dummy.DummyContent;
 import net.mindlevel.model.Mission;
 
 import java.util.List;

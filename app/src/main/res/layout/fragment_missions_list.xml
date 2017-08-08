@@ -19,11 +19,7 @@
         tools:context="net.mindlevel.MissionsFragment"
         tools:listitem="@layout/fragment_missions" />
 
-    <ProgressBar
-        android:id="@+id/progress"
-        android:visibility="visible"
-        android:layout_gravity="center"
-        android:layout_width="@dimen/progress_large"
-        android:layout_height="@dimen/progress_large" />
+
+    <include layout="@layout/progress_center"/>
 
 </LinearLayout>

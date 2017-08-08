@@ -16,7 +16,6 @@ import android.view.ViewGroup;
 
 import net.mindlevel.api.AccomplishmentController;
 import net.mindlevel.api.ControllerCallback;
-import net.mindlevel.dummy.DummyContent;
 import net.mindlevel.model.Accomplishment;
 
 import java.util.List;
@@ -81,7 +80,6 @@ public class FeedFragment extends Fragment {
             recyclerView.setLayoutManager(
                     new StaggeredGridLayoutManager(columnCount, StaggeredGridLayoutManager.VERTICAL));
         }
-        recyclerView.setAdapter(new FeedRecyclerViewAdapter(DummyContent.ACCOMPLISHMENTS, listener));
 
         controller.getLatest(getLatestCallback);
         return view;

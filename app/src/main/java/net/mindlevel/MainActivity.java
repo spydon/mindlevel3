@@ -19,10 +19,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.bumptech.glide.Glide;
-
-import net.mindlevel.api.BackendService;
-import net.mindlevel.dummy.DummyContent;
 import net.mindlevel.model.Accomplishment;
 import net.mindlevel.model.Mission;
 
