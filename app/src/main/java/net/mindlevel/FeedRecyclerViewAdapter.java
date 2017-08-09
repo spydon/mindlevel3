@@ -4,7 +4,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -79,6 +78,8 @@ public class FeedRecyclerViewAdapter extends RecyclerView.Adapter<FeedRecyclerVi
             titleView = (TextView) view.findViewById(R.id.title);
             imageView = (ImageLikeView) view.findViewById(R.id.image);
             progressBar = (ProgressBar) view.findViewById(R.id.progress);
+            TextView imageText = (TextView) view.findViewById(R.id.image_text);
+            imageView.setTextView(imageText);
         }
 
         @Override

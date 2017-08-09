@@ -19,6 +19,7 @@ public class ImageLikeView extends AppCompatImageView {
 
     private OnClickListener tapListener;
     private View tapSource;
+    private TextView imageText;
 
     public ImageLikeView(Context context) {
         super(context);
@@ -38,6 +39,8 @@ public class ImageLikeView extends AppCompatImageView {
     private void sharedConstructing(Context context) {
         super.setClickable(true);
         this.context = context;
+        // TODO: Investigate whether this should be removed or if setTextView pattern should be refactored
+        this.imageText =  (TextView) ((Activity) context).findViewById(R.id.image_text);
         gestureListener = new GestureListener();
         gestureDetector = new GestureDetector(context, gestureListener, null, true);
         setOnTouchListener(new OnTouchListener() {
@@ -50,6 +53,10 @@ public class ImageLikeView extends AppCompatImageView {
             }
 
         });
+    }
+
+    public void setTextView(TextView imageText) {
+        this.imageText = imageText;
     }
 
     public void setClickListener(OnClickListener tapListener, View tapSource) {
@@ -70,7 +77,11 @@ public class ImageLikeView extends AppCompatImageView {
 
         @Override
         public boolean onDoubleTap(MotionEvent e) {
-            final TextView view = (TextView) ((Activity) context).findViewById(R.id.image_text);
+            final TextView view = imageText;
+            if(view == null) {
+                return false;
+            }
+
             view.setVisibility(VISIBLE);
             int duration = 1500;
             AlphaAnimation anim = new AlphaAnimation(1.0f, 0.0f);

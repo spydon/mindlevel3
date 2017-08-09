@@ -39,6 +39,8 @@ public class AccomplishmentActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         ImageLikeView imageView = (ImageLikeView) findViewById(R.id.image);
+        TextView imageText = (TextView) findViewById(R.id.image_text);
+        imageView.setTextView(imageText);
         ProgressBar progressBar = (ProgressBar) findViewById(R.id.progress);
         String url = ImageUtil.getUrl(accomplishment.image);
         Glide.with(this)

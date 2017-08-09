@@ -2,6 +2,7 @@ package net.mindlevel.api;
 
 import android.content.Context;
 import android.net.Uri;
+import android.text.TextUtils;
 
 import net.mindlevel.api.endpoint.AccomplishmentEndpoint;
 import net.mindlevel.model.Accomplishment;
@@ -34,28 +35,33 @@ public class AccomplishmentController extends BackendService {
     public void add(final Accomplishment accomplishment, final Uri path, final ControllerCallback<Void> callback) {
         InputStream is = null;
         try {
-            is = context.getContentResolver().openInputStream(path);
-            byte[] bytes = IOUtils.toByteArray(is);
+            if(path != null && !TextUtils.isEmpty(path.getPath())) {
+                is = context.getContentResolver().openInputStream(path);
+                byte[] bytes = IOUtils.toByteArray(is);
 
-            MultipartBody.Part image = MultipartBody.Part.createFormData("image", null, RequestBody.create
-                    (MediaType.parse("image/*"), bytes));
-            Call<Void> call = endpoint.add(accomplishment, image);
-            call.enqueue(new Callback<Void>() {
-                @Override
-                public void onResponse(Call<Void> call, Response<Void> response) {
-                    if(response.isSuccessful()) {
-                        callback.onPostExecute(true, null);
-                    } else {
-                        callback.onPostExecute(false, null);
+                MultipartBody.Part image = MultipartBody.Part.createFormData("image", null, RequestBody.create
+                        (MediaType.parse("image/*"), bytes));
+
+                Call<Void> call = endpoint.add(accomplishment, image);
+                call.enqueue(new Callback<Void>() {
+                    @Override
+                    public void onResponse(Call<Void> call, Response<Void> response) {
+                        if(response.isSuccessful()) {
+                            callback.onPostExecute(true, null);
+                        } else {
+                            callback.onPostExecute(false, null);
+                        }
                     }
-                }
 
-                @Override
-                public void onFailure(Call<Void> call, Throwable t) {
-                    callback.onPostExecute(false, null);
-                    t.printStackTrace();
-                }
-            });
+                    @Override
+                    public void onFailure(Call<Void> call, Throwable t) {
+                        callback.onPostExecute(false, null);
+                        t.printStackTrace();
+                    }
+                });
+            } else {
+                callback.onPostExecute(false, null);
+            }
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
