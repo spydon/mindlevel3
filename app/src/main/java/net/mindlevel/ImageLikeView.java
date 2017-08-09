@@ -12,6 +12,9 @@ import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.widget.TextView;
 
+import net.mindlevel.api.AccomplishmentController;
+import net.mindlevel.api.ControllerCallback;
+
 public class ImageLikeView extends AppCompatImageView {
     private GestureListener gestureListener;
     private GestureDetector gestureDetector;
@@ -20,6 +23,9 @@ public class ImageLikeView extends AppCompatImageView {
     private OnClickListener tapListener;
     private View tapSource;
     private TextView imageText;
+
+    private AccomplishmentController controller;
+    private int id;
 
     public ImageLikeView(Context context) {
         super(context);
@@ -41,6 +47,7 @@ public class ImageLikeView extends AppCompatImageView {
         this.context = context;
         // TODO: Investigate whether this should be removed or if setTextView pattern should be refactored
         this.imageText =  (TextView) ((Activity) context).findViewById(R.id.image_text);
+        controller = new AccomplishmentController(context);
         gestureListener = new GestureListener();
         gestureDetector = new GestureDetector(context, gestureListener, null, true);
         setOnTouchListener(new OnTouchListener() {
@@ -58,6 +65,7 @@ public class ImageLikeView extends AppCompatImageView {
     public void setTextView(TextView imageText) {
         this.imageText = imageText;
     }
+    public void setId(int id) { this.id = id; }
 
     public void setClickListener(OnClickListener tapListener, View tapSource) {
         this.tapListener = tapListener;
@@ -82,20 +90,53 @@ public class ImageLikeView extends AppCompatImageView {
                 return false;
             }
 
-            view.setVisibility(VISIBLE);
-            int duration = 1500;
-            AlphaAnimation anim = new AlphaAnimation(1.0f, 0.0f);
-            anim.setDuration(duration);
-            anim.setRepeatMode(Animation.REVERSE);
-            anim.setAnimationListener(new Animation.AnimationListener() {
+
+            ControllerCallback<String> callback = new ControllerCallback<String>() {
                 @Override
-                public void onAnimationStart(Animation animation) {}
-                @Override
-                public void onAnimationRepeat(Animation animation) {}
-                @Override
-                public void onAnimationEnd(Animation animation) { view.setVisibility(GONE); }
-            });
-            view.startAnimation(anim);
+                public void onPostExecute(Boolean isSuccess, final String response) {
+                    int duration = 1500;
+                    final AlphaAnimation countAnim = new AlphaAnimation(1.0f, 0.0f);
+                    countAnim.setDuration(duration);
+                    countAnim.setRepeatMode(Animation.REVERSE);
+                    countAnim.setAnimationListener(new Animation.AnimationListener() {
+                        @Override
+                        public void onAnimationStart(Animation animation) {
+                            view.setText(response);
+                            view.setVisibility(VISIBLE);
+                        }
+                        @Override
+                        public void onAnimationRepeat(Animation animation) {}
+                        @Override
+                        public void onAnimationEnd(Animation animation) {
+                            view.setVisibility(GONE);
+                            view.setText(R.string.action_like);
+                        }
+                    });
+
+                    AlphaAnimation likeAnim = new AlphaAnimation(1.0f, 0.0f);
+                    likeAnim.setDuration(duration);
+                    likeAnim.setRepeatMode(Animation.REVERSE);
+                    likeAnim.setAnimationListener(new Animation.AnimationListener() {
+                        @Override
+                        public void onAnimationStart(Animation animation) { view.setVisibility(VISIBLE); }
+                        @Override
+                        public void onAnimationRepeat(Animation animation) {}
+                        @Override
+                        public void onAnimationEnd(Animation animation) {
+                            view.setText(response);
+                            view.startAnimation(countAnim);
+                        }
+                    });
+
+                    if(isSuccess) {
+                        view.startAnimation(likeAnim);
+                    } else if(response != null) {
+                        view.startAnimation(countAnim);
+                    }
+                }
+            };
+
+            controller.like(id, callback);
             return true;
         }
     }

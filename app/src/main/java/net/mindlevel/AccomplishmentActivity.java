@@ -41,6 +41,7 @@ public class AccomplishmentActivity extends AppCompatActivity {
         ImageLikeView imageView = (ImageLikeView) findViewById(R.id.image);
         TextView imageText = (TextView) findViewById(R.id.image_text);
         imageView.setTextView(imageText);
+        imageView.setId(accomplishment.id);
         ProgressBar progressBar = (ProgressBar) findViewById(R.id.progress);
         String url = ImageUtil.getUrl(accomplishment.image);
         Glide.with(this)

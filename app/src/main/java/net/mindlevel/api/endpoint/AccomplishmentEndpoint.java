@@ -36,6 +36,9 @@ public interface AccomplishmentEndpoint {
             @Body List<String> contributors
     );
 
+    @GET("accomplishment/{id}/like")
+    Call<String> like(@Path("id") int id);
+
     @GET("accomplishment/latest")
     Call<List<Accomplishment>> getLatest();
 

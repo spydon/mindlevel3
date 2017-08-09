@@ -37,7 +37,7 @@ public class FeedRecyclerViewAdapter extends RecyclerView.Adapter<FeedRecyclerVi
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        holder.item = items.get(position);
+        holder.setItem(items.get(position));
         holder.titleView.setText(items.get(position).title);
         ImageLikeView imageView = holder.imageView;
         String url = ImageUtil.getUrl(holder.item.image);
@@ -80,6 +80,11 @@ public class FeedRecyclerViewAdapter extends RecyclerView.Adapter<FeedRecyclerVi
             progressBar = (ProgressBar) view.findViewById(R.id.progress);
             TextView imageText = (TextView) view.findViewById(R.id.image_text);
             imageView.setTextView(imageText);
+        }
+
+        public void setItem(Accomplishment item) {
+            this.item = item;
+            imageView.setId(item.id);
         }
 
         @Override

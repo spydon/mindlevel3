@@ -76,6 +76,26 @@ public class AccomplishmentController extends BackendService {
         }
     }
 
+    public void like(int id, final ControllerCallback<String> callback) {
+        Call<String> call = endpoint.like(id);
+        call.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                if(response.isSuccessful()) {
+                    callback.onPostExecute(true, response.body());
+                } else {
+                    callback.onPostExecute(false, null);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+                callback.onPostExecute(false, null);
+                t.printStackTrace();
+            }
+        });
+    }
+
     public void getLatest(final ControllerCallback<List<Accomplishment>> callback) {
         Call<List<Accomplishment>> call = endpoint.getLatest();
         call.enqueue(new Callback<List<Accomplishment>>() {
