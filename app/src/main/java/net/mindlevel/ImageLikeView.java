@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import net.mindlevel.api.AccomplishmentController;
 import net.mindlevel.api.ControllerCallback;
+import net.mindlevel.model.Like;
 
 public class ImageLikeView extends AppCompatImageView {
     private GestureListener gestureListener;
@@ -90,10 +91,9 @@ public class ImageLikeView extends AppCompatImageView {
                 return false;
             }
 
-
-            ControllerCallback<String> callback = new ControllerCallback<String>() {
+            ControllerCallback<Like> callback = new ControllerCallback<Like>() {
                 @Override
-                public void onPostExecute(Boolean isSuccess, final String response) {
+                public void onPostExecute(Boolean isSuccess, final Like like) {
                     int duration = 1500;
                     final AlphaAnimation countAnim = new AlphaAnimation(1.0f, 0.0f);
                     countAnim.setDuration(duration);
@@ -101,7 +101,6 @@ public class ImageLikeView extends AppCompatImageView {
                     countAnim.setAnimationListener(new Animation.AnimationListener() {
                         @Override
                         public void onAnimationStart(Animation animation) {
-                            view.setText(response);
                             view.setVisibility(VISIBLE);
                         }
                         @Override
@@ -123,14 +122,15 @@ public class ImageLikeView extends AppCompatImageView {
                         public void onAnimationRepeat(Animation animation) {}
                         @Override
                         public void onAnimationEnd(Animation animation) {
-                            view.setText(response);
+                            view.setText(like.score);
                             view.startAnimation(countAnim);
                         }
                     });
 
-                    if(isSuccess) {
+                    if(isSuccess && like.first) {
                         view.startAnimation(likeAnim);
-                    } else if(response != null) {
+                    } else if(like != null) {
+                        view.setText(like.score);
                         view.startAnimation(countAnim);
                     }
                 }

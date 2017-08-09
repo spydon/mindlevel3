@@ -6,6 +6,7 @@ import android.text.TextUtils;
 
 import net.mindlevel.api.endpoint.AccomplishmentEndpoint;
 import net.mindlevel.model.Accomplishment;
+import net.mindlevel.model.Like;
 
 import org.apache.commons.io.IOUtils;
 
@@ -76,11 +77,11 @@ public class AccomplishmentController extends BackendService {
         }
     }
 
-    public void like(int id, final ControllerCallback<String> callback) {
-        Call<String> call = endpoint.like(id);
-        call.enqueue(new Callback<String>() {
+    public void like(int id, final ControllerCallback<Like> callback) {
+        Call<Like> call = endpoint.like(id);
+        call.enqueue(new Callback<Like>() {
             @Override
-            public void onResponse(Call<String> call, Response<String> response) {
+            public void onResponse(Call<Like> call, Response<Like> response) {
                 if(response.isSuccessful()) {
                     callback.onPostExecute(true, response.body());
                 } else {
@@ -89,7 +90,7 @@ public class AccomplishmentController extends BackendService {
             }
 
             @Override
-            public void onFailure(Call<String> call, Throwable t) {
+            public void onFailure(Call<Like> call, Throwable t) {
                 callback.onPostExecute(false, null);
                 t.printStackTrace();
             }

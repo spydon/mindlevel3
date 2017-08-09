@@ -1,6 +1,7 @@
 package net.mindlevel.api.endpoint;
 
 import net.mindlevel.model.Accomplishment;
+import net.mindlevel.model.Like;
 
 import java.util.List;
 
@@ -37,7 +38,7 @@ public interface AccomplishmentEndpoint {
     );
 
     @GET("accomplishment/{id}/like")
-    Call<String> like(@Path("id") int id);
+    Call<Like> like(@Path("id") int id);
 
     @GET("accomplishment/latest")
     Call<List<Accomplishment>> getLatest();
