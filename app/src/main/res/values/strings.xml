@@ -30,6 +30,7 @@
     <string name="action_save">Save</string>
     <string name="action_edit">Edit</string>
     <string name="action_upload">Upload</string>
+    <string name="action_like">+1</string>
     <string name="successful_upload">Upload was successful</string>
     <string name="successful_registration">Successfully registered as %1$s, please login</string>
     <string name="successful_edit">Successful edit!</string>

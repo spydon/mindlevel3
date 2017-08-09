@@ -38,10 +38,11 @@ public class AccomplishmentActivity extends AppCompatActivity {
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        ImageView imageView = (ImageView) findViewById(R.id.image);
+        ImageLikeView imageView = (ImageLikeView) findViewById(R.id.image);
         ProgressBar progressBar = (ProgressBar) findViewById(R.id.progress);
+        String url = ImageUtil.getUrl(accomplishment.image);
         Glide.with(this)
-                .load(accomplishment.image)
+                .load(url)
                 .listener(new ProgressBarController(progressBar))
                 .into(imageView);
 

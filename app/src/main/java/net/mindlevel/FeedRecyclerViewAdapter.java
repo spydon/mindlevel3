@@ -21,53 +21,55 @@ import java.util.List;
  */
 public class FeedRecyclerViewAdapter extends RecyclerView.Adapter<FeedRecyclerViewAdapter.ViewHolder> {
 
-    private final List<Accomplishment> mValues;
-    private final OnListFragmentInteractionListener mListener;
+    private final List<Accomplishment> items;
+    private final OnListFragmentInteractionListener listener;
+    private View view;
 
     public FeedRecyclerViewAdapter(List<Accomplishment> items, OnListFragmentInteractionListener listener) {
-        mValues = items;
-        mListener = listener;
+        this.items = items;
+        this.listener = listener;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.fragment_feed, parent, false);
+        view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_feed, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        holder.item = mValues.get(position);
-        holder.titleView.setText(mValues.get(position).title);
-        ImageView imageView = holder.imageView;
+        holder.item = items.get(position);
+        holder.titleView.setText(items.get(position).title);
+        ImageLikeView imageView = holder.imageView;
         String url = ImageUtil.getUrl(holder.item.image);
         Glide.with(imageView.getContext())
                 .load(url)
                 .listener(new ProgressBarController(holder.progressBar))
                 .into(imageView);
 
-        holder.view.setOnClickListener(new View.OnClickListener() {
+        View.OnClickListener onClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mListener != null) {
+                if (listener != null) {
                     // Notify the active callbacks interface (the activity, if the
                     // fragment is attached to one) that an item has been selected.
-                    mListener.onListFragmentInteraction(holder.item);
+                    listener.onListFragmentInteraction(holder.item);
                 }
             }
-        });
+        };
+        holder.view.setOnClickListener(onClickListener);
+        imageView.setClickListener(onClickListener, view);
     }
 
     @Override
     public int getItemCount() {
-        return mValues.size();
+        return items.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View view;
         public final TextView titleView;
-        public final ImageView imageView;
+        public final ImageLikeView imageView;
         public final ProgressBar progressBar;
         public Accomplishment item;
 
@@ -75,7 +77,7 @@ public class FeedRecyclerViewAdapter extends RecyclerView.Adapter<FeedRecyclerVi
             super(view);
             this.view = view;
             titleView = (TextView) view.findViewById(R.id.title);
-            imageView = (ImageView) view.findViewById(R.id.image);
+            imageView = (ImageLikeView) view.findViewById(R.id.image);
             progressBar = (ProgressBar) view.findViewById(R.id.progress);
         }
 

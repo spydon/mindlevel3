@@ -113,7 +113,7 @@ public class FeedFragment extends Fragment {
         void onListFragmentInteraction(Accomplishment accomplishment);
     }
 
-        private void showProgress(final boolean show) {
+    private void showProgress(final boolean show) {
         int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
 
         recyclerView.setVisibility(show ? View.GONE : View.VISIBLE);
