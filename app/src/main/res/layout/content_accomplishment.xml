@@ -53,13 +53,5 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="20dip" />
 
-        <com.facebook.share.widget.ShareButton
-            android:id="@+id/fb_share_button"
-            android:visibility="gone"
-            android:enabled="false"
-            android:layout_marginStart="@dimen/activity_horizontal_margin"
-            android:layout_width="80dp"
-            android:layout_height="30dp"/>
-
     </LinearLayout>
 </ScrollView>
