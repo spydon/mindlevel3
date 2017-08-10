@@ -18,6 +18,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import net.mindlevel.model.Accomplishment;
 import net.mindlevel.model.Mission;
@@ -146,5 +147,24 @@ public class MainActivity
                 // Do nothing
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.options, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.settings_menu:
+                Toast.makeText(this, "Settings", Toast.LENGTH_SHORT).show();
+                return true;
+	        case R.id.about_menu:
+                Toast.makeText(this, "About", Toast.LENGTH_SHORT).show();
+                return true;
+        }
+        return true;
     }
 }

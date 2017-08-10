@@ -20,7 +20,6 @@ import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
-import com.facebook.share.model.ShareLinkContent;
 import com.facebook.share.model.SharePhoto;
 import com.facebook.share.model.SharePhotoContent;
 import com.facebook.share.widget.ShareButton;
@@ -34,6 +33,7 @@ public class AccomplishmentActivity extends AppCompatActivity {
     private ImageLikeView imageView;
     private Context context;
     private ProgressBar progressBar;
+    private ShareButton facebookButton;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -44,18 +44,28 @@ public class AccomplishmentActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(accomplishment.title);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        final Context outerContext = this;
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_mission);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent missionIntent = new Intent(outerContext, MissionActivity.class);
+                Intent missionIntent = new Intent(context, MissionActivity.class);
                 missionIntent.putExtra("missionId", accomplishment.missionId);
                 startActivity(missionIntent);
             }
         });
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        final FloatingActionButton shareButton = (FloatingActionButton) findViewById(R.id.fab_share);
+        shareButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(facebookButton.isEnabled()) {
+                    System.out.println("Share");
+                    facebookButton.performClick();
+                }
+            }
+        });
 
         TextView imageText = (TextView) findViewById(R.id.image_text);
         imageView = (ImageLikeView) findViewById(R.id.image);
@@ -66,13 +76,13 @@ public class AccomplishmentActivity extends AppCompatActivity {
         String url = ImageUtil.getUrl(accomplishment.image);
         Glide.with(this)
                 .load(url)
-                //.listener(new ProgressBarController(progressBar))
                 .listener(shareLoading)
                 .into(imageView);
 
         TextView titleView = (TextView) findViewById(R.id.title);
         TextView scoreView = (TextView) findViewById(R.id.score);
         TextView descriptionView = (TextView) findViewById(R.id.description);
+        facebookButton = (ShareButton) findViewById(R.id.fb_share_button);
         titleView.setText(accomplishment.title);
         scoreView.setText(Integer.toString(accomplishment.score));
         descriptionView.setText(accomplishment.description);
@@ -92,8 +102,7 @@ public class AccomplishmentActivity extends AppCompatActivity {
         @Override
         public boolean onResourceReady(Object resource, Object model, Target target, DataSource dataSource, boolean isFirstResource) {
             progressBar.setVisibility(GONE);
-            ShareButton shareButton = (ShareButton) findViewById(R.id.fb_share_button);
-            shareButton.setEnabled(true);
+            facebookButton.setEnabled(true);
             Bitmap bitmap = ((BitmapDrawable) resource).getBitmap();
             SharePhoto photo = new SharePhoto.Builder()
                     .setBitmap(bitmap)
@@ -102,7 +111,7 @@ public class AccomplishmentActivity extends AppCompatActivity {
                     .addPhoto(photo)
                     .build();
 
-            shareButton.setShareContent(content);
+            facebookButton.setShareContent(content);
             return false;
         }
     };

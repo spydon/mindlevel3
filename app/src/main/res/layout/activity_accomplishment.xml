@@ -24,11 +24,20 @@
     <include layout="@layout/content_accomplishment"/>
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
+        android:id="@+id/fab_mission"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginBottom="@dimen/fab_margin2"
+        android:layout_marginEnd="@dimen/fab_margin"
+        app:srcCompat="@android:drawable/ic_media_play"/>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_share"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@android:drawable/ic_media_play"/>
+        app:srcCompat="@android:drawable/ic_menu_share"/>
 
 </android.support.design.widget.CoordinatorLayout>
