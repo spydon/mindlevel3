@@ -103,7 +103,7 @@ public class EditUserActivity extends AppCompatActivity {
         progressBar = (ProgressBar) findViewById(R.id.edit_progress);
 
         descriptionView.setText(user.description);
-        if(!user.image.isEmpty()) {
+        if(user.image != null && !user.image.isEmpty()) {
             String url = ImageUtil.getUrl(user.image);
             Glide.with(this)
                     .load(url)

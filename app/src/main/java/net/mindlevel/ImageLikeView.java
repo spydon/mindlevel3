@@ -1,6 +1,5 @@
 package net.mindlevel;
 
-
 import android.app.Activity;
 import android.content.Context;
 import android.support.v7.widget.AppCompatImageView;
@@ -57,7 +56,7 @@ public class ImageLikeView extends AppCompatImageView {
             public boolean onTouch(View v, MotionEvent event) {
                 gestureDetector.onTouchEvent(event);
                 invalidate();
-                return true; // indicate event was handled
+                return true;
             }
 
         });

@@ -1,7 +1,9 @@
 <resources>
     <string name="app_name">MindLevel</string>
-    <string name="backend_address">http://192.168.0.131:8080/</string>
+    <string name="backend_address">http://192.168.42.37:8080/</string>
+    <string name="facebook_app_id">306451972838397</string>
     <string name="bucket_address">https://s3.eu-central-1.amazonaws.com/mindlevel/</string>
+
     <string name="title_feed">Feed</string>
     <string name="title_missions">Missions</string>
     <string name="title_profile">Profile</string>
