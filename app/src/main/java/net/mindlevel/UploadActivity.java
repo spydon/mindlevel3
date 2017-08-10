@@ -1,5 +1,8 @@
 package net.mindlevel;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -18,15 +21,19 @@ import net.mindlevel.api.AccomplishmentController;
 import net.mindlevel.api.ControllerCallback;
 import net.mindlevel.model.Accomplishment;
 import net.mindlevel.model.Mission;
+import net.mindlevel.util.ImageUtil;
+import net.mindlevel.util.KeyboardUtil;
 
 import java.io.File;
 
-import static net.mindlevel.ImageUtil.PICK_IMAGE;
-import static net.mindlevel.ImageUtil.REQUEST_IMAGE_CAPTURE;
+import static net.mindlevel.util.ImageUtil.PICK_IMAGE;
+import static net.mindlevel.util.ImageUtil.REQUEST_IMAGE_CAPTURE;
 
 public class UploadActivity extends AppCompatActivity {
 
     private AccomplishmentController controller;
+    private View containerView, progressView;
+    private TextView progressText;
     private TextView titleView, descriptionView;
     private Button uploadButton;
     private int missionId = -1;
@@ -68,14 +75,21 @@ public class UploadActivity extends AppCompatActivity {
             takePicture.setVisibility(View.INVISIBLE);
         }
 
+        containerView = findViewById(R.id.scroll);
+        progressView = findViewById(R.id.progress);
+        progressText = (TextView) findViewById(R.id.progress_text);
+        showProgress(false);
+
         titleView = (TextView) findViewById(R.id.title);
         descriptionView = (TextView) findViewById(R.id.description);
         titleView.setText(mission.title);
         uploadButton = (Button) findViewById(R.id.upload_button);
         uploadButton.setActivated(false);
+
         uploadButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                showProgress(true);
                 uploadButton.setActivated(false);
                 Accomplishment accomplishment = new Accomplishment(0, titleView.getText().toString(),
                         descriptionView.getText().toString(), "", missionId, 0, 0);
@@ -84,6 +98,32 @@ public class UploadActivity extends AppCompatActivity {
         });
 
     }
+
+    private void showProgress(final boolean show) {
+        int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
+        if(show) {
+            KeyboardUtil.hideKeyboard(this);
+        }
+
+        containerView.setVisibility(show ? View.GONE : View.VISIBLE);
+        containerView.animate().setDuration(shortAnimTime).alpha(
+                show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                containerView.setVisibility(show ? View.GONE : View.VISIBLE);
+            }
+        });
+
+        progressView.setVisibility(show ? View.VISIBLE : View.GONE);
+        progressView.animate().setDuration(shortAnimTime).alpha(
+                show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                progressView.setVisibility(show ? View.VISIBLE : View.GONE);
+            }
+        });
+    }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -106,6 +146,7 @@ public class UploadActivity extends AppCompatActivity {
 
         @Override
         public void onPostExecute(final Boolean success, final Void nothing) {
+            showProgress(false);
             if (success) {
                 Context context = getApplicationContext();
                 Toast.makeText(context, R.string.successful_upload, Toast.LENGTH_SHORT).show();

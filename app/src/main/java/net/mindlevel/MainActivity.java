@@ -18,10 +18,10 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import net.mindlevel.model.Accomplishment;
 import net.mindlevel.model.Mission;
+import net.mindlevel.util.ImageUtil;
 
 import java.util.Arrays;
 import java.util.LinkedHashMap;

@@ -24,11 +24,12 @@ import com.bumptech.glide.Glide;
 import net.mindlevel.api.ControllerCallback;
 import net.mindlevel.api.UserController;
 import net.mindlevel.model.User;
+import net.mindlevel.util.ImageUtil;
 
 import java.io.File;
 
-import static net.mindlevel.ImageUtil.PICK_IMAGE;
-import static net.mindlevel.ImageUtil.REQUEST_IMAGE_CAPTURE;
+import static net.mindlevel.util.ImageUtil.PICK_IMAGE;
+import static net.mindlevel.util.ImageUtil.REQUEST_IMAGE_CAPTURE;
 
 /**
  * A login screen that offers login via username/password.

@@ -1,43 +1,23 @@
-package net.mindlevel;
+package net.mindlevel.util;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.net.Uri;
-import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.FileProvider;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import net.mindlevel.api.AccomplishmentController;
-import net.mindlevel.api.ControllerCallback;
-import net.mindlevel.model.Accomplishment;
-import net.mindlevel.model.Mission;
 
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import retrofit2.http.Path;
-
-import static android.app.Activity.RESULT_OK;
-
 public class ImageUtil {
 
-    static final int REQUEST_IMAGE_CAPTURE = 1;
-    static final int PICK_IMAGE = 2;
+    public static final int REQUEST_IMAGE_CAPTURE = 1;
+    public static final int PICK_IMAGE = 2;
 
     private final Activity activity;
     private static String bucketAddress = "";
@@ -109,7 +89,7 @@ public class ImageUtil {
         activity.startActivityForResult(chooserIntent, PICK_IMAGE);
     }
 
-    protected void setImage(String image, boolean completePath, ImageView view) {
+    public void setImage(String image, boolean completePath, ImageView view) {
         Uri uri;
         if(completePath) {
             uri = Uri.parse(image);
@@ -119,7 +99,7 @@ public class ImageUtil {
         setImage(uri, view);
     }
 
-    protected void setImage(Uri path, ImageView view) {
+    public void setImage(Uri path, ImageView view) {
         try {
             double maxLength = 2048;
             Bitmap bitmap = MediaStore.Images.Media.getBitmap(activity.getContentResolver(), path);

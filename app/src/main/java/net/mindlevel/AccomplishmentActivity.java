@@ -3,9 +3,7 @@ package net.mindlevel;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -25,6 +23,7 @@ import com.facebook.share.model.SharePhotoContent;
 import com.facebook.share.widget.ShareButton;
 
 import net.mindlevel.model.Accomplishment;
+import net.mindlevel.util.ImageUtil;
 
 import static android.view.View.GONE;
 

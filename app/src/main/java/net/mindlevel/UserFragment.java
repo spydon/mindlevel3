@@ -23,6 +23,7 @@ import net.mindlevel.api.LoginController;
 import net.mindlevel.api.UserController;
 import net.mindlevel.model.Login;
 import net.mindlevel.model.User;
+import net.mindlevel.util.ImageUtil;
 
 import static android.app.Activity.RESULT_OK;
 

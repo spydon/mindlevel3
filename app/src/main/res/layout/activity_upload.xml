@@ -22,6 +22,7 @@
     </android.support.design.widget.AppBarLayout>
 
     <include layout="@layout/content_upload"/>
+    <include layout="@layout/progress_center"/>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/choose_picture"

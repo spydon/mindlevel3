@@ -18,6 +18,7 @@ import com.bumptech.glide.Glide;
 import net.mindlevel.api.ControllerCallback;
 import net.mindlevel.api.MissionController;
 import net.mindlevel.model.Mission;
+import net.mindlevel.util.ImageUtil;
 
 public class MissionActivity extends AppCompatActivity {
 

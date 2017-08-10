@@ -11,6 +11,7 @@ import com.bumptech.glide.Glide;
 
 import net.mindlevel.FeedFragment.OnListFragmentInteractionListener;
 import net.mindlevel.model.Accomplishment;
+import net.mindlevel.util.ImageUtil;
 
 import java.util.List;
 
