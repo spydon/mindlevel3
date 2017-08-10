@@ -71,6 +71,10 @@
             android:name=".LoginActivity"
             android:label="@string/title_activity_login">
         </activity>
+        <activity
+            android:name=".AboutActivity"
+            android:label="@string/title_activity_about">
+        </activity>
 
         <provider
             android:name="android.support.v4.content.FileProvider"

@@ -162,9 +162,10 @@ public class MainActivity
                 Toast.makeText(this, "Settings", Toast.LENGTH_SHORT).show();
                 return true;
 	        case R.id.about_menu:
-                Toast.makeText(this, "About", Toast.LENGTH_SHORT).show();
+	            Intent aboutIntent = new Intent(this, AboutActivity.class);
+                startActivity(aboutIntent);
                 return true;
         }
-        return true;
+        return super.onOptionsItemSelected(item);
     }
 }
