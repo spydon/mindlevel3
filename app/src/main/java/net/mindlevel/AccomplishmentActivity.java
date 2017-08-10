@@ -1,10 +1,13 @@
 package net.mindlevel;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -30,16 +33,19 @@ import static android.view.View.GONE;
 public class AccomplishmentActivity extends AppCompatActivity {
 
     private ImageLikeView imageView;
-    private Context context;
+    private Activity activity;
     private ProgressBar progressBar;
     private ShareButton facebookButton;
+
+    private final int SHARE = 1;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_accomplishment);
-        this.context = this;
+        this.activity = this;
         final Accomplishment accomplishment = (Accomplishment) getIntent().getSerializableExtra("accomplishment");
+        final String url = ImageUtil.getUrl(accomplishment.image);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(accomplishment.title);
         setSupportActionBar(toolbar);
@@ -49,7 +55,7 @@ public class AccomplishmentActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent missionIntent = new Intent(context, MissionActivity.class);
+                Intent missionIntent = new Intent(activity, MissionActivity.class);
                 missionIntent.putExtra("missionId", accomplishment.missionId);
                 startActivity(missionIntent);
             }
@@ -60,8 +66,16 @@ public class AccomplishmentActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(facebookButton.isEnabled()) {
-                    System.out.println("Share");
-                    facebookButton.performClick();
+                    //facebookButton.performClick();
+                    Intent sharingIntent = new Intent(Intent.ACTION_SEND);
+                    sharingIntent.setType("image/*");
+                    sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, accomplishment.title);
+                    sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, accomplishment.description);
+                    Bitmap bitmap = ((BitmapDrawable)imageView.getDrawable()).getBitmap();
+                    String path = MediaStore.Images.Media.insertImage(getContentResolver(), bitmap, "", null);
+                    Uri uri = Uri.parse(path);
+                    sharingIntent.putExtra(Intent.EXTRA_STREAM, uri);
+                    activity.startActivityForResult(Intent.createChooser(sharingIntent, "Share using"), SHARE);
                 }
             }
         });
@@ -72,7 +86,6 @@ public class AccomplishmentActivity extends AppCompatActivity {
         imageView.setId(accomplishment.id);
 
         progressBar = (ProgressBar) findViewById(R.id.progress);
-        String url = ImageUtil.getUrl(accomplishment.image);
         Glide.with(this)
                 .load(url)
                 .listener(shareLoading)
