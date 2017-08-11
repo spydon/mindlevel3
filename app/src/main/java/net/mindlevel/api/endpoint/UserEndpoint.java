@@ -3,6 +3,8 @@ package net.mindlevel.api.endpoint;
 import net.mindlevel.model.Login;
 import net.mindlevel.model.User;
 
+import java.util.List;
+
 import okhttp3.MultipartBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -14,6 +16,9 @@ import retrofit2.http.Part;
 import retrofit2.http.Path;
 
 public interface UserEndpoint {
+    @GET("user")
+    Call<List<User>> getAll();
+
     @GET("user/{user}")
     Call<User> get(@Path("user") String user);
 

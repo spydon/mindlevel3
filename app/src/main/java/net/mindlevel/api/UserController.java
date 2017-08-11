@@ -12,6 +12,7 @@ import org.apache.commons.io.IOUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -28,6 +29,30 @@ public class UserController extends BackendService {
         super(context);
         endpoint = retrofit.create(UserEndpoint.class);
     }
+
+    public void getAll(final ControllerCallback<List<User>> callback) {
+
+        Call<List<User>> userCall = endpoint.getAll();
+
+        userCall.enqueue(new Callback<List<User>>() {
+            @Override
+            public void onResponse(Call<List<User>> call, Response<List<User>> usersResponse) {
+                if(usersResponse.isSuccessful()) {
+                    List<User> users = usersResponse.body();
+                    callback.onPostExecute(true, users);
+                } else {
+                    callback.onPostExecute(false, null);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<User>> call, Throwable t) {
+                callback.onPostExecute(false, null);
+                t.printStackTrace();
+            }
+        });
+    }
+
 
     public void getUser(String username, final ControllerCallback<User> callback) {
 

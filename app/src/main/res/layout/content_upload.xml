@@ -41,10 +41,12 @@
             <requestFocus />
         </EditText>
 
-        <AutoCompleteTextView
-            android:id="@+id/username_input"
+        <com.pchmn.materialchips.ChipsInput
+            android:id="@+id/contributor_input"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            app:chip_hasAvatarIcon="false"
+            app:hint="@string/hint_contributors" />
 
         <Button
             android:id="@+id/upload_button"

@@ -2,7 +2,6 @@ package net.mindlevel;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -17,24 +16,33 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.pchmn.materialchips.ChipsInput;
+
 import net.mindlevel.api.AccomplishmentController;
 import net.mindlevel.api.ControllerCallback;
+import net.mindlevel.api.UserController;
 import net.mindlevel.model.Accomplishment;
 import net.mindlevel.model.Mission;
+import net.mindlevel.model.User;
 import net.mindlevel.util.ImageUtil;
 import net.mindlevel.util.KeyboardUtil;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import static net.mindlevel.util.ImageUtil.PICK_IMAGE;
 import static net.mindlevel.util.ImageUtil.REQUEST_IMAGE_CAPTURE;
 
 public class UploadActivity extends AppCompatActivity {
 
-    private AccomplishmentController controller;
+    private AccomplishmentController accomplishmentController;
+    private UserController userController;
     private View containerView, progressView;
     private TextView titleView, descriptionView;
+    private ChipsInput contributorInput;
     private Button uploadButton;
+    private Context context;
     private int missionId = -1;
     private Uri path = null;
     private ImageUtil utils;
@@ -43,7 +51,9 @@ public class UploadActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upload);
-        controller = new AccomplishmentController(getApplicationContext());
+        context = getApplicationContext();
+        accomplishmentController = new AccomplishmentController(context);
+        userController = new UserController(context);
         utils = new ImageUtil(this);
 
         final Mission mission = (Mission) getIntent().getSerializableExtra("mission");
@@ -91,12 +101,12 @@ public class UploadActivity extends AppCompatActivity {
                 uploadButton.setActivated(false);
                 Accomplishment accomplishment = new Accomplishment(0, titleView.getText().toString(),
                         descriptionView.getText().toString(), "", missionId, 0, 0);
-                controller.add(accomplishment, path, uploadCallback);
+                accomplishmentController.add(accomplishment, path, uploadCallback);
             }
         });
 
-
-
+        contributorInput = (ChipsInput) findViewById(R.id.contributor_input);
+        userController.getAll(usernamesCallback);
     }
 
     private void showProgress(final boolean show) {
@@ -153,6 +163,20 @@ public class UploadActivity extends AppCompatActivity {
                 finish();
             } else {
                 // TODO: Handle error
+            }
+        }
+    };
+
+    private ControllerCallback<List<User>> usernamesCallback = new ControllerCallback<List<User>>() {
+
+        @Override
+        public void onPostExecute(final Boolean success, final List<User> users) {
+            if (success) {
+                ArrayList<UserChip> userChips = new ArrayList<>();
+                for(User user : users) {
+                    userChips.add(new UserChip(user));
+                }
+                contributorInput.setFilterableList(userChips);
             }
         }
     };
