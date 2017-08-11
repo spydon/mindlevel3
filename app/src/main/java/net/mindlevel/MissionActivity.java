@@ -23,8 +23,8 @@ import net.mindlevel.util.ImageUtil;
 public class MissionActivity extends AppCompatActivity {
 
     private MissionController controller;
-    private View missionView;
-    private ProgressBar progressView, imageProgressView;
+    private View missionView, progressView;
+    private ProgressBar imageProgressView;
     private Context outerContext;
 
     @Override
@@ -32,7 +32,7 @@ public class MissionActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mission);
         missionView = findViewById(R.id.mission_content);
-        progressView = (ProgressBar) findViewById(R.id.progress);
+        progressView = findViewById(R.id.progress);
         imageProgressView = (ProgressBar) findViewById(R.id.image_progress);
         controller = new MissionController(missionView.getContext());
         outerContext = this;
@@ -40,10 +40,14 @@ public class MissionActivity extends AppCompatActivity {
 
         if(getIntent().hasExtra("mission")) {
             Mission mission = (Mission) getIntent().getSerializableExtra("mission");
+            Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+            toolbar.setTitle(mission.title);
             missionCallback.onPostExecute(true, mission);
-        } else {
+        } else if(getIntent().hasExtra("missionId")) {
             int missionId = getIntent().getIntExtra("missionId", -1);
             controller.get(missionId, missionCallback);
+        } else {
+            // TODO: Handle not found
         }
     }
 
@@ -91,10 +95,6 @@ public class MissionActivity extends AppCompatActivity {
                 fab.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        // TODO: move snackbar
-                        //Snackbar.make(view, mission.title, Snackbar.LENGTH_LONG)
-                        //        .setAction("Action", null).show();
-
                         Intent missionIntent = new Intent(outerContext, UploadActivity.class);
                         missionIntent.putExtra("mission", mission);
                         startActivity(missionIntent);
