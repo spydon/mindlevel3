@@ -33,7 +33,6 @@ public class UploadActivity extends AppCompatActivity {
 
     private AccomplishmentController controller;
     private View containerView, progressView;
-    private TextView progressText;
     private TextView titleView, descriptionView;
     private Button uploadButton;
     private int missionId = -1;
@@ -77,7 +76,6 @@ public class UploadActivity extends AppCompatActivity {
 
         containerView = findViewById(R.id.scroll);
         progressView = findViewById(R.id.progress);
-        progressText = (TextView) findViewById(R.id.progress_text);
         showProgress(false);
 
         titleView = (TextView) findViewById(R.id.title);
@@ -96,6 +94,8 @@ public class UploadActivity extends AppCompatActivity {
                 controller.add(accomplishment, path, uploadCallback);
             }
         });
+
+
 
     }
 

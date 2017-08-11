@@ -17,6 +17,9 @@ public interface UserEndpoint {
     @GET("user/{user}")
     Call<User> get(@Path("user") String user);
 
+    @GET("user/usernames")
+    Call<String[]> getUsernames();
+
     @Multipart
     @PUT("user/{user}")
     Call<Void> update(

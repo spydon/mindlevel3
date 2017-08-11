@@ -52,6 +52,29 @@ public class UserController extends BackendService {
         });
     }
 
+    public void getUsernames(final ControllerCallback<String[]> callback) {
+
+        Call<String[]> usernamesCall = endpoint.getUsernames();
+
+        usernamesCall.enqueue(new Callback<String[]>() {
+            @Override
+            public void onResponse(Call<String[]> call, Response<String[]> userResponse) {
+                if(userResponse.isSuccessful()) {
+                    String[] usernames = userResponse.body();
+                    callback.onPostExecute(true, usernames);
+                } else {
+                    callback.onPostExecute(false, null);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<String[]> call, Throwable t) {
+                callback.onPostExecute(false, null);
+                t.printStackTrace();
+            }
+        });
+    }
+
     public void update(final User user, final Uri path, final ControllerCallback<Void> callback) {
         InputStream is = null;
         MultipartBody.Part image = null;
