@@ -167,6 +167,9 @@ public class UploadActivity extends AppCompatActivity {
                 Context context = getApplicationContext();
                 Toast.makeText(context, R.string.successful_upload, Toast.LENGTH_SHORT).show();
                 finish();
+                Intent accomplishmentIntent = new Intent(context, AccomplishmentActivity.class);
+                accomplishmentIntent.putExtra("accomplishment", accomplishment);
+                startActivity(accomplishmentIntent);
             } else {
                 // TODO: Handle error
                 System.out.println("Failed with upload...");
