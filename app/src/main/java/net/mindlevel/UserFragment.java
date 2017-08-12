@@ -175,17 +175,8 @@ public class UserFragment extends Fragment {
 
         @Override
         public void onPostExecute(final Boolean success, final Void nothing) {
-            ProgressBarController loading = new ProgressBarController(progressBar);
-            userVisibility(false);
-            signOutButton.setActivated(true);
-            if (success) {
-                Intent loginIntent = new Intent(getContext(), LoginActivity.class);
-                startActivity(loginIntent);
-            } else {
-                userVisibility(true);
-                loading.hide();
-                descriptionView.setText("Something went wrong.");
-            }
+            Intent loginIntent = new Intent(getContext(), LoginActivity.class);
+            startActivity(loginIntent);
         }
     };
 

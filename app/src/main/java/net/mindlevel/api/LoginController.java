@@ -18,7 +18,6 @@ public class LoginController extends BackendService {
         this.endpoint = retrofit.create(LoginEndpoint.class);
     }
 
-
     public void login(final Login user, final ControllerCallback<String> callback) {
 
         Call<String> login = endpoint.login(user);

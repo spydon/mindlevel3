@@ -1,6 +1,7 @@
 package net.mindlevel.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class Accomplishment implements Serializable{
 

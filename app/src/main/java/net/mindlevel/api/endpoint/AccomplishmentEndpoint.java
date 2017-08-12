@@ -1,7 +1,10 @@
 package net.mindlevel.api.endpoint;
 
 import net.mindlevel.model.Accomplishment;
+import net.mindlevel.model.Contributors;
 import net.mindlevel.model.Like;
+
+import org.json.JSONArray;
 
 import java.util.List;
 
@@ -17,8 +20,9 @@ import retrofit2.http.Path;
 public interface AccomplishmentEndpoint {
     @Multipart
     @POST("accomplishment")
-    Call<Void> add(
+    Call<Accomplishment> add(
             @Part("accomplishment") Accomplishment accomplishment,
+            @Part("contributors") Contributors contributors,
             @Part MultipartBody.Part image
     );
 

@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.pchmn.materialchips.ChipsInput;
+import com.pchmn.materialchips.model.ChipInterface;
 
 import net.mindlevel.api.AccomplishmentController;
 import net.mindlevel.api.ControllerCallback;
@@ -99,9 +100,14 @@ public class UploadActivity extends AppCompatActivity {
             public void onClick(View view) {
                 showProgress(true);
                 uploadButton.setActivated(false);
+                List<String> contributors = new ArrayList<>();
+                for(ChipInterface chip : contributorInput.getSelectedChipList()) {
+                    contributors.add(chip.getLabel());
+                }
+                contributors.add("spydon");
                 Accomplishment accomplishment = new Accomplishment(0, titleView.getText().toString(),
                         descriptionView.getText().toString(), "", missionId, 0, 0);
-                accomplishmentController.add(accomplishment, path, uploadCallback);
+                accomplishmentController.add(accomplishment, contributors, path, uploadCallback);
             }
         });
 
@@ -152,10 +158,10 @@ public class UploadActivity extends AppCompatActivity {
         }
     }
 
-    private ControllerCallback<Void> uploadCallback = new ControllerCallback<Void>() {
+    private ControllerCallback<Accomplishment> uploadCallback = new ControllerCallback<Accomplishment>() {
 
         @Override
-        public void onPostExecute(final Boolean success, final Void nothing) {
+        public void onPostExecute(final Boolean success, final Accomplishment accomplishment) {
             showProgress(false);
             if (success) {
                 Context context = getApplicationContext();
@@ -163,6 +169,7 @@ public class UploadActivity extends AppCompatActivity {
                 finish();
             } else {
                 // TODO: Handle error
+                System.out.println("Failed with upload...");
             }
         }
     };

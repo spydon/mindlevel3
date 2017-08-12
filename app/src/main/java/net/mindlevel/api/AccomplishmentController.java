@@ -6,13 +6,12 @@ import android.text.TextUtils;
 
 import net.mindlevel.api.endpoint.AccomplishmentEndpoint;
 import net.mindlevel.model.Accomplishment;
+import net.mindlevel.model.Contributors;
 import net.mindlevel.model.Like;
 
 import org.apache.commons.io.IOUtils;
+import org.json.JSONArray;
 
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
@@ -33,29 +32,32 @@ public class AccomplishmentController extends BackendService {
         endpoint = retrofit.create(AccomplishmentEndpoint.class);
     }
 
-    public void add(final Accomplishment accomplishment, final Uri path, final ControllerCallback<Void> callback) {
+    public void add(final Accomplishment accomplishment, final List<String> contributors, final Uri path, final
+                    ControllerCallback<Accomplishment> callback) {
         InputStream is = null;
         try {
             if(path != null && !TextUtils.isEmpty(path.getPath())) {
                 is = context.getContentResolver().openInputStream(path);
-                byte[] bytes = IOUtils.toByteArray(is);
+                byte[] bytes =  IOUtils.toByteArray(is);
 
                 MultipartBody.Part image = MultipartBody.Part.createFormData("image", null, RequestBody.create
                         (MediaType.parse("image/*"), bytes));
 
-                Call<Void> call = endpoint.add(accomplishment, image);
-                call.enqueue(new Callback<Void>() {
+                // For some reason the implicit conversion from List gives a string instead of a list
+                Call<Accomplishment> call =
+                        endpoint.add(accomplishment, new Contributors(contributors), image);
+                call.enqueue(new Callback<Accomplishment>() {
                     @Override
-                    public void onResponse(Call<Void> call, Response<Void> response) {
+                    public void onResponse(Call<Accomplishment> call, Response<Accomplishment> response) {
                         if(response.isSuccessful()) {
-                            callback.onPostExecute(true, null);
+                            callback.onPostExecute(true, response.body());
                         } else {
                             callback.onPostExecute(false, null);
                         }
                     }
 
                     @Override
-                    public void onFailure(Call<Void> call, Throwable t) {
+                    public void onFailure(Call<Accomplishment> call, Throwable t) {
                         callback.onPostExecute(false, null);
                         t.printStackTrace();
                     }
