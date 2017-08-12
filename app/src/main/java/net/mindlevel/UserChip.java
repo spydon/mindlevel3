@@ -7,6 +7,10 @@ import com.pchmn.materialchips.model.ChipInterface;
 
 import net.mindlevel.model.User;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+
 public class UserChip implements ChipInterface {
 
     private User user;
@@ -31,10 +35,10 @@ public class UserChip implements ChipInterface {
         //Uri uri = getAvatarUri();
         //InputStream is = null;
         //try {
-        //    is = getContentResolver().openInputStream(uri);
+        //    is = context.getContentResolver().openInputStream(uri);
         //    return Drawable.createFromStream(is, uri.toString() );
         //} catch (FileNotFoundException e) {
-        //    return getResources().getDrawable(R.drawable.avatar, getTheme());
+        //    return context.getResources().getDrawable(R.drawable.avatar, context.getTheme());
         //} finally {
         //    if(is != null) {
         //        try {

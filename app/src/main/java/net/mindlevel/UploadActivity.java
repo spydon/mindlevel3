@@ -112,6 +112,7 @@ public class UploadActivity extends AppCompatActivity {
         });
 
         contributorInput = (ChipsInput) findViewById(R.id.contributor_input);
+        contributorInput.setEnabled(false);
         userController.getAll(usernamesCallback);
     }
 
@@ -183,10 +184,12 @@ public class UploadActivity extends AppCompatActivity {
         public void onPostExecute(final Boolean success, final List<User> users) {
             if (success) {
                 ArrayList<UserChip> userChips = new ArrayList<>();
+                contributorInput = (ChipsInput) findViewById(R.id.contributor_input);
                 for(User user : users) {
                     userChips.add(new UserChip(user));
                 }
                 contributorInput.setFilterableList(userChips);
+                contributorInput.setEnabled(true);
             }
         }
     };
