@@ -105,7 +105,7 @@ public class MissionActivity extends AppCompatActivity {
                 String url = ImageUtil.getUrl(mission.image);
                 Glide.with(outerContext)
                         .load(url)
-                        .listener(new ProgressBarController(imageProgressView))
+                        .listener(new ProgressController(imageProgressView))
                         .into(imageView);
             } else {
                 // TODO: Show error

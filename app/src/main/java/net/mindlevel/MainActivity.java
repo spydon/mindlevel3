@@ -110,7 +110,7 @@ public class MainActivity
         fragments.put(R.id.navigation_profile, userFragment);
 
         SharedPreferences sharedPreferences = getSharedPreferences("session", Context.MODE_PRIVATE);
-        if(sharedPreferences.getString("sessionId", "").isEmpty() || NetworkUtil.isConnected(this)) {
+        if(sharedPreferences.getString("sessionId", "").isEmpty() || !NetworkUtil.isConnected(this)) {
             Intent loginIntent = new Intent(this, LoginActivity.class);
             startActivity(loginIntent);
         }

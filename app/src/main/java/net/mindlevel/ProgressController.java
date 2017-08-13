@@ -3,22 +3,21 @@ package net.mindlevel;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.Nullable;
 import android.view.View;
-import android.widget.ProgressBar;
 
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 
-public class ProgressBarController implements RequestListener<Drawable> {
-    private final ProgressBar progressBar;
+public class ProgressController implements RequestListener<Drawable> {
+    private final View progress;
 
-    public ProgressBarController(ProgressBar progressBar) {
-        this.progressBar = progressBar;
+    public ProgressController(View progress) {
+        this.progress = progress;
     }
 
     public void hide() {
-        progressBar.setVisibility(View.GONE);
+        progress.setVisibility(View.GONE);
     }
 
     @Override

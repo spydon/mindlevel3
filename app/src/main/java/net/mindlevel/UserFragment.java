@@ -1,8 +1,11 @@
 package net.mindlevel;
 
 // TODO: Change back to non-support lib
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.content.Context;
 import android.net.Uri;
@@ -11,9 +14,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -35,7 +36,6 @@ import static android.app.Activity.RESULT_OK;
  */
 public class UserFragment extends Fragment {
 
-    private OnFragmentInteractionListener listener;
     private UserController controller;
     private LoginController loginController;
 
@@ -43,8 +43,8 @@ public class UserFragment extends Fragment {
     private TextView usernameView;
     private TextView scoreView;
     private TextView descriptionView;
-    private ProgressBar progressBar;
-    private Button editButton, signOutButton;
+    private View progressView, view, imageProgressBar;
+    private FloatingActionButton editButton, signOutButton;
     private Context context;
     private User user;
 
@@ -53,21 +53,23 @@ public class UserFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.content_user, container, false);
+        view = inflater.inflate(R.layout.fragment_user, container, false);
 
         this.imageView = (ImageView) view.findViewById(R.id.image);
         this.usernameView = (TextView) view.findViewById(R.id.username);
         this.scoreView = (TextView) view.findViewById(R.id.score);
         this.descriptionView = (TextView) view.findViewById(R.id.description);
-        this.progressBar = (ProgressBar) view.findViewById(R.id.progress);
+        this.progressView = view.findViewById(R.id.progress);
+        this.imageProgressBar = view.findViewById(R.id.progress_image);
         this.context = getContext();
 
         this.controller = new UserController(context);
         this.loginController = new LoginController(context);
 
+        showProgress(true);
         populateUserFragment();
 
-        editButton = (Button) view.findViewById(R.id.edit_button);
+        editButton = (FloatingActionButton) view.findViewById(R.id.edit_button);
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -77,7 +79,7 @@ public class UserFragment extends Fragment {
             }
         });
 
-        signOutButton = (Button) view.findViewById(R.id.sign_out_button);
+        signOutButton = (FloatingActionButton) view.findViewById(R.id.sign_out_button);
         signOutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -102,18 +104,11 @@ public class UserFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            listener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        listener = null;
     }
 
     /**
@@ -131,17 +126,30 @@ public class UserFragment extends Fragment {
         void onFragmentInteraction(Uri uri);
     }
 
-    private void userVisibility(boolean visible) {
-        int visibility = visible ? View.VISIBLE : View.GONE;
-        imageView.setVisibility(visibility);
-        usernameView.setVisibility(visibility);
-        scoreView.setVisibility(visibility);
-        descriptionView.setVisibility(visibility);
-        signOutButton.setVisibility(visibility);
-    }
-
     private void setUser(User user) {
         this.user = user;
+    }
+
+    private void showProgress(final boolean show) {
+        int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
+
+        view.setVisibility(show ? View.GONE : View.VISIBLE);
+        view.animate().setDuration(shortAnimTime).alpha(
+                show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                view.setVisibility(show ? View.GONE : View.VISIBLE);
+            }
+        });
+
+        progressView.setVisibility(show ? View.VISIBLE : View.GONE);
+        progressView.animate().setDuration(shortAnimTime).alpha(
+                show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                progressView.setVisibility(show ? View.VISIBLE : View.GONE);
+            }
+        });
     }
 
     private ControllerCallback<User> userCallback = new ControllerCallback<User>() {
@@ -149,8 +157,9 @@ public class UserFragment extends Fragment {
         @Override
         public void onPostExecute(final Boolean success, final User user) {
             setUser(user);
-            ProgressBarController loading = new ProgressBarController(progressBar);
+            ProgressController loading = new ProgressController(imageProgressBar);
             if(success) {
+                showProgress(false);
                 if(!TextUtils.isEmpty(user.image)) {
                     String url = ImageUtil.getUrl(user.image);
                     Glide.with(imageView.getContext())

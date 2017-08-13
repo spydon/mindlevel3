@@ -48,7 +48,7 @@ public class MissionsRecyclerViewAdapter extends RecyclerView.Adapter<MissionsRe
         String url = ImageUtil.getUrl(holder.item.image);
         Glide.with(imageView.getContext())
                 .load(url)
-                .listener(new ProgressBarController(holder.progressBar))
+                .listener(new ProgressController(holder.progressBar))
                 .into(imageView);
 
         holder.view.setOnClickListener(new View.OnClickListener() {

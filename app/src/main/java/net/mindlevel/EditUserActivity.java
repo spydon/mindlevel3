@@ -108,7 +108,7 @@ public class EditUserActivity extends AppCompatActivity {
             String url = ImageUtil.getUrl(user.image);
             Glide.with(this)
                     .load(url)
-                    .listener(new ProgressBarController(progressBar))
+                    .listener(new ProgressController(progressBar))
                     .into(imageView);
 
         }

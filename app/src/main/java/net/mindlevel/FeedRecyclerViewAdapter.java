@@ -44,7 +44,7 @@ public class FeedRecyclerViewAdapter extends RecyclerView.Adapter<FeedRecyclerVi
         String url = ImageUtil.getUrl(holder.item.image);
         Glide.with(imageView.getContext())
                 .load(url)
-                .listener(new ProgressBarController(holder.progressBar))
+                .listener(new ProgressController(holder.progressBar))
                 .into(imageView);
 
         View.OnClickListener onClickListener = new View.OnClickListener() {

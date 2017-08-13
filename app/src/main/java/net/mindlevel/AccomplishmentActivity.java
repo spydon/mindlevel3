@@ -1,14 +1,12 @@
 package net.mindlevel;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -75,7 +73,7 @@ public class AccomplishmentActivity extends AppCompatActivity {
         progressBar = (ProgressBar) findViewById(R.id.progress);
         Glide.with(this)
                 .load(url)
-                .listener(new ProgressBarController(progressBar))
+                .listener(new ProgressController(progressBar))
                 .into(imageView);
 
         TextView titleView = (TextView) findViewById(R.id.title);
