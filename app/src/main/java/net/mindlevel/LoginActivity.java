@@ -2,12 +2,11 @@ package net.mindlevel;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
-import android.annotation.TargetApi;
 import android.content.Context;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 
 
-import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.KeyEvent;
@@ -23,6 +22,7 @@ import net.mindlevel.api.ControllerCallback;
 import net.mindlevel.api.LoginController;
 import net.mindlevel.api.UserController;
 import net.mindlevel.model.Login;
+import net.mindlevel.util.NetworkUtil;
 
 /**
  * A login screen that offers login via username/password.
@@ -33,6 +33,7 @@ public class LoginActivity extends AppCompatActivity {
     private UserController userController;
 
     // UI references.
+    private View coordinatorLayout;
     private EditText usernameView;
     private EditText passwordView;
     private View progressView;
@@ -42,7 +43,8 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        View innerView = findViewById(R.id.inner_login_form);
+        coordinatorLayout = findViewById(R.id.login_outer);
+        View innerView = findViewById(R.id.login_inner_form);
         loginController = new LoginController(innerView.getContext());
         userController = new UserController(innerView.getContext());
 
@@ -87,6 +89,9 @@ public class LoginActivity extends AppCompatActivity {
      * errors are presented and no actual login attempt is made.
      */
     private void attemptLogin(boolean isNewUser) {
+        if(!NetworkUtil.connectionCheck(getApplicationContext(), coordinatorLayout)) {
+            return;
+        }
         // Reset errors.
         usernameView.setError(null);
         passwordView.setError(null);

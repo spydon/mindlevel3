@@ -59,5 +59,7 @@
     <string name="author">Lukas Klingsbo (spydon)</string>
     <string name="about_email">me@lukas.fyi</string>
     <string name="about_site">http://lukas.fyi</string>
+    <string name="error_network">No network available, try again later</string>
+    <string name="error_backend">Performing maintainance, try again later</string>
 
 </resources>

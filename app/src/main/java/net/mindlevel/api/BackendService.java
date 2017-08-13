@@ -2,13 +2,17 @@ package net.mindlevel.api;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Looper;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import net.mindlevel.R;
+import net.mindlevel.util.NetworkUtil;
 
 import java.io.IOException;
+import java.net.SocketException;
 
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
@@ -22,7 +26,7 @@ public abstract class BackendService {
     protected Context context;
     private SharedPreferences sharedPreferences;
 
-    BackendService(Context context) {
+    BackendService(final Context context) {
         this.context = context;
         this.sharedPreferences = context.getSharedPreferences("session", Context.MODE_PRIVATE);
         Gson gson = new GsonBuilder()
@@ -37,7 +41,20 @@ public abstract class BackendService {
             }
         };
 
+        Interceptor errorInterceptor = new Interceptor() {
+            @Override
+            public Response intercept(Chain chain) throws IOException {
+                if(!NetworkUtil.isConnected(context)) {
+                    throw new SocketException("No network");
+                } else if(!NetworkUtil.isBackendAvailable(context)) {
+                    throw new SocketException("Backend not available");
+                }
+                return chain.proceed(chain.request());
+            }
+        };
+
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+        httpClient.addInterceptor(errorInterceptor);
         httpClient.addInterceptor(sessionHeaderInterceptor);
 
         retrofit = new Retrofit.Builder()
