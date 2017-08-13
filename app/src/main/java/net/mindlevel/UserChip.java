@@ -27,7 +27,8 @@ public class UserChip implements ChipInterface {
 
     @Override
     public Uri getAvatarUri() {
-        return Uri.parse(user.image);
+        Uri uri = user.image == null ? null : Uri.parse(user.image);
+        return uri;
     }
 
     @Override

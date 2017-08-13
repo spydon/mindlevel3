@@ -31,6 +31,13 @@
             android:layout_height="wrap_content"
             android:inputType="textCapSentences|textAutoCorrect"/>
 
+        <com.pchmn.materialchips.ChipsInput
+            android:id="@+id/contributor_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:chip_hasAvatarIcon="false"
+            app:hint="@string/hint_contributors" />
+
         <EditText
             android:id="@+id/description"
             android:hint="@string/hint_upload_description"
@@ -40,13 +47,6 @@
             android:layout_height="wrap_content">
             <requestFocus />
         </EditText>
-
-        <com.pchmn.materialchips.ChipsInput
-            android:id="@+id/contributor_input"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:chip_hasAvatarIcon="false"
-            app:hint="@string/hint_contributors" />
 
         <Button
             android:id="@+id/upload_button"

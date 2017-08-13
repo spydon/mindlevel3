@@ -13,6 +13,7 @@ import net.mindlevel.util.NetworkUtil;
 
 import java.io.IOException;
 import java.net.SocketException;
+import java.util.concurrent.TimeUnit;
 
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
@@ -54,6 +55,9 @@ public abstract class BackendService {
         };
 
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+        httpClient.connectTimeout(30, TimeUnit.SECONDS);
+        httpClient.readTimeout(30, TimeUnit.SECONDS);
+        httpClient.writeTimeout(120, TimeUnit.SECONDS);
         httpClient.addInterceptor(errorInterceptor);
         httpClient.addInterceptor(sessionHeaderInterceptor);
 
