@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -46,7 +47,7 @@ public class EditUserActivity extends AppCompatActivity {
     private EditText passwordView2;
     private EditText descriptionView;
     private ProgressBar progressBar;
-    private View editFormView;
+    private View editFormView, progressView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,7 +102,9 @@ public class EditUserActivity extends AppCompatActivity {
         });
 
         editFormView = findViewById(R.id.edit_form);
-        progressBar = (ProgressBar) findViewById(R.id.edit_progress);
+        progressBar = (ProgressBar) findViewById(R.id.progress_image);
+        progressView = findViewById(R.id.progress);
+        showProgress(false);
 
         descriptionView.setText(user.description);
         if(user.image != null && !user.image.isEmpty()) {
@@ -138,7 +141,7 @@ public class EditUserActivity extends AppCompatActivity {
             cancel = true;
         }
 
-        if (!isPasswordValid(password1)) {
+        if (!isPasswordValid(password1) && !password1.isEmpty()) {
             passwordView1.setError(getString(R.string.error_invalid_password));
             focusView = passwordView1;
             cancel = true;
@@ -180,12 +183,12 @@ public class EditUserActivity extends AppCompatActivity {
             }
         });
 
-        progressBar.setVisibility(show ? View.VISIBLE : View.GONE);
-        progressBar.animate().setDuration(shortAnimTime).alpha(
+        progressView.setVisibility(show ? View.VISIBLE : View.GONE);
+        progressView.animate().setDuration(shortAnimTime).alpha(
                 show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
-                progressBar.setVisibility(show ? View.VISIBLE : View.GONE);
+                progressView.setVisibility(show ? View.VISIBLE : View.GONE);
             }
         });
     }
