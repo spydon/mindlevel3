@@ -30,7 +30,7 @@
         android:layout_gravity="bottom|end"
         android:layout_marginBottom="@dimen/fab_margin2"
         android:layout_marginEnd="@dimen/fab_margin"
-        app:srcCompat="@android:drawable/ic_media_play"/>
+        app:srcCompat="@drawable/mission"/>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab_share"
@@ -38,6 +38,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@android:drawable/ic_menu_share"/>
+        app:srcCompat="@drawable/share"/>
 
 </android.support.design.widget.CoordinatorLayout>
