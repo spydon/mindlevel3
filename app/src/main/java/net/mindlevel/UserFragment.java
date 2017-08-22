@@ -25,6 +25,7 @@ import net.mindlevel.api.UserController;
 import net.mindlevel.model.Login;
 import net.mindlevel.model.User;
 import net.mindlevel.util.ImageUtil;
+import net.mindlevel.util.NetworkUtil;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -91,6 +92,11 @@ public class UserFragment extends Fragment {
                 loginController.logout(login, signOutCallback);
             }
         });
+
+        if(!NetworkUtil.connectionCheck(getContext(), view)) {
+            editButton.setEnabled(false);
+            signOutButton.setEnabled(false);
+        }
 
         return view;
     }
