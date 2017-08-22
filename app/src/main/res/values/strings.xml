@@ -66,5 +66,6 @@
     <string name="tip">Tip: %1$s</string>
     <string name="tip_like">Double click image to like it</string>
     <string name="tip_contributor">Contributors all receive points too</string>
+    <string name="title_highscore">Highscore</string>
 
 </resources>

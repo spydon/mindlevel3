@@ -21,6 +21,7 @@ import android.view.MenuItem;
 
 import net.mindlevel.model.Accomplishment;
 import net.mindlevel.model.Mission;
+import net.mindlevel.model.User;
 import net.mindlevel.util.ImageUtil;
 import net.mindlevel.util.NetworkUtil;
 
@@ -31,11 +32,13 @@ public class MainActivity
         extends AppCompatActivity
         implements MissionsFragment.OnListFragmentInteractionListener,
         FeedFragment.OnListFragmentInteractionListener,
+        HighscoreFragment.OnListFragmentInteractionListener,
         UserFragment.OnFragmentInteractionListener {
 
-    private final UserFragment userFragment = new UserFragment();
-    private final MissionsFragment missionsFragment = new MissionsFragment();
     private final FeedFragment feedFragment = new FeedFragment();
+    private final MissionsFragment missionsFragment = new MissionsFragment();
+    private final HighscoreFragment highscoreFragment = new HighscoreFragment();
+    private final UserFragment userFragment = new UserFragment();
     private final LinkedHashMap<Integer, Fragment> fragments = new LinkedHashMap<>();
 
     private Fragment currentFragment;
@@ -99,6 +102,13 @@ public class MainActivity
         startActivity(missionIntent);
     }
 
+    public void onListFragmentInteraction(User user) {
+        // TODO: Check how to start non programmatically, R.id.Mission... etc
+        Intent userIntent = new Intent(this, UserFragment.class);
+        userIntent.putExtra("user", user);
+        startActivity(userIntent);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -107,6 +117,7 @@ public class MainActivity
 
         fragments.put(R.id.navigation_feed, feedFragment);
         fragments.put(R.id.navigation_missions, missionsFragment);
+        fragments.put(R.id.navigation_highscore, highscoreFragment);
         fragments.put(R.id.navigation_profile, userFragment);
 
         SharedPreferences sharedPreferences = getSharedPreferences("session", Context.MODE_PRIVATE);
