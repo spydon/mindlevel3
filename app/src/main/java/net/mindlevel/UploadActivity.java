@@ -30,8 +30,11 @@ import net.mindlevel.util.ImageUtil;
 import net.mindlevel.util.KeyboardUtil;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import id.zelory.compressor.Compressor;
 
 import static net.mindlevel.util.ImageUtil.PICK_IMAGE;
 import static net.mindlevel.util.ImageUtil.REQUEST_IMAGE_CAPTURE;
@@ -105,7 +108,6 @@ public class UploadActivity extends AppCompatActivity {
                 for(ChipInterface chip : contributorInput.getSelectedChipList()) {
                     contributors.add(chip.getLabel());
                 }
-                contributors.add("spydon");
                 Accomplishment accomplishment = new Accomplishment(0, titleView.getText().toString(),
                         descriptionView.getText().toString(), "", missionId, 0, 0);
                 accomplishmentController.add(accomplishment, contributors, path, uploadCallback);
@@ -155,6 +157,7 @@ public class UploadActivity extends AppCompatActivity {
                 }
                 path = data.getData();
             }
+
             ImageView imageView = (ImageView)findViewById(R.id.image);
             utils.setImage(path, imageView);
         }
