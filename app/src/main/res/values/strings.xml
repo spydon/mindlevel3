@@ -60,6 +60,11 @@
     <string name="about_email">me@lukas.fyi</string>
     <string name="about_site">http://lukas.fyi</string>
     <string name="error_network">No network available, try again later</string>
-    <string name="error_backend">Performing maintainance, try again later</string>
+    <string name="error_backend">Performing maintenance, try again later</string>
+
+    <!-- Strings related to tips -->
+    <string name="tip">Tip: %1$s</string>
+    <string name="tip_like">Double click image to like it</string>
+    <string name="tip_contributor">Contributors all receive points too</string>
 
 </resources>

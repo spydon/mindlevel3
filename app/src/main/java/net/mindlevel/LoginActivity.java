@@ -27,6 +27,8 @@ import net.mindlevel.api.UserController;
 import net.mindlevel.model.Login;
 import net.mindlevel.util.NetworkUtil;
 
+import java.util.Random;
+
 /**
  * A login screen that offers login via username/password.
  */
@@ -84,6 +86,14 @@ public class LoginActivity extends AppCompatActivity {
 
         loginFormView = findViewById(R.id.login_form);
         progressView = findViewById(R.id.login_progress);
+        setRandomTip();
+    }
+
+    private void setRandomTip() {
+        TextView random = (TextView) findViewById(R.id.tip);
+        String[] tips = {getString(R.string.tip_like), getString(R.string.tip_contributor)};
+        String tip = tips[new Random().nextInt(tips.length)];
+        random.setText(getString(R.string.tip, tip));
     }
 
     /**
