@@ -20,6 +20,7 @@
         tools:context="net.mindlevel.FeedFragment"
         tools:listitem="@layout/fragment_feed" />
 
-    <include layout="@layout/progress_center"/>
+    <include layout="@layout/error_center" />
+    <include layout="@layout/progress_center" />
 
 </LinearLayout>

@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import net.mindlevel.api.AccomplishmentController;
 import net.mindlevel.api.ControllerCallback;
 import net.mindlevel.model.Accomplishment;
+import net.mindlevel.util.NetworkUtil;
 
 import java.util.List;
 
@@ -35,7 +36,7 @@ public class FeedFragment extends Fragment {
     private OnListFragmentInteractionListener listener;
     private AccomplishmentController controller;
     private RecyclerView recyclerView;
-    private View view, progressView;
+    private View view, progressView, errorView;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -71,8 +72,8 @@ public class FeedFragment extends Fragment {
         recyclerView = (RecyclerView) view.findViewById(R.id.list);
 
         progressView = view.findViewById(R.id.progress);
+        errorView = view.findViewById(R.id.error);
         Context context = getContext();
-        showProgress(true);
 
         if (columnCount <= 1) {
             recyclerView.setLayoutManager(new LinearLayoutManager(context));
@@ -81,7 +82,13 @@ public class FeedFragment extends Fragment {
                     new StaggeredGridLayoutManager(columnCount, StaggeredGridLayoutManager.VERTICAL));
         }
 
-        controller.getLatest(getLatestCallback);
+        if (NetworkUtil.connectionCheck(getContext(), getView())) {
+            showProgress(true);
+            controller.getLatest(getLatestCallback);
+        } else {
+            showProgress(false);
+            showError(true);
+        }
         return view;
     }
 
@@ -127,6 +134,28 @@ public class FeedFragment extends Fragment {
 
         progressView.setVisibility(show ? View.VISIBLE : View.GONE);
         progressView.animate().setDuration(shortAnimTime).alpha(
+                show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                progressView.setVisibility(show ? View.VISIBLE : View.GONE);
+            }
+        });
+    }
+
+    private void showError(final boolean show) {
+        int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
+
+        recyclerView.setVisibility(show ? View.GONE : View.VISIBLE);
+        recyclerView.animate().setDuration(shortAnimTime).alpha(
+                show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                recyclerView.setVisibility(show ? View.GONE : View.VISIBLE);
+            }
+        });
+
+        errorView.setVisibility(show ? View.VISIBLE : View.GONE);
+        errorView.animate().setDuration(shortAnimTime).alpha(
                 show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {

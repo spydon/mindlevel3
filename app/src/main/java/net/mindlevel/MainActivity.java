@@ -112,7 +112,7 @@ public class MainActivity
         SharedPreferences sharedPreferences = getSharedPreferences("session", Context.MODE_PRIVATE);
         if(sharedPreferences.getString("sessionId", "").isEmpty() || !NetworkUtil.isConnected(this)) {
             Intent loginIntent = new Intent(this, LoginActivity.class);
-            startActivity(loginIntent);
+            startActivity(loginIntent); //TODO: Enable again
         }
 
         navigation = (BottomNavigationView) findViewById(R.id.navigation);
