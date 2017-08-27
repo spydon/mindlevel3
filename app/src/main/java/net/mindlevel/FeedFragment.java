@@ -33,6 +33,7 @@ public class FeedFragment extends Fragment {
     private static final String ARG_COLUMN_COUNT = "column-count";
     // TODO: Customize parameters
     private int columnCount = 2;
+    private int shortAnimTime;
     private OnListFragmentInteractionListener listener;
     private AccomplishmentController controller;
     private RecyclerView recyclerView;
@@ -59,6 +60,7 @@ public class FeedFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.controller = new AccomplishmentController(getContext());
+        this.shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
 
         if (getArguments() != null) {
             columnCount = getArguments().getInt(ARG_COLUMN_COUNT);
@@ -82,12 +84,11 @@ public class FeedFragment extends Fragment {
                     new StaggeredGridLayoutManager(columnCount, StaggeredGridLayoutManager.VERTICAL));
         }
 
-        if (NetworkUtil.connectionCheck(getContext(), getView())) {
-            showProgress(true);
+        if (!NetworkUtil.connectionCheck(getContext(), getView())) {
+            showInfo(false, true);
             controller.getLatest(getLatestCallback);
         } else {
-            showProgress(false);
-            showError(true);
+            showInfo(true, false);
         }
         return view;
     }
@@ -120,46 +121,33 @@ public class FeedFragment extends Fragment {
         void onListFragmentInteraction(Accomplishment accomplishment);
     }
 
-    private void showProgress(final boolean show) {
-        int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
+    private void showInfo(final boolean isError, final boolean isProgress) {
+        final boolean isNormal = !isError && !isProgress;
 
-        recyclerView.setVisibility(show ? View.GONE : View.VISIBLE);
+        recyclerView.setVisibility(isNormal ? View.VISIBLE : View.GONE);
         recyclerView.animate().setDuration(shortAnimTime).alpha(
-                show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
+                isNormal ? 0 : 1).setListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
-                recyclerView.setVisibility(show ? View.GONE : View.VISIBLE);
+                recyclerView.setVisibility(isNormal ? View.VISIBLE : View.GONE);
             }
         });
 
-        progressView.setVisibility(show ? View.VISIBLE : View.GONE);
-        progressView.animate().setDuration(shortAnimTime).alpha(
-                show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                progressView.setVisibility(show ? View.VISIBLE : View.GONE);
-            }
-        });
-    }
-
-    private void showError(final boolean show) {
-        int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
-
-        recyclerView.setVisibility(show ? View.GONE : View.VISIBLE);
-        recyclerView.animate().setDuration(shortAnimTime).alpha(
-                show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                recyclerView.setVisibility(show ? View.GONE : View.VISIBLE);
-            }
-        });
-
-        errorView.setVisibility(show ? View.VISIBLE : View.GONE);
+        errorView.setVisibility(isError ? View.VISIBLE : View.GONE);
         errorView.animate().setDuration(shortAnimTime).alpha(
-                show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
+                isError ? 1 : 0).setListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
-                progressView.setVisibility(show ? View.VISIBLE : View.GONE);
+                progressView.setVisibility(isError ? View.VISIBLE : View.GONE);
+            }
+        });
+
+        progressView.setVisibility(isProgress ? View.VISIBLE : View.GONE);
+        progressView.animate().setDuration(shortAnimTime).alpha(
+                isProgress ? 1 : 0).setListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                progressView.setVisibility(isProgress ? View.VISIBLE : View.GONE);
             }
         });
     }
@@ -167,11 +155,14 @@ public class FeedFragment extends Fragment {
     private ControllerCallback<List<Accomplishment>> getLatestCallback = new ControllerCallback<List<Accomplishment>>() {
         @Override
         public void onPostExecute(Boolean isSuccess, List<Accomplishment> response) {
-            showProgress(false);
-            if(isSuccess) {
-                recyclerView.setAdapter(new FeedRecyclerViewAdapter(response, listener));
-            } else {
-                // TODO: Show error
+            if(getActivity() != null) {
+                if (isSuccess && getActivity() != null) {
+                    showInfo(false, false);
+                    recyclerView.setAdapter(new FeedRecyclerViewAdapter(response, listener));
+                } else {
+                    showInfo(true, false);
+                    // TODO: Show error
+                }
             }
         }
     };

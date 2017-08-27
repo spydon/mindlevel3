@@ -34,6 +34,7 @@ public class HighscoreFragment extends Fragment {
     private static final String ARG_COLUMN_COUNT = "column-count";
     // TODO: Customize parameters
     private int columnCount = 1;
+    private int shortAnimTime;
     private OnListFragmentInteractionListener listener;
     private UserController controller;
     private RecyclerView recyclerView;
@@ -60,6 +61,7 @@ public class HighscoreFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.controller = new UserController(getContext());
+        this.shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
 
         if (getArguments() != null) {
             columnCount = getArguments().getInt(ARG_COLUMN_COUNT);
@@ -118,8 +120,6 @@ public class HighscoreFragment extends Fragment {
     }
 
     private void showProgress(final boolean show) {
-        int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
-
         recyclerView.setVisibility(show ? View.GONE : View.VISIBLE);
         recyclerView.animate().setDuration(shortAnimTime).alpha(
                 show ? 0 : 1).setListener(new AnimatorListenerAdapter() {

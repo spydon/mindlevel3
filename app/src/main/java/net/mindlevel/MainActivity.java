@@ -18,6 +18,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import net.mindlevel.model.Accomplishment;
 import net.mindlevel.model.Mission;
@@ -27,6 +28,8 @@ import net.mindlevel.util.NetworkUtil;
 
 import java.util.Arrays;
 import java.util.LinkedHashMap;
+
+import static android.support.v4.view.accessibility.AccessibilityNodeInfoCompat.AccessibilityActionCompat.ACTION_CONTEXT_CLICK;
 
 public class MainActivity
         extends AppCompatActivity
@@ -149,6 +152,7 @@ public class MainActivity
                 for(int i = 0; i < menu.size(); i++) {
                     menu.getItem(i).setChecked(false);
                 }
+
                 MenuItem selectedItem = menu.getItem(position);
                 selectedItem.setChecked(true);
                 navigationItemSelectedListener.onNavigationItemSelected(selectedItem);
