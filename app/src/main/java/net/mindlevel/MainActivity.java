@@ -15,7 +15,6 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
 import net.mindlevel.model.Accomplishment;
 import net.mindlevel.model.Mission;
@@ -121,7 +120,7 @@ public class MainActivity
         SharedPreferences sharedPreferences = getSharedPreferences("session", Context.MODE_PRIVATE);
         if(sharedPreferences.getString("sessionId", "").isEmpty() || !NetworkUtil.isConnected(this)) {
             Intent loginIntent = new Intent(this, LoginActivity.class);
-            //startActivity(loginIntent); //TODO: Enable again
+            startActivity(loginIntent); //TODO: Enable again
         }
 
         navigation = (BottomNavigationView) findViewById(R.id.navigation);
