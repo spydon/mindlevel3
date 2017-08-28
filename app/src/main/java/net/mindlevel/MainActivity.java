@@ -6,9 +6,6 @@ import android.content.SharedPreferences;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.app.FragmentManager;
-//import android.app.Fragment;
-//import android.support.v13.app.FragmentStatePagerAdapter;
-//import android.app.FragmentManager;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -28,8 +25,6 @@ import net.mindlevel.util.NetworkUtil;
 
 import java.util.Arrays;
 import java.util.LinkedHashMap;
-
-import static android.support.v4.view.accessibility.AccessibilityNodeInfoCompat.AccessibilityActionCompat.ACTION_CONTEXT_CLICK;
 
 public class MainActivity
         extends AppCompatActivity
@@ -146,16 +141,9 @@ public class MainActivity
 
             @Override
             public void onPageSelected(int position) {
-                // TODO: There must be something built-in for this.
-                // Currently unchecks all menu items and then checks the correct one
                 Menu menu = navigation.getMenu();
-                for(int i = 0; i < menu.size(); i++) {
-                    menu.getItem(i).setChecked(false);
-                }
-
                 MenuItem selectedItem = menu.getItem(position);
-                selectedItem.setChecked(true);
-                navigationItemSelectedListener.onNavigationItemSelected(selectedItem);
+                findViewById(selectedItem.getItemId()).callOnClick();
             }
 
             @Override

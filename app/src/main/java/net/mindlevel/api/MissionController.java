@@ -5,6 +5,11 @@ import android.content.Context;
 import net.mindlevel.api.endpoint.MissionEndpoint;
 import net.mindlevel.model.Mission;
 
+import org.apache.commons.io.FileUtils;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.charset.Charset;
 import java.util.List;
 
 import retrofit2.Call;
@@ -26,20 +31,27 @@ public class MissionController extends BackendService {
             @Override
             public void onResponse(Call<List<Mission>> call, Response<List<Mission>> response) {
                 if(response.isSuccessful()) {
+                    // TODO: Cache missions
                     callback.onPostExecute(true, response.body());
+                    cacheMissions(response.body());
                 } else {
+                    // TODO: send back missions that are cached
+                    // Handle when cached missions don't exist
                     callback.onPostExecute(false, null);
                 }
             }
 
             @Override
             public void onFailure(Call<List<Mission>> call, Throwable t) {
+                // TODO: send back missions that are cached
+                // Handle when cached missions don't exist
                 callback.onPostExecute(false, null);
                 t.printStackTrace();
             }
         });
     }
 
+    // TODO: Get from cached json file when call fails
     public void get(final int missionId, final ControllerCallback<Mission> callback) {
         Call<Mission> call = endpoint.get(missionId);
         call.enqueue(new Callback<Mission>() {
@@ -58,5 +70,15 @@ public class MissionController extends BackendService {
                 t.printStackTrace();
             }
         });
+    }
+
+    private void cacheMissions(List<Mission> missions) {
+        File outputDir = context.getFilesDir(); // TODO: getDataDir?
+        File targetFile = new File(outputDir + "/missions.txt");
+        try {
+            FileUtils.writeStringToFile(targetFile, missions.toString(), Charset.defaultCharset());
+        } catch (IOException e) {
+            // Not that important if caching was not successful
+        }
     }
 }

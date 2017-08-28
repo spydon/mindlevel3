@@ -156,12 +156,11 @@ public class FeedFragment extends Fragment {
         @Override
         public void onPostExecute(Boolean isSuccess, List<Accomplishment> response) {
             if(getActivity() != null) {
-                if (isSuccess && getActivity() != null) {
+                if (isSuccess) {
                     showInfo(false, false);
                     recyclerView.setAdapter(new FeedRecyclerViewAdapter(response, listener));
                 } else {
                     showInfo(true, false);
-                    // TODO: Show error
                 }
             }
         }
