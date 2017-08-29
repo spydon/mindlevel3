@@ -48,6 +48,7 @@ public class UserFragment extends Fragment {
     private FloatingActionButton editButton, signOutButton;
     private Context context;
     private User user;
+    private int shortAnimTime;
 
     private final static int UPDATE_USER = 1;
 
@@ -66,6 +67,8 @@ public class UserFragment extends Fragment {
 
         this.controller = new UserController(context);
         this.loginController = new LoginController(context);
+
+        this.shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
 
         showProgress(true);
         populateUserFragment();
@@ -137,8 +140,6 @@ public class UserFragment extends Fragment {
     }
 
     private void showProgress(final boolean show) {
-        int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
-
         view.setVisibility(show ? View.GONE : View.VISIBLE);
         view.animate().setDuration(shortAnimTime).alpha(
                 show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
