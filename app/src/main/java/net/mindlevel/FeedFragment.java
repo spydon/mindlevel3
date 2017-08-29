@@ -84,7 +84,7 @@ public class FeedFragment extends Fragment {
                     new StaggeredGridLayoutManager(columnCount, StaggeredGridLayoutManager.VERTICAL));
         }
 
-        if (!NetworkUtil.connectionCheck(getContext(), getView())) {
+        if (NetworkUtil.connectionCheck(getContext(), getView())) {
             showInfo(false, true);
             controller.getLatest(getLatestCallback);
         } else {

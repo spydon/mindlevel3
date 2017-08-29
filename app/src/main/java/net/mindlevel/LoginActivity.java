@@ -4,6 +4,8 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 
@@ -15,6 +17,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
@@ -88,6 +91,8 @@ public class LoginActivity extends AppCompatActivity {
         loginFormView = findViewById(R.id.login_form);
         progressView = findViewById(R.id.login_progress);
         setRandomTip();
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION, WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
     }
 
     private void setRandomTip() {
