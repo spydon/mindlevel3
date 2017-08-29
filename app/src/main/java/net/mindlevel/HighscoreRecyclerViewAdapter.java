@@ -41,8 +41,9 @@ public class HighscoreRecyclerViewAdapter extends RecyclerView.Adapter<Highscore
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.item = users.get(position);
-        holder.titleView.setText(users.get(position).username);
-        holder.descriptionView.setText(users.get(position).description);
+        holder.positionView.setText(String.valueOf(position+1));
+        holder.usernameView.setText(users.get(position).username);
+        holder.scoreView.setText(String.valueOf(users.get(position).score));
 
         ImageView imageView = holder.imageView;
         String url = ImageUtil.getUrl(holder.item.image);
@@ -72,22 +73,24 @@ public class HighscoreRecyclerViewAdapter extends RecyclerView.Adapter<Highscore
         public User item;
         public final View view;
         public final ImageView imageView;
-        public final TextView titleView;
-        public final TextView descriptionView;
+        public final TextView usernameView;
+        public final TextView scoreView;
+        public final TextView positionView;
         public final ProgressBar progressBar;
 
         public ViewHolder(View view) {
             super(view);
             this.view = view;
             imageView = (ImageView) view.findViewById(R.id.image);
-            titleView = (TextView) view.findViewById(R.id.title);
-            descriptionView = (TextView) view.findViewById(R.id.description);
+            usernameView = (TextView) view.findViewById(R.id.username);
+            scoreView = (TextView) view.findViewById(R.id.score);
+            positionView = (TextView) view.findViewById(R.id.position);
             progressBar = (ProgressBar) view.findViewById(R.id.image_progress);
         }
 
         @Override
         public String toString() {
-            return super.toString() + " '" + titleView.getText() + "'";
+            return super.toString() + " '" + usernameView.getText() + "'";
         }
     }
 }
