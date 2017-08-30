@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import net.mindlevel.api.ControllerCallback;
 import net.mindlevel.api.UserController;
 import net.mindlevel.model.User;
+import net.mindlevel.util.NetworkUtil;
 
 import java.util.List;
 
@@ -38,7 +39,7 @@ public class HighscoreFragment extends Fragment {
     private OnListFragmentInteractionListener listener;
     private UserController controller;
     private RecyclerView recyclerView;
-    private View view, progressView;
+    private View view, progressView, errorView;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -73,10 +74,10 @@ public class HighscoreFragment extends Fragment {
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_highscore_list, container, false);
         recyclerView = (RecyclerView) view.findViewById(R.id.list);
-
         progressView = view.findViewById(R.id.progress);
+        errorView = view.findViewById(R.id.error);
+
         Context context = getContext();
-        showProgress(true);
 
         if (columnCount <= 1) {
             recyclerView.setLayoutManager(new LinearLayoutManager(context));
@@ -84,7 +85,12 @@ public class HighscoreFragment extends Fragment {
             recyclerView.setLayoutManager(new GridLayoutManager(context, columnCount));
         }
 
-        controller.getAll(getAllCallback);
+        if (NetworkUtil.connectionCheck(context, null)) {
+            showInfo(false, true);
+            controller.getAll(getAllCallback);
+        } else {
+            showInfo(true, false);
+        }
         return view;
     }
 
@@ -119,22 +125,33 @@ public class HighscoreFragment extends Fragment {
         void onListFragmentInteraction(User user);
     }
 
-    private void showProgress(final boolean show) {
-        recyclerView.setVisibility(show ? View.GONE : View.VISIBLE);
+    private void showInfo(final boolean isError, final boolean isProgress) {
+        final boolean isNormal = !isError && !isProgress;
+
+        recyclerView.setVisibility(isNormal ? View.VISIBLE : View.GONE);
         recyclerView.animate().setDuration(shortAnimTime).alpha(
-                show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
+                isNormal ? 0 : 1).setListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
-                recyclerView.setVisibility(show ? View.GONE : View.VISIBLE);
+                recyclerView.setVisibility(isNormal ? View.VISIBLE : View.GONE);
             }
         });
 
-        progressView.setVisibility(show ? View.VISIBLE : View.GONE);
-        progressView.animate().setDuration(shortAnimTime).alpha(
-                show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
+        errorView.setVisibility(isError ? View.VISIBLE : View.GONE);
+        errorView.animate().setDuration(shortAnimTime).alpha(
+                isError ? 1 : 0).setListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
-                progressView.setVisibility(show ? View.VISIBLE : View.GONE);
+                progressView.setVisibility(isError ? View.VISIBLE : View.GONE);
+            }
+        });
+
+        progressView.setVisibility(isProgress ? View.VISIBLE : View.GONE);
+        progressView.animate().setDuration(shortAnimTime).alpha(
+                isProgress ? 1 : 0).setListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                progressView.setVisibility(isProgress ? View.VISIBLE : View.GONE);
             }
         });
     }
@@ -142,11 +159,11 @@ public class HighscoreFragment extends Fragment {
     private ControllerCallback<List<User>> getAllCallback = new ControllerCallback<List<User>>() {
         @Override
         public void onPostExecute(Boolean isSuccess, List<User> response) {
-            showProgress(false);
             if(isSuccess) {
+                showInfo(false, false);
                 recyclerView.setAdapter(new HighscoreRecyclerViewAdapter(response, listener));
             } else {
-                // TODO: Show error
+                showInfo(true, false);
             }
         }
     };

@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="50dp" />
 
-    <include layout="@layout/image_like"/>
+    <include layout="@layout/image_like" />
 
     <TextView
         android:id="@+id/title"
