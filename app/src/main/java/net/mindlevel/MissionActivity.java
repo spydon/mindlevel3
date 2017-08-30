@@ -19,13 +19,14 @@ import net.mindlevel.api.ControllerCallback;
 import net.mindlevel.api.MissionController;
 import net.mindlevel.model.Mission;
 import net.mindlevel.util.ImageUtil;
+import net.mindlevel.util.NetworkUtil;
 
 public class MissionActivity extends AppCompatActivity {
 
     private MissionController controller;
     private View missionView, progressView;
     private ProgressBar imageProgressView;
-    private Context outerContext;
+    private Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +36,7 @@ public class MissionActivity extends AppCompatActivity {
         progressView = findViewById(R.id.progress);
         imageProgressView = (ProgressBar) findViewById(R.id.image_progress);
         controller = new MissionController(missionView.getContext());
-        outerContext = this;
+        context = this;
         showProgress(true);
 
         if(getIntent().hasExtra("mission")) {
@@ -91,22 +92,26 @@ public class MissionActivity extends AppCompatActivity {
                 TextView descriptionView = (TextView) findViewById(R.id.description);
                 descriptionView.setText(mission.description);
 
-                FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-                fab.setOnClickListener(new View.OnClickListener() {
+                FloatingActionButton uploadButton = (FloatingActionButton) findViewById(R.id.fab);
+                uploadButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Intent missionIntent = new Intent(outerContext, UploadActivity.class);
-                        missionIntent.putExtra("mission", mission);
-                        startActivity(missionIntent);
+                        Intent uploadIntent = new Intent(context, UploadActivity.class);
+                        uploadIntent.putExtra("mission", mission);
+                        startActivity(uploadIntent);
                     }
                 });
 
                 ImageView imageView = (ImageView) findViewById(R.id.image);
                 String url = ImageUtil.getUrl(mission.image);
-                Glide.with(outerContext)
+                Glide.with(context)
                         .load(url)
                         .listener(new ProgressController(imageProgressView))
                         .into(imageView);
+
+                if(!NetworkUtil.connectionCheck(context, missionView)) {
+                    uploadButton.setEnabled(false);
+                }
             } else {
                 // TODO: Show error
             }

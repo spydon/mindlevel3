@@ -39,8 +39,8 @@ public class AccomplishmentActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_mission);
-        fab.setOnClickListener(new View.OnClickListener() {
+        FloatingActionButton missionButton = (FloatingActionButton) findViewById(R.id.fab_mission);
+        missionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent missionIntent = new Intent(activity, MissionActivity.class);
