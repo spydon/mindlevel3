@@ -4,14 +4,19 @@ import android.content.Context;
 import android.net.Uri;
 import android.text.TextUtils;
 
+import net.mindlevel.R;
 import net.mindlevel.api.endpoint.UserEndpoint;
 import net.mindlevel.model.Login;
 import net.mindlevel.model.User;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.Charset;
+import java.util.ArrayList;
 import java.util.List;
 
 import okhttp3.MediaType;
@@ -54,7 +59,7 @@ public class UserController extends BackendService {
     }
 
 
-    public void getUser(String username, final ControllerCallback<User> callback) {
+    public void getUser(final String username, final ControllerCallback<User> callback) {
 
         Call<User> userCall = endpoint.get(username);
 
@@ -64,8 +69,14 @@ public class UserController extends BackendService {
                 if(userResponse.isSuccessful()) {
                     User user = userResponse.body();
                     callback.onPostExecute(true, user);
+                    cacheUser(user);
                 } else {
-                    callback.onPostExecute(false, null);
+                    User user = readFromCache(username);
+                    if(user == null) {
+                        callback.onPostExecute(false, null);
+                    } else {
+                        callback.onPostExecute(true, user);
+                    }
                 }
             }
 
@@ -162,5 +173,40 @@ public class UserController extends BackendService {
                 t.printStackTrace();
             }
         });
+    }
+
+    private void cacheUser(User user) {
+        File outputDir = context.getFilesDir(); // TODO: getDataDir?
+        String usersFilename = context.getString(R.string.users_file);
+        File targetFile = new File(outputDir + "/" + usersFilename);
+        String marshalled = user.toString();
+
+        try {
+            FileUtils.writeStringToFile(targetFile, marshalled, Charset.defaultCharset());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private User readFromCache(String username) {
+        File outputDir = context.getFilesDir(); // TODO: getDataDir?
+        String missionsFilename = context.getString(R.string.missions_file);
+        File targetFile = new File(outputDir + "/" + missionsFilename);
+        String marshalled = "";
+        try {
+            marshalled = FileUtils.readFileToString(targetFile, Charset.defaultCharset());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        User user = null;
+        for(String u : marshalled.split("\n")) {
+            User tmp = User.fromString(u, context);
+            if(tmp.username.equals(username)) {
+                user = tmp;
+                break;
+            }
+        }
+        return user;
     }
 }

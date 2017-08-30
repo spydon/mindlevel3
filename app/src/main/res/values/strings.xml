@@ -16,7 +16,8 @@
     <string name="facebook_app_id">306451972838397</string>
     <string name="bucket_address">https://s3.eu-central-1.amazonaws.com/mindlevel/</string>
     <string name="missions_file">missions.txt</string>
-    <string name="mission_field_delim">M-delim-M</string>
+    <string name="users_file">users.txt</string>
+    <string name="field_delim">M-delim-M</string>
 
     <string name="title_feed">Feed</string>
     <string name="title_missions">Missions</string>

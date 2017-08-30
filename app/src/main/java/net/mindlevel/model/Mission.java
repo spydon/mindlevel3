@@ -40,11 +40,11 @@ public class Mission implements Serializable {
         tokens.add(Long.toString(created));
         tokens.add(creator);
         tokens.add(Boolean.toString(validated));
-        return TextUtils.join(context.getString(R.string.mission_field_delim), tokens);
+        return TextUtils.join(context.getString(R.string.field_delim), tokens);
     }
 
     public static Mission fromString(String marshalled, Context context) {
-        String[] fields = marshalled.split(context.getString(R.string.mission_field_delim));
+        String[] fields = marshalled.split(context.getString(R.string.field_delim));
         int id = Integer.valueOf(fields[0]);
         String title = fields[1];
         String description = fields[2];

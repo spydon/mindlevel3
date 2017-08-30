@@ -1,6 +1,13 @@
 package net.mindlevel.model;
 
+import android.content.Context;
+import android.text.TextUtils;
+
+import net.mindlevel.R;
+
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 public class User implements Serializable {
     public final String username, password, description, image;
@@ -26,5 +33,29 @@ public class User implements Serializable {
         this.score = score;
         this.created = created;
         this.lastActive = lastActive;
+    }
+
+    public String toString(Context context) {
+        List<String> tokens = new ArrayList<>();
+        tokens.add(username);
+        tokens.add(password);
+        tokens.add(description);
+        tokens.add(image);
+        tokens.add(Integer.toString(score));
+        tokens.add(Long.toString(created));
+        tokens.add(Long.toString(lastActive));
+        return TextUtils.join(context.getString(R.string.field_delim), tokens);
+    }
+
+    public static User fromString(String marshalled, Context context) {
+        String[] fields = marshalled.split(context.getString(R.string.field_delim));
+        String username = fields[0];
+        String password = fields[1];
+        String description = fields[2];
+        String image = fields[3];
+        int score = Integer.valueOf(fields[4]);
+        long created = Long.valueOf(fields[5]);
+        long lastActive = Long.valueOf(fields[6]);
+        return new User(username, password, description, image, score, created, lastActive);
     }
 }
