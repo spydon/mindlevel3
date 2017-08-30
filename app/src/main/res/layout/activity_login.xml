@@ -8,7 +8,7 @@
               android:orientation="vertical"
               android:descendantFocusability="beforeDescendants"
               android:focusableInTouchMode="true" >
-              tools:context="net.mindlevel.LoginActivity">
+              tools:context="net.mindlevel.activity.LoginActivity">
 
     <!-- Login progress -->
     <ProgressBar

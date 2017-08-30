@@ -1,4 +1,4 @@
-package net.mindlevel;
+package net.mindlevel.activity;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 
 
@@ -24,11 +23,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import net.mindlevel.R;
 import net.mindlevel.api.ControllerCallback;
 import net.mindlevel.api.LoginController;
 import net.mindlevel.api.UserController;
 import net.mindlevel.model.Login;
-import net.mindlevel.util.KeyboardUtil;
 import net.mindlevel.util.NetworkUtil;
 
 import java.util.Random;

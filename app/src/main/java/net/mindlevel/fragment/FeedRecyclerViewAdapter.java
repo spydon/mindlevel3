@@ -1,57 +1,55 @@
-package net.mindlevel;
+package net.mindlevel.fragment;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
-import net.mindlevel.MissionsFragment.OnListFragmentInteractionListener;
-import net.mindlevel.model.Mission;
+import net.mindlevel.view.ImageLikeView;
+import net.mindlevel.util.ProgressController;
+import net.mindlevel.R;
+import net.mindlevel.model.Accomplishment;
 import net.mindlevel.util.ImageUtil;
 
 import java.util.List;
 
 /**
- * {@link RecyclerView.Adapter} that can display a {@link Mission} and makes a call to the
- * specified {@link OnListFragmentInteractionListener}.
+ * {@link RecyclerView.Adapter} that can display a {@link Accomplishment} and makes a call to the
+ * specified {@link FeedFragment.OnListFragmentInteractionListener}.
  */
-public class MissionsRecyclerViewAdapter extends RecyclerView.Adapter<MissionsRecyclerViewAdapter.ViewHolder> {
+public class FeedRecyclerViewAdapter extends RecyclerView.Adapter<FeedRecyclerViewAdapter.ViewHolder> {
 
-    private final List<Mission> missions;
-    private final OnListFragmentInteractionListener listener;
+    private final List<Accomplishment> items;
+    private final FeedFragment.OnListFragmentInteractionListener listener;
+    private View view;
 
-    public MissionsRecyclerViewAdapter(List<Mission> missions, OnListFragmentInteractionListener listener) {
-        this.missions = missions;
+    public FeedRecyclerViewAdapter(List<Accomplishment> items, FeedFragment.OnListFragmentInteractionListener listener) {
+        this.items = items;
         this.listener = listener;
-
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.fragment_missions, parent, false);
+        view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_feed, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        holder.item = missions.get(position);
-        holder.titleView.setText(missions.get(position).title);
-        holder.descriptionView.setText(missions.get(position).description);
-
-        ImageView imageView = holder.imageView;
+        holder.setItem(items.get(position));
+        holder.titleView.setText(items.get(position).title);
+        ImageLikeView imageView = holder.imageView;
         String url = ImageUtil.getUrl(holder.item.image);
         Glide.with(imageView.getContext())
                 .load(url)
                 .listener(new ProgressController(holder.progressBar))
                 .into(imageView);
 
-        holder.view.setOnClickListener(new View.OnClickListener() {
+        View.OnClickListener onClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (listener != null) {
@@ -60,29 +58,36 @@ public class MissionsRecyclerViewAdapter extends RecyclerView.Adapter<MissionsRe
                     listener.onListFragmentInteraction(holder.item);
                 }
             }
-        });
+        };
+        holder.view.setOnClickListener(onClickListener);
+        imageView.setClickListener(onClickListener, view);
     }
 
     @Override
     public int getItemCount() {
-        return missions.size();
+        return items.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        public Mission item;
         public final View view;
-        public final ImageView imageView;
         public final TextView titleView;
-        public final TextView descriptionView;
+        public final ImageLikeView imageView;
         public final ProgressBar progressBar;
+        public Accomplishment item;
 
         public ViewHolder(View view) {
             super(view);
             this.view = view;
-            imageView = (ImageView) view.findViewById(R.id.image);
             titleView = (TextView) view.findViewById(R.id.title);
-            descriptionView = (TextView) view.findViewById(R.id.description);
-            progressBar = (ProgressBar) view.findViewById(R.id.image_progress);
+            imageView = (ImageLikeView) view.findViewById(R.id.image);
+            progressBar = (ProgressBar) view.findViewById(R.id.progress);
+            TextView imageText = (TextView) view.findViewById(R.id.image_text);
+            imageView.setTextView(imageText);
+        }
+
+        public void setItem(Accomplishment item) {
+            this.item = item;
+            imageView.setId(item.id);
         }
 
         @Override

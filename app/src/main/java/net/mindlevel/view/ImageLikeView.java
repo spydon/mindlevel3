@@ -1,4 +1,4 @@
-package net.mindlevel;
+package net.mindlevel.view;
 
 import android.app.Activity;
 import android.content.Context;
@@ -11,6 +11,7 @@ import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.widget.TextView;
 
+import net.mindlevel.R;
 import net.mindlevel.api.AccomplishmentController;
 import net.mindlevel.api.ControllerCallback;
 import net.mindlevel.model.Like;

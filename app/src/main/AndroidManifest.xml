@@ -28,7 +28,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MissionActivity"
+            android:name=".activity.MissionActivity"
             android:label="@string/title_activity_mission"
             android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
@@ -37,7 +37,7 @@
                 android:value="net.mindlevel.MainActivity"/>
         </activity>
         <activity
-            android:name=".AccomplishmentActivity"
+            android:name=".activity.AccomplishmentActivity"
             android:label="@string/title_activity_accomplishment"
             android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
@@ -46,7 +46,7 @@
                 android:value="net.mindlevel.MainActivity"/>
         </activity>
         <activity
-            android:name=".EditUserActivity"
+            android:name=".activity.EditUserActivity"
             android:label="@string/title_activity_edit_user"
             android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
@@ -55,7 +55,7 @@
                 android:value="net.mindlevel.MainActivity"/>
         </activity>
         <activity
-            android:name=".UploadActivity"
+            android:name=".activity.UploadActivity"
             android:label="@string/title_activity_upload"
             android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
@@ -64,11 +64,11 @@
                 android:value="net.mindlevel.MainActivity"/>
         </activity>
         <activity
-            android:name=".LoginActivity"
+            android:name=".activity.LoginActivity"
             android:label="@string/title_activity_login">
         </activity>
         <activity
-            android:name=".AboutActivity"
+            android:name=".activity.AboutActivity"
             android:label="@string/title_activity_about">
         </activity>
 

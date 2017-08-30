@@ -1,4 +1,4 @@
-package net.mindlevel;
+package net.mindlevel.fragment;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,7 +10,8 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
-import net.mindlevel.HighscoreFragment.OnListFragmentInteractionListener;
+import net.mindlevel.util.ProgressController;
+import net.mindlevel.R;
 import net.mindlevel.model.Mission;
 import net.mindlevel.model.User;
 import net.mindlevel.util.ImageUtil;
@@ -19,14 +20,14 @@ import java.util.List;
 
 /**
  * {@link RecyclerView.Adapter} that can display a {@link Mission} and makes a call to the
- * specified {@link OnListFragmentInteractionListener}.
+ * specified {@link HighscoreFragment.OnListFragmentInteractionListener}.
  */
 public class HighscoreRecyclerViewAdapter extends RecyclerView.Adapter<HighscoreRecyclerViewAdapter.ViewHolder> {
 
     private final List<User> users;
-    private final OnListFragmentInteractionListener listener;
+    private final HighscoreFragment.OnListFragmentInteractionListener listener;
 
-    public HighscoreRecyclerViewAdapter(List<User> users, OnListFragmentInteractionListener listener) {
+    public HighscoreRecyclerViewAdapter(List<User> users, HighscoreFragment.OnListFragmentInteractionListener listener) {
         this.users = users;
         this.listener = listener;
     }

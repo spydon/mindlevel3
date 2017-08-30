@@ -16,7 +16,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layoutManager="LinearLayoutManager"
-        tools:context="net.mindlevel.MissionsFragment"
+        tools:context="net.mindlevel.fragment.MissionsFragment"
         tools:listitem="@layout/fragment_missions" />
 
     <include layout="@layout/error_center" />

@@ -1,9 +1,6 @@
-package net.mindlevel;
+package net.mindlevel.fragment;
 
 // TODO: Change back to non-support lib
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.support.v4.app.Fragment;
 //import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
@@ -14,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import net.mindlevel.R;
 import net.mindlevel.api.AccomplishmentController;
 import net.mindlevel.api.ControllerCallback;
 import net.mindlevel.model.Accomplishment;

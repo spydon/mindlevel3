@@ -16,6 +16,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import net.mindlevel.activity.AboutActivity;
+import net.mindlevel.activity.AccomplishmentActivity;
+import net.mindlevel.activity.LoginActivity;
+import net.mindlevel.activity.MissionActivity;
+import net.mindlevel.fragment.FeedFragment;
+import net.mindlevel.fragment.HighscoreFragment;
+import net.mindlevel.fragment.MissionsFragment;
+import net.mindlevel.fragment.UserFragment;
 import net.mindlevel.model.Accomplishment;
 import net.mindlevel.model.Mission;
 import net.mindlevel.model.User;

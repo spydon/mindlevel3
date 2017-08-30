@@ -1,4 +1,4 @@
-package net.mindlevel;
+package net.mindlevel.activity;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -15,6 +15,8 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
+import net.mindlevel.util.ProgressController;
+import net.mindlevel.R;
 import net.mindlevel.api.ControllerCallback;
 import net.mindlevel.api.MissionController;
 import net.mindlevel.model.Mission;

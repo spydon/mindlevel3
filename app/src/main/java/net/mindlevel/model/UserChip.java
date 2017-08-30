@@ -1,4 +1,4 @@
-package net.mindlevel;
+package net.mindlevel.model;
 
 import android.graphics.drawable.Drawable;
 import android.net.Uri;

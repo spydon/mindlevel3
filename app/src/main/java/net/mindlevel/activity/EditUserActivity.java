@@ -1,4 +1,4 @@
-package net.mindlevel;
+package net.mindlevel.activity;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -11,7 +11,6 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -22,6 +21,8 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
+import net.mindlevel.util.ProgressController;
+import net.mindlevel.R;
 import net.mindlevel.api.ControllerCallback;
 import net.mindlevel.api.UserController;
 import net.mindlevel.model.User;

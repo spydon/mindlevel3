@@ -1,11 +1,10 @@
-package net.mindlevel;
+package net.mindlevel.activity;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -20,6 +19,8 @@ import android.widget.Toast;
 import com.pchmn.materialchips.ChipsInput;
 import com.pchmn.materialchips.model.ChipInterface;
 
+import net.mindlevel.R;
+import net.mindlevel.model.UserChip;
 import net.mindlevel.api.AccomplishmentController;
 import net.mindlevel.api.ControllerCallback;
 import net.mindlevel.api.UserController;
@@ -30,11 +31,8 @@ import net.mindlevel.util.ImageUtil;
 import net.mindlevel.util.KeyboardUtil;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import id.zelory.compressor.Compressor;
 
 import static net.mindlevel.util.ImageUtil.PICK_IMAGE;
 import static net.mindlevel.util.ImageUtil.REQUEST_IMAGE_CAPTURE;

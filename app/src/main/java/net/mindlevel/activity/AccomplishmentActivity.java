@@ -1,4 +1,4 @@
-package net.mindlevel;
+package net.mindlevel.activity;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -16,6 +16,9 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
+import net.mindlevel.view.ImageLikeView;
+import net.mindlevel.util.ProgressController;
+import net.mindlevel.R;
 import net.mindlevel.model.Accomplishment;
 import net.mindlevel.util.ImageUtil;
 

@@ -1,8 +1,10 @@
-package net.mindlevel;
+package net.mindlevel.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+
+import net.mindlevel.R;
 
 public class AboutActivity extends AppCompatActivity {
 

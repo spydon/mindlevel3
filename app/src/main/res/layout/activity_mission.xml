@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="net.mindlevel.MissionActivity">
+    tools:context="net.mindlevel.activity.MissionActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"

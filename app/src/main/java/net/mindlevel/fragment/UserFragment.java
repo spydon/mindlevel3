@@ -1,8 +1,6 @@
-package net.mindlevel;
+package net.mindlevel.fragment;
 
 // TODO: Change back to non-support lib
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.design.widget.FloatingActionButton;
@@ -19,6 +17,10 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
+import net.mindlevel.activity.EditUserActivity;
+import net.mindlevel.activity.LoginActivity;
+import net.mindlevel.util.ProgressController;
+import net.mindlevel.R;
 import net.mindlevel.api.ControllerCallback;
 import net.mindlevel.api.LoginController;
 import net.mindlevel.api.UserController;
