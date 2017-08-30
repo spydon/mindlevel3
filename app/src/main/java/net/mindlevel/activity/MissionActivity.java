@@ -112,7 +112,7 @@ public class MissionActivity extends AppCompatActivity {
                         .into(imageView);
 
                 if(!NetworkUtil.connectionCheck(context, missionView)) {
-                    uploadButton.setEnabled(false);
+                    uploadButton.setVisibility(View.GONE);
                 }
             } else {
                 // TODO: Show error

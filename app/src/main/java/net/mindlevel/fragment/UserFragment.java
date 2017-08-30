@@ -101,8 +101,8 @@ public class UserFragment extends InfoFragment {
         });
 
         if(!NetworkUtil.connectionCheck(getContext(), view)) {
-            editButton.setEnabled(false);
-            signOutButton.setEnabled(false);
+            editButton.setVisibility(View.GONE);
+            signOutButton.setVisibility(View.GONE);
         }
 
         return view;
