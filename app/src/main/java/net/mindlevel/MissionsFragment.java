@@ -26,7 +26,7 @@ import java.util.List;
  * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
  * interface.
  */
-public class MissionsFragment extends Fragment {
+public class MissionsFragment extends InfoFragment {
 
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
@@ -35,8 +35,6 @@ public class MissionsFragment extends Fragment {
     private OnListFragmentInteractionListener listener;
     private MissionController controller;
     private RecyclerView recyclerView;
-    private View view, progressView;
-    private int shortAnimTime;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -68,13 +66,15 @@ public class MissionsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        this.view = inflater.inflate(R.layout.fragment_missions_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_missions_list, container, false);
         this.recyclerView = (RecyclerView) view.findViewById(R.id.list);
+        this.contentView = recyclerView;
         this.shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
 
-        progressView = view.findViewById(R.id.progress);
+        this.progressView = view.findViewById(R.id.progress);
+        this.errorView = view.findViewById(R.id.error);
         Context context = getContext();
-        showProgress(true);
+        showInfo(false, true);
 
         if (columnCount <= 1) {
             recyclerView.setLayoutManager(new LinearLayoutManager(context));
@@ -117,34 +117,14 @@ public class MissionsFragment extends Fragment {
         void onListFragmentInteraction(Mission mission);
     }
 
-    private void showProgress(final boolean show) {
-        recyclerView.setVisibility(show ? View.GONE : View.VISIBLE);
-        recyclerView.animate().setDuration(shortAnimTime).alpha(
-                show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                recyclerView.setVisibility(show ? View.GONE : View.VISIBLE);
-            }
-        });
-
-        progressView.setVisibility(show ? View.VISIBLE : View.GONE);
-        progressView.animate().setDuration(shortAnimTime).alpha(
-                show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                progressView.setVisibility(show ? View.VISIBLE : View.GONE);
-            }
-        });
-    }
-
     private ControllerCallback<List<Mission>> getAllCallback = new ControllerCallback<List<Mission>>() {
         @Override
         public void onPostExecute(Boolean isSuccess, List<Mission> response) {
-            showProgress(false);
             if(isSuccess) {
+                showInfo(false, false);
                 recyclerView.setAdapter(new MissionsRecyclerViewAdapter(response, listener));
             } else {
-                // TODO: Show error
+                showInfo(true, false);
             }
         }
     };

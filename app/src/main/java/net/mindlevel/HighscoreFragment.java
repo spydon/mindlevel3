@@ -29,17 +29,15 @@ import java.util.List;
  * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
  * interface.
  */
-public class HighscoreFragment extends Fragment {
+public class HighscoreFragment extends InfoFragment {
 
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
     // TODO: Customize parameters
     private int columnCount = 1;
-    private int shortAnimTime;
     private OnListFragmentInteractionListener listener;
     private UserController controller;
     private RecyclerView recyclerView;
-    private View view, progressView, errorView;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -72,8 +70,9 @@ public class HighscoreFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_highscore_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_highscore_list, container, false);
         recyclerView = (RecyclerView) view.findViewById(R.id.list);
+        contentView = recyclerView;
         progressView = view.findViewById(R.id.progress);
         errorView = view.findViewById(R.id.error);
 
@@ -123,37 +122,6 @@ public class HighscoreFragment extends Fragment {
      */
     public interface OnListFragmentInteractionListener {
         void onListFragmentInteraction(User user);
-    }
-
-    private void showInfo(final boolean isError, final boolean isProgress) {
-        final boolean isNormal = !isError && !isProgress;
-
-        recyclerView.setVisibility(isNormal ? View.VISIBLE : View.GONE);
-        recyclerView.animate().setDuration(shortAnimTime).alpha(
-                isNormal ? 0 : 1).setListener(new AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                recyclerView.setVisibility(isNormal ? View.VISIBLE : View.GONE);
-            }
-        });
-
-        errorView.setVisibility(isError ? View.VISIBLE : View.GONE);
-        errorView.animate().setDuration(shortAnimTime).alpha(
-                isError ? 1 : 0).setListener(new AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                progressView.setVisibility(isError ? View.VISIBLE : View.GONE);
-            }
-        });
-
-        progressView.setVisibility(isProgress ? View.VISIBLE : View.GONE);
-        progressView.animate().setDuration(shortAnimTime).alpha(
-                isProgress ? 1 : 0).setListener(new AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                progressView.setVisibility(isProgress ? View.VISIBLE : View.GONE);
-            }
-        });
     }
 
     private ControllerCallback<List<User>> getAllCallback = new ControllerCallback<List<User>>() {

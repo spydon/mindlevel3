@@ -35,7 +35,7 @@ import static android.app.Activity.RESULT_OK;
  * {@link UserFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
  */
-public class UserFragment extends Fragment {
+public class UserFragment extends InfoFragment {
 
     private UserController controller;
     private LoginController loginController;
@@ -44,7 +44,7 @@ public class UserFragment extends Fragment {
     private TextView usernameView;
     private TextView scoreView;
     private TextView descriptionView;
-    private View progressView, view, imageProgressBar;
+    private View view, imageProgressBar;
     private FloatingActionButton editButton, signOutButton;
     private Context context;
     private User user;
@@ -55,13 +55,15 @@ public class UserFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_user, container, false);
+        this.view = inflater.inflate(R.layout.fragment_user, container, false);
+        this.contentView = view.findViewById(R.id.content);
 
         this.imageView = (ImageView) view.findViewById(R.id.image);
         this.usernameView = (TextView) view.findViewById(R.id.username);
         this.scoreView = (TextView) view.findViewById(R.id.score);
         this.descriptionView = (TextView) view.findViewById(R.id.description);
         this.progressView = view.findViewById(R.id.progress);
+        this.errorView = view.findViewById(R.id.error);
         this.imageProgressBar = view.findViewById(R.id.progress_image);
         this.context = getContext();
 
@@ -70,7 +72,7 @@ public class UserFragment extends Fragment {
 
         this.shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
 
-        showProgress(true);
+        showInfo(false, true);
         populateUserFragment();
 
         editButton = (FloatingActionButton) view.findViewById(R.id.edit_button);
@@ -139,26 +141,6 @@ public class UserFragment extends Fragment {
         this.user = user;
     }
 
-    private void showProgress(final boolean show) {
-        view.setVisibility(show ? View.GONE : View.VISIBLE);
-        view.animate().setDuration(shortAnimTime).alpha(
-                show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                view.setVisibility(show ? View.GONE : View.VISIBLE);
-            }
-        });
-
-        progressView.setVisibility(show ? View.VISIBLE : View.GONE);
-        progressView.animate().setDuration(shortAnimTime).alpha(
-                show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                progressView.setVisibility(show ? View.VISIBLE : View.GONE);
-            }
-        });
-    }
-
     private ControllerCallback<User> userCallback = new ControllerCallback<User>() {
 
         @Override
@@ -166,7 +148,7 @@ public class UserFragment extends Fragment {
             setUser(user);
             ProgressController loading = new ProgressController(imageProgressBar);
             if(success) {
-                showProgress(false);
+                showInfo(false, false);
                 if(!TextUtils.isEmpty(user.image)) {
                     String url = ImageUtil.getUrl(user.image);
                     Glide.with(imageView.getContext())
@@ -182,7 +164,7 @@ public class UserFragment extends Fragment {
                 descriptionView.setText(user.description);
             } else {
                 loading.hide();
-                descriptionView.setText("Something went wrong.");
+                showInfo(true, false);
             }
         }
     };

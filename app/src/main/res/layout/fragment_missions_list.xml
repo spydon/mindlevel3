@@ -19,6 +19,7 @@
         tools:context="net.mindlevel.MissionsFragment"
         tools:listitem="@layout/fragment_missions" />
 
-    <include layout="@layout/progress_center"/>
+    <include layout="@layout/error_center" />
+    <include layout="@layout/progress_center" />
 
 </LinearLayout>
