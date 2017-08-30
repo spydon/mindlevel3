@@ -1,8 +1,6 @@
 package net.mindlevel;
 
 // TODO: Change back to non-support lib
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.app.FragmentManager;
@@ -29,6 +27,7 @@ import net.mindlevel.model.Mission;
 import net.mindlevel.model.User;
 import net.mindlevel.util.ImageUtil;
 import net.mindlevel.util.NetworkUtil;
+import net.mindlevel.util.PreferencesUtil;
 
 import java.util.Arrays;
 import java.util.LinkedHashMap;
@@ -125,10 +124,9 @@ public class MainActivity
         fragments.put(R.id.navigation_highscore, highscoreFragment);
         fragments.put(R.id.navigation_profile, userFragment);
 
-        SharedPreferences sharedPreferences = getSharedPreferences("session", Context.MODE_PRIVATE);
-        if(sharedPreferences.getString("sessionId", "").isEmpty() || !NetworkUtil.isConnected(this)) {
+        if(PreferencesUtil.getSessionId(getApplicationContext()).isEmpty() || !NetworkUtil.isConnected(this)) {
             Intent loginIntent = new Intent(this, LoginActivity.class);
-            //startActivity(loginIntent); //TODO: Enable again
+            startActivity(loginIntent); //TODO: Enable again
         }
 
         navigation = (BottomNavigationView) findViewById(R.id.navigation);

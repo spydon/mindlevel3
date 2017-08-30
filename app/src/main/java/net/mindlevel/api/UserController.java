@@ -8,6 +8,7 @@ import net.mindlevel.R;
 import net.mindlevel.api.endpoint.UserEndpoint;
 import net.mindlevel.model.Login;
 import net.mindlevel.model.User;
+import net.mindlevel.util.PreferencesUtil;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
@@ -16,7 +17,6 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
-import java.util.ArrayList;
 import java.util.List;
 
 import okhttp3.MediaType;
@@ -176,19 +176,25 @@ public class UserController extends BackendService {
     }
 
     private void cacheUser(User user) {
+        if(!PreferencesUtil.getUsername(context).equals(user.username)) {
+            return;
+        }
         File outputDir = context.getFilesDir(); // TODO: getDataDir?
         String usersFilename = context.getString(R.string.users_file);
         File targetFile = new File(outputDir + "/" + usersFilename);
-        String marshalled = user.toString() + "\n";
+        String marshalled = user.toString(context) + "\n";
 
         try {
-            FileUtils.writeStringToFile(targetFile, marshalled, Charset.defaultCharset(), true);
+            FileUtils.writeStringToFile(targetFile, marshalled, Charset.defaultCharset());
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     private User readFromCache(String username) {
+        if(!PreferencesUtil.getUsername(context).equals(username)) {
+            return null;
+        }
         File outputDir = context.getFilesDir(); // TODO: getDataDir?
         String missionsFilename = context.getString(R.string.missions_file);
         File targetFile = new File(outputDir + "/" + missionsFilename);
@@ -201,10 +207,12 @@ public class UserController extends BackendService {
 
         User user = null;
         for(String u : marshalled.split("\n")) {
-            User tmp = User.fromString(u, context);
-            if(tmp.username.equals(username)) {
-                user = tmp;
-                break;
+            if(u.contains(context.getString(R.string.field_delim))) {
+                User tmp = User.fromString(u, context);
+                if (tmp.username.equals(username)) {
+                    user = tmp;
+                    break;
+                }
             }
         }
         return user;

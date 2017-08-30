@@ -2,7 +2,6 @@ package net.mindlevel.fragment;
 
 // TODO: Change back to non-support lib
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.content.Context;
@@ -19,6 +18,7 @@ import com.bumptech.glide.Glide;
 
 import net.mindlevel.activity.EditUserActivity;
 import net.mindlevel.activity.LoginActivity;
+import net.mindlevel.util.PreferencesUtil;
 import net.mindlevel.util.ProgressController;
 import net.mindlevel.R;
 import net.mindlevel.api.ControllerCallback;
@@ -92,9 +92,8 @@ public class UserFragment extends InfoFragment {
             @Override
             public void onClick(View view) {
                 signOutButton.setActivated(false);
-                SharedPreferences sharedPreferences = context.getSharedPreferences("session", Context.MODE_PRIVATE);
-                String username = sharedPreferences.getString("username", "");
-                String sessionId = sharedPreferences.getString("sessionId", "");
+                String username = PreferencesUtil.getUsername(context);
+                String sessionId = PreferencesUtil.getSessionId(context);
                 Login login = new Login(username, "", sessionId);
                 loginController.logout(login, signOutCallback);
             }
@@ -109,8 +108,7 @@ public class UserFragment extends InfoFragment {
     }
 
     private void populateUserFragment() {
-        SharedPreferences sharedPreferences = context.getSharedPreferences("session", Context.MODE_PRIVATE);
-        String username = sharedPreferences.getString("username", "");
+        String username = PreferencesUtil.getUsername(context);
         controller.getUser(username, userCallback);
     }
 

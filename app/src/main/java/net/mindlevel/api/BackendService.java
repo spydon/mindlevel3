@@ -10,6 +10,7 @@ import com.google.gson.GsonBuilder;
 
 import net.mindlevel.R;
 import net.mindlevel.util.NetworkUtil;
+import net.mindlevel.util.PreferencesUtil;
 
 import java.io.IOException;
 import java.net.SocketException;
@@ -25,18 +26,16 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public abstract class BackendService {
     static Retrofit retrofit;
     protected Context context;
-    private SharedPreferences sharedPreferences;
 
     BackendService(final Context context) {
         this.context = context;
-        this.sharedPreferences = context.getSharedPreferences("session", Context.MODE_PRIVATE);
         Gson gson = new GsonBuilder()
                 .setLenient()
                 .create();
 
         Interceptor sessionHeaderInterceptor = new Interceptor() {
             @Override public Response intercept(Chain chain) throws IOException {
-                String sessionId = sharedPreferences.getString("sessionId", "");
+                String sessionId = PreferencesUtil.getSessionId(context);
                 Request request = chain.request().newBuilder().addHeader("X-Session", sessionId).build();
                 return chain.proceed(request);
             }
@@ -66,12 +65,5 @@ public abstract class BackendService {
                 .client(httpClient.build())
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
-    }
-
-    void addSessionState(String username, String sessionId) {
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("username", username);
-        editor.putString("sessionId", sessionId);
-        editor.apply();
     }
 }

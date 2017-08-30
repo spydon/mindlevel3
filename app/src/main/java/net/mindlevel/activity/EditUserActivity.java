@@ -4,7 +4,6 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
@@ -21,6 +20,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
+import net.mindlevel.util.PreferencesUtil;
 import net.mindlevel.util.ProgressController;
 import net.mindlevel.R;
 import net.mindlevel.api.ControllerCallback;
@@ -157,8 +157,7 @@ public class EditUserActivity extends AppCompatActivity {
             // perform the user login attempt.
             showProgress(true);
 
-            SharedPreferences sharedPreferences = getSharedPreferences("session", Context.MODE_PRIVATE);
-            String username = sharedPreferences.getString("username", "");
+            String username = PreferencesUtil.getUsername(getApplicationContext());
             User user = new User(username, password1, description);
             userController.update(user, path, editCallback);
         }

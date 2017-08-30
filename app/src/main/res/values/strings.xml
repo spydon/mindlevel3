@@ -11,8 +11,8 @@
         option of doing something more exciting, something that will be worth remembering.
         \n\nThis is my attempt of giving you that option.
     </string>
-    <string name="backend_address">http://mindlevel.net:8080/</string>
-    <!-- <string name="backend_address">http://192.168.42.37:8080/</string> -->
+    <!-- <string name="backend_address">http://mindlevel.net:8080/</string> -->
+    <string name="backend_address">http://192.168.42.37:8080/</string>
     <string name="facebook_app_id">306451972838397</string>
     <string name="bucket_address">https://s3.eu-central-1.amazonaws.com/mindlevel/</string>
     <string name="missions_file">missions.txt</string>

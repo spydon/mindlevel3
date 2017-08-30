@@ -1,9 +1,9 @@
 package net.mindlevel.api;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import net.mindlevel.api.endpoint.LoginEndpoint;
 import net.mindlevel.model.Login;
+import net.mindlevel.util.PreferencesUtil;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -27,7 +27,7 @@ public class LoginController extends BackendService {
             public void onResponse(Call<String> call, Response<String> response) {
                 if(response.isSuccessful()) {
                     String sessionId = response.body();
-                    addSessionState(user.username, sessionId);
+                    PreferencesUtil.setSessionState(user.username, sessionId, context);
                     callback.onPostExecute(true, sessionId);
                 } else {
                     callback.onPostExecute(false, null);
@@ -50,7 +50,7 @@ public class LoginController extends BackendService {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 if(response.isSuccessful()) {
-                    addSessionState(null, null);
+                    PreferencesUtil.setSessionState(null, null, context);
                     callback.onPostExecute(true, null);
                 } else {
                     callback.onPostExecute(false, null);
