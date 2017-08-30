@@ -179,10 +179,10 @@ public class UserController extends BackendService {
         File outputDir = context.getFilesDir(); // TODO: getDataDir?
         String usersFilename = context.getString(R.string.users_file);
         File targetFile = new File(outputDir + "/" + usersFilename);
-        String marshalled = user.toString();
+        String marshalled = user.toString() + "\n";
 
         try {
-            FileUtils.writeStringToFile(targetFile, marshalled, Charset.defaultCharset());
+            FileUtils.writeStringToFile(targetFile, marshalled, Charset.defaultCharset(), true);
         } catch (IOException e) {
             e.printStackTrace();
         }
