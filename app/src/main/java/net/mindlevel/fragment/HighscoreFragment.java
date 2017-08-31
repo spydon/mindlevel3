@@ -82,7 +82,8 @@ public class HighscoreFragment extends InfoFragment {
             recyclerView.setLayoutManager(new GridLayoutManager(context, columnCount));
         }
 
-        if (NetworkUtil.connectionCheck(context, null)) {
+        View coordinator = contentView.getRootView();
+        if (NetworkUtil.connectionCheck(context, coordinator)) {
             showInfo(false, true);
             controller.getAll(getAllCallback);
         } else {

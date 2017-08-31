@@ -99,7 +99,8 @@ public class UserFragment extends InfoFragment {
             }
         });
 
-        if(!NetworkUtil.connectionCheck(getContext(), view)) {
+        View coordinator = contentView.getRootView();
+        if(!NetworkUtil.connectionCheck(getContext(), coordinator)) {
             editButton.setVisibility(View.GONE);
             signOutButton.setVisibility(View.GONE);
         }

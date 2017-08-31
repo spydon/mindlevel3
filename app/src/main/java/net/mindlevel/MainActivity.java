@@ -126,7 +126,7 @@ public class MainActivity
 
         if(PreferencesUtil.getSessionId(getApplicationContext()).isEmpty() || !NetworkUtil.isConnected(this)) {
             Intent loginIntent = new Intent(this, LoginActivity.class);
-            startActivity(loginIntent); //TODO: Enable again
+            //startActivity(loginIntent); //TODO: Enable again
         }
 
         navigation = (BottomNavigationView) findViewById(R.id.navigation);

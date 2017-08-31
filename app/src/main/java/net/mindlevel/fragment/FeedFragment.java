@@ -81,7 +81,8 @@ public class FeedFragment extends InfoFragment {
                     new StaggeredGridLayoutManager(columnCount, StaggeredGridLayoutManager.VERTICAL));
         }
 
-        if (NetworkUtil.connectionCheck(getContext(), getView())) {
+        View coordinator = contentView.getRootView();
+        if (NetworkUtil.connectionCheck(getContext(), coordinator)) {
             showInfo(false, true);
             controller.getLatest(getLatestCallback);
         } else {
