@@ -29,6 +29,7 @@ import retrofit2.Response;
 public class UserController extends BackendService {
 
     private static UserEndpoint endpoint;
+    private final int HIGHSCORE_AMOUNT = 20;
 
     public UserController(Context context) {
         super(context);
@@ -36,7 +37,6 @@ public class UserController extends BackendService {
     }
 
     public void getAll(final ControllerCallback<List<User>> callback) {
-
         Call<List<User>> userCall = endpoint.getAll();
 
         userCall.enqueue(new Callback<List<User>>() {
@@ -58,9 +58,29 @@ public class UserController extends BackendService {
         });
     }
 
+     public void getHighscore(final ControllerCallback<List<User>> callback) {
+        Call<List<User>> highscoreCall = endpoint.getHighscore(HIGHSCORE_AMOUNT);
+
+        highscoreCall.enqueue(new Callback<List<User>>() {
+            @Override
+            public void onResponse(Call<List<User>> call, Response<List<User>> usersResponse) {
+                if(usersResponse.isSuccessful()) {
+                    List<User> users = usersResponse.body();
+                    callback.onPostExecute(true, users);
+                } else {
+                    callback.onPostExecute(false, null);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<User>> call, Throwable t) {
+                callback.onPostExecute(false, null);
+                t.printStackTrace();
+            }
+        });
+    }
 
     public void getUser(final String username, final ControllerCallback<User> callback) {
-
         Call<User> userCall = endpoint.get(username);
 
         userCall.enqueue(new Callback<User>() {
@@ -89,7 +109,6 @@ public class UserController extends BackendService {
     }
 
     public void getUsernames(final ControllerCallback<String[]> callback) {
-
         Call<String[]> usernamesCall = endpoint.getUsernames();
 
         usernamesCall.enqueue(new Callback<String[]>() {
@@ -154,7 +173,6 @@ public class UserController extends BackendService {
     }
 
     public void register(final Login user, final ControllerCallback<String> callback) {
-
         Call<Void> register = endpoint.register(user);
 
         register.enqueue(new Callback<Void>() {

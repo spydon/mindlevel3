@@ -85,7 +85,7 @@ public class HighscoreFragment extends InfoFragment {
         View coordinator = contentView.getRootView();
         if (NetworkUtil.connectionCheck(context, coordinator)) {
             showInfo(false, true);
-            controller.getAll(getAllCallback);
+            controller.getHighscore(getHighscoreCallback);
         } else {
             showInfo(true, false);
         }
@@ -114,16 +114,12 @@ public class HighscoreFragment extends InfoFragment {
      * fragment to allow an interaction in this fragment to be communicated
      * to the activity and potentially other fragments contained in that
      * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnListFragmentInteractionListener {
         void onListFragmentInteraction(User user);
     }
 
-    private ControllerCallback<List<User>> getAllCallback = new ControllerCallback<List<User>>() {
+    private ControllerCallback<List<User>> getHighscoreCallback = new ControllerCallback<List<User>>() {
         @Override
         public void onPostExecute(Boolean isSuccess, List<User> response) {
             if(isSuccess) {

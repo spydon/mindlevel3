@@ -22,6 +22,9 @@ public interface UserEndpoint {
     @GET("user/{user}")
     Call<User> get(@Path("user") String user);
 
+    @GET("user/highscore/{amount}")
+    Call<List<User>> getHighscore(@Path("amount") int amount);
+
     @GET("user/usernames")
     Call<String[]> getUsernames();
 
