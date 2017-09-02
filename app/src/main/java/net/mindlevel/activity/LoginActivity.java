@@ -88,7 +88,8 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         loginFormView = findViewById(R.id.login_form);
-        progressView = findViewById(R.id.login_progress);
+        progressView = findViewById(R.id.progress);
+        showProgress(false);
         setRandomTip();
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION, WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));

@@ -214,7 +214,7 @@ public class UserController extends BackendService {
             return null;
         }
         File outputDir = context.getFilesDir(); // TODO: getDataDir?
-        String missionsFilename = context.getString(R.string.missions_file);
+        String missionsFilename = context.getString(R.string.users_file);
         File targetFile = new File(outputDir + "/" + missionsFilename);
         String marshalled = "";
         try {
