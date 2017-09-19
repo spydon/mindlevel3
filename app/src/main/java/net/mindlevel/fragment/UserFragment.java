@@ -163,6 +163,8 @@ public class UserFragment extends InfoFragment {
                 usernameView.setText(user.username);
                 scoreView.setText(String.valueOf(user.score));
                 descriptionView.setText(user.description);
+                System.out.println(contentView.getVisibility() + " " + errorView.getVisibility() + " " + progressView
+                        .getVisibility());
             } else {
                 loading.hide();
                 showInfo(true, false);

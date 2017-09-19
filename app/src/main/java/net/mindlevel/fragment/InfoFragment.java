@@ -19,13 +19,13 @@ public abstract class InfoFragment extends Fragment {
         final boolean isNormal = !isError && !isProgress;
 
         contentView.setVisibility(isNormal ? VISIBLE : GONE);
-        contentView.animate().setDuration(shortAnimTime).alpha(
-                isNormal ? 0 : 1).setListener(new AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                contentView.setVisibility(isNormal ? VISIBLE : GONE);
-            }
-        });
+        //contentView.animate().setDuration(shortAnimTime).alpha(
+        //        isNormal ? 0 : 1).setListener(new AnimatorListenerAdapter() {
+        //    @Override
+        //    public void onAnimationEnd(Animator animation) {
+        //        contentView.setVisibility(isNormal ? VISIBLE : GONE);
+        //    }
+        //});
 
         errorView.setVisibility(GONE);
         progressView.setVisibility(GONE);

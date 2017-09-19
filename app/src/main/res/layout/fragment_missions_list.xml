@@ -2,14 +2,20 @@
 
 <android.support.design.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@android:color/holo_orange_light"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
+
+    <include layout="@layout/error_center" />
+    <include layout="@layout/progress_center" />
 
     <android.support.v7.widget.RecyclerView
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
+        android:background="@android:color/holo_red_dark"
+        android:visibility="gone"
         android:id="@+id/list"
         android:name="net.mindlevel.MissionsFragment"
         android:layout_width="match_parent"
@@ -17,8 +23,5 @@
         app:layoutManager="LinearLayoutManager"
         tools:context="net.mindlevel.fragment.MissionsFragment"
         tools:listitem="@layout/fragment_missions" />
-
-    <include layout="@layout/error_center" />
-    <include layout="@layout/progress_center" />
 
 </android.support.design.widget.CoordinatorLayout>
