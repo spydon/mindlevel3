@@ -18,6 +18,7 @@ import net.mindlevel.activity.AboutActivity;
 import net.mindlevel.activity.AccomplishmentActivity;
 import net.mindlevel.activity.LoginActivity;
 import net.mindlevel.activity.MissionActivity;
+import net.mindlevel.activity.UserActivity;
 import net.mindlevel.fragment.FeedFragment;
 import net.mindlevel.fragment.HighscoreFragment;
 import net.mindlevel.fragment.MissionsFragment;
@@ -108,7 +109,7 @@ public class MainActivity
 
     public void onListFragmentInteraction(User user) {
         // TODO: Check how to start non programmatically, R.id.Mission... etc
-        Intent userIntent = new Intent(this, UserFragment.class);
+        Intent userIntent = new Intent(this, UserActivity.class);
         userIntent.putExtra("user", user);
         startActivity(userIntent);
     }
