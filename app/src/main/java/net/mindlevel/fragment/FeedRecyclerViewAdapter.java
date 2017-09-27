@@ -34,7 +34,7 @@ public class FeedRecyclerViewAdapter extends RecyclerView.Adapter<FeedRecyclerVi
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_feed, parent, false);
+        view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_feed_item, parent, false);
         return new ViewHolder(view);
     }
 

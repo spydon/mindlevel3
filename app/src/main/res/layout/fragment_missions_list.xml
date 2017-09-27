@@ -2,7 +2,6 @@
 
 <android.support.design.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:background="@android:color/holo_orange_light"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
@@ -14,7 +13,6 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
-        android:background="@android:color/holo_red_dark"
         android:visibility="gone"
         android:id="@+id/list"
         android:name="net.mindlevel.MissionsFragment"
@@ -22,6 +20,6 @@
         android:layout_height="match_parent"
         app:layoutManager="LinearLayoutManager"
         tools:context="net.mindlevel.fragment.MissionsFragment"
-        tools:listitem="@layout/fragment_missions" />
+        tools:listitem="@layout/fragment_missions_item" />
 
 </android.support.design.widget.CoordinatorLayout>

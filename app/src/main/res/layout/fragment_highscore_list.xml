@@ -16,7 +16,7 @@
         android:layout_height="match_parent"
         app:layoutManager="LinearLayoutManager"
         tools:context="net.mindlevel.fragment.MissionsFragment"
-        tools:listitem="@layout/fragment_highscore" />
+        tools:listitem="@layout/fragment_highscore_item" />
 
     <include layout="@layout/error_center" />
     <include layout="@layout/progress_center" />

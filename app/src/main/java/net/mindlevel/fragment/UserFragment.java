@@ -101,8 +101,8 @@ public class UserFragment extends InfoFragment {
 
         View coordinator = contentView.getRootView();
         if(!NetworkUtil.connectionCheck(getContext(), coordinator)) {
-            editButton.setVisibility(View.GONE);
-            signOutButton.setVisibility(View.GONE);
+            //editButton.setVisibility(View.GONE);
+            //signOutButton.setVisibility(View.GONE);
         }
 
         return view;
