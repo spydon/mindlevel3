@@ -98,7 +98,11 @@ public class LoginActivity extends AppCompatActivity {
 
     private void setRandomTip() {
         TextView random = (TextView) findViewById(R.id.tip);
-        String[] tips = {getString(R.string.tip_like), getString(R.string.tip_contributor)};
+        String[] tips = {
+                getString(R.string.tip_like),
+                getString(R.string.tip_contributor),
+                getString(R.string.tip_points)
+        };
         String tip = tips[new Random().nextInt(tips.length)];
         random.setText(getString(R.string.tip, tip));
     }

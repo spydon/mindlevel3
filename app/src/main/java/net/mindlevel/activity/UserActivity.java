@@ -17,6 +17,7 @@ import net.mindlevel.model.User;
 import net.mindlevel.util.ImageUtil;
 import net.mindlevel.util.ProgressController;
 
+@Deprecated
 public class UserActivity extends AppCompatActivity {
 
     private ImageView imageView;

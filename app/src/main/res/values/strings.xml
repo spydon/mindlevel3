@@ -31,6 +31,7 @@
     <string name="title_activity_upload">UploadActivity</string>
     <string name="title_activity_about">About</string>
     <string name="title_activity_login">Sign in</string>
+    <string name="title_highscore">Highscore</string>
 
     <string name="hint_upload_description">Describe how you accomplished the mission</string>
     <string name="hint_user_description">Describe yourself, or write anything really</string>
@@ -70,7 +71,7 @@
     <!-- Strings related to tips -->
     <string name="tip">Tip: %1$s</string>
     <string name="tip_like">Double click an image to like it</string>
+    <string name="tip_points">After completing one mission you like images</string>
     <string name="tip_contributor">Contributors receive all points too</string>
-    <string name="title_highscore">Highscore</string>
 
 </resources>

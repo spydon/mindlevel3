@@ -18,7 +18,6 @@ import net.mindlevel.activity.AboutActivity;
 import net.mindlevel.activity.AccomplishmentActivity;
 import net.mindlevel.activity.LoginActivity;
 import net.mindlevel.activity.MissionActivity;
-import net.mindlevel.activity.UserActivity;
 import net.mindlevel.fragment.FeedFragment;
 import net.mindlevel.fragment.HighscoreFragment;
 import net.mindlevel.fragment.MissionsFragment;
@@ -57,9 +56,7 @@ public class MainActivity
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             Fragment selectedFragment = fragments.get(item.getItemId());
             if(selectedFragment != currentFragment) {
-                int fragmentOrderId = Arrays.asList(fragments.values().toArray()).indexOf(selectedFragment);
-                viewPager.setCurrentItem(fragmentOrderId, true);
-                currentFragment = selectedFragment;
+                scrollToFragment(selectedFragment);
             }
             return true;
         }
@@ -108,10 +105,15 @@ public class MainActivity
     }
 
     public void onListFragmentInteraction(User user) {
-        // TODO: Check how to start non programmatically, R.id.Mission... etc
-        Intent userIntent = new Intent(this, UserActivity.class);
-        userIntent.putExtra("user", user);
-        startActivity(userIntent);
+        userFragment.setUser(user);
+        scrollToFragment(userFragment);
+
+    }
+
+    private void scrollToFragment(Fragment selectedFragment) {
+        int fragmentOrderId = Arrays.asList(fragments.values().toArray()).indexOf(selectedFragment);
+        viewPager.setCurrentItem(fragmentOrderId, true);
+        currentFragment = selectedFragment;
     }
 
     @Override
@@ -127,7 +129,7 @@ public class MainActivity
 
         if(PreferencesUtil.getSessionId(getApplicationContext()).isEmpty() || !NetworkUtil.isConnected(this)) {
             Intent loginIntent = new Intent(this, LoginActivity.class);
-            startActivity(loginIntent); //TODO: Enable again
+            startActivity(loginIntent);
         }
 
         navigation = (BottomNavigationView) findViewById(R.id.navigation);

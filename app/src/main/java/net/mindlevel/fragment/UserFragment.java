@@ -30,6 +30,8 @@ import net.mindlevel.util.ImageUtil;
 import net.mindlevel.util.NetworkUtil;
 
 import static android.app.Activity.RESULT_OK;
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -47,7 +49,7 @@ public class UserFragment extends InfoFragment {
     private TextView scoreView;
     private TextView descriptionView;
     private View view, imageProgressBar;
-    private FloatingActionButton editButton, signOutButton;
+    private FloatingActionButton editButton, signOutButton, selfButton;
     private Context context;
     private User user;
     private int shortAnimTime;
@@ -99,17 +101,26 @@ public class UserFragment extends InfoFragment {
             }
         });
 
+        selfButton = (FloatingActionButton) view.findViewById(R.id.self_button);
+        selfButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                populateUserFragment();
+            }
+        });
+
         View coordinator = contentView.getRootView();
-        if(!NetworkUtil.connectionCheck(getContext(), coordinator)) {
-            //editButton.setVisibility(View.GONE);
-            //signOutButton.setVisibility(View.GONE);
-        }
+        NetworkUtil.connectionCheck(getContext(), coordinator);
 
         return view;
     }
 
     private void populateUserFragment() {
         String username = PreferencesUtil.getUsername(context);
+        populateUserFragment(username);
+    }
+
+    public void populateUserFragment(String username) {
         controller.getUser(username, userCallback);
     }
 
@@ -138,35 +149,38 @@ public class UserFragment extends InfoFragment {
         void onFragmentInteraction(Uri uri);
     }
 
-    private void setUser(User user) {
+    public void setUser(User user) {
         this.user = user;
+        ProgressController loading = new ProgressController(imageProgressBar);
+        showInfo(false, false);
+        if(!TextUtils.isEmpty(user.image)) {
+            String url = ImageUtil.getUrl(user.image);
+            Glide.with(imageView.getContext())
+                    .load(url)
+                    .listener(loading)
+                    .into(imageView);
+        } else {
+            loading.hide();
+        }
+
+        usernameView.setText(user.username);
+        scoreView.setText(String.valueOf(user.score));
+        descriptionView.setText(user.description);
+
+        if(PreferencesUtil.getUsername(context).equals(user.username)) {
+            selfButton.setVisibility(GONE);
+            editButton.setVisibility(VISIBLE);
+            signOutButton.setVisibility(VISIBLE);
+        }
     }
 
     private ControllerCallback<User> userCallback = new ControllerCallback<User>() {
 
         @Override
         public void onPostExecute(final Boolean success, final User user) {
-            setUser(user);
-            ProgressController loading = new ProgressController(imageProgressBar);
             if(success) {
-                showInfo(false, false);
-                if(!TextUtils.isEmpty(user.image)) {
-                    String url = ImageUtil.getUrl(user.image);
-                    Glide.with(imageView.getContext())
-                            .load(url)
-                            .listener(loading)
-                            .into(imageView);
-                } else {
-                    loading.hide();
-                }
-
-                usernameView.setText(user.username);
-                scoreView.setText(String.valueOf(user.score));
-                descriptionView.setText(user.description);
-                System.out.println(contentView.getVisibility() + " " + errorView.getVisibility() + " " + progressView
-                        .getVisibility());
+                setUser(user);
             } else {
-                loading.hide();
                 showInfo(true, false);
             }
         }
