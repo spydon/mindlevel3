@@ -34,8 +34,7 @@
             android:textSize="8pt"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dip"
-            android:layout_marginStart="10dip" />
+            android:layout_margin="10dip" />
 
         <TextView
             android:id="@+id/description"

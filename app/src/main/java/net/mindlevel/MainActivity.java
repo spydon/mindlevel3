@@ -125,10 +125,10 @@ public class MainActivity
         fragments.put(R.id.navigation_highscore, highscoreFragment);
         fragments.put(R.id.navigation_profile, userFragment);
 
-        //if(PreferencesUtil.getSessionId(getApplicationContext()).isEmpty() || !NetworkUtil.isConnected(this)) {
-        //    Intent loginIntent = new Intent(this, LoginActivity.class);
-        //    startActivity(loginIntent); //TODO: Enable again
-        //}
+        if(PreferencesUtil.getSessionId(getApplicationContext()).isEmpty() || !NetworkUtil.isConnected(this)) {
+            Intent loginIntent = new Intent(this, LoginActivity.class);
+            startActivity(loginIntent); //TODO: Enable again
+        }
 
         navigation = (BottomNavigationView) findViewById(R.id.navigation);
         // TODO: Remove support lib once not on S5

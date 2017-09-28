@@ -13,7 +13,7 @@
         android:alpha="1"
         android:layout_centerHorizontal="true"
         android:layout_height="wrap_content"
-        android:layout_width="wrap_content" />
+        android:layout_width="match_parent" />
 
     <TextView
         android:id="@+id/image_text"
@@ -27,7 +27,7 @@
         android:layout_alignEnd="@id/image"
         android:scaleType="fitXY"
         android:layout_above="@+id/image"
-        android:textColor="@color/colorLike"
+        android:textColor="@color/colorAccent"
         android:alpha="0.8"
         android:shadowColor="#000000"
         android:shadowDx="1.5"

@@ -28,6 +28,7 @@ import net.mindlevel.api.ControllerCallback;
 import net.mindlevel.api.LoginController;
 import net.mindlevel.api.UserController;
 import net.mindlevel.model.Login;
+import net.mindlevel.util.KeyboardUtil;
 import net.mindlevel.util.NetworkUtil;
 
 import java.util.Random;
@@ -108,6 +109,7 @@ public class LoginActivity extends AppCompatActivity {
      * errors are presented and no actual login attempt is made.
      */
     private void attemptLogin(boolean isNewUser) {
+        KeyboardUtil.hideKeyboard(this);
         if(!NetworkUtil.connectionCheck(getApplicationContext(), coordinatorLayout)) {
             return;
         }
