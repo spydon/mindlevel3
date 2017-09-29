@@ -71,7 +71,7 @@
     <!-- Strings related to tips -->
     <string name="tip">Tip: %1$s</string>
     <string name="tip_like">Double click an image to like it</string>
-    <string name="tip_points">After completing one mission you like images</string>
+    <string name="tip_points">After completing one mission you can like images</string>
     <string name="tip_contributor">Contributors receive all points too</string>
     <string name="creator">Creator:</string>
 
