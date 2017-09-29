@@ -15,9 +15,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
-import net.mindlevel.MainActivity;
-import net.mindlevel.fragment.FeedFragment;
-import net.mindlevel.fragment.UserFragment;
+import net.mindlevel.CoordinatorActivity;
 import net.mindlevel.util.ProgressController;
 import net.mindlevel.R;
 import net.mindlevel.api.ControllerCallback;
@@ -103,7 +101,7 @@ public class MissionActivity extends AppCompatActivity {
                 creatorView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent mainIntent = new Intent(context, MainActivity.class);
+                        Intent mainIntent = new Intent(context, CoordinatorActivity.class);
                         mainIntent.putExtra("username", mission.creator);
                         startActivity(mainIntent);
                     }

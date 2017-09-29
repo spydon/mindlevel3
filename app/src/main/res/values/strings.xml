@@ -76,6 +76,6 @@
     <string name="creator">Creator:</string>
     <string name="licences">Licences</string>
     <string name="link_icons">https://icons8.com/</string>
-    <string name="icon_thanks"><![CDATA[Thanks to Icon8 for providing awesome icons <3]]></string>
+    <string name="icon_thanks">Thanks to Icons8 for providing awesome icons</string>
 
 </resources>

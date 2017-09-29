@@ -34,7 +34,7 @@ import net.mindlevel.util.PreferencesUtil;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 
-public class MainActivity
+public class CoordinatorActivity
         extends AppCompatActivity
         implements MissionsFragment.OnListFragmentInteractionListener,
         FeedFragment.OnListFragmentInteractionListener,
