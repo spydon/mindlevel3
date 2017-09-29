@@ -119,7 +119,7 @@ public class MissionActivity extends AppCompatActivity {
                 accomplishmentsButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        CoordinatorUtil.toFeed(context, mission.id);
+                        CoordinatorUtil.toFeed(context, mission);
                     }
                 });
 

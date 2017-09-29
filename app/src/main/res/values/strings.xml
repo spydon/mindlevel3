@@ -73,9 +73,15 @@
     <string name="tip_like">Double click an image to like it</string>
     <string name="tip_points">After completing one mission you can like images</string>
     <string name="tip_contributor">Contributors receive all points too</string>
+
+    <!-- String related to about -->
     <string name="creator">Creator:</string>
     <string name="licences">Licences</string>
     <string name="link_icons">https://icons8.com/</string>
     <string name="icon_thanks">Thanks to Icons8 for providing awesome icons</string>
+
+    <string name="latest">Latest</string>
+    <string name="feed_user">Showing accomplishments for user %1$s</string>
+    <string name="feed_mission">Showing accomplishments for mission \"%1$s\"</string>
 
 </resources>

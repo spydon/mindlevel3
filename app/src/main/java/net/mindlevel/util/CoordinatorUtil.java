@@ -11,6 +11,7 @@ import android.widget.Toast;
 import net.mindlevel.CoordinatorActivity;
 import net.mindlevel.R;
 import net.mindlevel.model.Accomplishment;
+import net.mindlevel.model.Mission;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,9 +29,9 @@ public class CoordinatorUtil {
         context.startActivity(mainIntent);
     }
 
-    public static void toFeed(Context context, int missionId) {
+    public static void toFeed(Context context, Mission mission) {
         Intent mainIntent = new Intent(context, CoordinatorActivity.class);
-        mainIntent.putExtra("accomplishments_for_mission", missionId);
+        mainIntent.putExtra("accomplishments_for_mission", mission);
         context.startActivity(mainIntent);
     }
 }

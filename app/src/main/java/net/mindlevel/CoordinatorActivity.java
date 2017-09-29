@@ -171,12 +171,12 @@ public class CoordinatorActivity
             scrollToFragment(userFragment);
         } else if(intent.hasExtra("accomplishments_for_user")) {
             String username = intent.getStringExtra("accomplishments_for_user");
+            scrollToFragment(feedFragment);
             feedFragment.populateUserAccomplishments(username);
-            scrollToFragment(feedFragment);
         } else if(intent.hasExtra("accomplishments_for_mission")) {
-            int missionId = intent.getIntExtra("accomplishments_for_mission", 0);
-            feedFragment.populateMissionAccomplishments(missionId);
+            Mission mission = (Mission)intent.getSerializableExtra("accomplishments_for_mission");
             scrollToFragment(feedFragment);
+            feedFragment.populateMissionAccomplishments(mission);
         }
     }
 

@@ -4,6 +4,7 @@ package net.mindlevel.fragment;
 //import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -17,6 +18,7 @@ import net.mindlevel.api.ControllerCallback;
 import net.mindlevel.api.MissionController;
 import net.mindlevel.api.UserController;
 import net.mindlevel.model.Accomplishment;
+import net.mindlevel.model.Mission;
 import net.mindlevel.util.NetworkUtil;
 
 import java.util.List;
@@ -38,6 +40,7 @@ public class FeedFragment extends InfoFragment {
     private UserController userController;
     private MissionController missionController;
     private RecyclerView recyclerView;
+    private Snackbar searchInfoBar;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -89,11 +92,21 @@ public class FeedFragment extends InfoFragment {
 
         View coordinator = contentView.getRootView();
         if (NetworkUtil.connectionCheck(getContext(), coordinator)) {
-            showInfo(false, true);
-            accomplishmentController.getLatest(getAccomplishmentsCallback);
+            populateLatest();
         } else {
             showInfo(true, false);
         }
+
+        this.searchInfoBar = Snackbar.make(coordinator, "", Snackbar.LENGTH_INDEFINITE);
+        String latest = getString(R.string.latest);
+        searchInfoBar.setAction(latest, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                searchInfoBar.dismiss();
+                populateLatest();
+            }
+        });
+
         return view;
     }
 
@@ -115,14 +128,25 @@ public class FeedFragment extends InfoFragment {
         listener = null;
     }
 
-    public void populateUserAccomplishments(String username) {
-        // TODO: Add title and button to clear
-        userController.getAccomplishments(username, getAccomplishmentsCallback);
+    private void populateLatest() {
+        showInfo(false, true);
+        accomplishmentController.getLatest(getAccomplishmentsCallback);
     }
 
-    public void populateMissionAccomplishments(int missionId) {
-        // TODO: Add title and button to clear
-        missionController.getAccomplishments(missionId, getAccomplishmentsCallback);
+    public void populateUserAccomplishments(String username) {
+        showInfo(false, true);
+        userController.getAccomplishments(username, getAccomplishmentsCallback);
+        String infoText = getString(R.string.feed_user, username);
+        searchInfoBar.setText(infoText);
+        searchInfoBar.show();
+    }
+
+    public void populateMissionAccomplishments(Mission mission) {
+        showInfo(false, true);
+        missionController.getAccomplishments(mission.id, getAccomplishmentsCallback);
+        String infoText = getString(R.string.feed_mission, mission.title);
+        searchInfoBar.setText(infoText);
+        searchInfoBar.show();
     }
 
     /**
@@ -139,7 +163,7 @@ public class FeedFragment extends InfoFragment {
         @Override
         public void onPostExecute(Boolean isSuccess, List<Accomplishment> response) {
             if(getActivity() != null) {
-                if (isSuccess) {
+                if (isSuccess && !response.isEmpty()) {
                     showInfo(false, false);
                     recyclerView.setAdapter(new FeedRecyclerViewAdapter(response, listener));
                 } else {
