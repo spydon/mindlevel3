@@ -59,6 +59,7 @@
             android:layout_height="wrap_content"
             android:autoLink="web"
             android:gravity="end"
+            android:textColorLink="@color/colorPrimary"
             android:text="@string/about_site"
             android:textAppearance="?android:attr/textAppearanceSmall" />
 
@@ -68,6 +69,7 @@
             android:layout_height="wrap_content"
             android:autoLink="email"
             android:gravity="end"
+            android:textColorLink="@color/colorPrimary"
             android:text="@string/about_email"
             android:textAppearance="?android:attr/textAppearanceSmall" />
 
@@ -89,6 +91,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:autoLink="web"
+            android:textColorLink="@color/colorPrimary"
             android:text="@string/link_icons"
             android:textAppearance="?android:attr/textAppearanceSmall" />
 
