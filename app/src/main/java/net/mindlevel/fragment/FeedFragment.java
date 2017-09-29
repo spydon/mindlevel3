@@ -84,7 +84,7 @@ public class FeedFragment extends InfoFragment {
         View coordinator = contentView.getRootView();
         if (NetworkUtil.connectionCheck(getContext(), coordinator)) {
             showInfo(false, true);
-            controller.getLatest(getLatestCallback);
+            controller.getLatest(getAccomplishmentsCallback);
         } else {
             showInfo(true, false);
         }
@@ -109,6 +109,14 @@ public class FeedFragment extends InfoFragment {
         listener = null;
     }
 
+    public void populateUserAccomplishments(String username) {
+
+    }
+
+    public void populateMissionAccomplishments(int missionId) {
+
+    }
+
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
@@ -119,7 +127,7 @@ public class FeedFragment extends InfoFragment {
         void onListFragmentInteraction(Accomplishment accomplishment);
     }
 
-    private ControllerCallback<List<Accomplishment>> getLatestCallback = new ControllerCallback<List<Accomplishment>>() {
+    private ControllerCallback<List<Accomplishment>> getAccomplishmentsCallback = new ControllerCallback<List<Accomplishment>>() {
         @Override
         public void onPostExecute(Boolean isSuccess, List<Accomplishment> response) {
             if(getActivity() != null) {

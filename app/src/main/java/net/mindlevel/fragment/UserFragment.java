@@ -151,6 +151,10 @@ public class UserFragment extends InfoFragment {
 
     public void setUser(User user) {
         this.user = user;
+        if(imageView != null) {
+            Glide.with(imageView.getContext()).clear(imageView);
+        }
+
         ProgressController loading = new ProgressController(imageProgressBar);
         showInfo(false, false);
         if(!TextUtils.isEmpty(user.image)) {
@@ -171,6 +175,10 @@ public class UserFragment extends InfoFragment {
             selfButton.setVisibility(GONE);
             editButton.setVisibility(VISIBLE);
             signOutButton.setVisibility(VISIBLE);
+        } else {
+            selfButton.setVisibility(VISIBLE);
+            editButton.setVisibility(GONE);
+            signOutButton.setVisibility(GONE);
         }
     }
 
