@@ -74,5 +74,8 @@
     <string name="tip_points">After completing one mission you can like images</string>
     <string name="tip_contributor">Contributors receive all points too</string>
     <string name="creator">Creator:</string>
+    <string name="licences">Licences</string>
+    <string name="link_icons">https://icons8.com/</string>
+    <string name="icon_thanks"><![CDATA[Thanks to Icon8 for providing awesome icons <3]]></string>
 
 </resources>
