@@ -107,7 +107,6 @@ public class MainActivity
     public void onListFragmentInteraction(User user) {
         userFragment.setUser(user);
         scrollToFragment(userFragment);
-
     }
 
     private void scrollToFragment(Fragment selectedFragment) {
@@ -159,6 +158,18 @@ public class MainActivity
                 // Do nothing
             }
         });
+    }
+
+    @Override
+    public void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        if(intent.hasExtra("username")) {
+            String username = intent.getStringExtra("username");
+            userFragment.populateUserFragment(username);
+            scrollToFragment(userFragment);
+        } else {
+            // Do nothing for now
+        }
     }
 
     @Override

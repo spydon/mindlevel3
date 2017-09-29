@@ -52,6 +52,7 @@ public class UserFragment extends InfoFragment {
     private FloatingActionButton editButton, signOutButton, selfButton;
     private Context context;
     private User user;
+    private String username;
     private int shortAnimTime;
 
     private final static int UPDATE_USER = 1;
@@ -77,7 +78,11 @@ public class UserFragment extends InfoFragment {
         this.shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
 
         showInfo(false, true);
-        populateUserFragment();
+        if(username == null) {
+            populateUserFragment();
+        } else {
+            populateUserFragment(username);
+        }
 
         editButton = (FloatingActionButton) view.findViewById(R.id.edit_button);
         editButton.setOnClickListener(new View.OnClickListener() {
@@ -121,7 +126,11 @@ public class UserFragment extends InfoFragment {
     }
 
     public void populateUserFragment(String username) {
-        controller.getUser(username, userCallback);
+        if(controller == null) {
+            this.username = username;
+        } else {
+            controller.getUser(username, userCallback);
+        }
     }
 
     @Override

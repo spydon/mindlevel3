@@ -15,6 +15,9 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
+import net.mindlevel.MainActivity;
+import net.mindlevel.fragment.FeedFragment;
+import net.mindlevel.fragment.UserFragment;
 import net.mindlevel.util.ProgressController;
 import net.mindlevel.R;
 import net.mindlevel.api.ControllerCallback;
@@ -93,6 +96,18 @@ public class MissionActivity extends AppCompatActivity {
 
                 TextView descriptionView = (TextView) findViewById(R.id.description);
                 descriptionView.setText(mission.description);
+
+                TextView creatorView = (TextView) findViewById(R.id.creator);
+                creatorView.setText(mission.creator);
+
+                creatorView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent mainIntent = new Intent(context, MainActivity.class);
+                        mainIntent.putExtra("username", mission.creator);
+                        startActivity(mainIntent);
+                    }
+                });
 
                 FloatingActionButton uploadButton = (FloatingActionButton) findViewById(R.id.fab);
                 uploadButton.setOnClickListener(new View.OnClickListener() {
