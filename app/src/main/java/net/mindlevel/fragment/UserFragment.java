@@ -18,6 +18,7 @@ import com.bumptech.glide.Glide;
 
 import net.mindlevel.activity.EditUserActivity;
 import net.mindlevel.activity.LoginActivity;
+import net.mindlevel.util.CoordinatorUtil;
 import net.mindlevel.util.PreferencesUtil;
 import net.mindlevel.util.ProgressController;
 import net.mindlevel.R;
@@ -49,7 +50,7 @@ public class UserFragment extends InfoFragment {
     private TextView scoreView;
     private TextView descriptionView;
     private View view, imageProgressBar;
-    private FloatingActionButton editButton, signOutButton, selfButton;
+    private FloatingActionButton editButton, signOutButton, selfButton, accomplishmentButton;
     private Context context;
     private User user;
     private String username;
@@ -78,11 +79,10 @@ public class UserFragment extends InfoFragment {
         this.shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
 
         showInfo(false, true);
-        if(username == null) {
-            populateUserFragment();
-        } else {
-            populateUserFragment(username);
+        if(this.username == null) {
+            this.username = PreferencesUtil.getUsername(context);
         }
+        populate(username);
 
         editButton = (FloatingActionButton) view.findViewById(R.id.edit_button);
         editButton.setOnClickListener(new View.OnClickListener() {
@@ -110,7 +110,15 @@ public class UserFragment extends InfoFragment {
         selfButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                populateUserFragment();
+                populateWithSelf();
+            }
+        });
+
+        accomplishmentButton = (FloatingActionButton) view.findViewById(R.id.accomplishments_button);
+        accomplishmentButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                CoordinatorUtil.toFeed(context, username);
             }
         });
 
@@ -120,12 +128,12 @@ public class UserFragment extends InfoFragment {
         return view;
     }
 
-    private void populateUserFragment() {
+    private void populateWithSelf() {
         String username = PreferencesUtil.getUsername(context);
-        populateUserFragment(username);
+        populate(username);
     }
 
-    public void populateUserFragment(String username) {
+    public void populate(String username) {
         if(controller == null) {
             this.username = username;
         } else {
@@ -215,7 +223,7 @@ public class UserFragment extends InfoFragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(resultCode == RESULT_OK && requestCode == UPDATE_USER) {
-            populateUserFragment();
+            populateWithSelf();
         }
     }
 }

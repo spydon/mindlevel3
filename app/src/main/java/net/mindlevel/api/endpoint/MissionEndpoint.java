@@ -1,5 +1,6 @@
 package net.mindlevel.api.endpoint;
 
+import net.mindlevel.model.Accomplishment;
 import net.mindlevel.model.Mission;
 
 import java.util.List;
@@ -23,6 +24,9 @@ public interface MissionEndpoint {
 
     @GET("mission/{id}")
     Call<Mission> get(@Path("id") int id);
+
+    @GET("mission/{id}/accomplishment")
+    Call<List<Accomplishment>> getAccomplishments(@Path("id") int id);
 
     @GET("mission/{range}")
     Call<List<Mission>> get(@Path("range") String range);

@@ -25,11 +25,20 @@
     <include layout="@layout/content_mission"/>
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
+        android:id="@+id/upload_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginEnd="@dimen/fab_margin"
+        android:layout_marginBottom="@dimen/fab_margin2"
+        app:srcCompat="@drawable/upload"/>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/accomplishments_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@drawable/upload"/>
+        app:srcCompat="@drawable/accomplishment"/>
 
 </android.support.design.widget.CoordinatorLayout>

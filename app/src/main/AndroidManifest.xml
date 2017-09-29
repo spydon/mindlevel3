@@ -20,7 +20,8 @@
 
         <activity
             android:name=".CoordinatorActivity"
-            android:launchMode="singleInstance"
+            android:launchMode="singleTask"
+            android:taskAffinity=""
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -31,6 +32,7 @@
         <activity
             android:name=".activity.MissionActivity"
             android:label="@string/title_activity_mission"
+            android:launchMode="standard"
             android:parentActivityName=".CoordinatorActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data

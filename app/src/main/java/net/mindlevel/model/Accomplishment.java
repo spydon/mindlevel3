@@ -3,7 +3,7 @@ package net.mindlevel.model;
 import java.io.Serializable;
 import java.util.List;
 
-public class Accomplishment implements Serializable{
+public class Accomplishment implements Serializable {
 
     public final String title, description, image;
     public final int id, missionId, score;

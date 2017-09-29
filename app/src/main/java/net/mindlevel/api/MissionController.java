@@ -5,6 +5,7 @@ import android.text.TextUtils;
 
 import net.mindlevel.R;
 import net.mindlevel.api.endpoint.MissionEndpoint;
+import net.mindlevel.model.Accomplishment;
 import net.mindlevel.model.Mission;
 
 import org.apache.commons.io.FileUtils;
@@ -71,6 +72,29 @@ public class MissionController extends BackendService {
 
             @Override
             public void onFailure(Call<Mission> call, Throwable t) {
+                callback.onPostExecute(false, null);
+                t.printStackTrace();
+            }
+        });
+    }
+
+    public void getAccomplishments(final int missionId, final ControllerCallback<List<Accomplishment>> callback) {
+        Call<List<Accomplishment>> accomplishmentsCall = endpoint.getAccomplishments(missionId);
+
+        accomplishmentsCall.enqueue(new Callback<List<Accomplishment>>() {
+            @Override
+            public void onResponse(Call<List<Accomplishment>> call,
+                                   Response<List<Accomplishment>> accomplishmentsResponse) {
+                if(accomplishmentsResponse.isSuccessful()) {
+                    List<Accomplishment> accomplishments = accomplishmentsResponse.body();
+                    callback.onPostExecute(true, accomplishments);
+                } else {
+                    callback.onPostExecute(false, null);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Accomplishment>> call, Throwable t) {
                 callback.onPostExecute(false, null);
                 t.printStackTrace();
             }

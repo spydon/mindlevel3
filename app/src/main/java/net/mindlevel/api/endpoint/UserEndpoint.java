@@ -1,5 +1,6 @@
 package net.mindlevel.api.endpoint;
 
+import net.mindlevel.model.Accomplishment;
 import net.mindlevel.model.Login;
 import net.mindlevel.model.User;
 
@@ -21,6 +22,9 @@ public interface UserEndpoint {
 
     @GET("user/{user}")
     Call<User> get(@Path("user") String user);
+
+    @GET("user/{user}/accomplishment")
+    Call<List<Accomplishment>> getAccomplishments(@Path("user") String user);
 
     @GET("user/highscore/{amount}")
     Call<List<User>> getHighscore(@Path("amount") int amount);

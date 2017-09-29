@@ -6,6 +6,7 @@ import android.text.TextUtils;
 
 import net.mindlevel.R;
 import net.mindlevel.api.endpoint.UserEndpoint;
+import net.mindlevel.model.Accomplishment;
 import net.mindlevel.model.Login;
 import net.mindlevel.model.User;
 import net.mindlevel.util.PreferencesUtil;
@@ -102,6 +103,29 @@ public class UserController extends BackendService {
 
             @Override
             public void onFailure(Call<User> call, Throwable t) {
+                callback.onPostExecute(false, null);
+                t.printStackTrace();
+            }
+        });
+    }
+
+    public void getAccomplishments(final String username, final ControllerCallback<List<Accomplishment>> callback) {
+        Call<List<Accomplishment>> accomplishmentsCall = endpoint.getAccomplishments(username);
+
+        accomplishmentsCall.enqueue(new Callback<List<Accomplishment>>() {
+            @Override
+            public void onResponse(Call<List<Accomplishment>> call,
+                                   Response<List<Accomplishment>> accomplishmentsResponse) {
+                if(accomplishmentsResponse.isSuccessful()) {
+                    List<Accomplishment> accomplishments = accomplishmentsResponse.body();
+                    callback.onPostExecute(true, accomplishments);
+                } else {
+                    callback.onPostExecute(false, null);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Accomplishment>> call, Throwable t) {
                 callback.onPostExecute(false, null);
                 t.printStackTrace();
             }

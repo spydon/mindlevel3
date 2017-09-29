@@ -14,6 +14,8 @@ import android.view.ViewGroup;
 import net.mindlevel.R;
 import net.mindlevel.api.AccomplishmentController;
 import net.mindlevel.api.ControllerCallback;
+import net.mindlevel.api.MissionController;
+import net.mindlevel.api.UserController;
 import net.mindlevel.model.Accomplishment;
 import net.mindlevel.util.NetworkUtil;
 
@@ -32,7 +34,9 @@ public class FeedFragment extends InfoFragment {
     // TODO: Customize parameters
     private int columnCount = 2;
     private OnListFragmentInteractionListener listener;
-    private AccomplishmentController controller;
+    private AccomplishmentController accomplishmentController;
+    private UserController userController;
+    private MissionController missionController;
     private RecyclerView recyclerView;
 
     /**
@@ -55,7 +59,9 @@ public class FeedFragment extends InfoFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.controller = new AccomplishmentController(getContext());
+        this.accomplishmentController = new AccomplishmentController(getContext());
+        this.userController = new UserController(getContext());
+        this.missionController = new MissionController(getContext());
         this.shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
 
         if (getArguments() != null) {
@@ -84,7 +90,7 @@ public class FeedFragment extends InfoFragment {
         View coordinator = contentView.getRootView();
         if (NetworkUtil.connectionCheck(getContext(), coordinator)) {
             showInfo(false, true);
-            controller.getLatest(getAccomplishmentsCallback);
+            accomplishmentController.getLatest(getAccomplishmentsCallback);
         } else {
             showInfo(true, false);
         }
@@ -110,11 +116,13 @@ public class FeedFragment extends InfoFragment {
     }
 
     public void populateUserAccomplishments(String username) {
-
+        // TODO: Add title and button to clear
+        userController.getAccomplishments(username, getAccomplishmentsCallback);
     }
 
     public void populateMissionAccomplishments(int missionId) {
-
+        // TODO: Add title and button to clear
+        missionController.getAccomplishments(missionId, getAccomplishmentsCallback);
     }
 
     /**

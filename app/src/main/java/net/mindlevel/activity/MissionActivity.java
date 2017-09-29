@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 
 import net.mindlevel.CoordinatorActivity;
+import net.mindlevel.util.CoordinatorUtil;
 import net.mindlevel.util.ProgressController;
 import net.mindlevel.R;
 import net.mindlevel.api.ControllerCallback;
@@ -40,8 +41,8 @@ public class MissionActivity extends AppCompatActivity {
         imageProgressView = (ProgressBar) findViewById(R.id.image_progress);
         controller = new MissionController(missionView.getContext());
         context = this;
-        showProgress(true);
 
+        showProgress(true);
         if(getIntent().hasExtra("mission")) {
             Mission mission = (Mission) getIntent().getSerializableExtra("mission");
             Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -50,8 +51,6 @@ public class MissionActivity extends AppCompatActivity {
         } else if(getIntent().hasExtra("missionId")) {
             int missionId = getIntent().getIntExtra("missionId", -1);
             controller.get(missionId, missionCallback);
-        } else {
-            // TODO: Handle not found
         }
     }
 
@@ -101,19 +100,26 @@ public class MissionActivity extends AppCompatActivity {
                 creatorView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent mainIntent = new Intent(context, CoordinatorActivity.class);
-                        mainIntent.putExtra("username", mission.creator);
-                        startActivity(mainIntent);
+                        CoordinatorUtil.toUser(context, mission.creator);
                     }
                 });
 
-                FloatingActionButton uploadButton = (FloatingActionButton) findViewById(R.id.fab);
+                FloatingActionButton uploadButton = (FloatingActionButton) findViewById(R.id.upload_button);
                 uploadButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         Intent uploadIntent = new Intent(context, UploadActivity.class);
                         uploadIntent.putExtra("mission", mission);
                         startActivity(uploadIntent);
+                    }
+                });
+
+                FloatingActionButton accomplishmentsButton =
+                        (FloatingActionButton) findViewById(R.id.accomplishments_button);
+                accomplishmentsButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        CoordinatorUtil.toFeed(context, mission.id);
                     }
                 });
 

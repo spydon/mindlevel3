@@ -12,7 +12,6 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -93,14 +92,12 @@ public class CoordinatorActivity
     }
 
     public void onListFragmentInteraction(Accomplishment accomplishment) {
-        // TODO: Check how to start non programmatically, R.id.Mission... etc
         Intent accomplishmentIntent = new Intent(this, AccomplishmentActivity.class);
         accomplishmentIntent.putExtra("accomplishment", accomplishment);
         startActivity(accomplishmentIntent);
     }
 
     public void onListFragmentInteraction(Mission mission) {
-        // TODO: Check how to start non programmatically, R.id.Mission... etc
         Intent missionIntent = new Intent(this, MissionActivity.class);
         missionIntent.putExtra("mission", mission);
         startActivity(missionIntent);
@@ -170,10 +167,16 @@ public class CoordinatorActivity
         super.onNewIntent(intent);
         if(intent.hasExtra("username")) {
             String username = intent.getStringExtra("username");
-            userFragment.populateUserFragment(username);
+            userFragment.populate(username);
             scrollToFragment(userFragment);
-        } else {
-            // Do nothing for now
+        } else if(intent.hasExtra("accomplishments_for_user")) {
+            String username = intent.getStringExtra("accomplishments_for_user");
+            feedFragment.populateUserAccomplishments(username);
+            scrollToFragment(feedFragment);
+        } else if(intent.hasExtra("accomplishments_for_mission")) {
+            int missionId = intent.getIntExtra("accomplishments_for_mission", 0);
+            feedFragment.populateMissionAccomplishments(missionId);
+            scrollToFragment(feedFragment);
         }
     }
 
