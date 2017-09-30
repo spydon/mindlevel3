@@ -108,18 +108,19 @@ public class FeedFragment extends InfoFragment {
             }
         });
 
+        if (NetworkUtil.connectionCheck(getContext(), coordinator)) {
+            populateLatest();
+        } else {
+            showInfo(true, false);
+        }
+
         return view;
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        if (NetworkUtil.connectionCheck(getContext(), coordinator)) {
-            populateLatest();
-        } else {
-            showInfo(true, false);
-        }
-    }
+   }
 
     @Override
     public void onAttach(Context context) {
@@ -177,7 +178,7 @@ public class FeedFragment extends InfoFragment {
                     accomplishments.clear();
 
                     if(response.isEmpty()) {
-                        showInfo(true, false);
+                        showInfo(true, false, getString(R.string.not_found));
                     } else {
                         accomplishments.addAll(response);
                         showInfo(false, false);

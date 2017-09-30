@@ -74,7 +74,13 @@
     <string name="tip_points">After completing one mission you can like images</string>
     <string name="tip_contributor">Contributors receive all points too</string>
 
-    <!-- String related to about -->
+    <!-- Strings related to progress motivations -->
+    <string name="progress_satelite">Moving satellites into position</string>
+    <string name="progress_order">Restoring order</string>
+    <string name="progress_petting">Brb, petting animals</string>
+    <string name="progress_sleep">Just one more snooze…</string>
+
+    <!-- Strings related to about -->
     <string name="creator">Creator:</string>
     <string name="licences">Licences</string>
     <string name="link_icons">https://icons8.com/</string>
@@ -83,5 +89,6 @@
     <string name="latest">Latest</string>
     <string name="feed_user">Showing accomplishments for user %1$s</string>
     <string name="feed_mission">Showing accomplishments for mission \"%1$s\"</string>
+    <string name="not_found">The squirrels came up with nothing</string>
 
 </resources>
