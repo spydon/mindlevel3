@@ -90,5 +90,6 @@
     <string name="feed_user">Showing accomplishments for user %1$s</string>
     <string name="feed_mission">Showing accomplishments for mission \"%1$s\"</string>
     <string name="not_found">The squirrels came up with nothing</string>
+    <string name="contributors">Contributors</string>
 
 </resources>

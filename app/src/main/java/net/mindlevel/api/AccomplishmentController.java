@@ -10,6 +10,7 @@ import net.mindlevel.api.endpoint.AccomplishmentEndpoint;
 import net.mindlevel.model.Accomplishment;
 import net.mindlevel.model.Contributors;
 import net.mindlevel.model.Like;
+import net.mindlevel.model.User;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
@@ -93,6 +94,26 @@ public class AccomplishmentController extends BackendService {
                 }
             }
         }
+    }
+
+    public void getContributors(int id, final ControllerCallback<List<User>> callback) {
+        Call<List<User>> call = endpoint.getContributors(id);
+        call.enqueue(new Callback<List<User>>() {
+            @Override
+            public void onResponse(Call<List<User>> call, Response<List<User>> response) {
+                if(response.isSuccessful()) {
+                    callback.onPostExecute(true, response.body());
+                } else {
+                    callback.onPostExecute(false, null);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<User>> call, Throwable t) {
+                callback.onPostExecute(false, null);
+                t.printStackTrace();
+            }
+        });
     }
 
     public void like(int id, final ControllerCallback<Like> callback) {

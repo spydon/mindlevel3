@@ -12,6 +12,7 @@ import net.mindlevel.CoordinatorActivity;
 import net.mindlevel.R;
 import net.mindlevel.model.Accomplishment;
 import net.mindlevel.model.Mission;
+import net.mindlevel.model.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +21,12 @@ public class CoordinatorUtil {
     public static void toUser(Context context, String username) {
         Intent mainIntent = new Intent(context, CoordinatorActivity.class);
         mainIntent.putExtra("username", username);
+        context.startActivity(mainIntent);
+    }
+
+    public static void toUser(Context context, User user) {
+        Intent mainIntent = new Intent(context, CoordinatorActivity.class);
+        mainIntent.putExtra("user", user);
         context.startActivity(mainIntent);
     }
 

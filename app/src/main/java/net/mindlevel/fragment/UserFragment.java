@@ -52,7 +52,7 @@ public class UserFragment extends InfoFragment {
     private View view, imageProgressBar;
     private FloatingActionButton editButton, signOutButton, selfButton, accomplishmentButton;
     private Context context;
-    private User user;
+    private User user, forwardedUser;
     private String username;
     private int shortAnimTime;
 
@@ -126,10 +126,13 @@ public class UserFragment extends InfoFragment {
         NetworkUtil.connectionCheck(getContext(), coordinator);
 
         showInfo(false, true);
-        if(this.username == null) {
-            this.username = PreferencesUtil.getUsername(context);
+        if(this.forwardedUser != null) {
+            populate(forwardedUser);
+        } else if(this.username == null) {
+            populateWithSelf();
+        } else {
+            populate(username);
         }
-        populate(username);
 
     }
 
@@ -143,6 +146,14 @@ public class UserFragment extends InfoFragment {
             this.username = username;
         } else {
             controller.getUser(username, userCallback);
+        }
+    }
+
+    public void populate(User user) {
+        if(controller == null) {
+            this.forwardedUser = forwardedUser;
+        } else {
+            setUser(user);
         }
     }
 

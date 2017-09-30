@@ -118,11 +118,6 @@ public class FeedFragment extends InfoFragment {
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
-   }
-
-    @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         if (context instanceof OnListFragmentInteractionListener) {

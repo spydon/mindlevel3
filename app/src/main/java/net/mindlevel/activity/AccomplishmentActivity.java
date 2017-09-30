@@ -9,24 +9,39 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.pchmn.materialchips.ChipView;
+import com.pchmn.materialchips.ChipsInput;
+import com.pchmn.materialchips.model.Chip;
 
+import net.mindlevel.api.AccomplishmentController;
+import net.mindlevel.api.ControllerCallback;
+import net.mindlevel.fragment.ContributorRecyclerViewAdapter;
+import net.mindlevel.model.User;
+import net.mindlevel.model.UserChip;
+import net.mindlevel.util.CoordinatorUtil;
 import net.mindlevel.view.ImageLikeView;
 import net.mindlevel.util.ProgressController;
 import net.mindlevel.R;
 import net.mindlevel.model.Accomplishment;
 import net.mindlevel.util.ImageUtil;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class AccomplishmentActivity extends AppCompatActivity {
 
     private ImageLikeView imageView;
     private Activity activity;
-    private ProgressBar progressBar;
+    private ContributorRecyclerViewAdapter adapter;
+    private RecyclerView recyclerView;
 
     private final int SHARE = 1;
 
@@ -69,11 +84,11 @@ public class AccomplishmentActivity extends AppCompatActivity {
         });
 
         TextView imageText = (TextView) findViewById(R.id.image_text);
-        imageView = (ImageLikeView) findViewById(R.id.image);
+        this.imageView = (ImageLikeView) findViewById(R.id.image);
         imageView.setTextView(imageText);
         imageView.setId(accomplishment.id);
 
-        progressBar = (ProgressBar) findViewById(R.id.progress);
+        ProgressBar progressBar = (ProgressBar) findViewById(R.id.progress);
         Glide.with(this)
                 .load(url)
                 .listener(new ProgressController(progressBar))
@@ -89,5 +104,20 @@ public class AccomplishmentActivity extends AppCompatActivity {
         imageView.setDrawingCacheEnabled(true);
         imageView.buildDrawingCache();
 
+        AccomplishmentController controller = new AccomplishmentController(this);
+        controller.getContributors(accomplishment.id, contributorsCallback);
+
+        recyclerView = (RecyclerView) findViewById(R.id.contributors);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
+
+    private ControllerCallback<List<User>> contributorsCallback = new ControllerCallback<List<User>>() {
+        @Override
+        public void onPostExecute(Boolean isSuccess, List<User> response) {
+            if (isSuccess) {
+                adapter = new ContributorRecyclerViewAdapter(activity, response);
+                recyclerView.setAdapter(adapter);
+            }
+        }
+    };
 }

@@ -3,6 +3,7 @@ package net.mindlevel.api.endpoint;
 import net.mindlevel.model.Accomplishment;
 import net.mindlevel.model.Contributors;
 import net.mindlevel.model.Like;
+import net.mindlevel.model.User;
 
 import org.json.JSONArray;
 
@@ -33,7 +34,7 @@ public interface AccomplishmentEndpoint {
     Call<List<Accomplishment>> get(@Path("range") String range);
 
     @GET("accomplishment/{id}/contributor")
-    Call<List<String>> getContributors(@Path("id") int id);
+    Call<List<User>> getContributors(@Path("id") int id);
 
     @POST("accomplishment/{id}/contributor")
     Call<Void> addContributors(
