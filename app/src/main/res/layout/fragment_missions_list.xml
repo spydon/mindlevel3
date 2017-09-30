@@ -6,8 +6,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <include layout="@layout/error_center" />
-    <include layout="@layout/progress_center" />
+    <include layout="@layout/info_center" />
 
     <android.support.v7.widget.RecyclerView
         xmlns:android="http://schemas.android.com/apk/res/android"

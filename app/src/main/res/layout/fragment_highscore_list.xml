@@ -18,7 +18,6 @@
         tools:context="net.mindlevel.fragment.MissionsFragment"
         tools:listitem="@layout/fragment_highscore_item" />
 
-    <include layout="@layout/error_center" />
-    <include layout="@layout/progress_center" />
+    <include layout="@layout/info_center" />
 
 </android.support.design.widget.CoordinatorLayout>

@@ -72,7 +72,6 @@ public class MissionsFragment extends InfoFragment {
         this.progressView = view.findViewById(R.id.progress);
         this.errorView = view.findViewById(R.id.error);
         Context context = getContext();
-        showInfo(false, true);
 
         if (columnCount <= 1) {
             recyclerView.setLayoutManager(new LinearLayoutManager(context));
@@ -80,8 +79,14 @@ public class MissionsFragment extends InfoFragment {
             recyclerView.setLayoutManager(new GridLayoutManager(context, columnCount));
         }
 
-        controller.getAll(getAllCallback);
         return view;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        showInfo(false, true);
+        controller.getAll(getAllCallback);
     }
 
     @Override

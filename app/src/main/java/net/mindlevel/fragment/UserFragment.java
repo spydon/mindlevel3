@@ -78,12 +78,6 @@ public class UserFragment extends InfoFragment {
 
         this.shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
 
-        showInfo(false, true);
-        if(this.username == null) {
-            this.username = PreferencesUtil.getUsername(context);
-        }
-        populate(username);
-
         editButton = (FloatingActionButton) view.findViewById(R.id.edit_button);
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -122,10 +116,21 @@ public class UserFragment extends InfoFragment {
             }
         });
 
+        return view;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
         View coordinator = contentView.getRootView();
         NetworkUtil.connectionCheck(getContext(), coordinator);
 
-        return view;
+        showInfo(false, true);
+        if(this.username == null) {
+            this.username = PreferencesUtil.getUsername(context);
+        }
+        populate(username);
+
     }
 
     private void populateWithSelf() {

@@ -21,6 +21,7 @@ import net.mindlevel.model.Accomplishment;
 import net.mindlevel.model.Mission;
 import net.mindlevel.util.NetworkUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -35,11 +36,14 @@ public class FeedFragment extends InfoFragment {
     private static final String ARG_COLUMN_COUNT = "column-count";
     // TODO: Customize parameters
     private int columnCount = 2;
+    private View coordinator;
     private OnListFragmentInteractionListener listener;
     private AccomplishmentController accomplishmentController;
     private UserController userController;
     private MissionController missionController;
+    private List<Accomplishment> accomplishments;
     private RecyclerView recyclerView;
+    private FeedRecyclerViewAdapter adapter;
     private Snackbar searchInfoBar;
 
     /**
@@ -66,6 +70,7 @@ public class FeedFragment extends InfoFragment {
         this.userController = new UserController(getContext());
         this.missionController = new MissionController(getContext());
         this.shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
+        this.accomplishments = new ArrayList<>();
 
         if (getArguments() != null) {
             columnCount = getArguments().getInt(ARG_COLUMN_COUNT);
@@ -76,9 +81,11 @@ public class FeedFragment extends InfoFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_feed_list, container, false);
-        recyclerView = (RecyclerView) view.findViewById(R.id.list);
-        contentView = recyclerView;
+        this.adapter = new FeedRecyclerViewAdapter(accomplishments, listener);
+        this.recyclerView = (RecyclerView) view.findViewById(R.id.list);
+        recyclerView.setAdapter(adapter);
 
+        contentView = recyclerView;
         progressView = view.findViewById(R.id.progress);
         errorView = view.findViewById(R.id.error);
         Context context = getContext();
@@ -90,13 +97,7 @@ public class FeedFragment extends InfoFragment {
                     new StaggeredGridLayoutManager(columnCount, StaggeredGridLayoutManager.VERTICAL));
         }
 
-        View coordinator = contentView.getRootView();
-        if (NetworkUtil.connectionCheck(getContext(), coordinator)) {
-            populateLatest();
-        } else {
-            showInfo(true, false);
-        }
-
+        this.coordinator = contentView.getRootView();
         this.searchInfoBar = Snackbar.make(coordinator, "", Snackbar.LENGTH_INDEFINITE);
         String latest = getString(R.string.latest);
         searchInfoBar.setAction(latest, new View.OnClickListener() {
@@ -110,6 +111,15 @@ public class FeedFragment extends InfoFragment {
         return view;
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        if (NetworkUtil.connectionCheck(getContext(), coordinator)) {
+            populateLatest();
+        } else {
+            showInfo(true, false);
+        }
+    }
 
     @Override
     public void onAttach(Context context) {
@@ -163,9 +173,16 @@ public class FeedFragment extends InfoFragment {
         @Override
         public void onPostExecute(Boolean isSuccess, List<Accomplishment> response) {
             if(getActivity() != null) {
-                if (isSuccess && !response.isEmpty()) {
-                    showInfo(false, false);
-                    recyclerView.setAdapter(new FeedRecyclerViewAdapter(response, listener));
+                if (isSuccess) {
+                    accomplishments.clear();
+
+                    if(response.isEmpty()) {
+                        showInfo(true, false);
+                    } else {
+                        accomplishments.addAll(response);
+                        showInfo(false, false);
+                    }
+                    adapter.notifyDataSetChanged();
                 } else {
                     showInfo(true, false);
                 }
