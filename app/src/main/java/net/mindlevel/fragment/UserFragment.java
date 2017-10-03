@@ -142,7 +142,7 @@ public class UserFragment extends InfoFragment {
     }
 
     public void populate(String username) {
-        if(controller == null) {
+        if(getActivity() == null) {
             this.username = username;
         } else {
             controller.getUser(username, userCallback);
@@ -150,8 +150,8 @@ public class UserFragment extends InfoFragment {
     }
 
     public void populate(User user) {
-        if(controller == null) {
-            this.forwardedUser = forwardedUser;
+        if(getActivity() == null) {
+            this.forwardedUser = user;
         } else {
             setUser(user);
         }
@@ -213,6 +213,7 @@ public class UserFragment extends InfoFragment {
             editButton.setVisibility(GONE);
             signOutButton.setVisibility(GONE);
         }
+        this.forwardedUser = null;
     }
 
     private ControllerCallback<User> userCallback = new ControllerCallback<User>() {

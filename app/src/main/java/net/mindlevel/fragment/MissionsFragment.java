@@ -79,14 +79,9 @@ public class MissionsFragment extends InfoFragment {
             recyclerView.setLayoutManager(new GridLayoutManager(context, columnCount));
         }
 
-        return view;
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
         showInfo(false, true);
         controller.getAll(getAllCallback);
+        return view;
     }
 
     @Override

@@ -19,26 +19,26 @@ import java.util.List;
 
 public class CoordinatorUtil {
     public static void toUser(Context context, String username) {
-        Intent mainIntent = new Intent(context, CoordinatorActivity.class);
-        mainIntent.putExtra("username", username);
-        context.startActivity(mainIntent);
+        Intent coordinatorIntent = new Intent(context, CoordinatorActivity.class);
+        coordinatorIntent.putExtra("username", username);
+        context.startActivity(coordinatorIntent);
     }
 
     public static void toUser(Context context, User user) {
-        Intent mainIntent = new Intent(context, CoordinatorActivity.class);
-        mainIntent.putExtra("user", user);
-        context.startActivity(mainIntent);
+        Intent coordinatorIntent = new Intent(context, CoordinatorActivity.class);
+        coordinatorIntent.putExtra("user", user);
+        context.startActivity(coordinatorIntent);
     }
 
     public static void toFeed(Context context, String username) {
-        Intent mainIntent = new Intent(context, CoordinatorActivity.class);
-        mainIntent.putExtra("accomplishments_for_user", username);
-        context.startActivity(mainIntent);
+        Intent coordinatorIntent = new Intent(context, CoordinatorActivity.class);
+        coordinatorIntent.putExtra("accomplishments_for_user", username);
+        context.startActivity(coordinatorIntent);
     }
 
     public static void toFeed(Context context, Mission mission) {
-        Intent mainIntent = new Intent(context, CoordinatorActivity.class);
-        mainIntent.putExtra("accomplishments_for_mission", mission);
-        context.startActivity(mainIntent);
+        Intent coordinatorIntent = new Intent(context, CoordinatorActivity.class);
+        coordinatorIntent.putExtra("accomplishments_for_mission", mission);
+        context.startActivity(coordinatorIntent);
     }
 }

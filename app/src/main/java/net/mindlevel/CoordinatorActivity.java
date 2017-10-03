@@ -169,6 +169,10 @@ public class CoordinatorActivity
             String username = intent.getStringExtra("username");
             userFragment.populate(username);
             scrollToFragment(userFragment);
+        } else if(intent.hasExtra("user")) {
+            User user = (User)intent.getSerializableExtra("user");
+            userFragment.populate(user);
+            scrollToFragment(userFragment);
         } else if(intent.hasExtra("accomplishments_for_user")) {
             String username = intent.getStringExtra("accomplishments_for_user");
             scrollToFragment(feedFragment);

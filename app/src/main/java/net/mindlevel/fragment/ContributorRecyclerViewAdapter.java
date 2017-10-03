@@ -44,12 +44,11 @@ public class ContributorRecyclerViewAdapter extends RecyclerView.Adapter<Contrib
         return viewHolder;
     }
 
-    // binds the data to the textview in each row
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         final User contributor = contributors.get(position);
         holder.chip.setLabel(contributor.username);
-        holder.chip.setOnClickListener(new View.OnClickListener() {
+        holder.chip.setOnChipClicked(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 CoordinatorUtil.toUser(context, contributor);

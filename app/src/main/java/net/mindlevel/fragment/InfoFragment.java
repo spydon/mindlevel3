@@ -2,6 +2,7 @@ package net.mindlevel.fragment;
 
 // TODO: Change back to non-support lib
 
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.view.View;
 import android.widget.TextView;
@@ -23,6 +24,10 @@ public abstract class InfoFragment extends Fragment {
     }
 
     protected void showInfo(boolean isError, boolean isProgress, String message) {
+        if(!isAdded()) {
+            return;
+        }
+
         TextView errorText = (TextView)errorView.findViewById(R.id.error_text);
         TextView progressText = (TextView)progressView.findViewById(R.id.progress_text);
 
@@ -36,7 +41,12 @@ public abstract class InfoFragment extends Fragment {
 
         final boolean isNormal = !isError && !isProgress;
         if(isNormal) {
-            animateToFront(contentView);
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                public void run() {
+                    animateToFront(contentView);
+                }
+            }, 1000);
         } else if(isError) {
             animateToFront(errorView);
         } else if(isProgress) {
@@ -55,14 +65,16 @@ public abstract class InfoFragment extends Fragment {
     }
 
     private void animateToFront(View view) {
-        View[] views = {contentView, progressView, errorView};
-        for(View other : views) {
-            if(view != other) {
-                other.setVisibility(GONE);
+        if(isAdded()) {
+            View[] views = {contentView, progressView, errorView};
+            for (View other : views) {
+                if (view != other) {
+                    other.setVisibility(GONE);
+                }
             }
+            view.setVisibility(VISIBLE);
+            view.setAlpha(0F);
+            view.animate().setDuration(shortAnimTime).alpha(1F).setListener(null);
         }
-        view.setVisibility(VISIBLE);
-        view.setAlpha(0F);
-        view.animate().setDuration(shortAnimTime).alpha(1F).setListener(null);
     }
 }
