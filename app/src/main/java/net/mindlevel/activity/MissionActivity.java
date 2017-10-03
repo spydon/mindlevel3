@@ -14,6 +14,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.pchmn.materialchips.ChipView;
 
 import net.mindlevel.CoordinatorActivity;
 import net.mindlevel.util.CoordinatorUtil;
@@ -94,10 +95,10 @@ public class MissionActivity extends AppCompatActivity {
                 TextView descriptionView = (TextView) findViewById(R.id.description);
                 descriptionView.setText(mission.description);
 
-                TextView creatorView = (TextView) findViewById(R.id.creator);
-                creatorView.setText(mission.creator);
+                ChipView creatorView = (ChipView) findViewById(R.id.creator);
+                creatorView.setLabel(mission.creator);
 
-                creatorView.setOnClickListener(new View.OnClickListener() {
+                creatorView.setOnChipClicked(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         CoordinatorUtil.toUser(context, mission.creator);

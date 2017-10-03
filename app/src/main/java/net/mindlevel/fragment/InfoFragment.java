@@ -46,7 +46,7 @@ public abstract class InfoFragment extends Fragment {
                 public void run() {
                     animateToFront(contentView);
                 }
-            }, 1000);
+            }, 500);
         } else if(isError) {
             animateToFront(errorView);
         } else if(isProgress) {
