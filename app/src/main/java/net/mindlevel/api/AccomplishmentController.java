@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 
 import id.zelory.compressor.Compressor;
 import okhttp3.MediaType;
@@ -50,7 +51,7 @@ public class AccomplishmentController extends BackendService {
         return FileUtils.readFileToByteArray(compressed);
     }
 
-    public void add(final Accomplishment accomplishment, final List<String> contributors, final Uri path, final
+    public void add(final Accomplishment accomplishment, final Set<String> contributors, final Uri path, final
                     ControllerCallback<Accomplishment> callback) {
         InputStream is = null;
         try {
@@ -61,8 +62,7 @@ public class AccomplishmentController extends BackendService {
                         (MediaType.parse("image/*"), bytes));
 
                 // For some reason the implicit conversion from List gives a string instead of a list
-                Call<Accomplishment> call =
-                        endpoint.add(accomplishment, new Contributors(contributors), image);
+                Call<Accomplishment> call = endpoint.add(accomplishment, new Contributors(contributors), image);
                 call.enqueue(new Callback<Accomplishment>() {
                     @Override
                     public void onResponse(Call<Accomplishment> call, Response<Accomplishment> response) {

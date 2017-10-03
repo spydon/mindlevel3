@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.ArraySet;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -32,7 +33,9 @@ import net.mindlevel.util.KeyboardUtil;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import static net.mindlevel.util.ImageUtil.PICK_IMAGE;
 import static net.mindlevel.util.ImageUtil.REQUEST_IMAGE_CAPTURE;
@@ -42,7 +45,7 @@ public class UploadActivity extends AppCompatActivity {
     private AccomplishmentController accomplishmentController;
     private UserController userController;
     private View containerView, progressView;
-    private TextView titleView, descriptionView;
+    private TextView titleView, descriptionView, errorView;
     private ChipsInput contributorInput;
     private Button uploadButton;
     private Context context;
@@ -91,6 +94,7 @@ public class UploadActivity extends AppCompatActivity {
         progressView = findViewById(R.id.progress);
         showProgress(false);
 
+        errorView = (TextView) findViewById(R.id.error_text);
         titleView = (TextView) findViewById(R.id.title);
         descriptionView = (TextView) findViewById(R.id.description);
         titleView.setText(mission.title);
@@ -100,9 +104,14 @@ public class UploadActivity extends AppCompatActivity {
         uploadButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(path == null) {
+                    errorView.setText(R.string.error_no_image);
+                } else {
+                    errorView.setText("");
+                }
                 showProgress(true);
                 uploadButton.setActivated(false);
-                List<String> contributors = new ArrayList<>();
+                Set<String> contributors = new HashSet<>();
                 for(ChipInterface chip : contributorInput.getSelectedChipList()) {
                     contributors.add(chip.getLabel());
                 }
@@ -147,10 +156,11 @@ public class UploadActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(resultCode == RESULT_OK) {
             if (requestCode == REQUEST_IMAGE_CAPTURE) {
+                errorView.setText("");
                 path = Uri.fromFile(new File(utils.getPhotoPath()));
             } else if (requestCode == PICK_IMAGE) {
                 if (data == null) {
-                    // TODO: Display an error
+                    errorView.setText(R.string.error_image_loading);
                     return;
                 }
                 path = data.getData();

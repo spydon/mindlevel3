@@ -173,7 +173,7 @@ public class FeedFragment extends InfoFragment {
                     accomplishments.clear();
 
                     if(response.isEmpty()) {
-                        showInfo(true, false, getString(R.string.not_found));
+                        showInfo(true, false, getString(R.string.error_not_found));
                     } else {
                         accomplishments.addAll(response);
                         showInfo(false, false);

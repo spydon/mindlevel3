@@ -1,11 +1,11 @@
 package net.mindlevel.model;
 
-import java.util.List;
+import java.util.Set;
 
 public class Contributors {
-    public final List<String> contributors;
+    public final Set<String> contributors;
 
-    public Contributors(List<String> contributors) {
+    public Contributors(Set<String> contributors) {
         this.contributors = contributors;
     }
 }
