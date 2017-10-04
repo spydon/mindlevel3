@@ -112,7 +112,7 @@ public class UserFragment extends InfoFragment {
         accomplishmentButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                CoordinatorUtil.toFeed(context, username);
+                CoordinatorUtil.toFeed(context, user.username);
             }
         });
 

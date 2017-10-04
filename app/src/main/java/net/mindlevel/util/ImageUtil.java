@@ -134,12 +134,14 @@ public class ImageUtil {
         Cursor cursor = context.getContentResolver().query(photoUri,
                 new String[] { MediaStore.Images.ImageColumns.ORIENTATION }, null, null, null);
 
-        if (cursor.getCount() != 1) {
+        if (cursor == null || cursor.getCount() != 1) {
             return -1;
         }
 
         cursor.moveToFirst();
-        return cursor.getInt(0);
+        int rotation = cursor.getInt(0);
+        cursor.close();
+        return rotation;
     }
 
     private static Bitmap getCorrectlyOrientedImage(Context context, Uri photoUri) throws IOException {

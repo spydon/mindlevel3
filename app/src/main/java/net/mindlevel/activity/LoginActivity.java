@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 
 
@@ -139,7 +140,7 @@ public class LoginActivity extends AppCompatActivity {
             usernameView.setError(getString(R.string.error_field_required));
             focusView = usernameView;
             cancel = true;
-        } else if (!isEmailValid(username)) {
+        } else if (!isUsernameValid(username)) {
             usernameView.setError(getString(R.string.error_invalid_username));
             focusView = usernameView;
             cancel = true;
@@ -164,8 +165,8 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    private boolean isEmailValid(String email) {
-        return email.length() > 4;
+    private boolean isUsernameValid(String email) {
+        return email.length() > 3;
     }
 
     private boolean isPasswordValid(String password) {
@@ -216,12 +217,8 @@ public class LoginActivity extends AppCompatActivity {
             showProgress(false);
 
             if (success) {
-                Context context = getApplicationContext();
-                String text = getString(R.string.successful_registration, username);
-                int duration = Toast.LENGTH_SHORT;
-
-                Toast toast = Toast.makeText(context, text, duration);
-                toast.show();
+                String registrationText = getString(R.string.successful_registration, username);
+                Snackbar.make(coordinatorLayout, registrationText, Snackbar.LENGTH_LONG).show();
             } else {
                 passwordView.setError(getString(R.string.error_incorrect_password));
                 passwordView.requestFocus();

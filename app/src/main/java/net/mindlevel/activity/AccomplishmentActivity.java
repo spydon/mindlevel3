@@ -110,7 +110,7 @@ public class AccomplishmentActivity extends AppCompatActivity {
         controller.getContributors(accomplishment.id, contributorsCallback);
 
         recyclerView = (RecyclerView) findViewById(R.id.contributors);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
     }
 
     private ControllerCallback<List<User>> contributorsCallback = new ControllerCallback<List<User>>() {
