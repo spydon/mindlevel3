@@ -37,6 +37,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
 import static net.mindlevel.util.ImageUtil.PICK_IMAGE;
 import static net.mindlevel.util.ImageUtil.REQUEST_IMAGE_CAPTURE;
 
@@ -105,9 +107,9 @@ public class UploadActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(path == null) {
-                    errorView.setText(R.string.error_no_image);
+                    setError(true, getString(R.string.error_no_image));
                 } else {
-                    errorView.setText("");
+                    setError(false);
                 }
                 showProgress(true);
                 uploadButton.setActivated(false);
@@ -132,21 +134,21 @@ public class UploadActivity extends AppCompatActivity {
             KeyboardUtil.hideKeyboard(this);
         }
 
-        containerView.setVisibility(show ? View.GONE : View.VISIBLE);
+        containerView.setVisibility(show ? GONE : VISIBLE);
         containerView.animate().setDuration(shortAnimTime).alpha(
                 show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
-                containerView.setVisibility(show ? View.GONE : View.VISIBLE);
+                containerView.setVisibility(show ? GONE : VISIBLE);
             }
         });
 
-        progressView.setVisibility(show ? View.VISIBLE : View.GONE);
+        progressView.setVisibility(show ? VISIBLE : GONE);
         progressView.animate().setDuration(shortAnimTime).alpha(
                 show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
-                progressView.setVisibility(show ? View.VISIBLE : View.GONE);
+                progressView.setVisibility(show ? VISIBLE : GONE);
             }
         });
     }
@@ -156,11 +158,11 @@ public class UploadActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(resultCode == RESULT_OK) {
             if (requestCode == REQUEST_IMAGE_CAPTURE) {
-                errorView.setText("");
+                setError(false);
                 path = Uri.fromFile(new File(utils.getPhotoPath()));
             } else if (requestCode == PICK_IMAGE) {
                 if (data == null) {
-                    errorView.setText(R.string.error_image_loading);
+                    setError(true, getString(R.string.error_image_loading));
                     return;
                 }
                 path = data.getData();
@@ -169,6 +171,15 @@ public class UploadActivity extends AppCompatActivity {
             ImageView imageView = (ImageView)findViewById(R.id.image);
             utils.setImage(path, imageView);
         }
+    }
+
+    private void setError(boolean isError) {
+        setError(isError, "");
+    }
+
+    private void setError(boolean isError, String error) {
+        errorView.setVisibility(isError ? VISIBLE : GONE);
+        errorView.setText(error);
     }
 
     private ControllerCallback<Accomplishment> uploadCallback = new ControllerCallback<Accomplishment>() {
