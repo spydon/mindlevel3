@@ -9,6 +9,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import net.mindlevel.R;
@@ -23,6 +24,7 @@ public class ImageLikeView extends AppCompatImageView {
 
     private OnClickListener tapListener;
     private View tapSource;
+    private ProgressBar progress;
     private TextView imageText;
 
     private AccomplishmentController controller;
@@ -46,8 +48,6 @@ public class ImageLikeView extends AppCompatImageView {
     private void sharedConstructing(Context context) {
         super.setClickable(true);
         this.context = context;
-        // TODO: Investigate whether this should be removed or if setTextView pattern should be refactored
-        this.imageText =  (TextView) ((Activity) context).findViewById(R.id.image_text);
         controller = new AccomplishmentController(context);
         gestureListener = new GestureListener();
         gestureDetector = new GestureDetector(context, gestureListener, null, true);
@@ -65,6 +65,9 @@ public class ImageLikeView extends AppCompatImageView {
 
     public void setTextView(TextView imageText) {
         this.imageText = imageText;
+    }
+    public void setProgressLike(ProgressBar progress) {
+        this.progress = progress;
     }
     public void setId(int id) { this.id = id; }
 
@@ -86,10 +89,11 @@ public class ImageLikeView extends AppCompatImageView {
 
         @Override
         public boolean onDoubleTap(MotionEvent e) {
-            final TextView view = imageText;
-            if(view == null) {
+            final TextView likeText = imageText;
+            if(likeText == null) {
                 return false;
             }
+            progress.setVisibility(VISIBLE);
 
             ControllerCallback<Like> callback = new ControllerCallback<Like>() {
                 @Override
@@ -101,14 +105,14 @@ public class ImageLikeView extends AppCompatImageView {
                     countAnim.setAnimationListener(new Animation.AnimationListener() {
                         @Override
                         public void onAnimationStart(Animation animation) {
-                            view.setVisibility(VISIBLE);
+                            likeText.setVisibility(VISIBLE);
                         }
                         @Override
                         public void onAnimationRepeat(Animation animation) {}
                         @Override
                         public void onAnimationEnd(Animation animation) {
-                            view.setVisibility(GONE);
-                            view.setText(R.string.action_like);
+                            likeText.setVisibility(GONE);
+                            likeText.setText(R.string.action_like);
                         }
                     });
 
@@ -117,21 +121,37 @@ public class ImageLikeView extends AppCompatImageView {
                     likeAnim.setRepeatMode(Animation.REVERSE);
                     likeAnim.setAnimationListener(new Animation.AnimationListener() {
                         @Override
-                        public void onAnimationStart(Animation animation) { view.setVisibility(VISIBLE); }
+                        public void onAnimationStart(Animation animation) {
+                            likeText.setVisibility(VISIBLE);
+                        }
                         @Override
                         public void onAnimationRepeat(Animation animation) {}
                         @Override
                         public void onAnimationEnd(Animation animation) {
-                            view.setText(like.score);
-                            view.startAnimation(countAnim);
+                            likeText.setText(like.score);
+                            likeText.startAnimation(countAnim);
                         }
                     });
 
+                    final AlphaAnimation progressAnim = new AlphaAnimation(1.0f, 0.0f);
+                    progressAnim.setDuration(duration/3);
+                    progressAnim.setAnimationListener(new Animation.AnimationListener() {
+                        @Override
+                        public void onAnimationStart(Animation animation) {}
+                        @Override
+                        public void onAnimationRepeat(Animation animation) {}
+                        @Override
+                        public void onAnimationEnd(Animation animation) {
+                            progress.setVisibility(GONE);
+                        }
+                    });
+
+                    progress.startAnimation(progressAnim);
                     if(isSuccess && like.first) {
-                        view.startAnimation(likeAnim);
+                        likeText.startAnimation(likeAnim);
                     } else if(like != null) {
-                        view.setText(like.score);
-                        view.startAnimation(countAnim);
+                        likeText.setText(like.score);
+                        likeText.startAnimation(countAnim);
                     }
                 }
             };

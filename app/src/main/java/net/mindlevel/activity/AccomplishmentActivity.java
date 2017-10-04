@@ -84,8 +84,10 @@ public class AccomplishmentActivity extends AppCompatActivity {
         });
 
         TextView imageText = (TextView) findViewById(R.id.image_text);
+        ProgressBar likeProgress = (ProgressBar) findViewById(R.id.progress_like);
         this.imageView = (ImageLikeView) findViewById(R.id.image);
         imageView.setTextView(imageText);
+        imageView.setProgressLike(likeProgress);
         imageView.setId(accomplishment.id);
 
         ProgressBar progressBar = (ProgressBar) findViewById(R.id.progress);

@@ -82,7 +82,9 @@ public class FeedRecyclerViewAdapter extends RecyclerView.Adapter<FeedRecyclerVi
             imageView = (ImageLikeView) view.findViewById(R.id.image);
             progressBar = (ProgressBar) view.findViewById(R.id.progress);
             TextView imageText = (TextView) view.findViewById(R.id.image_text);
+            ProgressBar likeProgress = (ProgressBar) view.findViewById(R.id.progress_like);
             imageView.setTextView(imageText);
+            imageView.setProgressLike(likeProgress);
         }
 
         public void setItem(Accomplishment item) {
