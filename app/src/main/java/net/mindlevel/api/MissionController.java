@@ -38,20 +38,18 @@ public class MissionController extends BackendService {
                     callback.onPostExecute(true, response.body());
                     cacheMissions(response.body());
                 } else {
-                    List<Mission> missions = readFromCache();
-                    if(missions.isEmpty()) {
-                        callback.onPostExecute(false, null);
-                    } else {
-                        callback.onPostExecute(true, missions);
-                    }
+                    onFailure(call, new Throwable("Could not fetch missions remotely"));
                 }
             }
 
             @Override
             public void onFailure(Call<List<Mission>> call, Throwable t) {
-                // TODO: send back missions that are cached
-                // Handle when cached missions don't exist
-                callback.onPostExecute(false, null);
+                List<Mission> missions = readFromCache();
+                if(missions.isEmpty()) {
+                    callback.onPostExecute(false, null);
+                } else {
+                    callback.onPostExecute(true, missions);
+                }
                 t.printStackTrace();
             }
         });

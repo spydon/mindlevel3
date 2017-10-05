@@ -45,6 +45,7 @@ public class UserFragment extends InfoFragment {
     private UserController controller;
     private LoginController loginController;
 
+    private View coordinator;
     private ImageView imageView;
     private TextView usernameView;
     private TextView scoreView;
@@ -118,6 +119,7 @@ public class UserFragment extends InfoFragment {
         if(!NetworkUtil.isConnected(context)) {
             editButton.setVisibility(GONE);
         }
+        coordinator = contentView.getRootView();
 
         return view;
     }
@@ -125,7 +127,6 @@ public class UserFragment extends InfoFragment {
     @Override
     public void onStart() {
         super.onStart();
-        View coordinator = contentView.getRootView();
 
         showInfo(false, true);
         if(this.forwardedUser != null) {
