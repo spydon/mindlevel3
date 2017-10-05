@@ -74,11 +74,12 @@ public class HighscoreFragment extends InfoFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_highscore_list, container, false);
-        recyclerView = (RecyclerView) view.findViewById(R.id.list);
+        this.recyclerView = (RecyclerView) view.findViewById(R.id.list);
+        recyclerView.setAdapter(adapter);
+
         contentView = recyclerView;
         progressView = view.findViewById(R.id.progress);
         errorView = view.findViewById(R.id.error);
-
         Context context = getContext();
 
         if (columnCount <= 1) {
@@ -86,13 +87,7 @@ public class HighscoreFragment extends InfoFragment {
         } else {
             recyclerView.setLayoutManager(new GridLayoutManager(context, columnCount));
         }
-        recyclerView.setAdapter(adapter);
-        return view;
-    }
 
-    @Override
-    public void onStart() {
-        super.onStart();
         View coordinator = contentView.getRootView();
         if (NetworkUtil.connectionCheck(getContext(), coordinator)) {
             showInfo(false, true);
@@ -100,6 +95,8 @@ public class HighscoreFragment extends InfoFragment {
         } else {
             showInfo(true, false);
         }
+
+        return view;
     }
 
     @Override

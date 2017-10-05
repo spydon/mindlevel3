@@ -54,7 +54,6 @@ public class UserFragment extends InfoFragment {
     private Context context;
     private User user, forwardedUser;
     private String username;
-    private int shortAnimTime;
 
     private final static int UPDATE_USER = 1;
 
@@ -116,6 +115,10 @@ public class UserFragment extends InfoFragment {
             }
         });
 
+        if(!NetworkUtil.isConnected(context)) {
+            editButton.setVisibility(GONE);
+        }
+
         return view;
     }
 
@@ -123,7 +126,6 @@ public class UserFragment extends InfoFragment {
     public void onStart() {
         super.onStart();
         View coordinator = contentView.getRootView();
-        NetworkUtil.connectionCheck(getContext(), coordinator);
 
         showInfo(false, true);
         if(this.forwardedUser != null) {
@@ -131,6 +133,7 @@ public class UserFragment extends InfoFragment {
         } else if(this.username == null) {
             populateWithSelf();
         } else {
+            NetworkUtil.connectionCheck(getContext(), coordinator);
             populate(username);
         }
 
@@ -206,7 +209,11 @@ public class UserFragment extends InfoFragment {
 
         if(PreferencesUtil.getUsername(context).equals(user.username)) {
             selfButton.setVisibility(GONE);
-            editButton.setVisibility(VISIBLE);
+            if(NetworkUtil.isConnected(context)) {
+                editButton.setVisibility(VISIBLE);
+            } else {
+                editButton.setVisibility(GONE);
+            }
             signOutButton.setVisibility(VISIBLE);
         } else {
             selfButton.setVisibility(VISIBLE);

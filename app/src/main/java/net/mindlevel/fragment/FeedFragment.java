@@ -71,6 +71,7 @@ public class FeedFragment extends InfoFragment {
         this.missionController = new MissionController(getContext());
         this.shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
         this.accomplishments = new ArrayList<>();
+        this.adapter = new FeedRecyclerViewAdapter(accomplishments, listener);
 
         if (getArguments() != null) {
             columnCount = getArguments().getInt(ARG_COLUMN_COUNT);
@@ -81,7 +82,6 @@ public class FeedFragment extends InfoFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_feed_list, container, false);
-        this.adapter = new FeedRecyclerViewAdapter(accomplishments, listener);
         this.recyclerView = (RecyclerView) view.findViewById(R.id.list);
         recyclerView.setAdapter(adapter);
 

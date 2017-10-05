@@ -92,19 +92,19 @@ public class UserController extends BackendService {
                     callback.onPostExecute(true, user);
                     cacheUser(user);
                 } else {
-                    User user = readFromCache(username);
-                    if(user == null) {
-                        callback.onPostExecute(false, null);
-                    } else {
-                        callback.onPostExecute(true, user);
-                    }
+                    onFailure(call, new Throwable("User not fetched"));
                 }
             }
 
             @Override
             public void onFailure(Call<User> call, Throwable t) {
-                callback.onPostExecute(false, null);
-                t.printStackTrace();
+                User user = readFromCache(username);
+                if(user == null) {
+                    t.printStackTrace();
+                    callback.onPostExecute(false, null);
+                } else {
+                    callback.onPostExecute(true, user);
+                }
             }
         });
     }

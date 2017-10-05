@@ -125,7 +125,7 @@ public class CoordinatorActivity
         fragments.put(R.id.navigation_highscore, highscoreFragment);
         fragments.put(R.id.navigation_profile, userFragment);
 
-        if(PreferencesUtil.getSessionId(getApplicationContext()).isEmpty() || !NetworkUtil.isConnected(this)) {
+        if(PreferencesUtil.getSessionId(getApplicationContext()).isEmpty()) {
             Intent loginIntent = new Intent(this, LoginActivity.class);
             startActivity(loginIntent);
         }

@@ -3,7 +3,7 @@
 <android.support.design.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:orientation="vertical">
 
     <android.support.v7.widget.RecyclerView
@@ -14,6 +14,7 @@
         android:name="net.mindlevel.MissionsFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_gravity="bottom"
         app:layoutManager="LinearLayoutManager"
         tools:context="net.mindlevel.fragment.MissionsFragment"
         tools:listitem="@layout/fragment_highscore_item" />
