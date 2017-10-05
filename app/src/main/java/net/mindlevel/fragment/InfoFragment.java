@@ -24,20 +24,12 @@ public abstract class InfoFragment extends Fragment {
     }
 
     protected void showInfo(boolean isError, boolean isProgress, String message) {
-        if(!isAdded()) {
+        if(!isAdded() || isDetached() || isRemoving()) {
             return;
         }
 
         TextView errorText = (TextView)errorView.findViewById(R.id.error_text);
         TextView progressText = (TextView)progressView.findViewById(R.id.progress_text);
-
-        if(message == null) {
-            errorText.setText(R.string.error_network);
-            progressText.setText(getRandomMotivation());
-        } else {
-            errorText.setText(message);
-            progressText.setText(message);
-        }
 
         final boolean isNormal = !isError && !isProgress;
         if(isNormal) {
@@ -48,8 +40,12 @@ public abstract class InfoFragment extends Fragment {
                 }
             }, 500);
         } else if(isError) {
+            String errorMessage = message == null ? getString(R.string.error_network) : message;
+            errorText.setText(errorMessage);
             animateToFront(errorView);
         } else if(isProgress) {
+            String progressMessage = message == null ? getRandomMotivation() : message;
+            progressText.setText(progressMessage);
             animateToFront(progressView);
         }
     }
