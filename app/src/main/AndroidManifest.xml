@@ -58,15 +58,6 @@
                 android:value="net.mindlevel.CoordinatorActivity"/>
         </activity>
         <activity
-            android:name=".activity.UserActivity"
-            android:label="@string/title_activity_user"
-            android:parentActivityName=".CoordinatorActivity"
-            android:theme="@style/AppTheme.NoActionBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="net.mindlevel.CoordinatorActivity"/>
-        </activity>
-        <activity
             android:name=".activity.UploadActivity"
             android:label="@string/title_activity_upload"
             android:parentActivityName=".CoordinatorActivity"
@@ -82,6 +73,10 @@
         <activity
             android:name=".activity.AboutActivity"
             android:label="@string/title_activity_about">
+        </activity>
+        <activity
+            android:name=".activity.TermsActivity"
+            android:label="@string/title_activity_terms">
         </activity>
 
         <provider

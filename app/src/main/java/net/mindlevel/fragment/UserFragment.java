@@ -188,7 +188,7 @@ public class UserFragment extends InfoFragment {
 
     public void setUser(User user) {
         this.user = user;
-        if(imageView != null) {
+        if(isAdded()) {
             Glide.with(imageView.getContext()).clear(imageView);
         }
 

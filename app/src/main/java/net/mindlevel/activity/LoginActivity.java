@@ -33,6 +33,8 @@ import net.mindlevel.util.NetworkUtil;
 
 import java.util.Random;
 
+import static java.security.AccessController.getContext;
+
 public class LoginActivity extends AppCompatActivity {
 
     private LoginController loginController;
@@ -66,6 +68,15 @@ public class LoginActivity extends AppCompatActivity {
                     return true;
                 }
                 return false;
+            }
+        });
+
+        View tosView = findViewById(R.id.terms);
+        tosView.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent termsIntent = new Intent(getApplicationContext(), TermsActivity.class);
+                startActivity(termsIntent);
             }
         });
 
