@@ -22,7 +22,6 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import net.mindlevel.R;
 import net.mindlevel.api.ControllerCallback;
@@ -34,9 +33,6 @@ import net.mindlevel.util.NetworkUtil;
 
 import java.util.Random;
 
-/**
- * A login screen that offers login via username/password.
- */
 public class LoginActivity extends AppCompatActivity {
 
     private LoginController loginController;

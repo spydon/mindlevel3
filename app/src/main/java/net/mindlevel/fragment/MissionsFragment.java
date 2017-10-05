@@ -16,6 +16,7 @@ import net.mindlevel.api.ControllerCallback;
 import net.mindlevel.api.MissionController;
 import net.mindlevel.model.Mission;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -33,6 +34,8 @@ public class MissionsFragment extends InfoFragment {
     private OnListFragmentInteractionListener listener;
     private MissionController controller;
     private RecyclerView recyclerView;
+    private MissionsRecyclerViewAdapter adapter;
+    private List<Mission> missions;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -55,6 +58,8 @@ public class MissionsFragment extends InfoFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.controller = new MissionController(getContext());
+        this.missions = new ArrayList<>();
+        this.adapter = new MissionsRecyclerViewAdapter(missions, listener);
 
         if (getArguments() != null) {
             columnCount = getArguments().getInt(ARG_COLUMN_COUNT);
@@ -79,6 +84,7 @@ public class MissionsFragment extends InfoFragment {
             recyclerView.setLayoutManager(new GridLayoutManager(context, columnCount));
         }
 
+        recyclerView.setAdapter(adapter);
         showInfo(false, true);
         controller.getAll(getAllCallback);
         return view;
@@ -120,7 +126,9 @@ public class MissionsFragment extends InfoFragment {
         public void onPostExecute(Boolean isSuccess, List<Mission> response) {
             if(isSuccess) {
                 showInfo(false, false);
-                recyclerView.setAdapter(new MissionsRecyclerViewAdapter(response, listener));
+                missions.clear();
+                missions.addAll(response);
+                adapter.notifyDataSetChanged();
             } else {
                 showInfo(true, false);
             }

@@ -17,6 +17,7 @@ import net.mindlevel.api.UserController;
 import net.mindlevel.model.User;
 import net.mindlevel.util.NetworkUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 
 //import android.app.Fragment;
@@ -36,6 +37,8 @@ public class HighscoreFragment extends InfoFragment {
     private OnListFragmentInteractionListener listener;
     private UserController controller;
     private RecyclerView recyclerView;
+    private HighscoreRecyclerViewAdapter adapter;
+    private List<User> highscores;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -59,6 +62,8 @@ public class HighscoreFragment extends InfoFragment {
         super.onCreate(savedInstanceState);
         this.controller = new UserController(getContext());
         this.shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
+        this.highscores = new ArrayList<>();
+        this.adapter = new HighscoreRecyclerViewAdapter(highscores, listener);
 
         if (getArguments() != null) {
             columnCount = getArguments().getInt(ARG_COLUMN_COUNT);
@@ -81,7 +86,7 @@ public class HighscoreFragment extends InfoFragment {
         } else {
             recyclerView.setLayoutManager(new GridLayoutManager(context, columnCount));
         }
-
+        recyclerView.setAdapter(adapter);
         return view;
     }
 
@@ -129,7 +134,9 @@ public class HighscoreFragment extends InfoFragment {
         public void onPostExecute(Boolean isSuccess, List<User> response) {
             if(isSuccess) {
                 showInfo(false, false);
-                recyclerView.setAdapter(new HighscoreRecyclerViewAdapter(response, listener));
+                highscores.clear();
+                highscores.addAll(response);
+                adapter.notifyDataSetChanged();
             } else {
                 showInfo(true, false);
             }

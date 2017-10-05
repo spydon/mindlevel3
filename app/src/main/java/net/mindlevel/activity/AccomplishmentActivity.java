@@ -42,6 +42,7 @@ public class AccomplishmentActivity extends AppCompatActivity {
     private Activity activity;
     private ContributorRecyclerViewAdapter adapter;
     private RecyclerView recyclerView;
+    private List<User> contributors;
 
     private final int SHARE = 1;
 
@@ -50,6 +51,8 @@ public class AccomplishmentActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_accomplishment);
         this.activity = this;
+        this.contributors = new ArrayList<>();
+        this.adapter = new ContributorRecyclerViewAdapter(activity, contributors);
         final Accomplishment accomplishment = (Accomplishment) getIntent().getSerializableExtra("accomplishment");
         final String url = ImageUtil.getUrl(accomplishment.image);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -111,14 +114,16 @@ public class AccomplishmentActivity extends AppCompatActivity {
 
         recyclerView = (RecyclerView) findViewById(R.id.contributors);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        recyclerView.setAdapter(adapter);
     }
 
     private ControllerCallback<List<User>> contributorsCallback = new ControllerCallback<List<User>>() {
         @Override
         public void onPostExecute(Boolean isSuccess, List<User> response) {
             if (isSuccess) {
-                adapter = new ContributorRecyclerViewAdapter(activity, response);
-                recyclerView.setAdapter(adapter);
+                contributors.clear();
+                contributors.addAll(response);
+                adapter.notifyDataSetChanged();
             }
         }
     };
