@@ -105,5 +105,6 @@
     <!-- Terms -->
     <string name="terms_agree">By using Mindlevel you agree to the</string>
     <string name="terms_of_service">Terms of Service</string>
+    <string name="accomplishment_by">By:</string>
 
 </resources>

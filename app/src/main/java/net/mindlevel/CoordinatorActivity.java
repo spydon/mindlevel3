@@ -27,7 +27,6 @@ import net.mindlevel.model.Accomplishment;
 import net.mindlevel.model.Mission;
 import net.mindlevel.model.User;
 import net.mindlevel.util.ImageUtil;
-import net.mindlevel.util.NetworkUtil;
 import net.mindlevel.util.PreferencesUtil;
 
 import java.util.Arrays;
@@ -70,7 +69,6 @@ public class CoordinatorActivity
             super(fm);
         }
 
-        //@Override
         public Fragment getItem(int i) {
             // i is incremental from the left
             Fragment selectedFragment = (Fragment) fragments.values().toArray()[i];
@@ -85,33 +83,6 @@ public class CoordinatorActivity
         public CharSequence getPageTitle(int position) {
             return "OBJECT " + (position + 1);
         }
-    }
-
-    public void onFragmentInteraction(Uri uri) {
-        System.out.println("Uri");
-    }
-
-    public void onListFragmentInteraction(Accomplishment accomplishment) {
-        Intent accomplishmentIntent = new Intent(this, AccomplishmentActivity.class);
-        accomplishmentIntent.putExtra("accomplishment", accomplishment);
-        startActivity(accomplishmentIntent);
-    }
-
-    public void onListFragmentInteraction(Mission mission) {
-        Intent missionIntent = new Intent(this, MissionActivity.class);
-        missionIntent.putExtra("mission", mission);
-        startActivity(missionIntent);
-    }
-
-    public void onListFragmentInteraction(User user) {
-        userFragment.setUser(user);
-        scrollToFragment(userFragment);
-    }
-
-    private void scrollToFragment(Fragment selectedFragment) {
-        int fragmentOrderId = Arrays.asList(fragments.values().toArray()).indexOf(selectedFragment);
-        viewPager.setCurrentItem(fragmentOrderId, true);
-        currentFragment = selectedFragment;
     }
 
     @Override
@@ -144,9 +115,7 @@ public class CoordinatorActivity
         viewPager.setAdapter(pager);
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                // Do nothing
-            }
+            public void onPageScrolled(int position, float offset, int offsetPixels) { /* Do nothing */ }
 
             @Override
             public void onPageSelected(int position) {
@@ -156,9 +125,7 @@ public class CoordinatorActivity
             }
 
             @Override
-            public void onPageScrollStateChanged(int state) {
-                // Do nothing
-            }
+            public void onPageScrollStateChanged(int state) { /* Do nothing */ }
         });
     }
 
@@ -199,5 +166,46 @@ public class CoordinatorActivity
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        FragmentManager fm = getSupportFragmentManager();
+        fm.executePendingTransactions();
+        int count = fm.getBackStackEntryCount();
+
+        if (count == 0) {
+            super.onBackPressed();
+        } else {
+            fm.popBackStackImmediate();
+        }
+
+    }
+
+    public void onFragmentInteraction(Uri uri) {
+        System.out.println("Uri");
+    }
+
+    public void onListFragmentInteraction(Accomplishment accomplishment) {
+        Intent accomplishmentIntent = new Intent(this, AccomplishmentActivity.class);
+        accomplishmentIntent.putExtra("accomplishment", accomplishment);
+        startActivity(accomplishmentIntent);
+    }
+
+    public void onListFragmentInteraction(Mission mission) {
+        Intent missionIntent = new Intent(this, MissionActivity.class);
+        missionIntent.putExtra("mission", mission);
+        startActivity(missionIntent);
+    }
+
+    public void onListFragmentInteraction(User user) {
+        userFragment.setUser(user);
+        scrollToFragment(userFragment);
+    }
+
+    private void scrollToFragment(Fragment selectedFragment) {
+        int fragmentOrderId = Arrays.asList(fragments.values().toArray()).indexOf(selectedFragment);
+        viewPager.setCurrentItem(fragmentOrderId, true);
+        currentFragment = selectedFragment;
     }
 }

@@ -34,7 +34,7 @@ import static net.mindlevel.util.ImageUtil.PICK_IMAGE;
 import static net.mindlevel.util.ImageUtil.REQUEST_IMAGE_CAPTURE;
 
 /**
- * A login screen that offers login via username/password.
+ * Edit a users details
  */
 public class EditUserActivity extends AppCompatActivity {
 
