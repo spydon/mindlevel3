@@ -36,11 +36,14 @@ import net.mindlevel.util.ImageUtil;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.view.View.GONE;
+
 public class AccomplishmentActivity extends AppCompatActivity {
 
     private ImageLikeView imageView;
     private Activity activity;
     private ContributorRecyclerViewAdapter adapter;
+    private View contributorProgress;
     private RecyclerView recyclerView;
     private List<User> contributors;
 
@@ -60,6 +63,7 @@ public class AccomplishmentActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        this.contributorProgress = findViewById(R.id.contributor_progress);
         FloatingActionButton missionButton = (FloatingActionButton) findViewById(R.id.fab_mission);
         missionButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -120,6 +124,7 @@ public class AccomplishmentActivity extends AppCompatActivity {
     private ControllerCallback<List<User>> contributorsCallback = new ControllerCallback<List<User>>() {
         @Override
         public void onPostExecute(Boolean isSuccess, List<User> response) {
+            contributorProgress.setVisibility(GONE);
             if (isSuccess) {
                 contributors.clear();
                 contributors.addAll(response);
