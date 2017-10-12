@@ -81,6 +81,7 @@ public class HighscoreFragment extends InfoFragment {
         progressView = view.findViewById(R.id.progress);
         errorView = view.findViewById(R.id.error);
         Context context = getContext();
+        View coordinator = contentView.getRootView();
 
         if (columnCount <= 1) {
             recyclerView.setLayoutManager(new LinearLayoutManager(context));
@@ -88,7 +89,6 @@ public class HighscoreFragment extends InfoFragment {
             recyclerView.setLayoutManager(new GridLayoutManager(context, columnCount));
         }
 
-        View coordinator = contentView.getRootView();
         if (NetworkUtil.connectionCheck(getContext(), coordinator)) {
             showInfo(false, true);
             controller.getHighscore(getHighscoreCallback);
