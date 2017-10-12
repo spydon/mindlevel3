@@ -21,6 +21,7 @@
         android:background="@drawable/logo_center"
         android:typeface="monospace"
         android:text="@string/app_name"
+        android:alpha="0.5"
         android:textColor="@android:color/black"
         android:textSize="8pt"
         android:gravity="center" />
