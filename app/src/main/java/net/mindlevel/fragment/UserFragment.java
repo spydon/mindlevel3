@@ -117,7 +117,7 @@ public class UserFragment extends InfoFragment {
         });
 
         if(!NetworkUtil.isConnected(context)) {
-            editButton.setVisibility(GONE);
+            buttonVisibility(false, false);
         }
         coordinator = contentView.getRootView();
 
@@ -182,6 +182,16 @@ public class UserFragment extends InfoFragment {
         void onFragmentInteraction(Uri uri);
     }
 
+    public void buttonVisibility(boolean isVisible, boolean isSelf) {
+        int visibility = isVisible ? VISIBLE : GONE;
+        int selfVisibility = !isSelf ? VISIBLE : GONE;
+        int selfModVisibilty = isVisible && isSelf ? VISIBLE : GONE;
+        editButton.setVisibility(selfModVisibilty);
+        signOutButton.setVisibility(selfModVisibilty);
+        accomplishmentButton.setVisibility(visibility);
+        selfButton.setVisibility(selfVisibility);
+    }
+
     public void setUser(User user) {
         this.user = user;
         if(isAdded()) {
@@ -205,17 +215,13 @@ public class UserFragment extends InfoFragment {
         descriptionView.setText(user.description);
 
         if(PreferencesUtil.getUsername(context).equals(user.username)) {
-            selfButton.setVisibility(GONE);
             if(NetworkUtil.isConnected(context)) {
-                editButton.setVisibility(VISIBLE);
+                buttonVisibility(true, true);
             } else {
-                editButton.setVisibility(GONE);
+                buttonVisibility(false, true);
             }
-            signOutButton.setVisibility(VISIBLE);
         } else {
-            selfButton.setVisibility(VISIBLE);
-            editButton.setVisibility(GONE);
-            signOutButton.setVisibility(GONE);
+            buttonVisibility(true, false);
         }
         this.forwardedUser = null;
     }
