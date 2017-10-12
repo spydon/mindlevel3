@@ -21,8 +21,10 @@
         <LinearLayout
             android:id="@+id/login_inner_form"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
+            android:layout_height="match_parent"
+            android:paddingBottom="300dip"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
             android:orientation="vertical">
 
             <ImageView
@@ -49,7 +51,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/prompt_username"
-                android:inputType="text"
+                android:inputType="textFilter"
                 android:maxLines="1" />
 
             <android.support.design.widget.TextInputLayout

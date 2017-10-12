@@ -53,6 +53,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         coordinatorLayout = findViewById(R.id.login_outer);
         View innerView = findViewById(R.id.login_inner_form);
+        final View scrollView = findViewById(R.id.login_form);
         loginController = new LoginController(innerView.getContext());
         userController = new UserController(innerView.getContext());
 
@@ -68,6 +69,15 @@ public class LoginActivity extends AppCompatActivity {
                     return true;
                 }
                 return false;
+            }
+        });
+
+        passwordView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(hasFocus) {
+                    scrollView.scrollTo(scrollView.getScrollX(), scrollView.getScrollY()+200);
+                }
             }
         });
 
