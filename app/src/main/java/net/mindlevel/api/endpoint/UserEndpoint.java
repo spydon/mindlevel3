@@ -3,6 +3,7 @@ package net.mindlevel.api.endpoint;
 import net.mindlevel.model.Accomplishment;
 import net.mindlevel.model.Login;
 import net.mindlevel.model.User;
+import net.mindlevel.model.UserExtra;
 
 import java.util.List;
 
@@ -36,6 +37,7 @@ public interface UserEndpoint {
     @PUT("user/{user}")
     Call<Void> update(
             @Part("user") User user,
+            @Part("extra") UserExtra userExtra,
             @Part MultipartBody.Part image
     );
 

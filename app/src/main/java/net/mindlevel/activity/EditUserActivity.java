@@ -8,6 +8,7 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -20,6 +21,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
+import net.mindlevel.model.UserExtra;
 import net.mindlevel.util.PreferencesUtil;
 import net.mindlevel.util.ProgressController;
 import net.mindlevel.R;
@@ -59,7 +61,10 @@ public class EditUserActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.title_edit_profile);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ActionBar actionBar = getSupportActionBar();
+        if(actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
 
         utils = new ImageUtil(this);
         FloatingActionButton choosePicture = (FloatingActionButton) findViewById(R.id.choose_picture);
@@ -159,7 +164,8 @@ public class EditUserActivity extends AppCompatActivity {
 
             String username = PreferencesUtil.getUsername(getApplicationContext());
             User user = new User(username, password1, description);
-            userController.update(user, path, editCallback);
+            UserExtra userExtra = new UserExtra(username, password1, "");
+            userController.update(user, userExtra, path, editCallback);
         }
     }
 

@@ -2,6 +2,7 @@ package net.mindlevel.api;
 
 import android.content.Context;
 import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
 import net.mindlevel.R;
@@ -9,6 +10,7 @@ import net.mindlevel.api.endpoint.UserEndpoint;
 import net.mindlevel.model.Accomplishment;
 import net.mindlevel.model.Login;
 import net.mindlevel.model.User;
+import net.mindlevel.model.UserExtra;
 import net.mindlevel.util.PreferencesUtil;
 
 import org.apache.commons.io.FileUtils;
@@ -42,7 +44,7 @@ public class UserController extends BackendService {
 
         userCall.enqueue(new Callback<List<User>>() {
             @Override
-            public void onResponse(Call<List<User>> call, Response<List<User>> usersResponse) {
+            public void onResponse(@NonNull Call<List<User>> call, @NonNull Response<List<User>> usersResponse) {
                 if(usersResponse.isSuccessful()) {
                     List<User> users = usersResponse.body();
                     callback.onPostExecute(true, users);
@@ -52,7 +54,7 @@ public class UserController extends BackendService {
             }
 
             @Override
-            public void onFailure(Call<List<User>> call, Throwable t) {
+            public void onFailure(@NonNull Call<List<User>> call, @NonNull Throwable t) {
                 callback.onPostExecute(false, null);
                 t.printStackTrace();
             }
@@ -64,7 +66,7 @@ public class UserController extends BackendService {
 
         highscoreCall.enqueue(new Callback<List<User>>() {
             @Override
-            public void onResponse(Call<List<User>> call, Response<List<User>> usersResponse) {
+            public void onResponse(@NonNull Call<List<User>> call, @NonNull Response<List<User>> usersResponse) {
                 if(usersResponse.isSuccessful()) {
                     List<User> users = usersResponse.body();
                     callback.onPostExecute(true, users);
@@ -74,7 +76,7 @@ public class UserController extends BackendService {
             }
 
             @Override
-            public void onFailure(Call<List<User>> call, Throwable t) {
+            public void onFailure(@NonNull Call<List<User>> call, @NonNull Throwable t) {
                 callback.onPostExecute(false, null);
                 t.printStackTrace();
             }
@@ -86,7 +88,7 @@ public class UserController extends BackendService {
 
         userCall.enqueue(new Callback<User>() {
             @Override
-            public void onResponse(Call<User> call, Response<User> userResponse) {
+            public void onResponse(@NonNull Call<User> call, @NonNull Response<User> userResponse) {
                 if(userResponse.isSuccessful()) {
                     User user = userResponse.body();
                     callback.onPostExecute(true, user);
@@ -97,7 +99,7 @@ public class UserController extends BackendService {
             }
 
             @Override
-            public void onFailure(Call<User> call, Throwable t) {
+            public void onFailure(@NonNull Call<User> call, @NonNull Throwable t) {
                 User user = readFromCache(username);
                 if(user == null) {
                     t.printStackTrace();
@@ -114,8 +116,8 @@ public class UserController extends BackendService {
 
         accomplishmentsCall.enqueue(new Callback<List<Accomplishment>>() {
             @Override
-            public void onResponse(Call<List<Accomplishment>> call,
-                                   Response<List<Accomplishment>> accomplishmentsResponse) {
+            public void onResponse(@NonNull Call<List<Accomplishment>> call,
+                                   @NonNull Response<List<Accomplishment>> accomplishmentsResponse) {
                 if(accomplishmentsResponse.isSuccessful()) {
                     List<Accomplishment> accomplishments = accomplishmentsResponse.body();
                     callback.onPostExecute(true, accomplishments);
@@ -125,7 +127,7 @@ public class UserController extends BackendService {
             }
 
             @Override
-            public void onFailure(Call<List<Accomplishment>> call, Throwable t) {
+            public void onFailure(@NonNull Call<List<Accomplishment>> call, @NonNull Throwable t) {
                 callback.onPostExecute(false, null);
                 t.printStackTrace();
             }
@@ -137,7 +139,7 @@ public class UserController extends BackendService {
 
         usernamesCall.enqueue(new Callback<String[]>() {
             @Override
-            public void onResponse(Call<String[]> call, Response<String[]> userResponse) {
+            public void onResponse(@NonNull Call<String[]> call, @NonNull Response<String[]> userResponse) {
                 if(userResponse.isSuccessful()) {
                     String[] usernames = userResponse.body();
                     callback.onPostExecute(true, usernames);
@@ -147,28 +149,29 @@ public class UserController extends BackendService {
             }
 
             @Override
-            public void onFailure(Call<String[]> call, Throwable t) {
+            public void onFailure(@NonNull Call<String[]> call, @NonNull Throwable t) {
                 callback.onPostExecute(false, null);
                 t.printStackTrace();
             }
         });
     }
 
-    public void update(final User user, final Uri path, final ControllerCallback<Void> callback) {
+    public void update(final User user, final UserExtra userExtra, final Uri path,
+                       final ControllerCallback<Void> callback) {
         InputStream is = null;
         MultipartBody.Part image = null;
         try {
             if(path != null && !TextUtils.isEmpty(path.getPath())) {
                 is = context.getContentResolver().openInputStream(path);
-                byte[] bytes = IOUtils.toByteArray(is);
+                byte[] bytes = is != null ? IOUtils.toByteArray(is) : new byte[0];
 
                 image = MultipartBody.Part.createFormData("image", null, RequestBody.create
                         (MediaType.parse("image/*"), bytes));
             }
-            Call<Void> call = endpoint.update(user, image);
+            Call<Void> call = endpoint.update(user, userExtra, image);
             call.enqueue(new Callback<Void>() {
                 @Override
-                public void onResponse(Call<Void> call, Response<Void> response) {
+                public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
                     if(response.isSuccessful()) {
                         callback.onPostExecute(true, null);
                     } else {
@@ -177,7 +180,7 @@ public class UserController extends BackendService {
                 }
 
                 @Override
-                public void onFailure(Call<Void> call, Throwable t) {
+                public void onFailure(@NonNull Call<Void> call, @NonNull Throwable t) {
                     callback.onPostExecute(false, null);
                     t.printStackTrace();
                 }
@@ -201,7 +204,7 @@ public class UserController extends BackendService {
 
         register.enqueue(new Callback<Void>() {
             @Override
-            public void onResponse(Call<Void> call, Response<Void> response) {
+            public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
                 if(response.isSuccessful()) {
                     callback.onPostExecute(true, user.username);
                 } else {
@@ -210,7 +213,7 @@ public class UserController extends BackendService {
             }
 
             @Override
-            public void onFailure(Call<Void> call, Throwable t) {
+            public void onFailure(@NonNull Call<Void> call, @NonNull Throwable t) {
                 callback.onPostExecute(false, null);
                 t.printStackTrace();
             }
