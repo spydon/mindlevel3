@@ -19,6 +19,12 @@
         tools:context="net.mindlevel.fragment.FeedFragment"
         tools:listitem="@layout/fragment_feed_item" />
 
+    <ProgressBar
+        android:id="@+id/progress_pagination"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
     <include layout="@layout/info_center" />
 
 </android.support.design.widget.CoordinatorLayout>

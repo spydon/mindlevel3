@@ -108,5 +108,6 @@
     <string name="accomplishment_by">By:</string>
     <string name="hint_email">Your E-mail address</string>
     <string name="accessibility_user_image">The user\'s image</string>
+    <string name="logo">logo</string>
 
 </resources>

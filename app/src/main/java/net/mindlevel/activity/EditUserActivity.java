@@ -22,6 +22,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 
 import net.mindlevel.model.UserExtra;
+import net.mindlevel.util.KeyboardUtil;
 import net.mindlevel.util.PreferencesUtil;
 import net.mindlevel.util.ProgressController;
 import net.mindlevel.R;
@@ -155,7 +156,7 @@ public class EditUserActivity extends AppCompatActivity {
             cancel = true;
         }
 
-        if(isEmailValid(email)) {
+        if(!isEmailValid(email)) {
             emailView.setError("Not a valid email");
             focusView = emailView;
             cancel = true;
@@ -166,6 +167,7 @@ public class EditUserActivity extends AppCompatActivity {
             // form field with an error.
             focusView.requestFocus();
         } else {
+            KeyboardUtil.hideKeyboard(this);
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             showProgress(true);

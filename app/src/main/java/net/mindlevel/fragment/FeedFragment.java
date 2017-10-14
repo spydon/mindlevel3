@@ -21,8 +21,12 @@ import net.mindlevel.model.Accomplishment;
 import net.mindlevel.model.Mission;
 import net.mindlevel.util.NetworkUtil;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
 
 /**
  * A fragment representing a list of Items.
@@ -41,10 +45,12 @@ public class FeedFragment extends InfoFragment {
     private AccomplishmentController accomplishmentController;
     private UserController userController;
     private MissionController missionController;
-    private List<Accomplishment> accomplishments;
+    private Set<Accomplishment> accomplishments;
     private RecyclerView recyclerView;
     private FeedRecyclerViewAdapter adapter;
     private Snackbar searchInfoBar;
+    private View paginationProgress;
+    private int page = 0;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -70,7 +76,7 @@ public class FeedFragment extends InfoFragment {
         this.userController = new UserController(getContext());
         this.missionController = new MissionController(getContext());
         this.shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
-        this.accomplishments = new ArrayList<>();
+        this.accomplishments = new HashSet<>();
         this.adapter = new FeedRecyclerViewAdapter(accomplishments, listener);
 
         if (getArguments() != null) {
@@ -88,6 +94,7 @@ public class FeedFragment extends InfoFragment {
         contentView = recyclerView;
         progressView = view.findViewById(R.id.progress);
         errorView = view.findViewById(R.id.error);
+        paginationProgress = view.findViewById(R.id.progress_pagination);
         Context context = getContext();
 
         if (columnCount <= 1) {
@@ -105,6 +112,27 @@ public class FeedFragment extends InfoFragment {
             public void onClick(View v) {
                 searchInfoBar.dismiss();
                 populateLatest();
+            }
+        });
+
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+
+                if(!recyclerView.isShown()) {
+                    return;
+                }
+
+                if(!recyclerView.canScrollVertically(-1)) {
+                    populateLatest();
+                } else if(!recyclerView.canScrollVertically(1)) {
+                    populatePage(page++);
+                } else if(dy < 0) {
+                    System.out.println("dy");
+                } else if(dy > 0) {
+                    System.out.println("dy2");
+                }
             }
         });
 
@@ -139,6 +167,12 @@ public class FeedFragment extends InfoFragment {
         accomplishmentController.getLatest(getAccomplishmentsCallback);
     }
 
+    private void populatePage(int page) {
+        showPaginationProgress(true);
+        String range = page*AccomplishmentController.PAGE_SIZE + "-" + ((page+1)*AccomplishmentController.PAGE_SIZE);
+        accomplishmentController.getLatest(range, getPaginationCallback);
+    }
+
     public void populateUserAccomplishments(String username) {
         showInfo(false, true);
         userController.getAccomplishments(username, getAccomplishmentsCallback);
@@ -153,6 +187,10 @@ public class FeedFragment extends InfoFragment {
         String infoText = getString(R.string.feed_mission, mission.title);
         searchInfoBar.setText(infoText);
         searchInfoBar.show();
+    }
+
+    private void showPaginationProgress(boolean isPagination) {
+        paginationProgress.setVisibility(isPagination ? VISIBLE : GONE);
     }
 
     /**
@@ -172,6 +210,27 @@ public class FeedFragment extends InfoFragment {
                 if (isSuccess) {
                     accomplishments.clear();
 
+                    if(response.isEmpty()) {
+                        showInfo(true, false, getString(R.string.error_not_found));
+                    } else {
+                        accomplishments.addAll(response);
+                        showInfo(false, false);
+                    }
+                    adapter.notifyDataSetChanged();
+                } else {
+                    showInfo(true, false);
+                }
+            }
+        }
+    };
+
+    private ControllerCallback<List<Accomplishment>> getPaginationCallback = new
+            ControllerCallback<List<Accomplishment>>() {
+        @Override
+        public void onPostExecute(Boolean isSuccess, List<Accomplishment> response) {
+            showPaginationProgress(false);
+            if(getActivity() != null) {
+                if (isSuccess) {
                     if(response.isEmpty()) {
                         showInfo(true, false, getString(R.string.error_not_found));
                     } else {

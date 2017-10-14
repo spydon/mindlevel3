@@ -15,19 +15,23 @@ import net.mindlevel.R;
 import net.mindlevel.model.Accomplishment;
 import net.mindlevel.util.ImageUtil;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.SortedSet;
 
 /**
  * {@link RecyclerView.Adapter} that can display a {@link Accomplishment} and makes a call to the
  * specified {@link FeedFragment.OnListFragmentInteractionListener}.
  */
-public class FeedRecyclerViewAdapter extends RecyclerView.Adapter<FeedRecyclerViewAdapter.ViewHolder> {
+class FeedRecyclerViewAdapter extends RecyclerView.Adapter<FeedRecyclerViewAdapter.ViewHolder> {
 
-    private final List<Accomplishment> items;
+    private final Set<Accomplishment> items;
     private final FeedFragment.OnListFragmentInteractionListener listener;
     private View view;
 
-    public FeedRecyclerViewAdapter(List<Accomplishment> items, FeedFragment.OnListFragmentInteractionListener listener) {
+    FeedRecyclerViewAdapter(Set<Accomplishment> items,
+                                   FeedFragment.OnListFragmentInteractionListener listener) {
         this.items = items;
         this.listener = listener;
     }
@@ -40,8 +44,9 @@ public class FeedRecyclerViewAdapter extends RecyclerView.Adapter<FeedRecyclerVi
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        holder.setItem(items.get(position));
-        holder.titleView.setText(items.get(position).title);
+        Accomplishment accomplishment = (Accomplishment)items.toArray()[position];
+        holder.setItem(accomplishment);
+        holder.titleView.setText(accomplishment.title);
         ImageLikeView imageView = holder.imageView;
         String url = ImageUtil.getUrl(holder.item.image);
         Glide.with(imageView.getContext())
@@ -68,14 +73,14 @@ public class FeedRecyclerViewAdapter extends RecyclerView.Adapter<FeedRecyclerVi
         return items.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends RecyclerView.ViewHolder {
         public final View view;
-        public final TextView titleView;
-        public final ImageLikeView imageView;
-        public final ProgressBar progressBar;
+        final TextView titleView;
+        final ImageLikeView imageView;
+        final ProgressBar progressBar;
         public Accomplishment item;
 
-        public ViewHolder(View view) {
+        ViewHolder(View view) {
             super(view);
             this.view = view;
             titleView = (TextView) view.findViewById(R.id.title);

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Environment;
 import android.renderscript.ScriptGroup;
+import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
 import net.mindlevel.api.endpoint.AccomplishmentEndpoint;
@@ -33,6 +34,7 @@ import retrofit2.Response;
 public class AccomplishmentController extends BackendService {
 
     private static AccomplishmentEndpoint endpoint;
+    public static int PAGE_SIZE = 20;
 
     public AccomplishmentController(Context context) {
         super(context);
@@ -45,15 +47,22 @@ public class AccomplishmentController extends BackendService {
         File outputDir = context.getCacheDir();
         File targetFile = File.createTempFile("mindlevel", ".jpg", outputDir);
 
-        FileUtils.copyInputStreamToFile(is, targetFile);
-        File compressed = new Compressor(context).compressToFile(targetFile);
+        byte[] bytes;
+        if(is != null) {
+            FileUtils.copyInputStreamToFile(is, targetFile);
+            File compressed = new Compressor(context).compressToFile(targetFile);
+            bytes = FileUtils.readFileToByteArray(compressed);
+        } else {
+            bytes = new byte[0];
+        }
 
-        return FileUtils.readFileToByteArray(compressed);
+        return bytes;
     }
 
-    public void add(final Accomplishment accomplishment, final Set<String> contributors, final Uri path, final
-                    ControllerCallback<Accomplishment> callback) {
-        InputStream is = null;
+    public void add(final Accomplishment accomplishment,
+                    final Set<String> contributors,
+                    final Uri path,
+                    final ControllerCallback<Accomplishment> callback) {
         try {
             if(path != null && !TextUtils.isEmpty(path.getPath())) {
                 byte[] bytes =  compressImage(path);
@@ -65,7 +74,7 @@ public class AccomplishmentController extends BackendService {
                 Call<Accomplishment> call = endpoint.add(accomplishment, new Contributors(contributors), image);
                 call.enqueue(new Callback<Accomplishment>() {
                     @Override
-                    public void onResponse(Call<Accomplishment> call, Response<Accomplishment> response) {
+                    public void onResponse(@NonNull Call<Accomplishment> call, @NonNull Response<Accomplishment> response) {
                         if(response.isSuccessful()) {
                             callback.onPostExecute(true, response.body());
                         } else {
@@ -74,7 +83,7 @@ public class AccomplishmentController extends BackendService {
                     }
 
                     @Override
-                    public void onFailure(Call<Accomplishment> call, Throwable t) {
+                    public void onFailure(@NonNull Call<Accomplishment> call, @NonNull Throwable t) {
                         callback.onPostExecute(false, null);
                         t.printStackTrace();
                     }
@@ -84,15 +93,6 @@ public class AccomplishmentController extends BackendService {
             }
         } catch (IOException e) {
             e.printStackTrace();
-        } finally {
-            if(is != null) {
-                try {
-                    is.close();
-                }
-                catch(IOException e) {
-                    e.printStackTrace();
-                }
-            }
         }
     }
 
@@ -100,7 +100,7 @@ public class AccomplishmentController extends BackendService {
         Call<List<User>> call = endpoint.getContributors(id);
         call.enqueue(new Callback<List<User>>() {
             @Override
-            public void onResponse(Call<List<User>> call, Response<List<User>> response) {
+            public void onResponse(@NonNull Call<List<User>> call, @NonNull Response<List<User>> response) {
                 if(response.isSuccessful()) {
                     callback.onPostExecute(true, response.body());
                 } else {
@@ -109,7 +109,7 @@ public class AccomplishmentController extends BackendService {
             }
 
             @Override
-            public void onFailure(Call<List<User>> call, Throwable t) {
+            public void onFailure(@NonNull Call<List<User>> call, @NonNull Throwable t) {
                 callback.onPostExecute(false, null);
                 t.printStackTrace();
             }
@@ -120,7 +120,7 @@ public class AccomplishmentController extends BackendService {
         Call<Like> call = endpoint.like(id);
         call.enqueue(new Callback<Like>() {
             @Override
-            public void onResponse(Call<Like> call, Response<Like> response) {
+            public void onResponse(@NonNull Call<Like> call, @NonNull Response<Like> response) {
                 if(response.isSuccessful()) {
                     callback.onPostExecute(true, response.body());
                 } else {
@@ -129,7 +129,7 @@ public class AccomplishmentController extends BackendService {
             }
 
             @Override
-            public void onFailure(Call<Like> call, Throwable t) {
+            public void onFailure(@NonNull Call<Like> call, @NonNull Throwable t) {
                 callback.onPostExecute(false, null);
                 t.printStackTrace();
             }
@@ -140,7 +140,7 @@ public class AccomplishmentController extends BackendService {
         Call<List<Accomplishment>> call = endpoint.getLatest();
         call.enqueue(new Callback<List<Accomplishment>>() {
             @Override
-            public void onResponse(Call<List<Accomplishment>> call, Response<List<Accomplishment>> response) {
+            public void onResponse(@NonNull Call<List<Accomplishment>> call, @NonNull Response<List<Accomplishment>> response) {
                 if(response.isSuccessful()) {
                     callback.onPostExecute(true, response.body());
                 } else {
@@ -149,7 +149,27 @@ public class AccomplishmentController extends BackendService {
             }
 
             @Override
-            public void onFailure(Call<List<Accomplishment>> call, Throwable t) {
+            public void onFailure(@NonNull Call<List<Accomplishment>> call, @NonNull Throwable t) {
+                callback.onPostExecute(false, null);
+                t.printStackTrace();
+            }
+        });
+    }
+
+    public void getLatest(String range, final ControllerCallback<List<Accomplishment>> callback) {
+        Call<List<Accomplishment>> call = endpoint.getLatest(range);
+        call.enqueue(new Callback<List<Accomplishment>>() {
+            @Override
+            public void onResponse(@NonNull Call<List<Accomplishment>> call, @NonNull Response<List<Accomplishment>> response) {
+                if(response.isSuccessful()) {
+                    callback.onPostExecute(true, response.body());
+                } else {
+                    callback.onPostExecute(false, null);
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<List<Accomplishment>> call, @NonNull Throwable t) {
                 callback.onPostExecute(false, null);
                 t.printStackTrace();
             }

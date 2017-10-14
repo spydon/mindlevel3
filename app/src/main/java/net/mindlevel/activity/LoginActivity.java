@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.design.widget.Snackbar;
+import android.support.design.widget.TextInputLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 
 
@@ -46,6 +48,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText passwordView;
     private View progressView;
     private View loginFormView;
+    private TextInputLayout outerPasswordView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +84,8 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        outerPasswordView = (TextInputLayout) findViewById(R.id.password_outer);
+
         View tosView = findViewById(R.id.terms);
         tosView.setOnClickListener(new OnClickListener() {
             @Override
@@ -106,11 +111,13 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        loginFormView = findViewById(R.id.login_form);
         progressView = findViewById(R.id.progress);
         setRandomTip();
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION, WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
-        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        ActionBar actionBar = getSupportActionBar();
+        if(actionBar != null) {
+            actionBar.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        }
     }
 
     private void setRandomTip() {
@@ -136,7 +143,7 @@ public class LoginActivity extends AppCompatActivity {
         }
         // Reset errors.
         usernameView.setError(null);
-        passwordView.setError(null);
+        outerPasswordView.setError(null);
 
         // Store values at the time of the login attempt.
         String username = usernameView.getText().toString();
@@ -147,7 +154,7 @@ public class LoginActivity extends AppCompatActivity {
 
         // Check for a valid password, if the user entered one.
         if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
-            passwordView.setError(getString(R.string.error_invalid_password));
+            outerPasswordView.setError(getString(R.string.error_invalid_password));
             focusView = passwordView;
             cancel = true;
         }
@@ -221,7 +228,7 @@ public class LoginActivity extends AppCompatActivity {
             if (success) {
                 finish();
             } else {
-                passwordView.setError(getString(R.string.error_incorrect_password));
+                outerPasswordView.setError(getString(R.string.error_incorrect_password));
                 passwordView.requestFocus();
             }
         }
