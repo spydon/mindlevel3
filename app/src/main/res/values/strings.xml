@@ -106,5 +106,7 @@
     <string name="terms_agree">By using Mindlevel you agree to the</string>
     <string name="terms_of_service">Terms of Service</string>
     <string name="accomplishment_by">By:</string>
+    <string name="hint_email">Your E-mail address</string>
+    <string name="accessibility_user_image">The user\'s image</string>
 
 </resources>

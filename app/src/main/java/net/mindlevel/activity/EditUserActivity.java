@@ -46,9 +46,9 @@ public class EditUserActivity extends AppCompatActivity {
 
     // UI references.
     private ImageView imageView;
-    private EditText passwordView1;
-    private EditText passwordView2;
+    private EditText passwordView1, passwordView2;
     private EditText descriptionView;
+    private EditText emailView;
     private ProgressBar progressBar;
     private View editFormView, progressView;
 
@@ -95,6 +95,7 @@ public class EditUserActivity extends AppCompatActivity {
         passwordView1.requestFocus();
 
         descriptionView = (EditText) findViewById(R.id.description);
+        emailView = (EditText) findViewById(R.id.email);
 
         User user = (User) getIntent().getSerializableExtra("user");
 
@@ -137,6 +138,7 @@ public class EditUserActivity extends AppCompatActivity {
         String password1 = passwordView1.getText().toString();
         String password2 = passwordView2.getText().toString();
         String description = descriptionView.getText().toString();
+        String email = emailView.getText().toString();
 
         boolean cancel = false;
         View focusView = null;
@@ -153,6 +155,12 @@ public class EditUserActivity extends AppCompatActivity {
             cancel = true;
         }
 
+        if(isEmailValid(email)) {
+            emailView.setError("Not a valid email");
+            focusView = emailView;
+            cancel = true;
+        }
+
         if (cancel) {
             // There was an error; don't attempt login and focus the first
             // form field with an error.
@@ -164,13 +172,13 @@ public class EditUserActivity extends AppCompatActivity {
 
             String username = PreferencesUtil.getUsername(getApplicationContext());
             User user = new User(username, password1, description);
-            UserExtra userExtra = new UserExtra(username, password1, "");
+            UserExtra userExtra = new UserExtra(username, password1, email);
             userController.update(user, userExtra, path, editCallback);
         }
     }
 
     private boolean isEmailValid(String email) {
-        return email.length() > 4;
+        return email.isEmpty() || (email.contains("@") && email.contains("."));
     }
 
     private boolean isPasswordValid(String password) {
