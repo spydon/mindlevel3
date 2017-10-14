@@ -2,6 +2,7 @@ package net.mindlevel.fragment;
 
 // TODO: Change back to non-support lib
 //import android.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -33,6 +34,7 @@ public class MissionsFragment extends InfoFragment {
     private int columnCount = 1;
     private OnListFragmentInteractionListener listener;
     private MissionController controller;
+    private SwipeRefreshLayout swipe;
     private RecyclerView recyclerView;
     private MissionsRecyclerViewAdapter adapter;
     private List<Mission> missions;
@@ -76,6 +78,7 @@ public class MissionsFragment extends InfoFragment {
 
         this.progressView = view.findViewById(R.id.progress);
         this.errorView = view.findViewById(R.id.error);
+        this.swipe = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh_layout);
         Context context = getContext();
 
         if (columnCount <= 1) {
@@ -85,6 +88,13 @@ public class MissionsFragment extends InfoFragment {
         }
 
         recyclerView.setAdapter(adapter);
+        swipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                controller.getAll(getAllCallback);
+            }
+        });
+
         showInfo(false, true);
         controller.getAll(getAllCallback);
         return view;
@@ -120,6 +130,7 @@ public class MissionsFragment extends InfoFragment {
     private ControllerCallback<List<Mission>> getAllCallback = new ControllerCallback<List<Mission>>() {
         @Override
         public void onPostExecute(Boolean isSuccess, List<Mission> response) {
+            swipe.setRefreshing(false);
             if(isSuccess) {
                 showInfo(false, false);
                 missions.clear();

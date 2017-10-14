@@ -4,6 +4,7 @@ package net.mindlevel.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -36,6 +37,7 @@ public class HighscoreFragment extends InfoFragment {
     private int columnCount = 1;
     private OnListFragmentInteractionListener listener;
     private UserController controller;
+    private SwipeRefreshLayout swipe;
     private RecyclerView recyclerView;
     private HighscoreRecyclerViewAdapter adapter;
     private List<User> highscores;
@@ -80,6 +82,7 @@ public class HighscoreFragment extends InfoFragment {
         contentView = recyclerView;
         progressView = view.findViewById(R.id.progress);
         errorView = view.findViewById(R.id.error);
+        this.swipe = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh_layout);
         Context context = getContext();
         View coordinator = contentView.getRootView();
 
@@ -88,6 +91,13 @@ public class HighscoreFragment extends InfoFragment {
         } else {
             recyclerView.setLayoutManager(new GridLayoutManager(context, columnCount));
         }
+
+        swipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                controller.getHighscore(getHighscoreCallback);
+            }
+        });
 
         if (NetworkUtil.connectionCheck(getContext(), coordinator)) {
             showInfo(false, true);
@@ -129,6 +139,7 @@ public class HighscoreFragment extends InfoFragment {
     private ControllerCallback<List<User>> getHighscoreCallback = new ControllerCallback<List<User>>() {
         @Override
         public void onPostExecute(Boolean isSuccess, List<User> response) {
+            swipe.setRefreshing(false);
             if(isSuccess) {
                 showInfo(false, false);
                 highscores.clear();

@@ -5,6 +5,7 @@ package net.mindlevel.fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -50,6 +51,7 @@ public class FeedFragment extends InfoFragment {
     private FeedRecyclerViewAdapter adapter;
     private Snackbar searchInfoBar;
     private View paginationProgress;
+    private SwipeRefreshLayout swipe;
     private int page = 0;
 
     /**
@@ -91,10 +93,11 @@ public class FeedFragment extends InfoFragment {
         this.recyclerView = (RecyclerView) view.findViewById(R.id.list);
         recyclerView.setAdapter(adapter);
 
-        contentView = recyclerView;
-        progressView = view.findViewById(R.id.progress);
-        errorView = view.findViewById(R.id.error);
-        paginationProgress = view.findViewById(R.id.progress_pagination);
+        this.contentView = recyclerView;
+        this.progressView = view.findViewById(R.id.progress);
+        this.errorView = view.findViewById(R.id.error);
+        this.paginationProgress = view.findViewById(R.id.progress_pagination);
+        this.swipe = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh_layout);
         Context context = getContext();
 
         if (columnCount <= 1) {
@@ -115,6 +118,13 @@ public class FeedFragment extends InfoFragment {
             }
         });
 
+        swipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                populateLatest();
+            }
+        });
+
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
@@ -125,7 +135,8 @@ public class FeedFragment extends InfoFragment {
                 }
 
                 if(!recyclerView.canScrollVertically(-1)) {
-                    populateLatest();
+                    // Already handled by SwipeRefreshLayout
+                    System.out.println("on top");
                 } else if(!recyclerView.canScrollVertically(1)) {
                     populatePage(page++);
                 } else if(dy < 0) {
@@ -206,6 +217,7 @@ public class FeedFragment extends InfoFragment {
     private ControllerCallback<List<Accomplishment>> getAccomplishmentsCallback = new ControllerCallback<List<Accomplishment>>() {
         @Override
         public void onPostExecute(Boolean isSuccess, List<Accomplishment> response) {
+            swipe.setRefreshing(false);
             if(getActivity() != null) {
                 if (isSuccess) {
                     accomplishments.clear();

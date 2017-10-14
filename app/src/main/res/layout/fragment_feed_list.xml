@@ -6,25 +6,32 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <android.support.v7.widget.RecyclerView
+    <android.support.v4.widget.SwipeRefreshLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/list"
-        android:name="net.mindlevel.FeedFragment"
+        android:id="@+id/swipe_refresh_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="bottom"
-        app:layoutManager="LinearLayoutManager"
-        tools:context="net.mindlevel.fragment.FeedFragment"
-        tools:listitem="@layout/fragment_feed_item" />
+        android:layout_height="wrap_content">
 
-    <ProgressBar
-        android:id="@+id/progress_pagination"
-        android:visibility="gone"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        <android.support.v7.widget.RecyclerView
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/list"
+            android:name="net.mindlevel.FeedFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="bottom"
+            app:layoutManager="LinearLayoutManager"
+            tools:context="net.mindlevel.fragment.FeedFragment"
+            tools:listitem="@layout/fragment_feed_item" />
 
-    <include layout="@layout/info_center" />
+        <ProgressBar
+            android:id="@+id/progress_pagination"
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
 
+        <include layout="@layout/info_center" />
+
+    </android.support.v4.widget.SwipeRefreshLayout>
 </android.support.design.widget.CoordinatorLayout>
