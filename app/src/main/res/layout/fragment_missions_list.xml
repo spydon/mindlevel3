@@ -24,6 +24,7 @@
             tools:context="net.mindlevel.fragment.MissionsFragment"
             tools:listitem="@layout/fragment_missions_item" />
 
-        <include layout="@layout/info_center" />
     </android.support.v4.widget.SwipeRefreshLayout>
+
+    <include layout="@layout/info_center" />
 </android.support.design.widget.CoordinatorLayout>
