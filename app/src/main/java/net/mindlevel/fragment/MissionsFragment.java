@@ -17,8 +17,9 @@ import net.mindlevel.api.ControllerCallback;
 import net.mindlevel.api.MissionController;
 import net.mindlevel.model.Mission;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * A fragment representing a list of Items.
@@ -37,7 +38,7 @@ public class MissionsFragment extends InfoFragment {
     private SwipeRefreshLayout swipe;
     private RecyclerView recyclerView;
     private MissionsRecyclerViewAdapter adapter;
-    private List<Mission> missions;
+    private Set<Mission> missions;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -60,7 +61,7 @@ public class MissionsFragment extends InfoFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.controller = new MissionController(getContext());
-        this.missions = new ArrayList<>();
+        this.missions = new HashSet<>();
         this.adapter = new MissionsRecyclerViewAdapter(missions, listener);
 
         if (getArguments() != null) {
@@ -132,10 +133,15 @@ public class MissionsFragment extends InfoFragment {
         public void onPostExecute(Boolean isSuccess, List<Mission> response) {
             swipe.setRefreshing(false);
             if(isSuccess) {
-                showInfo(false, false);
-                missions.clear();
-                missions.addAll(response);
-                adapter.notifyDataSetChanged();
+                 if(response.isEmpty()) {
+                     showInfo(true, false, getString(R.string.error_not_found));
+                 } else {
+                     showInfo(false, false);
+                     if(!missions.containsAll(response)) {
+                         missions.addAll(response);
+                         adapter.notifyDataSetChanged();
+                     }
+                 }
             } else {
                 showInfo(true, false);
             }

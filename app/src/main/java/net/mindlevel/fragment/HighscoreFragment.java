@@ -18,8 +18,9 @@ import net.mindlevel.api.UserController;
 import net.mindlevel.model.User;
 import net.mindlevel.util.NetworkUtil;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 //import android.app.Fragment;
 
@@ -40,7 +41,7 @@ public class HighscoreFragment extends InfoFragment {
     private SwipeRefreshLayout swipe;
     private RecyclerView recyclerView;
     private HighscoreRecyclerViewAdapter adapter;
-    private List<User> highscores;
+    private Set<User> highscores;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -64,7 +65,7 @@ public class HighscoreFragment extends InfoFragment {
         super.onCreate(savedInstanceState);
         this.controller = new UserController(getContext());
         this.shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
-        this.highscores = new ArrayList<>();
+        this.highscores = new HashSet<>();
         this.adapter = new HighscoreRecyclerViewAdapter(highscores, listener);
 
         if (getArguments() != null) {
@@ -141,10 +142,15 @@ public class HighscoreFragment extends InfoFragment {
         public void onPostExecute(Boolean isSuccess, List<User> response) {
             swipe.setRefreshing(false);
             if(isSuccess) {
-                showInfo(false, false);
-                highscores.clear();
-                highscores.addAll(response);
-                adapter.notifyDataSetChanged();
+                if(response.isEmpty()) {
+                    showInfo(true, false, getString(R.string.error_not_found));
+                } else {
+                    showInfo(false, false);
+                    if(!highscores.containsAll(response)) {
+                        highscores.addAll(response);
+                        adapter.notifyDataSetChanged();
+                    }
+                }
             } else {
                 showInfo(true, false);
             }

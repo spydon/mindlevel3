@@ -24,4 +24,14 @@ public class Accomplishment implements Serializable {
         this.score = score;
         this.created = created;
     }
+
+    @Override
+    public boolean equals(Object a) {
+        return a == this || (a instanceof Accomplishment && this.hashCode() == a.hashCode());
+    }
+
+    @Override
+    public int hashCode() {
+        return id;
+    }
 }

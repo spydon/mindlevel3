@@ -31,7 +31,7 @@ class FeedRecyclerViewAdapter extends RecyclerView.Adapter<FeedRecyclerViewAdapt
     private View view;
 
     FeedRecyclerViewAdapter(Set<Accomplishment> items,
-                                   FeedFragment.OnListFragmentInteractionListener listener) {
+                            FeedFragment.OnListFragmentInteractionListener listener) {
         this.items = items;
         this.listener = listener;
     }

@@ -16,20 +16,21 @@ import net.mindlevel.model.Mission;
 import net.mindlevel.util.ImageUtil;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * {@link RecyclerView.Adapter} that can display a {@link Mission} and makes a call to the
  * specified {@link MissionsFragment.OnListFragmentInteractionListener}.
  */
-public class MissionsRecyclerViewAdapter extends RecyclerView.Adapter<MissionsRecyclerViewAdapter.ViewHolder> {
+class MissionsRecyclerViewAdapter extends RecyclerView.Adapter<MissionsRecyclerViewAdapter.ViewHolder> {
 
-    private final List<Mission> missions;
+    private final Set<Mission> missions;
     private final MissionsFragment.OnListFragmentInteractionListener listener;
 
-    public MissionsRecyclerViewAdapter(List<Mission> missions, MissionsFragment.OnListFragmentInteractionListener listener) {
+    MissionsRecyclerViewAdapter(Set<Mission> missions, MissionsFragment.OnListFragmentInteractionListener
+            listener) {
         this.missions = missions;
         this.listener = listener;
-
     }
 
     @Override
@@ -41,9 +42,10 @@ public class MissionsRecyclerViewAdapter extends RecyclerView.Adapter<MissionsRe
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        holder.item = missions.get(position);
-        holder.titleView.setText(missions.get(position).title);
-        holder.descriptionView.setText(missions.get(position).description);
+        Mission mission = (Mission)missions.toArray()[position];
+        holder.item = mission;
+        holder.titleView.setText(mission.title);
+        holder.descriptionView.setText(mission.description);
 
         ImageView imageView = holder.imageView;
         String url = ImageUtil.getUrl(holder.item.image);
@@ -69,15 +71,15 @@ public class MissionsRecyclerViewAdapter extends RecyclerView.Adapter<MissionsRe
         return missions.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends RecyclerView.ViewHolder {
         public Mission item;
         public final View view;
-        public final ImageView imageView;
-        public final TextView titleView;
-        public final TextView descriptionView;
-        public final ProgressBar progressBar;
+        final ImageView imageView;
+        final TextView titleView;
+        final TextView descriptionView;
+        final ProgressBar progressBar;
 
-        public ViewHolder(View view) {
+        ViewHolder(View view) {
             super(view);
             this.view = view;
             imageView = (ImageView) view.findViewById(R.id.image);

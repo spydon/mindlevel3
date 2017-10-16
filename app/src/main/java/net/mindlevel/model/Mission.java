@@ -54,4 +54,14 @@ public class Mission implements Serializable {
         boolean validated = Boolean.valueOf(fields[6]);
         return new Mission(id, title, description, image, created, creator, validated);
     }
+
+    @Override
+    public boolean equals(Object m) {
+        return m == this || (m instanceof Mission && this.hashCode() == m.hashCode());
+    }
+
+    @Override
+    public int hashCode() {
+        return id;
+    }
 }

@@ -17,17 +17,18 @@ import net.mindlevel.model.User;
 import net.mindlevel.util.ImageUtil;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * {@link RecyclerView.Adapter} that can display a {@link Mission} and makes a call to the
  * specified {@link HighscoreFragment.OnListFragmentInteractionListener}.
  */
-public class HighscoreRecyclerViewAdapter extends RecyclerView.Adapter<HighscoreRecyclerViewAdapter.ViewHolder> {
+class HighscoreRecyclerViewAdapter extends RecyclerView.Adapter<HighscoreRecyclerViewAdapter.ViewHolder> {
 
-    private final List<User> users;
+    private final Set<User> users;
     private final HighscoreFragment.OnListFragmentInteractionListener listener;
 
-    public HighscoreRecyclerViewAdapter(List<User> users, HighscoreFragment.OnListFragmentInteractionListener listener) {
+    HighscoreRecyclerViewAdapter(Set<User> users, HighscoreFragment.OnListFragmentInteractionListener listener) {
         this.users = users;
         this.listener = listener;
     }
@@ -41,10 +42,11 @@ public class HighscoreRecyclerViewAdapter extends RecyclerView.Adapter<Highscore
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        holder.item = users.get(position);
+        User user = (User)users.toArray()[position];
+        holder.item = user;
         holder.positionView.setText(String.valueOf(position+1));
-        holder.usernameView.setText(users.get(position).username);
-        holder.scoreView.setText(String.valueOf(users.get(position).score));
+        holder.usernameView.setText(user.username);
+        holder.scoreView.setText(String.valueOf(user.score));
 
         ImageView imageView = holder.imageView;
         String url = ImageUtil.getUrl(holder.item.image);
@@ -70,16 +72,16 @@ public class HighscoreRecyclerViewAdapter extends RecyclerView.Adapter<Highscore
         return users.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends RecyclerView.ViewHolder {
         public User item;
         public final View view;
-        public final ImageView imageView;
-        public final TextView usernameView;
-        public final TextView scoreView;
-        public final TextView positionView;
-        public final ProgressBar progressBar;
+        final ImageView imageView;
+        final TextView usernameView;
+        final TextView scoreView;
+        final TextView positionView;
+        final ProgressBar progressBar;
 
-        public ViewHolder(View view) {
+        ViewHolder(View view) {
             super(view);
             this.view = view;
             imageView = (ImageView) view.findViewById(R.id.image);

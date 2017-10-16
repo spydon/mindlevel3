@@ -121,7 +121,7 @@ public class FeedFragment extends InfoFragment {
         swipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                populateLatest();
+                refresh();
             }
         });
 
@@ -173,6 +173,10 @@ public class FeedFragment extends InfoFragment {
         listener = null;
     }
 
+    private void refresh() {
+        accomplishmentController.getLatest(getAccomplishmentsCallback);
+    }
+
     private void populateLatest() {
         showInfo(false, true);
         accomplishmentController.getLatest(getAccomplishmentsCallback);
@@ -220,15 +224,15 @@ public class FeedFragment extends InfoFragment {
             swipe.setRefreshing(false);
             if(getActivity() != null) {
                 if (isSuccess) {
-                    accomplishments.clear();
-
                     if(response.isEmpty()) {
                         showInfo(true, false, getString(R.string.error_not_found));
                     } else {
-                        accomplishments.addAll(response);
                         showInfo(false, false);
+                        if(!accomplishments.containsAll(response)) {
+                            accomplishments.addAll(response);
+                            adapter.notifyDataSetChanged();
+                        }
                     }
-                    adapter.notifyDataSetChanged();
                 } else {
                     showInfo(true, false);
                 }

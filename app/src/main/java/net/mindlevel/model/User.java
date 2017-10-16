@@ -58,4 +58,14 @@ public class User implements Serializable {
         long lastActive = Long.valueOf(fields[6]);
         return new User(username, password, description, image, score, created, lastActive);
     }
+
+    @Override
+    public boolean equals(Object u) {
+        return u == this || (u instanceof User && this.hashCode() == u.hashCode());
+    }
+
+    @Override
+    public int hashCode() {
+        return username.hashCode();
+    }
 }
