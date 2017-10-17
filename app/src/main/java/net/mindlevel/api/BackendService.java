@@ -1,9 +1,7 @@
 package net.mindlevel.api;
 
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.os.Looper;
-import android.widget.Toast;
+import android.support.annotation.NonNull;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -23,7 +21,7 @@ import okhttp3.Request;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public abstract class BackendService {
+abstract class BackendService {
     static Retrofit retrofit;
     protected Context context;
 
@@ -34,7 +32,8 @@ public abstract class BackendService {
                 .create();
 
         Interceptor sessionHeaderInterceptor = new Interceptor() {
-            @Override public Response intercept(Chain chain) throws IOException {
+            @Override
+            public Response intercept(@NonNull Chain chain) throws IOException {
                 String sessionId = PreferencesUtil.getSessionId(context);
                 Request request = chain.request().newBuilder().addHeader("X-Session", sessionId).build();
                 return chain.proceed(request);
@@ -43,11 +42,9 @@ public abstract class BackendService {
 
         Interceptor errorInterceptor = new Interceptor() {
             @Override
-            public Response intercept(Chain chain) throws IOException {
+            public Response intercept(@NonNull Chain chain) throws IOException {
                 if(!NetworkUtil.isConnected(context)) {
                     throw new SocketException("No network");
-                } else if(!NetworkUtil.isBackendAvailable(context)) {
-                    throw new SocketException("Backend not available");
                 }
                 return chain.proceed(chain.request());
             }

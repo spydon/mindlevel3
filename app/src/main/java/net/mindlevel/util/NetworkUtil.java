@@ -3,8 +3,8 @@ package net.mindlevel.util;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.AsyncTask;
 import android.support.design.widget.Snackbar;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.Toast;
 
@@ -15,23 +15,22 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class NetworkUtil {
-    public static boolean connectionCheck(Context context, View coordinator) {
-        String message = "";
-        boolean hasConnection = true;
-        if(!isConnected(context)) {
-            message = context.getString(R.string.error_network);
-            hasConnection = false;
-        } else if (!isBackendAvailable(context)) {
-            message = context.getString(R.string.error_backend);
-            hasConnection = false;
-        }
 
-        if(!hasConnection && coordinator != null) {
-            Snackbar.make(coordinator, message, Snackbar.LENGTH_LONG).show();
-        } else if(!hasConnection) {
-            Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+    public static boolean connectionCheck(Context context, View coordinator) {
+        return connectionCheck(context, coordinator, true);
+    }
+
+    public static boolean connectionCheck(Context context, View coordinator, boolean showNotice) {
+        if(!isConnected(context)) {
+            if(showNotice) {
+                String message = context.getString(R.string.error_network);
+                showMessage(message, context, coordinator);
+            }
+            return false;
+        } else {
+            backendCheck(context, coordinator);
+            return true;
         }
-        return hasConnection;
     }
 
     public static boolean isConnected(Context context) {
@@ -40,19 +39,44 @@ public class NetworkUtil {
         return activeNetworkInfo != null && activeNetworkInfo.isConnectedOrConnecting();
     }
 
-    public static boolean isBackendAvailable(Context context) {
-        // TODO Make async and move to separate thread
-        //try {
-        //    String backendAddress = context.getString(R.string.backend_address);
-        //    HttpURLConnection urlc = (HttpURLConnection) (new URL(backendAddress).openConnection());
-        //    urlc.setRequestProperty("User-Agent", "mindlevel");
-        //    urlc.setRequestProperty("Connection", "close");
-        //    urlc.setConnectTimeout(1500);
-        //    urlc.connect();
-        //    return urlc.getResponseCode() == 200;
-        //} catch (IOException e) {
-        //    e.printStackTrace();
-        //}
-        return true;
+    public static void backendCheck(final Context context, final View coordinator) {
+        AsyncTask<Void, Void, Boolean> backendCheckTask = new AsyncTask<Void, Void, Boolean>() {
+            @Override
+            protected Boolean doInBackground(Void... params) {
+                Boolean backendAlive = true;
+                try {
+                    String backendAddress = context.getString(R.string.backend_address);
+                    HttpURLConnection urlc = (HttpURLConnection) (new URL(backendAddress).openConnection());
+                    urlc.setRequestProperty("User-Agent", "mindlevel");
+                    urlc.setRequestProperty("Connection", "close");
+                    urlc.setConnectTimeout(1500);
+                    urlc.connect();
+                    if(urlc.getResponseCode() != 200) {
+                        backendAlive = false;
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    backendAlive = false;
+                }
+                return backendAlive;
+            }
+
+            @Override
+            protected void onPostExecute(Boolean backendAlive) {
+                if(!backendAlive) {
+                    String message = context.getString(R.string.error_backend);
+                    showMessage(message, context, coordinator);
+                }
+            }
+        };
+        backendCheckTask.execute();
+    }
+
+    private static void showMessage(String message, Context context, View coordinator) {
+        if (coordinator != null && coordinator.isShown()) {
+            Snackbar.make(coordinator, message, Snackbar.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+        }
     }
 }
