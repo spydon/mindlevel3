@@ -26,5 +26,4 @@
         android:textSize="8pt"
         android:gravity="center" />
 
-
 </android.support.v7.widget.Toolbar>

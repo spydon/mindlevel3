@@ -19,6 +19,7 @@ import net.mindlevel.activity.AboutActivity;
 import net.mindlevel.activity.AccomplishmentActivity;
 import net.mindlevel.activity.LoginActivity;
 import net.mindlevel.activity.MissionActivity;
+import net.mindlevel.activity.TutorialActivity;
 import net.mindlevel.fragment.FeedFragment;
 import net.mindlevel.fragment.HighscoreFragment;
 import net.mindlevel.fragment.MissionsFragment;
@@ -64,15 +65,14 @@ public class CoordinatorActivity
     };
 
     // Used for handling the swiping between fragments
-    public class PagerAdapter extends FragmentStatePagerAdapter {
-        public PagerAdapter(FragmentManager fm) {
+    private class PagerAdapter extends FragmentStatePagerAdapter {
+        PagerAdapter(FragmentManager fm) {
             super(fm);
         }
 
         public Fragment getItem(int i) {
-            // i is incremental from the left
-            Fragment selectedFragment = (Fragment) fragments.values().toArray()[i];
-            return selectedFragment;
+            // i is incremental from the left, the selected fragment
+            return (Fragment)fragments.values().toArray()[i];
         }
 
         public int getCount() {
@@ -163,6 +163,10 @@ public class CoordinatorActivity
 	        case R.id.about_menu:
 	            Intent aboutIntent = new Intent(this, AboutActivity.class);
                 startActivity(aboutIntent);
+                return true;
+            case R.id.tutorial_menu:
+                Intent tutorialIntent = new Intent(this, TutorialActivity.class);
+                startActivity(tutorialIntent);
                 return true;
         }
         return super.onOptionsItemSelected(item);

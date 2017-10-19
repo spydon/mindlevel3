@@ -263,6 +263,10 @@ public class LoginActivity extends AppCompatActivity {
 	            Intent aboutIntent = new Intent(this, AboutActivity.class);
                 startActivity(aboutIntent);
                 return true;
+            case R.id.tutorial_menu:
+                Intent tutorialIntent = new Intent(this, TutorialActivity.class);
+                startActivity(tutorialIntent);
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }

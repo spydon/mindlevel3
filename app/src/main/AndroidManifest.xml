@@ -74,6 +74,10 @@
             android:label="@string/title_activity_about">
         </activity>
         <activity
+            android:name=".activity.TutorialActivity"
+            android:label="@string/title_activity_tutorial">
+        </activity>
+        <activity
             android:name=".activity.TermsActivity"
             android:label="@string/title_activity_terms">
         </activity>
