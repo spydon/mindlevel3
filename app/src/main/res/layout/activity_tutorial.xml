@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/scroll"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="net.mindlevel.activity.TutorialActivity"
+    tools:showIn="@layout/activity_tutorial">
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:paddingBottom="30dip"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/title"
+            android:textStyle="bold"
+            android:textSize="14pt"
+            android:typeface="monospace"
+            android:text="@string/tutorial_title"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/description"
+            android:text="@string/tutorial_description"
+            android:layout_marginBottom="20dip"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:text="@string/tutorial_icons"
+            android:textStyle="bold"
+            android:layout_marginBottom="10dip"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:drawableStart="@drawable/mission"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/tutorial_mission" />
+
+        <TextView
+            android:drawableStart="@drawable/accomplishment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/tutorial_accomplishment" />
+
+        <TextView
+            android:drawableStart="@drawable/camera"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/tutorial_camera" />
+
+        <TextView
+            android:drawableStart="@drawable/gallery"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/tutorial_gallery" />
+
+        <TextView
+            android:drawableStart="@drawable/upload"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/tutorial_upload" />
+
+        <TextView
+            android:drawableStart="@drawable/highscore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/tutorial_highscore" />
+
+        <TextView
+            android:drawableStart="@drawable/user"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/tutorial_user" />
+
+        <TextView
+            android:drawableStart="@drawable/edit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/tutorial_edit" />
+
+        <TextView
+            android:drawableStart="@drawable/logout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/tutorial_logout" />
+
+        <TextView
+            android:drawableStart="@drawable/share"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/tutorial_share" />
+    </LinearLayout>
+</ScrollView>
