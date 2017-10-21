@@ -33,6 +33,7 @@ import net.mindlevel.util.ImageUtil;
 
 import java.io.File;
 
+import static android.view.View.GONE;
 import static net.mindlevel.util.ImageUtil.PICK_IMAGE;
 import static net.mindlevel.util.ImageUtil.REQUEST_IMAGE_CAPTURE;
 
@@ -50,7 +51,7 @@ public class EditUserActivity extends AppCompatActivity {
     private EditText passwordView1, passwordView2;
     private EditText descriptionView;
     private EditText emailView;
-    private ProgressBar progressBar;
+    private ProgressBar progressBar, progressEmail;
     private View editFormView, progressView;
 
     @Override
@@ -98,9 +99,6 @@ public class EditUserActivity extends AppCompatActivity {
         descriptionView = (EditText) findViewById(R.id.description);
         emailView = (EditText) findViewById(R.id.email);
 
-        User user = (User) getIntent().getSerializableExtra("user");
-
-
         Button applyButton = (Button) findViewById(R.id.apply_button);
         applyButton.setOnClickListener(new OnClickListener() {
             @Override
@@ -111,9 +109,11 @@ public class EditUserActivity extends AppCompatActivity {
 
         editFormView = findViewById(R.id.edit_form);
         progressBar = (ProgressBar) findViewById(R.id.progress_image);
+        progressEmail = (ProgressBar) findViewById(R.id.progress_email);
         progressView = findViewById(R.id.progress);
         showProgress(false);
 
+        User user = (User) getIntent().getSerializableExtra("user");
         descriptionView.setText(user.description);
         if(user.image != null && !user.image.isEmpty()) {
             String url = ImageUtil.getUrl(user.image);
@@ -123,6 +123,7 @@ public class EditUserActivity extends AppCompatActivity {
                     .into(imageView);
 
         }
+        userController.getEmail(user.username, emailCallback);
     }
 
     /**
@@ -190,21 +191,21 @@ public class EditUserActivity extends AppCompatActivity {
     private void showProgress(final boolean show) {
         int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
 
-        editFormView.setVisibility(show ? View.GONE : View.VISIBLE);
+        editFormView.setVisibility(show ? GONE : View.VISIBLE);
         editFormView.animate().setDuration(shortAnimTime).alpha(
                 show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
-                editFormView.setVisibility(show ? View.GONE : View.VISIBLE);
+                editFormView.setVisibility(show ? GONE : View.VISIBLE);
             }
         });
 
-        progressView.setVisibility(show ? View.VISIBLE : View.GONE);
+        progressView.setVisibility(show ? View.VISIBLE : GONE);
         progressView.animate().setDuration(shortAnimTime).alpha(
                 show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
-                progressView.setVisibility(show ? View.VISIBLE : View.GONE);
+                progressView.setVisibility(show ? View.VISIBLE : GONE);
             }
         });
     }
@@ -224,6 +225,19 @@ public class EditUserActivity extends AppCompatActivity {
             utils.setImage(path, imageView);
         }
     }
+
+    private ControllerCallback<String> emailCallback = new ControllerCallback<String>() {
+
+        @Override
+        public void onPostExecute(final Boolean success, final String email) {
+            progressEmail.setVisibility(GONE);
+            emailView.setEnabled(true);
+
+            if (success) {
+                emailView.setText(email);
+            }
+        }
+    };
 
     private ControllerCallback<Void> editCallback = new ControllerCallback<Void>() {
 

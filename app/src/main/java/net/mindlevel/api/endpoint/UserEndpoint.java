@@ -27,6 +27,9 @@ public interface UserEndpoint {
     @GET("user/{user}/accomplishment")
     Call<List<Accomplishment>> getAccomplishments(@Path("user") String user);
 
+    @GET("user/{user}/email")
+    Call<String> getEmail(@Path("user") String user);
+
     @GET("user/highscore/{amount}")
     Call<List<User>> getHighscore(@Path("amount") int amount);
 

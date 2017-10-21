@@ -156,6 +156,27 @@ public class UserController extends BackendService {
         });
     }
 
+    public void getEmail(final String username, final ControllerCallback<String> callback) {
+        Call<String> emailCall = endpoint.getEmail(username);
+
+        emailCall.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(@NonNull Call<String> call, @NonNull Response<String> emailResponse) {
+                if(emailResponse.isSuccessful()) {
+                    callback.onPostExecute(true, emailResponse.body());
+                } else {
+                    callback.onPostExecute(false, null);
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<String> call, @NonNull Throwable t) {
+                callback.onPostExecute(false, null);
+                t.printStackTrace();
+            }
+        });
+    }
+
     public void update(final User user, final UserExtra userExtra, final Uri path,
                        final ControllerCallback<Void> callback) {
         InputStream is = null;

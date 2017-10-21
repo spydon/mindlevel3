@@ -63,15 +63,27 @@
 
             </android.support.design.widget.TextInputLayout>
 
-            <EditText
-                android:id="@+id/email"
-                android:hint="@string/hint_email"
-                android:inputType="textEmailAddress"
-                android:layout_marginEnd="@dimen/text_beside_fab"
-                android:layout_width="match_parent"
+            <RelativeLayout
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
-                <requestFocus />
-            </EditText>
+                <EditText
+                    android:id="@+id/email"
+                    android:hint="@string/hint_email"
+                    android:enabled="false"
+                    android:inputType="textEmailAddress"
+                    android:layout_marginEnd="@dimen/text_beside_fab"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                </EditText>
+                <ProgressBar
+                    style="?android:attr/progressBarStyleSmall"
+                    android:id="@+id/progress_email"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@id/email"
+                    android:layout_alignBottom="@id/email"
+                    android:layout_alignEnd="@id/email"/>
+            </RelativeLayout>
 
             <EditText
                 android:id="@+id/description"
