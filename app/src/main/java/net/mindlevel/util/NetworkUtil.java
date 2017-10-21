@@ -45,11 +45,11 @@ public class NetworkUtil {
             protected Boolean doInBackground(Void... params) {
                 Boolean backendAlive = true;
                 try {
-                    String backendAddress = context.getString(R.string.backend_address);
+                    String backendAddress = context.getString(R.string.backend_address) + "ping";
                     HttpURLConnection urlc = (HttpURLConnection) (new URL(backendAddress).openConnection());
                     urlc.setRequestProperty("User-Agent", "mindlevel");
                     urlc.setRequestProperty("Connection", "close");
-                    urlc.setConnectTimeout(1500);
+                    urlc.setConnectTimeout(3000);
                     urlc.connect();
                     if(urlc.getResponseCode() != 200) {
                         backendAlive = false;

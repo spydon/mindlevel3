@@ -55,10 +55,10 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         coordinatorLayout = findViewById(R.id.login_outer);
-        View innerView = findViewById(R.id.login_inner_form);
+        loginFormView = findViewById(R.id.login_inner_form);
         final View scrollView = findViewById(R.id.login_form);
-        loginController = new LoginController(innerView.getContext());
-        userController = new UserController(innerView.getContext());
+        loginController = new LoginController(loginFormView.getContext());
+        userController = new UserController(loginFormView.getContext());
 
         // Set up the login form.
         usernameView = (EditText) findViewById(R.id.username);
