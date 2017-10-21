@@ -23,6 +23,7 @@ import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import net.mindlevel.R;
@@ -56,7 +57,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         coordinatorLayout = findViewById(R.id.login_outer);
         loginFormView = findViewById(R.id.login_inner_form);
-        final View scrollView = findViewById(R.id.login_form);
+        final ScrollView scrollView = (ScrollView) findViewById(R.id.login_form);
         loginController = new LoginController(loginFormView.getContext());
         userController = new UserController(loginFormView.getContext());
 
@@ -79,7 +80,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if(hasFocus) {
-                    scrollView.scrollTo(scrollView.getScrollX(), scrollView.getScrollY()+200);
+                    scrollView.smoothScrollTo(scrollView.getScrollX(), scrollView.getScrollY()+200);
                 }
             }
         });
