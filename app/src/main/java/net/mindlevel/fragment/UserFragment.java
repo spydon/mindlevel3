@@ -242,6 +242,7 @@ public class UserFragment extends InfoFragment {
 
         @Override
         public void onPostExecute(final Boolean success, final Void nothing) {
+            PreferencesUtil.clearSession(context);
             Intent loginIntent = new Intent(getContext(), LoginActivity.class);
             startActivity(loginIntent);
         }

@@ -21,6 +21,13 @@ public class PreferencesUtil {
         return sharedPreferences.getString("sessionId", "");
     }
 
+    public static void clearSession(Context context) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences("session", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.clear();
+        editor.apply();
+    }
+
     public static void setSessionState(String username, String sessionId, Context context) {
         SharedPreferences sharedPreferences = context.getSharedPreferences("session", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
