@@ -136,7 +136,6 @@ public class FeedFragment extends InfoFragment {
 
                 if(!recyclerView.canScrollVertically(-1)) {
                     // Already handled by SwipeRefreshLayout
-                    System.out.println("on top");
                 } else if(!recyclerView.canScrollVertically(1)) {
                     populatePage(page++);
                 } else if(dy < 0) {

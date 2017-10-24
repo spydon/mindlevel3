@@ -73,7 +73,7 @@ public class NetworkUtil {
     }
 
     private static void showMessage(String message, Context context, View coordinator) {
-        if (coordinator != null && coordinator.isShown()) {
+        if (coordinator != null) {
             Snackbar.make(coordinator, message, Snackbar.LENGTH_LONG).show();
         } else {
             Toast.makeText(context, message, Toast.LENGTH_LONG).show();
