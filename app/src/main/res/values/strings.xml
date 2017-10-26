@@ -1,11 +1,9 @@
 <resources>
     <string name="app_name">MindLevel</string>
     <string name="app_description">
-        After a few months of backpacking I came to realize that my life at home was quite repetitive and boring.
-        (Even though I was living in a student town full of life)
-        \n\nIn most peoples day-to-day life they perform repetitive and seemingly pointless tasks, I\'m sure you know what
-        I\'m talking about. Repetitive tasks that we have grown to think that we like,
-        things that take up a lot of our time but don\'t add anything to our lives.
+        \n\nIn most peoples day-to-day life they perform repetitive and seemingly pointless tasks, I\'m sure that you
+        can relate. Repetitive tasks that we have grown to think that we like, things that take up a lot of our time
+        but don\'t add anything to our lives.
         \n\nThe things that we wont remember when we grow old.
         \n\nI think that most people wouldn\'t even appreciate these parts of their lives if they had an easy
         option of doing something more exciting sometimes, something that would be worth remembering.
@@ -42,6 +40,7 @@
     <string name="hint_upload_description">Describe how you accomplished the mission</string>
     <string name="hint_user_description">Describe yourself, or write anything really</string>
     <string name="hint_contributors">Add contributors</string>
+    <string name="hint_upload_title">Your title</string>
 
     <!-- Login -->
     <string name="prompt_username">Username</string>
@@ -75,6 +74,7 @@
     <string name="error_network">No network available, try again later</string>
     <string name="error_backend">Performing maintenance, try again later</string>
     <string name="error_not_found">The squirrels came up with nothing</string>
+    <string name="error_offline">Not available offline</string>
 
     <!--  Tips -->
     <string name="tip">Tip: %1$s</string>

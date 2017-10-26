@@ -90,7 +90,7 @@ public class CoordinatorActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_coordinator);
         ImageUtil.setBucketAddress(getString(R.string.bucket_address));
 
         fragments.put(R.id.navigation_feed, feedFragment);

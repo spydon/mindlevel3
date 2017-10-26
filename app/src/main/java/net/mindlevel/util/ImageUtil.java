@@ -111,17 +111,17 @@ public class ImageUtil {
     public void setImage(Uri path, ImageView view) {
         try {
             Context context = view.getContext();
-            double maxLength = 2048;
+            double maxWidth = 2048;
             //Bitmap bitmap = MediaStore.Images.Media.getBitmap(activity.getContentResolver(), path);
             Bitmap bitmap = getCorrectlyOrientedImage(context, path);
             int height = bitmap.getHeight();
             int width = bitmap.getWidth();
-            if (width > maxLength && width > height) {
-                int newHeight = (int)(height * (maxLength / width));
-                bitmap = Bitmap.createScaledBitmap(bitmap, (int)maxLength, newHeight, true);
-            } else if (height > maxLength && height > width) {
-                int newWidth = (int)(width * (maxLength / height));
-                bitmap = Bitmap.createScaledBitmap(bitmap, newWidth, (int)maxLength, true);
+            if (width > maxWidth && width > height) {
+                int newHeight = (int)(height * (maxWidth / width));
+                bitmap = Bitmap.createScaledBitmap(bitmap, (int)maxWidth, newHeight, true);
+            } else if (height > maxWidth && height > width) {
+                int newWidth = (int)(width * (maxWidth / height));
+                bitmap = Bitmap.createScaledBitmap(bitmap, newWidth, (int)maxWidth, true);
             }
             view.setImageBitmap(bitmap);
         } catch (IOException ioe) {

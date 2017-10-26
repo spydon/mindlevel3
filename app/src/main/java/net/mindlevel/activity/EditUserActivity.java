@@ -90,7 +90,7 @@ public class EditUserActivity extends AppCompatActivity {
             takePicture.setVisibility(View.INVISIBLE);
         }
 
-        imageView = (ImageView)findViewById(R.id.image);
+        imageView = (ImageView) findViewById(R.id.image);
 
         passwordView1 = (EditText) findViewById(R.id.password1);
         passwordView2 = (EditText) findViewById(R.id.password2);

@@ -14,6 +14,8 @@ import android.util.ArraySet;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -46,8 +48,9 @@ public class UploadActivity extends AppCompatActivity {
 
     private AccomplishmentController accomplishmentController;
     private UserController userController;
-    private View containerView, progressView;
-    private TextView titleView, descriptionView, errorView;
+    private ScrollView containerView;
+    private View progressView;
+    private TextView titleView, missionTitleView, descriptionView, errorView;
     private ChipsInput contributorInput;
     private Button uploadButton;
     private Context context;
@@ -92,14 +95,15 @@ public class UploadActivity extends AppCompatActivity {
             takePicture.setVisibility(View.INVISIBLE);
         }
 
-        containerView = findViewById(R.id.scroll);
+        containerView = (ScrollView) findViewById(R.id.scroll);
         progressView = findViewById(R.id.progress);
         showProgress(false);
 
         errorView = (TextView) findViewById(R.id.error_text);
+        missionTitleView = (TextView) findViewById(R.id.mission_title);
         titleView = (TextView) findViewById(R.id.title);
         descriptionView = (TextView) findViewById(R.id.description);
-        titleView.setText(mission.title);
+        missionTitleView.setText(mission.title);
         uploadButton = (Button) findViewById(R.id.upload_button);
         uploadButton.setActivated(false);
 
@@ -110,16 +114,16 @@ public class UploadActivity extends AppCompatActivity {
                     setError(true, getString(R.string.error_no_image));
                 } else {
                     setError(false);
+                    showProgress(true);
+                    uploadButton.setActivated(false);
+                    Set<String> contributors = new HashSet<>();
+                    for(ChipInterface chip : contributorInput.getSelectedChipList()) {
+                        contributors.add(chip.getLabel());
+                    }
+                    Accomplishment accomplishment = new Accomplishment(0, titleView.getText().toString(),
+                            descriptionView.getText().toString(), "", missionId, 0, 0);
+                    accomplishmentController.add(accomplishment, contributors, path, uploadCallback);
                 }
-                showProgress(true);
-                uploadButton.setActivated(false);
-                Set<String> contributors = new HashSet<>();
-                for(ChipInterface chip : contributorInput.getSelectedChipList()) {
-                    contributors.add(chip.getLabel());
-                }
-                Accomplishment accomplishment = new Accomplishment(0, titleView.getText().toString(),
-                        descriptionView.getText().toString(), "", missionId, 0, 0);
-                accomplishmentController.add(accomplishment, contributors, path, uploadCallback);
             }
         });
 
@@ -168,7 +172,7 @@ public class UploadActivity extends AppCompatActivity {
                 path = data.getData();
             }
 
-            ImageView imageView = (ImageView)findViewById(R.id.image);
+            ImageView imageView = (ImageView) findViewById(R.id.image);
             utils.setImage(path, imageView);
         }
     }
@@ -213,6 +217,7 @@ public class UploadActivity extends AppCompatActivity {
                 }
                 contributorInput.setFilterableList(userChips);
                 contributorInput.setEnabled(true);
+                findViewById(R.id.progress_contributor_input).setVisibility(GONE);
             }
         }
     };
