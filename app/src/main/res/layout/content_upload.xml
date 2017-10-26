@@ -12,59 +12,86 @@
 
     <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="15dp"
+        android:layout_width="match_parent"
+        android:id="@+id/inner_upload_form"
         android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/error_text"
-            android:visibility="gone"
-            android:textColor="@android:color/holo_red_dark"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
 
         <ImageView
             android:id="@+id/image"
             android:adjustViewBounds="true"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
-            android:layout_marginBottom="5dip"/>
+            android:layout_marginBottom="5dip" />
 
-        <EditText
-            android:id="@+id/title"
-            android:textStyle="bold"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textCapSentences|textAutoCorrect"/>
-
-        <EditText
-            android:id="@+id/description"
-            android:hint="@string/hint_upload_description"
-            android:inputType="textMultiLine"
-            android:lines="8"
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_margin="15dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-            <requestFocus />
-        </EditText>
 
-        <com.pchmn.materialchips.ChipsInput
-            android:id="@+id/contributor_input"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="5dip"
-            app:chip_hasAvatarIcon="false"
-            app:hint="@string/hint_contributors" />
+            <TextView
+                android:id="@+id/error_text"
+                android:visibility="gone"
+                android:textColor="@android:color/holo_red_dark"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
-        <Button
-            android:id="@+id/upload_button"
-            style="?android:textAppearanceSmall"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="24dp"
-            android:text="@string/action_upload"
-            android:textStyle="bold"/>
+            <TextView
+                android:id="@+id/mission_title"
+                android:textStyle="bold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
+            <EditText
+                android:id="@+id/title"
+                android:hint="@string/hint_upload_title"
+                android:textStyle="bold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textCapSentences|textAutoCorrect" />
+
+            <EditText
+                android:id="@+id/description"
+                android:hint="@string/hint_upload_description"
+                android:inputType="textMultiLine"
+                android:lines="8"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <requestFocus />
+            </EditText>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <com.pchmn.materialchips.ChipsInput
+                    android:id="@+id/contributor_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dip"
+                    app:chip_hasAvatarIcon="false"
+                    app:hint="@string/hint_contributors" />
+
+                <ProgressBar
+                    style="?android:attr/progressBarStyleSmall"
+                    android:id="@+id/progress_contributor_input"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@id/contributor_input"
+                    android:layout_alignBottom="@id/contributor_input"
+                    android:layout_alignEnd="@id/contributor_input" />
+            </RelativeLayout>
+
+            <Button
+                android:id="@+id/upload_button"
+                style="?android:textAppearanceSmall"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="24dp"
+                android:text="@string/action_upload"
+                android:textStyle="bold" />
+
+        </LinearLayout>
     </LinearLayout>
 </ScrollView>

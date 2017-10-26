@@ -13,9 +13,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
-        android:visibility="gone"/>
+        android:visibility="gone" />
 
-    <include layout="@layout/progress_center"/>
+    <include layout="@layout/progress_center" />
     <ScrollView
         android:id="@+id/edit_form"
         android:layout_width="match_parent"
@@ -34,7 +34,7 @@
                 android:contentDescription="@string/accessibility_user_image"
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
-                android:layout_marginBottom="6dip"/>
+                android:layout_marginBottom="6dip" />
 
             <LinearLayout
                 android:layout_marginEnd="@dimen/text_beside_fab"
@@ -53,7 +53,7 @@
                         android:layout_height="wrap_content"
                         android:hint="@string/new_password"
                         android:inputType="textPassword"
-                        android:maxLines="1"/>
+                        android:maxLines="1" />
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
@@ -67,7 +67,7 @@
                         android:layout_height="wrap_content"
                         android:hint="@string/repeat_password"
                         android:inputType="textPassword"
-                        android:maxLines="1"/>
+                        android:maxLines="1" />
                 </android.support.design.widget.TextInputLayout>
 
                 <RelativeLayout
@@ -88,7 +88,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignTop="@id/email"
                         android:layout_alignBottom="@id/email"
-                        android:layout_alignEnd="@id/email"/>
+                        android:layout_alignEnd="@id/email" />
                 </RelativeLayout>
 
                 <EditText
@@ -108,7 +108,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="6dp"
                     android:text="@string/action_edit"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold" />
 
             </LinearLayout>
         </LinearLayout>

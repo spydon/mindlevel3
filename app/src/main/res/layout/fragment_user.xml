@@ -3,9 +3,9 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent">
 
-    <include layout="@layout/info_center"/>
+    <include layout="@layout/info_center" />
 
     <LinearLayout
         android:orientation="vertical"
@@ -80,7 +80,7 @@
         android:layout_gravity="bottom|end"
         android:layout_marginEnd="@dimen/fab_margin"
         android:layout_marginBottom="@dimen/fab_margin2"
-        app:srcCompat="@drawable/user"/>
+        app:srcCompat="@drawable/user" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/edit_button"
@@ -90,7 +90,7 @@
         android:layout_gravity="bottom|end"
         android:layout_marginEnd="@dimen/fab_margin"
         android:layout_marginBottom="@dimen/fab_margin3"
-        app:srcCompat="@drawable/edit"/>
+        app:srcCompat="@drawable/edit" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/sign_out_button"
@@ -100,7 +100,7 @@
         android:layout_gravity="bottom|end"
         android:layout_marginEnd="@dimen/fab_margin"
         android:layout_marginBottom="@dimen/fab_margin2"
-        app:srcCompat="@drawable/logout"/>
+        app:srcCompat="@drawable/logout" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/accomplishments_button"
@@ -110,6 +110,6 @@
         android:layout_gravity="bottom|end"
         android:layout_marginEnd="@dimen/fab_margin"
         android:layout_marginBottom="@dimen/fab_margin"
-        app:srcCompat="@drawable/accomplishment"/>
+        app:srcCompat="@drawable/accomplishment" />
 
 </android.support.design.widget.CoordinatorLayout>
