@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import net.mindlevel.R;
+import net.mindlevel.model.Login;
 
 public class PreferencesUtil {
     public static String getUsername(Context context) {
@@ -19,6 +20,12 @@ public class PreferencesUtil {
     public static String getSessionId(Context context) {
         SharedPreferences sharedPreferences = context.getSharedPreferences("session", Context.MODE_PRIVATE);
         return sharedPreferences.getString("sessionId", "");
+    }
+
+    public static Login getLogin(Context context) {
+        SharedPreferences pref = context.getSharedPreferences("session", Context.MODE_PRIVATE);
+        Login login = new Login(pref.getString("username", ""), "", pref.getString("session", ""));
+        return login;
     }
 
     public static void clearSession(Context context) {

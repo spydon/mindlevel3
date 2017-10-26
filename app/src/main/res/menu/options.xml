@@ -6,4 +6,7 @@
     <item android:id="@+id/about_menu"
           android:title="@string/title_about"
           android:icon="@android:drawable/ic_dialog_info"/>
+    <item android:id="@+id/sign_out_menu"
+          android:title="@string/action_sign_out"
+          android:icon="@drawable/logout"/>
 </menu>

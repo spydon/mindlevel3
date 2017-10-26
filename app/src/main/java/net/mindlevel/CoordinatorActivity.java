@@ -20,11 +20,13 @@ import net.mindlevel.activity.AccomplishmentActivity;
 import net.mindlevel.activity.LoginActivity;
 import net.mindlevel.activity.MissionActivity;
 import net.mindlevel.activity.TutorialActivity;
+import net.mindlevel.api.LoginController;
 import net.mindlevel.fragment.FeedFragment;
 import net.mindlevel.fragment.HighscoreFragment;
 import net.mindlevel.fragment.MissionsFragment;
 import net.mindlevel.fragment.UserFragment;
 import net.mindlevel.model.Accomplishment;
+import net.mindlevel.model.Login;
 import net.mindlevel.model.Mission;
 import net.mindlevel.model.User;
 import net.mindlevel.util.ImageUtil;
@@ -167,6 +169,13 @@ public class CoordinatorActivity
             case R.id.tutorial_menu:
                 Intent tutorialIntent = new Intent(this, TutorialActivity.class);
                 startActivity(tutorialIntent);
+                return true;
+            case R.id.sign_out_menu:
+                PreferencesUtil.clearSession(this);
+                Login login = PreferencesUtil.getLogin(this);
+                new LoginController(this).logout(login, null);
+                Intent loginIntent = new Intent(this, LoginActivity.class);
+                startActivity(loginIntent);
                 return true;
         }
         return super.onOptionsItemSelected(item);

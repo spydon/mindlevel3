@@ -93,9 +93,7 @@ public class UserFragment extends InfoFragment {
             @Override
             public void onClick(View view) {
                 signOutButton.setActivated(false);
-                String username = PreferencesUtil.getUsername(context);
-                String sessionId = PreferencesUtil.getSessionId(context);
-                Login login = new Login(username, "", sessionId);
+                Login login = PreferencesUtil.getLogin(context);
                 loginController.logout(login, signOutCallback);
             }
         });

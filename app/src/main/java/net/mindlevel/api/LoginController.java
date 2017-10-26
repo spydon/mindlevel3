@@ -49,8 +49,12 @@ public class LoginController extends BackendService {
         logout.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
+                if(callback == null){
+                    return;
+                }
+
                 if(response.isSuccessful()) {
-                    PreferencesUtil.setSessionState(null, null, context);
+                    PreferencesUtil.clearSession(context);
                     callback.onPostExecute(true, null);
                 } else {
                     callback.onPostExecute(false, null);
@@ -59,8 +63,11 @@ public class LoginController extends BackendService {
 
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
-                callback.onPostExecute(false, null);
                 t.printStackTrace();
+                if(callback == null){
+                    return;
+                }
+                callback.onPostExecute(false, null);
             }
         });
     }
