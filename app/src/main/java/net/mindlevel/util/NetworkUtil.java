@@ -5,6 +5,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.Toast;
 
@@ -74,7 +75,8 @@ public class NetworkUtil {
 
     private static void showMessage(String message, Context context, View coordinator) {
         if (coordinator != null) {
-            Snackbar.make(coordinator, message, Snackbar.LENGTH_LONG).show();
+            Snackbar bar = Glassbar.make(coordinator, message, Snackbar.LENGTH_LONG);
+            bar.show();
         } else {
             Toast.makeText(context, message, Toast.LENGTH_LONG).show();
         }

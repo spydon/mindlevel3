@@ -5,6 +5,7 @@ package net.mindlevel.fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -20,6 +21,7 @@ import net.mindlevel.api.MissionController;
 import net.mindlevel.api.UserController;
 import net.mindlevel.model.Accomplishment;
 import net.mindlevel.model.Mission;
+import net.mindlevel.util.Glassbar;
 import net.mindlevel.util.NetworkUtil;
 
 import java.util.HashSet;
@@ -108,7 +110,8 @@ public class FeedFragment extends InfoFragment {
         }
 
         this.coordinator = contentView.getRootView();
-        this.searchInfoBar = Snackbar.make(coordinator, "", Snackbar.LENGTH_INDEFINITE);
+        this.searchInfoBar = Glassbar.make(coordinator, "", Snackbar.LENGTH_INDEFINITE);
+        searchInfoBar.getView().setBackgroundColor(ContextCompat.getColor(context, R.color.snackbar));
         String latest = getString(R.string.latest);
         searchInfoBar.setAction(latest, new View.OnClickListener() {
             @Override

@@ -132,7 +132,7 @@ public class MissionActivity extends AppCompatActivity {
                         .into(imageView);
 
                 if(!NetworkUtil.connectionCheck(context, missionView)) {
-                    //uploadButton.setVisibility(View.GONE);
+                    uploadButton.setVisibility(View.GONE);
                     accomplishmentsButton.setVisibility(View.GONE);
                 }
             } else {

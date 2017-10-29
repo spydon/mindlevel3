@@ -31,6 +31,7 @@ import net.mindlevel.api.ControllerCallback;
 import net.mindlevel.api.LoginController;
 import net.mindlevel.api.UserController;
 import net.mindlevel.model.Login;
+import net.mindlevel.util.Glassbar;
 import net.mindlevel.util.KeyboardUtil;
 import net.mindlevel.util.NetworkUtil;
 
@@ -243,7 +244,7 @@ public class LoginActivity extends AppCompatActivity {
 
             if (success) {
                 String registrationText = getString(R.string.successful_registration, username);
-                Snackbar.make(coordinatorLayout, registrationText, Snackbar.LENGTH_LONG).show();
+                Glassbar.make(coordinatorLayout, registrationText, Snackbar.LENGTH_LONG).show();
             } else {
                 passwordView.setError(getString(R.string.error_incorrect_password));
                 passwordView.requestFocus();
