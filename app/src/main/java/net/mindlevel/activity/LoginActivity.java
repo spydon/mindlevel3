@@ -136,6 +136,8 @@ public class LoginActivity extends AppCompatActivity {
         String[] tips = {
                 getString(R.string.tip_like),
                 getString(R.string.tip_contributor),
+                getString(R.string.tip_swipe),
+                getString(R.string.tip_share),
                 getString(R.string.tip_points)
         };
         String tip = tips[new Random().nextInt(tips.length)];
