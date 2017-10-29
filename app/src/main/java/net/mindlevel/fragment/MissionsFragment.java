@@ -132,12 +132,12 @@ public class MissionsFragment extends InfoFragment {
         @Override
         public void onPostExecute(Boolean isSuccess, List<Mission> response) {
             swipe.setRefreshing(false);
-            if(isSuccess) {
-                 if(response.isEmpty()) {
+            if (isSuccess) {
+                 if (response.isEmpty()) {
                      showInfo(true, false, getString(R.string.error_not_found));
                  } else {
                      showInfo(false, false);
-                     if(!missions.containsAll(response)) {
+                     if (!missions.containsAll(response)) {
                          missions.addAll(response);
                          adapter.notifyDataSetChanged();
                      }

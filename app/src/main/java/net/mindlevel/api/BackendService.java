@@ -43,7 +43,7 @@ abstract class BackendService {
         Interceptor errorInterceptor = new Interceptor() {
             @Override
             public Response intercept(@NonNull Chain chain) throws IOException {
-                if(!NetworkUtil.isConnected(context)) {
+                if (!NetworkUtil.isConnected(context)) {
                     throw new SocketException("No network");
                 }
                 return chain.proceed(chain.request());

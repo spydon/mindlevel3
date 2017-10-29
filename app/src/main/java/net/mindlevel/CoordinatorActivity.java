@@ -58,7 +58,7 @@ public class CoordinatorActivity
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             Fragment selectedFragment = fragments.get(item.getItemId());
-            if(selectedFragment != currentFragment) {
+            if (selectedFragment != currentFragment) {
                 scrollToFragment(selectedFragment);
             }
             return true;
@@ -98,7 +98,7 @@ public class CoordinatorActivity
         fragments.put(R.id.navigation_highscore, highscoreFragment);
         fragments.put(R.id.navigation_profile, userFragment);
 
-        if(PreferencesUtil.getSessionId(getApplicationContext()).isEmpty()) {
+        if (PreferencesUtil.getSessionId(getApplicationContext()).isEmpty()) {
             Intent loginIntent = new Intent(this, LoginActivity.class);
             startActivity(loginIntent);
         }
@@ -134,20 +134,20 @@ public class CoordinatorActivity
     @Override
     public void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        if(intent.hasExtra("username")) {
+        if (intent.hasExtra("username")) {
             String username = intent.getStringExtra("username");
             userFragment.populate(username);
             scrollToFragment(userFragment);
-        } else if(intent.hasExtra("user")) {
-            User user = (User)intent.getSerializableExtra("user");
+        } else if (intent.hasExtra("user")) {
+            User user = (User) intent.getSerializableExtra("user");
             userFragment.populate(user);
             scrollToFragment(userFragment);
-        } else if(intent.hasExtra("accomplishments_for_user")) {
+        } else if (intent.hasExtra("accomplishments_for_user")) {
             String username = intent.getStringExtra("accomplishments_for_user");
             scrollToFragment(feedFragment);
             feedFragment.populateUserAccomplishments(username);
-        } else if(intent.hasExtra("accomplishments_for_mission")) {
-            Mission mission = (Mission)intent.getSerializableExtra("accomplishments_for_mission");
+        } else if (intent.hasExtra("accomplishments_for_mission")) {
+            Mission mission = (Mission) intent.getSerializableExtra("accomplishments_for_mission");
             scrollToFragment(feedFragment);
             feedFragment.populateMissionAccomplishments(mission);
         }

@@ -110,7 +110,7 @@ public class UploadActivity extends AppCompatActivity {
         uploadButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(path == null) {
+                if (path == null) {
                     setError(true, getString(R.string.error_no_image));
                 } else {
                     setError(false);
@@ -134,7 +134,7 @@ public class UploadActivity extends AppCompatActivity {
 
     private void showProgress(final boolean show) {
         int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
-        if(show) {
+        if (show) {
             KeyboardUtil.hideKeyboard(this);
         }
 
@@ -160,7 +160,7 @@ public class UploadActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(resultCode == RESULT_OK) {
+        if (resultCode == RESULT_OK) {
             if (requestCode == REQUEST_IMAGE_CAPTURE) {
                 setError(false);
                 path = Uri.fromFile(new File(utils.getPhotoPath()));

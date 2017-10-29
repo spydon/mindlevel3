@@ -80,7 +80,7 @@ public class ImageLikeView extends AppCompatImageView {
 
         @Override
         public boolean onSingleTapConfirmed(MotionEvent e) {
-            if(tapListener != null){
+            if (tapListener != null){
                 tapListener.onClick(tapSource);
             }
 
@@ -90,7 +90,7 @@ public class ImageLikeView extends AppCompatImageView {
         @Override
         public boolean onDoubleTap(MotionEvent e) {
             final TextView likeText = imageText;
-            if(likeText == null) {
+            if (likeText == null) {
                 return false;
             }
             progress.setVisibility(VISIBLE);
@@ -147,9 +147,9 @@ public class ImageLikeView extends AppCompatImageView {
                     });
 
                     progress.startAnimation(progressAnim);
-                    if(isSuccess && like.first) {
+                    if (isSuccess && like.first) {
                         likeText.startAnimation(likeAnim);
-                    } else if(like != null) {
+                    } else if (like != null) {
                         likeText.setText(like.score);
                         likeText.startAnimation(countAnim);
                     }

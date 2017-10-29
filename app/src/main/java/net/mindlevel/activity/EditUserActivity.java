@@ -64,7 +64,7 @@ public class EditUserActivity extends AppCompatActivity {
         toolbar.setTitle(R.string.title_edit_profile);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
-        if(actionBar != null) {
+        if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
@@ -115,7 +115,7 @@ public class EditUserActivity extends AppCompatActivity {
 
         User user = (User) getIntent().getSerializableExtra("user");
         descriptionView.setText(user.description);
-        if(user.image != null && !user.image.isEmpty()) {
+        if (user.image != null && !user.image.isEmpty()) {
             String url = ImageUtil.getUrl(user.image);
             Glide.with(this)
                     .load(url)
@@ -157,7 +157,7 @@ public class EditUserActivity extends AppCompatActivity {
             cancel = true;
         }
 
-        if(!isEmailValid(email)) {
+        if (!isEmailValid(email)) {
             emailView.setError("Not a valid email");
             focusView = emailView;
             cancel = true;
@@ -212,7 +212,7 @@ public class EditUserActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(resultCode == RESULT_OK) {
+        if (resultCode == RESULT_OK) {
             if (requestCode == REQUEST_IMAGE_CAPTURE) {
                 path = Uri.fromFile(new File(utils.getPhotoPath()));
             } else if (requestCode == PICK_IMAGE) {

@@ -141,12 +141,12 @@ public class HighscoreFragment extends InfoFragment {
         @Override
         public void onPostExecute(Boolean isSuccess, List<User> response) {
             swipe.setRefreshing(false);
-            if(isSuccess) {
-                if(response.isEmpty()) {
+            if (isSuccess) {
+                if (response.isEmpty()) {
                     showInfo(true, false, getString(R.string.error_not_found));
                 } else {
                     showInfo(false, false);
-                    if(!highscores.containsAll(response)) {
+                    if (!highscores.containsAll(response)) {
                         highscores.addAll(response);
                         adapter.notifyDataSetChanged();
                     }

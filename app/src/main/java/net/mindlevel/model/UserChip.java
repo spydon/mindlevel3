@@ -27,8 +27,7 @@ public class UserChip implements ChipInterface {
 
     @Override
     public Uri getAvatarUri() {
-        Uri uri = user.image == null ? null : Uri.parse(user.image);
-        return uri;
+        return user.image == null ? null : Uri.parse(user.image);
     }
 
     @Override
@@ -41,7 +40,7 @@ public class UserChip implements ChipInterface {
         //} catch (FileNotFoundException e) {
         //    return context.getResources().getDrawable(R.drawable.avatar, context.getTheme());
         //} finally {
-        //    if(is != null) {
+        //    if (is != null) {
         //        try {
         //            is.close();
         //        } catch (IOException e) {

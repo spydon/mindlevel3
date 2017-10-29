@@ -24,7 +24,7 @@ public abstract class InfoFragment extends Fragment {
     }
 
     protected void showInfo(boolean isError, boolean isProgress, String message) {
-        if(!isAdded() || isDetached() || isRemoving()) {
+        if (!isAdded() || isDetached() || isRemoving()) {
             return;
         }
 
@@ -32,18 +32,18 @@ public abstract class InfoFragment extends Fragment {
         TextView progressText = (TextView)progressView.findViewById(R.id.progress_text);
 
         final boolean isNormal = !isError && !isProgress;
-        if(isNormal) {
+        if (isNormal) {
             Handler handler = new Handler();
             handler.postDelayed(new Runnable() {
                 public void run() {
                     animateToFront(contentView);
                 }
             }, 500);
-        } else if(isError) {
+        } else if (isError) {
             String errorMessage = message == null ? getString(R.string.error_network) : message;
             errorText.setText(errorMessage);
             animateToFront(errorView);
-        } else if(isProgress) {
+        } else if (isProgress) {
             String progressMessage = message == null ? getRandomMotivation() : message;
             progressText.setText(progressMessage);
             animateToFront(progressView);
@@ -61,7 +61,7 @@ public abstract class InfoFragment extends Fragment {
     }
 
     private void animateToFront(View view) {
-        if(isAdded()) {
+        if (isAdded()) {
             View[] views = {contentView, progressView, errorView};
             for (View other : views) {
                 if (view != other) {

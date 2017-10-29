@@ -100,7 +100,7 @@ public class ImageUtil {
 
     public void setImage(String image, boolean completePath, ImageView view) {
         Uri uri;
-        if(completePath) {
+        if (completePath) {
             uri = Uri.parse(image);
         } else {
             uri = Uri.parse(getUrl(image));

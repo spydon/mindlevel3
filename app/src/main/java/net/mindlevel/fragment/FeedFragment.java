@@ -133,17 +133,17 @@ public class FeedFragment extends InfoFragment {
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
 
-                if(!recyclerView.isShown()) {
+                if (!recyclerView.isShown()) {
                     return;
                 }
 
-                if(!recyclerView.canScrollVertically(-1)) {
+                if (!recyclerView.canScrollVertically(-1)) {
                     // Already handled by SwipeRefreshLayout
-                } else if(!recyclerView.canScrollVertically(1)) {
+                } else if (!recyclerView.canScrollVertically(1)) {
                     populatePage(page++);
-                } else if(dy < 0) {
+                } else if (dy < 0) {
                     System.out.println("dy");
-                } else if(dy > 0) {
+                } else if (dy > 0) {
                     System.out.println("dy2");
                 }
             }
@@ -224,13 +224,13 @@ public class FeedFragment extends InfoFragment {
         @Override
         public void onPostExecute(Boolean isSuccess, List<Accomplishment> response) {
             swipe.setRefreshing(false);
-            if(getActivity() != null) {
+            if (getActivity() != null) {
                 if (isSuccess) {
-                    if(response.isEmpty()) {
+                    if (response.isEmpty()) {
                         showInfo(true, false, getString(R.string.error_not_found));
                     } else {
                         showInfo(false, false);
-                        if(!accomplishments.containsAll(response)) {
+                        if (!accomplishments.containsAll(response)) {
                             accomplishments.addAll(response);
                             adapter.notifyDataSetChanged();
                         }
@@ -247,9 +247,9 @@ public class FeedFragment extends InfoFragment {
         @Override
         public void onPostExecute(Boolean isSuccess, List<Accomplishment> response) {
             showPaginationProgress(false);
-            if(getActivity() != null) {
+            if (getActivity() != null) {
                 if (isSuccess) {
-                    if(response.isEmpty()) {
+                    if (response.isEmpty()) {
                         showInfo(true, false, getString(R.string.error_not_found));
                     } else {
                         accomplishments.addAll(response);

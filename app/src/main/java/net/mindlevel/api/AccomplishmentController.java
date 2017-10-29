@@ -48,7 +48,7 @@ public class AccomplishmentController extends BackendService {
         File targetFile = File.createTempFile("mindlevel", ".jpg", outputDir);
 
         byte[] bytes;
-        if(is != null) {
+        if (is != null) {
             FileUtils.copyInputStreamToFile(is, targetFile);
             File compressed = new Compressor(context).compressToFile(targetFile);
             bytes = FileUtils.readFileToByteArray(compressed);
@@ -64,7 +64,7 @@ public class AccomplishmentController extends BackendService {
                     final Uri path,
                     final ControllerCallback<Accomplishment> callback) {
         try {
-            if(path != null && !TextUtils.isEmpty(path.getPath())) {
+            if (path != null && !TextUtils.isEmpty(path.getPath())) {
                 byte[] bytes =  compressImage(path);
 
                 MultipartBody.Part image = MultipartBody.Part.createFormData("image", null, RequestBody.create
@@ -75,7 +75,7 @@ public class AccomplishmentController extends BackendService {
                 call.enqueue(new Callback<Accomplishment>() {
                     @Override
                     public void onResponse(@NonNull Call<Accomplishment> call, @NonNull Response<Accomplishment> response) {
-                        if(response.isSuccessful()) {
+                        if (response.isSuccessful()) {
                             callback.onPostExecute(true, response.body());
                         } else {
                             callback.onPostExecute(false, null);
@@ -101,7 +101,7 @@ public class AccomplishmentController extends BackendService {
         call.enqueue(new Callback<List<User>>() {
             @Override
             public void onResponse(@NonNull Call<List<User>> call, @NonNull Response<List<User>> response) {
-                if(response.isSuccessful()) {
+                if (response.isSuccessful()) {
                     callback.onPostExecute(true, response.body());
                 } else {
                     callback.onPostExecute(false, null);
@@ -121,7 +121,7 @@ public class AccomplishmentController extends BackendService {
         call.enqueue(new Callback<Like>() {
             @Override
             public void onResponse(@NonNull Call<Like> call, @NonNull Response<Like> response) {
-                if(response.isSuccessful()) {
+                if (response.isSuccessful()) {
                     callback.onPostExecute(true, response.body());
                 } else {
                     callback.onPostExecute(false, null);
@@ -141,7 +141,7 @@ public class AccomplishmentController extends BackendService {
         call.enqueue(new Callback<List<Accomplishment>>() {
             @Override
             public void onResponse(@NonNull Call<List<Accomplishment>> call, @NonNull Response<List<Accomplishment>> response) {
-                if(response.isSuccessful()) {
+                if (response.isSuccessful()) {
                     callback.onPostExecute(true, response.body());
                 } else {
                     callback.onPostExecute(false, null);
@@ -161,7 +161,7 @@ public class AccomplishmentController extends BackendService {
         call.enqueue(new Callback<List<Accomplishment>>() {
             @Override
             public void onResponse(@NonNull Call<List<Accomplishment>> call, @NonNull Response<List<Accomplishment>> response) {
-                if(response.isSuccessful()) {
+                if (response.isSuccessful()) {
                     callback.onPostExecute(true, response.body());
                 } else {
                     callback.onPostExecute(false, null);

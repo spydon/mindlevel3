@@ -80,7 +80,7 @@ public class LoginActivity extends AppCompatActivity {
         passwordView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                if(hasFocus) {
+                if (hasFocus) {
                     scrollView.smoothScrollTo(scrollView.getScrollX(), scrollView.getScrollY()+200);
                 }
             }
@@ -117,7 +117,7 @@ public class LoginActivity extends AppCompatActivity {
         setRandomTip();
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION, WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
         ActionBar actionBar = getSupportActionBar();
-        if(actionBar != null) {
+        if (actionBar != null) {
             actionBar.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         }
     }
@@ -140,7 +140,7 @@ public class LoginActivity extends AppCompatActivity {
      */
     private void attemptLogin(boolean isNewUser) {
         KeyboardUtil.hideKeyboard(this);
-        if(!NetworkUtil.connectionCheck(getApplicationContext(), coordinatorLayout)) {
+        if (!NetworkUtil.connectionCheck(getApplicationContext(), coordinatorLayout)) {
             return;
         }
         // Reset errors.

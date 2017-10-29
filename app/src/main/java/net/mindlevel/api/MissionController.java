@@ -34,7 +34,7 @@ public class MissionController extends BackendService {
         call.enqueue(new Callback<List<Mission>>() {
             @Override
             public void onResponse(Call<List<Mission>> call, Response<List<Mission>> response) {
-                if(response.isSuccessful()) {
+                if (response.isSuccessful()) {
                     callback.onPostExecute(true, response.body());
                     cacheMissions(response.body());
                 } else {
@@ -45,7 +45,7 @@ public class MissionController extends BackendService {
             @Override
             public void onFailure(Call<List<Mission>> call, Throwable t) {
                 List<Mission> missions = readFromCache();
-                if(missions.isEmpty()) {
+                if (missions.isEmpty()) {
                     callback.onPostExecute(false, null);
                 } else {
                     callback.onPostExecute(true, missions);
@@ -61,7 +61,7 @@ public class MissionController extends BackendService {
         call.enqueue(new Callback<Mission>() {
             @Override
             public void onResponse(Call<Mission> call, Response<Mission> response) {
-                if(response.isSuccessful()) {
+                if (response.isSuccessful()) {
                     callback.onPostExecute(true, response.body());
                 } else {
                     callback.onPostExecute(false, null);
@@ -83,7 +83,7 @@ public class MissionController extends BackendService {
             @Override
             public void onResponse(Call<List<Accomplishment>> call,
                                    Response<List<Accomplishment>> accomplishmentsResponse) {
-                if(accomplishmentsResponse.isSuccessful()) {
+                if (accomplishmentsResponse.isSuccessful()) {
                     List<Accomplishment> accomplishments = accomplishmentsResponse.body();
                     callback.onPostExecute(true, accomplishments);
                 } else {

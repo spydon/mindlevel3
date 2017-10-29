@@ -45,7 +45,7 @@ public class UserController extends BackendService {
         userCall.enqueue(new Callback<List<User>>() {
             @Override
             public void onResponse(@NonNull Call<List<User>> call, @NonNull Response<List<User>> usersResponse) {
-                if(usersResponse.isSuccessful()) {
+                if (usersResponse.isSuccessful()) {
                     List<User> users = usersResponse.body();
                     callback.onPostExecute(true, users);
                 } else {
@@ -67,7 +67,7 @@ public class UserController extends BackendService {
         highscoreCall.enqueue(new Callback<List<User>>() {
             @Override
             public void onResponse(@NonNull Call<List<User>> call, @NonNull Response<List<User>> usersResponse) {
-                if(usersResponse.isSuccessful()) {
+                if (usersResponse.isSuccessful()) {
                     List<User> users = usersResponse.body();
                     callback.onPostExecute(true, users);
                 } else {
@@ -89,7 +89,7 @@ public class UserController extends BackendService {
         userCall.enqueue(new Callback<User>() {
             @Override
             public void onResponse(@NonNull Call<User> call, @NonNull Response<User> userResponse) {
-                if(userResponse.isSuccessful()) {
+                if (userResponse.isSuccessful()) {
                     User user = userResponse.body();
                     callback.onPostExecute(true, user);
                     cacheUser(user);
@@ -101,7 +101,7 @@ public class UserController extends BackendService {
             @Override
             public void onFailure(@NonNull Call<User> call, @NonNull Throwable t) {
                 User user = readFromCache(username);
-                if(user == null) {
+                if (user == null) {
                     t.printStackTrace();
                     callback.onPostExecute(false, null);
                 } else {
@@ -118,7 +118,7 @@ public class UserController extends BackendService {
             @Override
             public void onResponse(@NonNull Call<List<Accomplishment>> call,
                                    @NonNull Response<List<Accomplishment>> accomplishmentsResponse) {
-                if(accomplishmentsResponse.isSuccessful()) {
+                if (accomplishmentsResponse.isSuccessful()) {
                     List<Accomplishment> accomplishments = accomplishmentsResponse.body();
                     callback.onPostExecute(true, accomplishments);
                 } else {
@@ -140,7 +140,7 @@ public class UserController extends BackendService {
         usernamesCall.enqueue(new Callback<String[]>() {
             @Override
             public void onResponse(@NonNull Call<String[]> call, @NonNull Response<String[]> userResponse) {
-                if(userResponse.isSuccessful()) {
+                if (userResponse.isSuccessful()) {
                     String[] usernames = userResponse.body();
                     callback.onPostExecute(true, usernames);
                 } else {
@@ -162,7 +162,7 @@ public class UserController extends BackendService {
         emailCall.enqueue(new Callback<String>() {
             @Override
             public void onResponse(@NonNull Call<String> call, @NonNull Response<String> emailResponse) {
-                if(emailResponse.isSuccessful()) {
+                if (emailResponse.isSuccessful()) {
                     callback.onPostExecute(true, emailResponse.body());
                 } else {
                     callback.onPostExecute(false, null);
@@ -182,7 +182,7 @@ public class UserController extends BackendService {
         InputStream is = null;
         MultipartBody.Part image = null;
         try {
-            if(path != null && !TextUtils.isEmpty(path.getPath())) {
+            if (path != null && !TextUtils.isEmpty(path.getPath())) {
                 is = context.getContentResolver().openInputStream(path);
                 byte[] bytes = is != null ? IOUtils.toByteArray(is) : new byte[0];
 
@@ -193,7 +193,7 @@ public class UserController extends BackendService {
             call.enqueue(new Callback<Void>() {
                 @Override
                 public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
-                    if(response.isSuccessful()) {
+                    if (response.isSuccessful()) {
                         callback.onPostExecute(true, null);
                     } else {
                         callback.onPostExecute(false, null);
@@ -209,7 +209,7 @@ public class UserController extends BackendService {
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
-            if(is != null) {
+            if (is != null) {
                 try {
                     is.close();
                 }
@@ -226,7 +226,7 @@ public class UserController extends BackendService {
         register.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
-                if(response.isSuccessful()) {
+                if (response.isSuccessful()) {
                     callback.onPostExecute(true, user.username);
                 } else {
                     callback.onPostExecute(false, null);
@@ -242,7 +242,7 @@ public class UserController extends BackendService {
     }
 
     private void cacheUser(User user) {
-        if(!PreferencesUtil.getUsername(context).equals(user.username)) {
+        if (!PreferencesUtil.getUsername(context).equals(user.username)) {
             return;
         }
         File outputDir = context.getFilesDir(); // TODO: getDataDir?
@@ -258,7 +258,7 @@ public class UserController extends BackendService {
     }
 
     private User readFromCache(String username) {
-        if(!PreferencesUtil.getUsername(context).equals(username)) {
+        if (!PreferencesUtil.getUsername(context).equals(username)) {
             return null;
         }
         File outputDir = context.getFilesDir(); // TODO: getDataDir?
@@ -273,7 +273,7 @@ public class UserController extends BackendService {
 
         User user = null;
         for(String u : marshalled.split("\n")) {
-            if(u.contains(context.getString(R.string.field_delim))) {
+            if (u.contains(context.getString(R.string.field_delim))) {
                 User tmp = User.fromString(u, context);
                 if (tmp.username.equals(username)) {
                     user = tmp;

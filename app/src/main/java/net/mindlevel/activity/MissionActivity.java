@@ -44,12 +44,12 @@ public class MissionActivity extends AppCompatActivity {
         context = this;
 
         showProgress(true);
-        if(getIntent().hasExtra("mission")) {
+        if (getIntent().hasExtra("mission")) {
             Mission mission = (Mission) getIntent().getSerializableExtra("mission");
             Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
             toolbar.setTitle(mission.title);
             missionCallback.onPostExecute(true, mission);
-        } else if(getIntent().hasExtra("missionId")) {
+        } else if (getIntent().hasExtra("missionId")) {
             int missionId = getIntent().getIntExtra("missionId", -1);
             controller.get(missionId, missionCallback);
         }
@@ -131,7 +131,7 @@ public class MissionActivity extends AppCompatActivity {
                         .listener(new ProgressController(imageProgressView))
                         .into(imageView);
 
-                if(!NetworkUtil.connectionCheck(context, missionView)) {
+                if (!NetworkUtil.connectionCheck(context, missionView)) {
                     uploadButton.setVisibility(View.GONE);
                     accomplishmentsButton.setVisibility(View.GONE);
                 }

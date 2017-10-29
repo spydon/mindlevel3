@@ -114,7 +114,7 @@ public class UserFragment extends InfoFragment {
             }
         });
 
-        if(!NetworkUtil.isConnected(context)) {
+        if (!NetworkUtil.isConnected(context)) {
             buttonVisibility(false, false);
         }
         coordinator = contentView.getRootView();
@@ -127,9 +127,9 @@ public class UserFragment extends InfoFragment {
         super.onStart();
 
         showInfo(false, true);
-        if(this.forwardedUser != null) {
+        if (this.forwardedUser != null) {
             populate(forwardedUser);
-        } else if(this.username == null) {
+        } else if (this.username == null) {
             populateWithSelf();
         } else {
             NetworkUtil.connectionCheck(getContext(), coordinator);
@@ -144,7 +144,7 @@ public class UserFragment extends InfoFragment {
     }
 
     public void populate(String username) {
-        if(getActivity() == null) {
+        if (getActivity() == null) {
             this.username = username;
         } else {
             controller.getUser(username, userCallback);
@@ -152,7 +152,7 @@ public class UserFragment extends InfoFragment {
     }
 
     public void populate(User user) {
-        if(getActivity() == null) {
+        if (getActivity() == null) {
             this.forwardedUser = user;
         } else {
             setUser(user);
@@ -192,13 +192,13 @@ public class UserFragment extends InfoFragment {
 
     public void setUser(User user) {
         this.user = user;
-        if(isAdded()) {
+        if (isAdded()) {
             Glide.with(imageView.getContext()).clear(imageView);
         }
 
         ProgressController loading = new ProgressController(imageProgressBar);
         showInfo(false, false);
-        if(!TextUtils.isEmpty(user.image)) {
+        if (!TextUtils.isEmpty(user.image)) {
             String url = ImageUtil.getUrl(user.image);
             Glide.with(imageView.getContext())
                     .load(url)
@@ -212,8 +212,8 @@ public class UserFragment extends InfoFragment {
         scoreView.setText(String.valueOf(user.score));
         descriptionView.setText(user.description);
 
-        if(PreferencesUtil.getUsername(context).equals(user.username)) {
-            if(NetworkUtil.isConnected(context)) {
+        if (PreferencesUtil.getUsername(context).equals(user.username)) {
+            if (NetworkUtil.isConnected(context)) {
                 buttonVisibility(true, true);
             } else {
                 buttonVisibility(false, true);
@@ -228,7 +228,7 @@ public class UserFragment extends InfoFragment {
 
         @Override
         public void onPostExecute(final Boolean success, final User user) {
-            if(success) {
+            if (success) {
                 setUser(user);
             } else {
                 showInfo(true, false);
@@ -248,7 +248,7 @@ public class UserFragment extends InfoFragment {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(resultCode == RESULT_OK && requestCode == UPDATE_USER) {
+        if (resultCode == RESULT_OK && requestCode == UPDATE_USER) {
             populateWithSelf();
         }
     }

@@ -22,8 +22,8 @@ public class NetworkUtil {
     }
 
     public static boolean connectionCheck(Context context, View coordinator, boolean showNotice) {
-        if(!isConnected(context)) {
-            if(showNotice) {
+        if (!isConnected(context)) {
+            if (showNotice) {
                 String message = context.getString(R.string.error_network);
                 showMessage(message, context, coordinator);
             }
@@ -52,7 +52,7 @@ public class NetworkUtil {
                     urlc.setRequestProperty("Connection", "close");
                     urlc.setConnectTimeout(3000);
                     urlc.connect();
-                    if(urlc.getResponseCode() != 200) {
+                    if (urlc.getResponseCode() != 200) {
                         backendAlive = false;
                     }
                 } catch (IOException e) {
@@ -64,7 +64,7 @@ public class NetworkUtil {
 
             @Override
             protected void onPostExecute(Boolean backendAlive) {
-                if(!backendAlive) {
+                if (!backendAlive) {
                     String message = context.getString(R.string.error_backend);
                     showMessage(message, context, coordinator);
                 }
