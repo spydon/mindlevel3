@@ -24,7 +24,7 @@
             android:textStyle="bold"
             android:textSize="14pt"
             android:typeface="monospace"
-            android:text="@string/tutorial_title"
+            android:text="@string/tutorial"
             android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />

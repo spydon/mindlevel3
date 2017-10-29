@@ -75,11 +75,15 @@
         </activity>
         <activity
             android:name=".activity.TutorialActivity"
-            android:label="@string/title_activity_tutorial">
+            android:label="@string/tutorial">
         </activity>
         <activity
             android:name=".activity.TermsActivity"
-            android:label="@string/title_activity_terms">
+            android:label="@string/terms_of_service">
+        </activity>
+        <activity
+            android:name=".activity.PrivacyActivity"
+            android:label="@string/privacy_policy">
         </activity>
 
         <provider

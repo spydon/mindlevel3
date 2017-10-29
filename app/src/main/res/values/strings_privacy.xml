@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_privacy">
+        Privacy Policy ("Privacy")\n
+        Last updated: October 29, 2017
+        \n\n
+        Please read this privacy policy carefully before using Mindlevel
+        (the "Service") operated by Mindlevel ("us", "we", or "our").
+        \n\n
+        Accounts\n
+        Your account password is hashed and salted with bcrypt which makes it impossible for any service provider or
+        administrator to reverse what the password. Your email will never be shared with a third party and can not
+        be accessed by other users of the service. Your identity is as protected as you choose yourself since only a
+        username and password is needed to use the service.
+        \n\n
+        Content\n
+        You own the pictures that you upload, however anybody is allowed to share your uploaded pictures (without
+        making profit of them) on for example social media. If you want a picture taken down, please email me@lukas.fyi
+    </string>
+</resources>

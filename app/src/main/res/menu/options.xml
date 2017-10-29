@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:id="@+id/tutorial_menu"
-          android:title="@string/tutorial_title"
+          android:title="@string/tutorial"
           android:icon="@android:drawable/ic_menu_myplaces"/>
     <item android:id="@+id/about_menu"
           android:title="@string/title_about"

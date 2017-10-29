@@ -97,6 +97,15 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        View privacyView = findViewById(R.id.privacy);
+        privacyView.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent privacyIntent = new Intent(getApplicationContext(), PrivacyActivity.class);
+                startActivity(privacyIntent);
+            }
+        });
+
         Button signInButton = (Button) findViewById(R.id.sign_in_button);
         signInButton.setOnClickListener(new OnClickListener() {
             @Override
@@ -255,6 +264,7 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.options, menu);
+        menu.findItem(R.id.sign_out_menu).setVisible(false);
         return true;
     }
 
