@@ -1,6 +1,7 @@
 package net.mindlevel.model;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
 import net.mindlevel.R;
@@ -9,7 +10,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class User implements Serializable {
+public class User implements Serializable, Comparable {
     public final String username, password, description, image;
     public final int score;
     public final long created, lastActive;
@@ -67,5 +68,12 @@ public class User implements Serializable {
     @Override
     public int hashCode() {
         return username.hashCode();
+    }
+
+    @Override
+    public int compareTo(@NonNull Object o) {
+        User otherUser = (User) o;
+        int offset = otherUser.score - this.score;
+        return offset == 0 ? 1 : offset;
     }
 }

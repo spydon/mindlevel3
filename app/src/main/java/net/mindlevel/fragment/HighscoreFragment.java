@@ -18,9 +18,9 @@ import net.mindlevel.api.UserController;
 import net.mindlevel.model.User;
 import net.mindlevel.util.NetworkUtil;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.TreeSet;
 
 //import android.app.Fragment;
 
@@ -65,7 +65,7 @@ public class HighscoreFragment extends InfoFragment {
         super.onCreate(savedInstanceState);
         this.controller = new UserController(getContext());
         this.shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
-        this.highscores = new HashSet<>();
+        this.highscores = new TreeSet<>();
         this.adapter = new HighscoreRecyclerViewAdapter(highscores, listener);
 
         if (getArguments() != null) {
