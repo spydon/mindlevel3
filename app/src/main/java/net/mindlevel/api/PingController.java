@@ -1,6 +1,7 @@
 package net.mindlevel.api;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 
 import net.mindlevel.api.endpoint.PingEndpoint;
 
@@ -23,7 +24,7 @@ public class PingController extends BackendService {
 
         pingCall.enqueue(new Callback<Void>() {
             @Override
-            public void onResponse(Call<Void> call, Response<Void> pingResponse) {
+            public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> pingResponse) {
                 if (pingResponse.isSuccessful()) {
                     callback.onPostExecute(true, null);
                 } else {
@@ -32,7 +33,7 @@ public class PingController extends BackendService {
             }
 
             @Override
-            public void onFailure(Call<Void> call, Throwable t) {
+            public void onFailure(@NonNull Call<Void> call, @NonNull Throwable t) {
                 callback.onPostExecute(false, null);
                 t.printStackTrace();
             }

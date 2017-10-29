@@ -1,6 +1,7 @@
 package net.mindlevel.api;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
 import net.mindlevel.R;
@@ -33,7 +34,7 @@ public class MissionController extends BackendService {
         Call<List<Mission>> call = endpoint.getAll();
         call.enqueue(new Callback<List<Mission>>() {
             @Override
-            public void onResponse(Call<List<Mission>> call, Response<List<Mission>> response) {
+            public void onResponse(@NonNull Call<List<Mission>> call, @NonNull Response<List<Mission>> response) {
                 if (response.isSuccessful()) {
                     callback.onPostExecute(true, response.body());
                     cacheMissions(response.body());
@@ -43,7 +44,7 @@ public class MissionController extends BackendService {
             }
 
             @Override
-            public void onFailure(Call<List<Mission>> call, Throwable t) {
+            public void onFailure(@NonNull Call<List<Mission>> call, @NonNull Throwable t) {
                 List<Mission> missions = readFromCache();
                 if (missions.isEmpty()) {
                     callback.onPostExecute(false, null);
@@ -60,7 +61,7 @@ public class MissionController extends BackendService {
         Call<Mission> call = endpoint.get(missionId);
         call.enqueue(new Callback<Mission>() {
             @Override
-            public void onResponse(Call<Mission> call, Response<Mission> response) {
+            public void onResponse(@NonNull Call<Mission> call, @NonNull Response<Mission> response) {
                 if (response.isSuccessful()) {
                     callback.onPostExecute(true, response.body());
                 } else {
@@ -69,7 +70,7 @@ public class MissionController extends BackendService {
             }
 
             @Override
-            public void onFailure(Call<Mission> call, Throwable t) {
+            public void onFailure(@NonNull Call<Mission> call, @NonNull Throwable t) {
                 callback.onPostExecute(false, null);
                 t.printStackTrace();
             }
@@ -81,8 +82,8 @@ public class MissionController extends BackendService {
 
         accomplishmentsCall.enqueue(new Callback<List<Accomplishment>>() {
             @Override
-            public void onResponse(Call<List<Accomplishment>> call,
-                                   Response<List<Accomplishment>> accomplishmentsResponse) {
+            public void onResponse(@NonNull Call<List<Accomplishment>> call,
+                                   @NonNull Response<List<Accomplishment>> accomplishmentsResponse) {
                 if (accomplishmentsResponse.isSuccessful()) {
                     List<Accomplishment> accomplishments = accomplishmentsResponse.body();
                     callback.onPostExecute(true, accomplishments);
@@ -92,7 +93,7 @@ public class MissionController extends BackendService {
             }
 
             @Override
-            public void onFailure(Call<List<Accomplishment>> call, Throwable t) {
+            public void onFailure(@NonNull Call<List<Accomplishment>> call, @NonNull Throwable t) {
                 callback.onPostExecute(false, null);
                 t.printStackTrace();
             }

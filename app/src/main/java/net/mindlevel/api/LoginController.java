@@ -1,6 +1,8 @@
 package net.mindlevel.api;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
+
 import net.mindlevel.api.endpoint.LoginEndpoint;
 import net.mindlevel.model.Login;
 import net.mindlevel.util.PreferencesUtil;
@@ -24,7 +26,7 @@ public class LoginController extends BackendService {
 
         login.enqueue(new Callback<String>() {
             @Override
-            public void onResponse(Call<String> call, Response<String> response) {
+            public void onResponse(@NonNull Call<String> call, @NonNull Response<String> response) {
                 if (response.isSuccessful()) {
                     String sessionId = response.body();
                     PreferencesUtil.setSessionState(user.username, sessionId, context);
@@ -35,7 +37,7 @@ public class LoginController extends BackendService {
             }
 
             @Override
-            public void onFailure(Call<String> call, Throwable t) {
+            public void onFailure(@NonNull Call<String> call, @NonNull Throwable t) {
                 callback.onPostExecute(false, null);
                 t.printStackTrace();
             }
@@ -48,7 +50,7 @@ public class LoginController extends BackendService {
 
         logout.enqueue(new Callback<Void>() {
             @Override
-            public void onResponse(Call<Void> call, Response<Void> response) {
+            public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
                 if (callback == null){
                     return;
                 }
@@ -62,7 +64,7 @@ public class LoginController extends BackendService {
             }
 
             @Override
-            public void onFailure(Call<Void> call, Throwable t) {
+            public void onFailure(@NonNull Call<Void> call, @NonNull Throwable t) {
                 t.printStackTrace();
                 if (callback == null){
                     return;
