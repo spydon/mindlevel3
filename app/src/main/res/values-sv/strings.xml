@@ -12,7 +12,7 @@
     <string name="action_upload">Ladda upp</string>
     <string name="contributors">Utförare:</string>
     <string name="creator">Skapare:</string>
-    <string name="error_backend">Underhåll pågår</string>
+    <string name="error_backend">Kan inte nå servern</string>
     <string name="error_field_required">Detta fält behövs</string>
     <string name="error_image_loading">Misslyckades ladda bilden</string>
     <string name="error_incorrect_password">Fel lösenord</string>

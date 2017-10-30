@@ -70,7 +70,7 @@
     <string name="error_no_image">No image chosen, use buttons to the right</string>
     <string name="error_image_loading">Failed to load image</string>
     <string name="error_network">No network available, try again later</string>
-    <string name="error_backend">Performing maintenance, try again later</string>
+    <string name="error_backend">Can\'t reach the server, try again later</string>
     <string name="error_not_found">The squirrels came up with nothing</string>
     <string name="error_offline">Not available offline</string>
 
