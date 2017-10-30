@@ -10,7 +10,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class User implements Serializable, Comparable {
+public class User implements Serializable, Comparable<User> {
     public final String username, password, description, image;
     public final int score;
     public final long created, lastActive;
@@ -71,9 +71,10 @@ public class User implements Serializable, Comparable {
     }
 
     @Override
-    public int compareTo(@NonNull Object o) {
-        User otherUser = (User) o;
+    public int compareTo(@NonNull User otherUser) {
         int offset = otherUser.score - this.score;
-        return offset == 0 ? 1 : offset;
+        boolean isSame = this.equals(otherUser);
+        int order = offset == 0 ? 1 : offset;
+        return isSame ? 0 : order;
     }
 }
