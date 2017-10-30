@@ -13,17 +13,17 @@
     <!-- <string name="backend_address">http://192.168.42.37:8080/</string> -->
     <string name="facebook_app_id">306451972838397</string>
     <string name="bucket_address">https://s3.eu-central-1.amazonaws.com/mindlevel/</string>
-    <string name="missions_file">missions.txt</string>
+    <string name="challenges_file">challenges.txt</string>
     <string name="users_file">users.txt</string>
     <string name="field_delim">M-delim-M</string>
 
     <!-- Titles -->
     <string name="title_feed">Feed</string>
-    <string name="title_missions">Missions</string>
+    <string name="title_challenges">Challenges</string>
     <string name="title_profile">Profile</string>
-    <string name="title_activity_missions">MissionsActivity</string>
+    <string name="title_activity_challenges">ChallengesActivity</string>
     <string name="title_edit_profile">Edit profile</string>
-    <string name="title_activity_mission">MissionActivity</string>
+    <string name="title_activity_challenge">ChallengeActivity</string>
     <string name="title_activity_accomplishment">AccomplishmentActivity</string>
     <string name="title_activity_edit_user">EditUserActivity</string>
     <string name="title_activity_user">UserActivity</string>
@@ -35,7 +35,7 @@
     <string name="title_about">About</string>
 
     <!-- Hints -->
-    <string name="hint_upload_description">Describe how you accomplished the mission</string>
+    <string name="hint_upload_description">Describe how you accomplished the challenge</string>
     <string name="hint_user_description">Describe yourself, or write anything really</string>
     <string name="hint_contributors">Add contributors</string>
     <string name="hint_upload_title">Your title</string>
@@ -77,7 +77,7 @@
     <!--  Tips -->
     <string name="tip">Tip: %1$s</string>
     <string name="tip_like">Double click an image to like it</string>
-    <string name="tip_points">After completing one mission you can like images</string>
+    <string name="tip_points">After completing one challenge you can like images</string>
     <string name="tip_contributor">Contributors receive all points too</string>
     <string name="tip_share">You can share images to social media</string>
     <string name="tip_swipe">Swipe the screen to navigate</string>
@@ -100,7 +100,7 @@
     <!-- Feed -->
     <string name="latest">Latest</string>
     <string name="feed_user">Showing accomplishments for user %1$s</string>
-    <string name="feed_mission">Showing accomplishments for mission \"%1$s\"</string>
+    <string name="feed_challenge">Showing accomplishments for challenge \"%1$s\"</string>
     <string name="contributors">Contributors</string>
 
     <!-- Terms and Privacy-->
@@ -116,18 +116,18 @@
     <!-- Tutorial-->
     <string name="tutorial">Tutorial</string>
     <string name="tutorial_description">
-        The aim of the game is simple; choose a mission, complete it and upload a picture of the result.
+        The aim of the game is simple; choose a challenge, complete it and upload a picture of the result.
         Other users can then like your images and you get points.
     </string>
-    <string name="tutorial_mission">This will take you to mission related things</string>
-    <string name="tutorial_accomplishment">An accomplishment, a finished mission</string>
+    <string name="tutorial_challenge">This will take you to challenge related things</string>
+    <string name="tutorial_accomplishment">An accomplishment, a finished challenge</string>
     <string name="tutorial_camera">Take a picture from within the app</string>
     <string name="tutorial_gallery">Choose a picture from your local gallery</string>
     <string name="tutorial_highscore">See the top players</string>
     <string name="tutorial_user">Return to your own profile</string>
     <string name="tutorial_edit">Edit what you are currently viewing</string>
     <string name="tutorial_logout">Log out of the app</string>
-    <string name="tutorial_upload">Upload a picture for a finished mission</string>
+    <string name="tutorial_upload">Upload a picture for a finished challenge</string>
     <string name="tutorial_share">Share the current picture</string>
     <string name="tutorial_icons">Explanation of the icons that can be found in the app:</string>
 

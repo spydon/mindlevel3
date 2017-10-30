@@ -17,16 +17,11 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.pchmn.materialchips.ChipView;
-import com.pchmn.materialchips.ChipsInput;
-import com.pchmn.materialchips.model.Chip;
 
 import net.mindlevel.api.AccomplishmentController;
 import net.mindlevel.api.ControllerCallback;
 import net.mindlevel.fragment.ContributorRecyclerViewAdapter;
 import net.mindlevel.model.User;
-import net.mindlevel.model.UserChip;
-import net.mindlevel.util.CoordinatorUtil;
 import net.mindlevel.view.ImageLikeView;
 import net.mindlevel.util.ProgressController;
 import net.mindlevel.R;
@@ -64,13 +59,13 @@ public class AccomplishmentActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         this.contributorProgress = findViewById(R.id.contributor_progress);
-        FloatingActionButton missionButton = (FloatingActionButton) findViewById(R.id.fab_mission);
-        missionButton.setOnClickListener(new View.OnClickListener() {
+        FloatingActionButton ChallengeButton = (FloatingActionButton) findViewById(R.id.fab_challenge);
+        ChallengeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent missionIntent = new Intent(activity, MissionActivity.class);
-                missionIntent.putExtra("missionId", accomplishment.missionId);
-                startActivity(missionIntent);
+                Intent ChallengeIntent = new Intent(activity, ChallengeActivity.class);
+                ChallengeIntent.putExtra("ChallengeId", accomplishment.ChallengeId);
+                startActivity(ChallengeIntent);
             }
         });
 

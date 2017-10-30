@@ -13,7 +13,7 @@ import com.bumptech.glide.Glide;
 import com.pchmn.materialchips.ChipView;
 
 import net.mindlevel.R;
-import net.mindlevel.model.Mission;
+import net.mindlevel.model.Challenge;
 import net.mindlevel.model.User;
 import net.mindlevel.model.UserChip;
 import net.mindlevel.util.CoordinatorUtil;
@@ -40,8 +40,7 @@ public class ContributorRecyclerViewAdapter extends RecyclerView.Adapter<Contrib
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = inflater.inflate(R.layout.contributor_item, parent, false);
-        ViewHolder viewHolder = new ViewHolder(view);
-        return viewHolder;
+        return new ViewHolder(view);
     }
 
     @Override
@@ -65,9 +64,9 @@ public class ContributorRecyclerViewAdapter extends RecyclerView.Adapter<Contrib
 
     // stores and recycles views as they are scrolled off screen
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        public ChipView chip;
+        ChipView chip;
 
-        public ViewHolder(View itemView) {
+        ViewHolder(View itemView) {
             super(itemView);
             chip = (ChipView) itemView.findViewById(R.id.contributor);
         }

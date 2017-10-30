@@ -44,11 +44,11 @@
             android:layout_height="wrap_content" />
 
         <TextView
-            android:drawableStart="@drawable/mission"
+            android:drawableStart="@drawable/challenge"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="@string/tutorial_mission" />
+            android:text="@string/tutorial_challenge" />
 
         <TextView
             android:drawableStart="@drawable/accomplishment"

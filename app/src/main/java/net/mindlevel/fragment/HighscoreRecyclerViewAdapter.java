@@ -12,7 +12,7 @@ import com.bumptech.glide.Glide;
 
 import net.mindlevel.util.ProgressController;
 import net.mindlevel.R;
-import net.mindlevel.model.Mission;
+import net.mindlevel.model.Challenge;
 import net.mindlevel.model.User;
 import net.mindlevel.util.ImageUtil;
 
@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * {@link RecyclerView.Adapter} that can display a {@link Mission} and makes a call to the
+ * {@link RecyclerView.Adapter} that can display a {@link Challenge} and makes a call to the
  * specified {@link HighscoreFragment.OnListFragmentInteractionListener}.
  */
 class HighscoreRecyclerViewAdapter extends RecyclerView.Adapter<HighscoreRecyclerViewAdapter.ViewHolder> {

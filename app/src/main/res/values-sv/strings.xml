@@ -4,7 +4,6 @@
     <string name="accessibility_user_image">Användarens bild</string>
     <string name="accomplishment_by">Av:</string>
     <string name="action_edit">Ändra</string>
-    <string name="action_like"></string>
     <string name="action_register">Registrera</string>
     <string name="action_save">Spara</string>
     <string name="action_settings">Inställningar</string>
@@ -24,7 +23,7 @@
     <string name="error_no_image">Ingen bild vald, använd knapparna till höger</string>
     <string name="error_not_found">Ekorrarna hittade inget</string>
     <string name="error_offline">Inte tillgänglig offline</string>
-    <string name="feed_mission">Visa utföranden för uppdrag \"%1$s\"</string>
+    <string name="feed_challenge">Visa utföranden för uppdrag \"%1$s\"</string>
     <string name="feed_user">Visa utföranden för användare \"%1$s\"</string>
     <string name="hint_contributors">Lägg till utförare</string>
     <string name="hint_email">Din E-Mail</string>
@@ -46,7 +45,6 @@
     <string name="successful_registration">Registreringen lyckades för %1$s, logga in!</string>
     <string name="successful_upload">Uppladdningen lyckades</string>
     <string name="terms_agree">Genom att använda MindLevel så accepterar du</string>
-    <string name="terms_of_service"></string>
     <string name="tip">Tips: %1$s</string>
     <string name="tip_contributor">Alla utförare får poäng</string>
     <string name="tip_like">Dubbelklicka på en bild för att gilla den</string>
@@ -54,12 +52,9 @@
     <string name="title_about">Om</string>
     <string name="title_activity_about">Om</string>
     <string name="title_activity_accomplishment">Utföranden</string>
-    <string name="title_activity_edit_user"></string>
     <string name="title_activity_login">Logga in</string>
-    <string name="title_activity_mission"></string>
     <string name="title_edit_profile">Ändra profil</string>
-    <string name="title_highscore"></string>
-    <string name="title_missions">Uppdrag</string>
+    <string name="title_challenges">Uppdrag</string>
     <string name="title_profile">Profil</string>
     <string name="title_settings">Inställningar</string>
     <string name="tutorial_accomplishment">Ett utförande, ett avklarat uppdrag</string>
@@ -69,7 +64,7 @@
     <string name="tutorial_highscore">Se topp-spelare</string>
     <string name="tutorial_icons">Förklaring av ikonerna som finns i appen:</string>
     <string name="tutorial_logout">Logga ut</string>
-    <string name="tutorial_mission">Denna tar dig till uppdragsrelaterade saker</string>
+    <string name="tutorial_challenge">Denna tar dig till uppdragsrelaterade saker</string>
     <string name="tutorial_share">Dela bilden som du kollar på</string>
     <string name="tutorial_upload">Ladda upp en bild för ett avklarat uppdrag</string>
     <string name="tutorial_user">Återvänd till din profil</string>

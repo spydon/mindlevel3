@@ -5,13 +5,14 @@ import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
 import net.mindlevel.R;
-import net.mindlevel.api.endpoint.MissionEndpoint;
+import net.mindlevel.api.endpoint.ChallengeEndpoint;
 import net.mindlevel.model.Accomplishment;
-import net.mindlevel.model.Mission;
+import net.mindlevel.model.Challenge;
 
 import org.apache.commons.io.FileUtils;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
@@ -21,35 +22,35 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MissionController extends BackendService {
+public class ChallengeController extends BackendService {
 
-    private static MissionEndpoint endpoint;
+    private static ChallengeEndpoint endpoint;
 
-    public MissionController(Context context) {
+    public ChallengeController(Context context) {
         super(context);
-        endpoint = retrofit.create(MissionEndpoint.class);
+        endpoint = retrofit.create(ChallengeEndpoint.class);
     }
 
-    public void getAll(final ControllerCallback<List<Mission>> callback) {
-        Call<List<Mission>> call = endpoint.getAll();
-        call.enqueue(new Callback<List<Mission>>() {
+    public void getAll(final ControllerCallback<List<Challenge>> callback) {
+        Call<List<Challenge>> call = endpoint.getAll();
+        call.enqueue(new Callback<List<Challenge>>() {
             @Override
-            public void onResponse(@NonNull Call<List<Mission>> call, @NonNull Response<List<Mission>> response) {
+            public void onResponse(@NonNull Call<List<Challenge>> call, @NonNull Response<List<Challenge>> response) {
                 if (response.isSuccessful()) {
                     callback.onPostExecute(true, response.body());
-                    cacheMissions(response.body());
+                    cacheChallenges(response.body());
                 } else {
-                    onFailure(call, new Throwable("Could not fetch missions remotely"));
+                    onFailure(call, new Throwable("Could not fetch Challenges remotely"));
                 }
             }
 
             @Override
-            public void onFailure(@NonNull Call<List<Mission>> call, @NonNull Throwable t) {
-                List<Mission> missions = readFromCache();
-                if (missions.isEmpty()) {
+            public void onFailure(@NonNull Call<List<Challenge>> call, @NonNull Throwable t) {
+                List<Challenge> Challenges = readFromCache();
+                if (Challenges.isEmpty()) {
                     callback.onPostExecute(false, null);
                 } else {
-                    callback.onPostExecute(true, missions);
+                    callback.onPostExecute(true, Challenges);
                 }
                 t.printStackTrace();
             }
@@ -57,11 +58,11 @@ public class MissionController extends BackendService {
     }
 
     // TODO: Get from cached json file when call fails
-    public void get(final int missionId, final ControllerCallback<Mission> callback) {
-        Call<Mission> call = endpoint.get(missionId);
-        call.enqueue(new Callback<Mission>() {
+    public void get(final int ChallengeId, final ControllerCallback<Challenge> callback) {
+        Call<Challenge> call = endpoint.get(ChallengeId);
+        call.enqueue(new Callback<Challenge>() {
             @Override
-            public void onResponse(@NonNull Call<Mission> call, @NonNull Response<Mission> response) {
+            public void onResponse(@NonNull Call<Challenge> call, @NonNull Response<Challenge> response) {
                 if (response.isSuccessful()) {
                     callback.onPostExecute(true, response.body());
                 } else {
@@ -70,15 +71,15 @@ public class MissionController extends BackendService {
             }
 
             @Override
-            public void onFailure(@NonNull Call<Mission> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<Challenge> call, @NonNull Throwable t) {
                 callback.onPostExecute(false, null);
                 t.printStackTrace();
             }
         });
     }
 
-    public void getAccomplishments(final int missionId, final ControllerCallback<List<Accomplishment>> callback) {
-        Call<List<Accomplishment>> accomplishmentsCall = endpoint.getAccomplishments(missionId);
+    public void getAccomplishments(final int ChallengeId, final ControllerCallback<List<Accomplishment>> callback) {
+        Call<List<Accomplishment>> accomplishmentsCall = endpoint.getAccomplishments(ChallengeId);
 
         accomplishmentsCall.enqueue(new Callback<List<Accomplishment>>() {
             @Override
@@ -100,12 +101,12 @@ public class MissionController extends BackendService {
         });
     }
 
-    private void cacheMissions(List<Mission> missions) {
+    private void cacheChallenges(List<Challenge> Challenges) {
         File outputDir = context.getFilesDir(); // TODO: getDataDir?
-        String missionsFilename = context.getString(R.string.missions_file);
-        File targetFile = new File(outputDir + "/" + missionsFilename);
+        String ChallengesFilename = context.getString(R.string.challenges_file);
+        File targetFile = new File(outputDir + "/" + ChallengesFilename);
         ArrayList<String> marshallList = new ArrayList<>();
-        for(Mission m : missions) {
+        for(Challenge m : Challenges) {
             marshallList.add(m.toString(context));
         }
         String marshalled = TextUtils.join("\n" , marshallList);
@@ -117,21 +118,22 @@ public class MissionController extends BackendService {
         }
     }
 
-    private List<Mission> readFromCache() {
+    private List<Challenge> readFromCache() {
         File outputDir = context.getFilesDir(); // TODO: getDataDir?
-        String missionsFilename = context.getString(R.string.missions_file);
-        File targetFile = new File(outputDir + "/" + missionsFilename);
-        String marshalled = "";
+        ArrayList<Challenge> challenges = new ArrayList<>();
+        String ChallengesFilename = context.getString(R.string.challenges_file);
+        File targetFile = new File(outputDir + "/" + ChallengesFilename);
+        String marshalled;
         try {
             marshalled = FileUtils.readFileToString(targetFile, Charset.defaultCharset());
         } catch (IOException e) {
             e.printStackTrace();
+            return challenges;
         }
 
-        ArrayList<Mission> missions = new ArrayList<>();
         for(String m : marshalled.split("\n")) {
-            missions.add(Mission.fromString(m, context));
+            challenges.add(Challenge.fromString(m, context));
         }
-        return missions;
+        return challenges;
     }
 }

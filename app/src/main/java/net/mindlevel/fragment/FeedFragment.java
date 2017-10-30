@@ -17,10 +17,10 @@ import android.view.ViewGroup;
 import net.mindlevel.R;
 import net.mindlevel.api.AccomplishmentController;
 import net.mindlevel.api.ControllerCallback;
-import net.mindlevel.api.MissionController;
+import net.mindlevel.api.ChallengeController;
 import net.mindlevel.api.UserController;
 import net.mindlevel.model.Accomplishment;
-import net.mindlevel.model.Mission;
+import net.mindlevel.model.Challenge;
 import net.mindlevel.util.Glassbar;
 import net.mindlevel.util.NetworkUtil;
 
@@ -47,7 +47,7 @@ public class FeedFragment extends InfoFragment {
     private OnListFragmentInteractionListener listener;
     private AccomplishmentController accomplishmentController;
     private UserController userController;
-    private MissionController missionController;
+    private ChallengeController ChallengeController;
     private Set<Accomplishment> accomplishments;
     private RecyclerView recyclerView;
     private FeedRecyclerViewAdapter adapter;
@@ -78,7 +78,7 @@ public class FeedFragment extends InfoFragment {
         super.onCreate(savedInstanceState);
         this.accomplishmentController = new AccomplishmentController(getContext());
         this.userController = new UserController(getContext());
-        this.missionController = new MissionController(getContext());
+        this.ChallengeController = new ChallengeController(getContext());
         this.shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
         this.accomplishments = new HashSet<>();
         this.adapter = new FeedRecyclerViewAdapter(accomplishments, listener);
@@ -198,10 +198,10 @@ public class FeedFragment extends InfoFragment {
         searchInfoBar.show();
     }
 
-    public void populateMissionAccomplishments(Mission mission) {
+    public void populateChallengeAccomplishments(Challenge Challenge) {
         showInfo(false, true);
-        missionController.getAccomplishments(mission.id, getAccomplishmentsCallback);
-        String infoText = getString(R.string.feed_mission, mission.title);
+        ChallengeController.getAccomplishments(Challenge.id, getAccomplishmentsCallback);
+        String infoText = getString(R.string.feed_challenge, Challenge.title);
         searchInfoBar.setText(infoText);
         searchInfoBar.show();
     }

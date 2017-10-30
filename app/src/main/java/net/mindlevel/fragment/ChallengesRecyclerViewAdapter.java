@@ -12,40 +12,39 @@ import com.bumptech.glide.Glide;
 
 import net.mindlevel.util.ProgressController;
 import net.mindlevel.R;
-import net.mindlevel.model.Mission;
+import net.mindlevel.model.Challenge;
 import net.mindlevel.util.ImageUtil;
 
-import java.util.List;
 import java.util.Set;
 
 /**
- * {@link RecyclerView.Adapter} that can display a {@link Mission} and makes a call to the
- * specified {@link MissionsFragment.OnListFragmentInteractionListener}.
+ * {@link RecyclerView.Adapter} that can display a {@link Challenge} and makes a call to the
+ * specified {@link ChallengesFragment.OnListFragmentInteractionListener}.
  */
-class MissionsRecyclerViewAdapter extends RecyclerView.Adapter<MissionsRecyclerViewAdapter.ViewHolder> {
+class ChallengesRecyclerViewAdapter extends RecyclerView.Adapter<ChallengesRecyclerViewAdapter.ViewHolder> {
 
-    private final Set<Mission> missions;
-    private final MissionsFragment.OnListFragmentInteractionListener listener;
+    private final Set<Challenge> Challenges;
+    private final ChallengesFragment.OnListFragmentInteractionListener listener;
 
-    MissionsRecyclerViewAdapter(Set<Mission> missions, MissionsFragment.OnListFragmentInteractionListener
+    ChallengesRecyclerViewAdapter(Set<Challenge> Challenges, ChallengesFragment.OnListFragmentInteractionListener
             listener) {
-        this.missions = missions;
+        this.Challenges = Challenges;
         this.listener = listener;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.fragment_missions_item, parent, false);
+                .inflate(R.layout.fragment_challenge_item, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        Mission mission = (Mission)missions.toArray()[position];
-        holder.item = mission;
-        holder.titleView.setText(mission.title);
-        holder.descriptionView.setText(mission.description);
+        Challenge Challenge = (Challenge)Challenges.toArray()[position];
+        holder.item = Challenge;
+        holder.titleView.setText(Challenge.title);
+        holder.descriptionView.setText(Challenge.description);
 
         ImageView imageView = holder.imageView;
         String url = ImageUtil.getUrl(holder.item.image);
@@ -68,11 +67,11 @@ class MissionsRecyclerViewAdapter extends RecyclerView.Adapter<MissionsRecyclerV
 
     @Override
     public int getItemCount() {
-        return missions.size();
+        return Challenges.size();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
-        public Mission item;
+        public Challenge item;
         public final View view;
         final ImageView imageView;
         final TextView titleView;

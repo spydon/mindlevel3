@@ -7,9 +7,9 @@
         android:title="@string/title_feed" />
 
     <item
-        android:id="@+id/navigation_missions"
-        android:icon="@drawable/mission"
-        android:title="@string/title_missions" />
+        android:id="@+id/navigation_challenges"
+        android:icon="@drawable/challenge"
+        android:title="@string/title_challenges" />
 
     <item
         android:id="@+id/navigation_highscore"

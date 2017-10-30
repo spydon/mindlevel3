@@ -10,11 +10,9 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.ArraySet;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,7 +26,7 @@ import net.mindlevel.api.AccomplishmentController;
 import net.mindlevel.api.ControllerCallback;
 import net.mindlevel.api.UserController;
 import net.mindlevel.model.Accomplishment;
-import net.mindlevel.model.Mission;
+import net.mindlevel.model.Challenge;
 import net.mindlevel.model.User;
 import net.mindlevel.util.ImageUtil;
 import net.mindlevel.util.KeyboardUtil;
@@ -50,11 +48,11 @@ public class UploadActivity extends AppCompatActivity {
     private UserController userController;
     private ScrollView containerView;
     private View progressView;
-    private TextView titleView, missionTitleView, descriptionView, errorView;
+    private TextView titleView, ChallengeTitleView, descriptionView, errorView;
     private ChipsInput contributorInput;
     private Button uploadButton;
     private Context context;
-    private int missionId = -1;
+    private int ChallengeId = -1;
     private Uri path = null;
     private ImageUtil utils;
 
@@ -67,10 +65,10 @@ public class UploadActivity extends AppCompatActivity {
         userController = new UserController(context);
         utils = new ImageUtil(this);
 
-        final Mission mission = (Mission) getIntent().getSerializableExtra("mission");
-        missionId = mission.id;
+        final Challenge Challenge = (Challenge) getIntent().getSerializableExtra("challenge");
+        ChallengeId = Challenge.id;
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle(mission.title);
+        toolbar.setTitle(Challenge.title);
         setSupportActionBar(toolbar);
 
         FloatingActionButton choosePicture = (FloatingActionButton) findViewById(R.id.choose_picture);
@@ -100,10 +98,10 @@ public class UploadActivity extends AppCompatActivity {
         showProgress(false);
 
         errorView = (TextView) findViewById(R.id.error_text);
-        missionTitleView = (TextView) findViewById(R.id.mission_title);
+        ChallengeTitleView = (TextView) findViewById(R.id.challenge_title);
         titleView = (TextView) findViewById(R.id.title);
         descriptionView = (TextView) findViewById(R.id.description);
-        missionTitleView.setText(mission.title);
+        ChallengeTitleView.setText(Challenge.title);
         uploadButton = (Button) findViewById(R.id.upload_button);
         uploadButton.setActivated(false);
 
@@ -121,7 +119,7 @@ public class UploadActivity extends AppCompatActivity {
                         contributors.add(chip.getLabel());
                     }
                     Accomplishment accomplishment = new Accomplishment(0, titleView.getText().toString(),
-                            descriptionView.getText().toString(), "", missionId, 0, 0);
+                            descriptionView.getText().toString(), "", ChallengeId, 0, 0);
                     accomplishmentController.add(accomplishment, contributors, path, uploadCallback);
                 }
             }

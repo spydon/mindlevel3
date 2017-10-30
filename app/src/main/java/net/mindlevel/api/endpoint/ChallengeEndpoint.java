@@ -1,7 +1,7 @@
 package net.mindlevel.api.endpoint;
 
 import net.mindlevel.model.Accomplishment;
-import net.mindlevel.model.Mission;
+import net.mindlevel.model.Challenge;
 
 import java.util.List;
 
@@ -15,33 +15,33 @@ import retrofit2.http.POST;
 import retrofit2.http.Part;
 import retrofit2.http.Path;
 
-public interface MissionEndpoint {
-    @GET("mission")
-    Call<List<Mission>> getAll();
+public interface ChallengeEndpoint {
+    @GET("challenge")
+    Call<List<Challenge>> getAll();
 
-    @POST("mission")
-    Call<Void> add(@Body Mission mission);
+    @POST("challenge")
+    Call<Void> add(@Body Challenge Challenge);
 
-    @GET("mission/{id}")
-    Call<Mission> get(@Path("id") int id);
+    @GET("challenge/{id}")
+    Call<Challenge> get(@Path("id") int id);
 
-    @GET("mission/{id}/accomplishment")
+    @GET("challenge/{id}/accomplishment")
     Call<List<Accomplishment>> getAccomplishments(@Path("id") int id);
 
-    @GET("mission/{range}")
-    Call<List<Mission>> get(@Path("range") String range);
+    @GET("challenge/{range}")
+    Call<List<Challenge>> get(@Path("range") String range);
 
     @Multipart
-    @POST("mission/{id}/image")
+    @POST("challenge/{id}/image")
     Call<Void> addImage(
             @Path("id") int id,
             @Part("description") RequestBody description,
             @Part MultipartBody.Part file
     );
 
-    @GET("mission/latest")
-    Call<List<Mission>> getLatest();
+    @GET("challenge/latest")
+    Call<List<Challenge>> getLatest();
 
-    @GET("mission/latest/{range]")
-    Call<List<Mission>> getLatest(@Path("range") String range);
+    @GET("challenge/latest/{range]")
+    Call<List<Challenge>> getLatest(@Path("range") String range);
 }

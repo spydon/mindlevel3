@@ -24,13 +24,13 @@
     <include layout="@layout/content_accomplishment" />
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab_mission"
+        android:id="@+id/fab_challenge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_marginBottom="@dimen/fab_margin2"
         android:layout_marginEnd="@dimen/fab_margin"
-        app:srcCompat="@drawable/mission" />
+        app:srcCompat="@drawable/challenge" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab_share"

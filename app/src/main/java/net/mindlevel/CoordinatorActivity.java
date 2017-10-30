@@ -18,16 +18,16 @@ import android.view.MenuItem;
 import net.mindlevel.activity.AboutActivity;
 import net.mindlevel.activity.AccomplishmentActivity;
 import net.mindlevel.activity.LoginActivity;
-import net.mindlevel.activity.MissionActivity;
+import net.mindlevel.activity.ChallengeActivity;
 import net.mindlevel.activity.TutorialActivity;
 import net.mindlevel.api.LoginController;
 import net.mindlevel.fragment.FeedFragment;
 import net.mindlevel.fragment.HighscoreFragment;
-import net.mindlevel.fragment.MissionsFragment;
+import net.mindlevel.fragment.ChallengesFragment;
 import net.mindlevel.fragment.UserFragment;
 import net.mindlevel.model.Accomplishment;
 import net.mindlevel.model.Login;
-import net.mindlevel.model.Mission;
+import net.mindlevel.model.Challenge;
 import net.mindlevel.model.User;
 import net.mindlevel.util.ImageUtil;
 import net.mindlevel.util.PreferencesUtil;
@@ -37,13 +37,13 @@ import java.util.LinkedHashMap;
 
 public class CoordinatorActivity
         extends AppCompatActivity
-        implements MissionsFragment.OnListFragmentInteractionListener,
+        implements ChallengesFragment.OnListFragmentInteractionListener,
         FeedFragment.OnListFragmentInteractionListener,
         HighscoreFragment.OnListFragmentInteractionListener,
         UserFragment.OnFragmentInteractionListener {
 
     private final FeedFragment feedFragment = new FeedFragment();
-    private final MissionsFragment missionsFragment = new MissionsFragment();
+    private final ChallengesFragment challengesFragment = new ChallengesFragment();
     private final HighscoreFragment highscoreFragment = new HighscoreFragment();
     private final UserFragment userFragment = new UserFragment();
     private final LinkedHashMap<Integer, Fragment> fragments = new LinkedHashMap<>();
@@ -94,7 +94,7 @@ public class CoordinatorActivity
         ImageUtil.setBucketAddress(getString(R.string.bucket_address));
 
         fragments.put(R.id.navigation_feed, feedFragment);
-        fragments.put(R.id.navigation_missions, missionsFragment);
+        fragments.put(R.id.navigation_challenges, challengesFragment);
         fragments.put(R.id.navigation_highscore, highscoreFragment);
         fragments.put(R.id.navigation_profile, userFragment);
 
@@ -146,10 +146,10 @@ public class CoordinatorActivity
             String username = intent.getStringExtra("accomplishments_for_user");
             scrollToFragment(feedFragment);
             feedFragment.populateUserAccomplishments(username);
-        } else if (intent.hasExtra("accomplishments_for_mission")) {
-            Mission mission = (Mission) intent.getSerializableExtra("accomplishments_for_mission");
+        } else if (intent.hasExtra("accomplishments_for_challenge")) {
+            Challenge Challenge = (Challenge) intent.getSerializableExtra("accomplishments_for_challenge");
             scrollToFragment(feedFragment);
-            feedFragment.populateMissionAccomplishments(mission);
+            feedFragment.populateChallengeAccomplishments(Challenge);
         }
     }
 
@@ -205,10 +205,10 @@ public class CoordinatorActivity
         startActivity(accomplishmentIntent);
     }
 
-    public void onListFragmentInteraction(Mission mission) {
-        Intent missionIntent = new Intent(this, MissionActivity.class);
-        missionIntent.putExtra("mission", mission);
-        startActivity(missionIntent);
+    public void onListFragmentInteraction(Challenge Challenge) {
+        Intent ChallengeIntent = new Intent(this, ChallengeActivity.class);
+        ChallengeIntent.putExtra("challenge", Challenge);
+        startActivity(ChallengeIntent);
     }
 
     public void onListFragmentInteraction(User user) {

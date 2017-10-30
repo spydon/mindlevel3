@@ -9,13 +9,13 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Mission implements Serializable {
+public class Challenge implements Serializable {
     public final String title, description, image, creator;
     public final int id;
     public final long created;
     public final boolean validated;
 
-    public Mission(int id,
+    public Challenge(int id,
                    String title,
                    String description,
                    String image,
@@ -43,7 +43,7 @@ public class Mission implements Serializable {
         return TextUtils.join(context.getString(R.string.field_delim), tokens);
     }
 
-    public static Mission fromString(String marshalled, Context context) {
+    public static Challenge fromString(String marshalled, Context context) {
         String[] fields = marshalled.split(context.getString(R.string.field_delim));
         int id = Integer.valueOf(fields[0]);
         String title = fields[1];
@@ -52,12 +52,12 @@ public class Mission implements Serializable {
         long created = Long.valueOf(fields[4]);
         String creator = fields[5];
         boolean validated = Boolean.valueOf(fields[6]);
-        return new Mission(id, title, description, image, created, creator, validated);
+        return new Challenge(id, title, description, image, created, creator, validated);
     }
 
     @Override
     public boolean equals(Object m) {
-        return m == this || (m instanceof Mission && this.hashCode() == m.hashCode());
+        return m == this || (m instanceof Challenge && this.hashCode() == m.hashCode());
     }
 
     @Override
