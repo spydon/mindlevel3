@@ -4,7 +4,7 @@
         \n\nIn most peoples day-to-day life they perform repetitive and seemingly pointless tasks, I\'m sure that you
         can relate. Repetitive tasks that we have grown to think that we like, things that take up a lot of our time
         but don\'t add anything to our lives.
-        \n\nThe things that we wont remember when we grow old.
+        \n\nThe things that we won\'t remember when we grow old.
         \n\nI think that most people wouldn\'t even appreciate these parts of their lives if they had an easy
         option of doing something more exciting sometimes, something that would be worth remembering.
         \n\nThis is my attempt of giving you that option.
@@ -73,6 +73,7 @@
     <string name="error_not_found">The squirrels came up with nothing</string>
     <string name="error_offline">Not available offline</string>
     <string name="error_no_description">Please add a description</string>
+    <string name="error_upload_timeout">Upload timed out, try again</string>
 
     <!--  Tips -->
     <string name="tip">Tip: %1$s</string>
@@ -130,6 +131,5 @@
     <string name="tutorial_upload">Upload a picture for a finished challenge</string>
     <string name="tutorial_share">Share the current picture</string>
     <string name="tutorial_icons">Explanation of the icons that can be found in the app:</string>
-    <string name="error_upload_timeout">Upload timed out, try again</string>
 
 </resources>
