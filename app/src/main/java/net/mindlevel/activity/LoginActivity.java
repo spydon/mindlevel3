@@ -106,6 +106,17 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        passwordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    attemptLogin(false);
+                    return true;
+                }
+                return false;
+            }
+        });
+
         Button signInButton = (Button) findViewById(R.id.sign_in_button);
         signInButton.setOnClickListener(new OnClickListener() {
             @Override
