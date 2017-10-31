@@ -124,13 +124,14 @@ public class UserFragment extends InfoFragment {
         }
         coordinator = contentView.getRootView();
 
+        populate();
         return view;
     }
 
     @Override
     public void setUserVisibleHint(boolean isVisible) {
         super.setUserVisibleHint(isVisible);
-        if (isVisible) {
+        if (isVisible && isAdded()) {
             populate();
         }
     }
