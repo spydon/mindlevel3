@@ -72,6 +72,7 @@
     <string name="error_backend">Can\'t reach the server, try again later</string>
     <string name="error_not_found">The squirrels came up with nothing</string>
     <string name="error_offline">Not available offline</string>
+    <string name="error_no_description">Please add a description</string>
 
     <!--  Tips -->
     <string name="tip">Tip: %1$s</string>
@@ -129,5 +130,6 @@
     <string name="tutorial_upload">Upload a picture for a finished challenge</string>
     <string name="tutorial_share">Share the current picture</string>
     <string name="tutorial_icons">Explanation of the icons that can be found in the app:</string>
+    <string name="error_upload_timeout">Upload timed out, try again</string>
 
 </resources>

@@ -65,10 +65,10 @@ public class UploadActivity extends AppCompatActivity {
         userController = new UserController(context);
         utils = new ImageUtil(this);
 
-        final Challenge Challenge = (Challenge) getIntent().getSerializableExtra("challenge");
-        ChallengeId = Challenge.id;
+        final Challenge challenge = (Challenge) getIntent().getSerializableExtra("challenge");
+        ChallengeId = challenge.id;
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle(Challenge.title);
+        toolbar.setTitle(challenge.title);
         setSupportActionBar(toolbar);
 
         FloatingActionButton choosePicture = (FloatingActionButton) findViewById(R.id.choose_picture);
@@ -101,15 +101,18 @@ public class UploadActivity extends AppCompatActivity {
         ChallengeTitleView = (TextView) findViewById(R.id.challenge_title);
         titleView = (TextView) findViewById(R.id.title);
         descriptionView = (TextView) findViewById(R.id.description);
-        ChallengeTitleView.setText(Challenge.title);
+        ChallengeTitleView.setText(challenge.title);
         uploadButton = (Button) findViewById(R.id.upload_button);
         uploadButton.setActivated(false);
 
         uploadButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String description = descriptionView.getText().toString();
                 if (path == null) {
                     setError(true, getString(R.string.error_no_image));
+                } else if (description.isEmpty()) {
+                    setError(true, getString(R.string.error_no_description));
                 } else {
                     setError(false);
                     showProgress(true);
@@ -118,8 +121,10 @@ public class UploadActivity extends AppCompatActivity {
                     for(ChipInterface chip : contributorInput.getSelectedChipList()) {
                         contributors.add(chip.getLabel());
                     }
-                    Accomplishment accomplishment = new Accomplishment(0, titleView.getText().toString(),
-                            descriptionView.getText().toString(), "", ChallengeId, 0, 0);
+                    String writtenTitle = titleView.getText().toString();
+                    String title = writtenTitle.isEmpty() ? challenge.title : writtenTitle;
+                    Accomplishment accomplishment = new Accomplishment(0, title, description, "",
+                            ChallengeId, 0, 0);
                     accomplishmentController.add(accomplishment, contributors, path, uploadCallback);
                 }
             }
@@ -159,8 +164,8 @@ public class UploadActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
+            setError(false);
             if (requestCode == REQUEST_IMAGE_CAPTURE) {
-                setError(false);
                 path = Uri.fromFile(new File(utils.getPhotoPath()));
             } else if (requestCode == PICK_IMAGE) {
                 if (data == null) {
@@ -180,6 +185,7 @@ public class UploadActivity extends AppCompatActivity {
     }
 
     private void setError(boolean isError, String error) {
+        containerView.smoothScrollTo(0,0);
         errorView.setVisibility(isError ? VISIBLE : GONE);
         errorView.setText(error);
     }
@@ -197,8 +203,7 @@ public class UploadActivity extends AppCompatActivity {
                 accomplishmentIntent.putExtra("accomplishment", accomplishment);
                 startActivity(accomplishmentIntent);
             } else {
-                // TODO: Handle error
-                System.out.println("Failed with upload...");
+                setError(true, getString(R.string.error_upload_timeout));
             }
         }
     };
