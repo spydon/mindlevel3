@@ -53,10 +53,15 @@ public class UserFragment extends InfoFragment {
     private View view, imageProgressBar;
     private FloatingActionButton editButton, signOutButton, selfButton, accomplishmentButton;
     private Context context;
-    private User user, forwardedUser;
-    private String username;
+    private User user;
 
     private final static int UPDATE_USER = 1;
+
+    public UserFragment() {
+        if (getArguments() == null) {
+            setArguments(new Bundle());
+        }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -123,64 +128,43 @@ public class UserFragment extends InfoFragment {
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
-
-        showInfo(false, true);
-        if (this.forwardedUser != null) {
-            populate(forwardedUser);
-        } else if (this.username == null) {
-            populateWithSelf();
-        } else {
-            NetworkUtil.connectionCheck(getContext(), coordinator);
-            populate(username);
+    public void setUserVisibleHint(boolean isVisible) {
+        super.setUserVisibleHint(isVisible);
+        if (isVisible) {
+            populate();
         }
+    }
 
+    private void populate() {
+        showInfo(false, true);
+        NetworkUtil.connectionCheck(getContext(), coordinator);
+        Bundle bundle = this.getArguments();
+        if (bundle != null) {
+            if (bundle.containsKey("username")) {
+                String username = bundle.getString("username");
+                populate(username);
+            } else if (bundle.containsKey("user")) {
+                User user = (User) bundle.getSerializable("user");
+                populate(user);
+            } else {
+                populateWithSelf();
+            }
+        } else {
+            populateWithSelf();
+        }
     }
 
     private void populateWithSelf() {
+        getArguments().clear();
         String username = PreferencesUtil.getUsername(context);
         populate(username);
     }
 
-    public void populate(String username) {
-        if (getActivity() == null) {
-            this.username = username;
-        } else {
-            controller.getUser(username, userCallback);
-        }
+    private void populate(String username) {
+        controller.getUser(username, userCallback);
     }
 
-    public void populate(User user) {
-        if (getActivity() == null) {
-            this.forwardedUser = user;
-        } else {
-            setUser(user);
-        }
-    }
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and title
-        void onFragmentInteraction(Uri uri);
-    }
-
-    public void buttonVisibility(boolean isVisible, boolean isSelf) {
-        int visibility = isVisible ? VISIBLE : GONE;
-        int selfVisibility = !isSelf ? VISIBLE : GONE;
-        int selfModVisibilty = isVisible && isSelf ? VISIBLE : GONE;
-        editButton.setVisibility(selfModVisibilty);
-        signOutButton.setVisibility(selfModVisibilty);
-        accomplishmentButton.setVisibility(visibility);
-        selfButton.setVisibility(selfVisibility);
-    }
-
-    public void setUser(User user) {
+    private void populate(User user) {
         this.user = user;
         if (isAdded()) {
             Glide.with(imageView.getContext()).clear(imageView);
@@ -211,7 +195,27 @@ public class UserFragment extends InfoFragment {
         } else {
             buttonVisibility(true, false);
         }
-        this.forwardedUser = null;
+    }
+
+    /**
+     * This interface must be implemented by activities that contain this
+     * fragment to allow an interaction in this fragment to be communicated
+     * to the activity and potentially other fragments contained in that
+     * activity.
+     */
+    public interface OnFragmentInteractionListener {
+        // TODO: Update argument type and title
+        void onFragmentInteraction(Uri uri);
+    }
+
+    public void buttonVisibility(boolean isVisible, boolean isSelf) {
+        int visibility = isVisible ? VISIBLE : GONE;
+        int selfVisibility = !isSelf ? VISIBLE : GONE;
+        int selfModVisibilty = isVisible && isSelf ? VISIBLE : GONE;
+        editButton.setVisibility(selfModVisibilty);
+        signOutButton.setVisibility(selfModVisibilty);
+        accomplishmentButton.setVisibility(visibility);
+        selfButton.setVisibility(selfVisibility);
     }
 
     private ControllerCallback<User> userCallback = new ControllerCallback<User>() {
@@ -219,7 +223,7 @@ public class UserFragment extends InfoFragment {
         @Override
         public void onPostExecute(final Boolean success, final User user) {
             if (success) {
-                setUser(user);
+                populate(user);
             } else {
                 showInfo(true, false);
             }

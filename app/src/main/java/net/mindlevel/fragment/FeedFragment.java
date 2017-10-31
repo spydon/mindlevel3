@@ -32,16 +32,13 @@ import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 
 /**
- * A fragment representing a list of Items.
+ * A fragment representing a list of accomplishments.
  * <p/>
  * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
  * interface.
  */
 public class FeedFragment extends InfoFragment {
 
-    // TODO: Customize parameter argument names
-    private static final String ARG_COLUMN_COUNT = "column-count";
-    // TODO: Customize parameters
     private int columnCount = 2;
     private View coordinator;
     private OnListFragmentInteractionListener listener;
@@ -56,21 +53,10 @@ public class FeedFragment extends InfoFragment {
     private SwipeRefreshLayout swipe;
     private int page = 0;
 
-    /**
-     * Mandatory empty constructor for the fragment manager to instantiate the
-     * fragment (e.g. upon screen orientation changes).
-     */
     public FeedFragment() {
-    }
-
-    // TODO: Customize parameter initialization
-    @SuppressWarnings("unused")
-    public static FeedFragment newInstance(int columnCount) {
-        FeedFragment fragment = new FeedFragment();
-        Bundle args = new Bundle();
-        args.putInt(ARG_COLUMN_COUNT, columnCount);
-        fragment.setArguments(args);
-        return fragment;
+        if (getArguments() == null) {
+            setArguments(new Bundle());
+        }
     }
 
     @Override
@@ -82,10 +68,6 @@ public class FeedFragment extends InfoFragment {
         this.shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
         this.accomplishments = new HashSet<>();
         this.adapter = new FeedRecyclerViewAdapter(accomplishments, listener);
-
-        if (getArguments() != null) {
-            columnCount = getArguments().getInt(ARG_COLUMN_COUNT);
-        }
     }
 
     @Override
@@ -149,13 +131,16 @@ public class FeedFragment extends InfoFragment {
             }
         });
 
-        if (NetworkUtil.connectionCheck(getContext(), coordinator)) {
-            populateLatest();
-        } else {
-            showInfo(true, false);
-        }
-
+        populate();
         return view;
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisible) {
+        super.setUserVisibleHint(isVisible);
+        if (isVisible && isAdded()) {
+            populate();
+        }
     }
 
     @Override
@@ -175,12 +160,34 @@ public class FeedFragment extends InfoFragment {
         listener = null;
     }
 
+    private void populate() {
+        if (NetworkUtil.connectionCheck(getContext(), coordinator)) {
+            Bundle bundle = this.getArguments();
+            if (bundle != null) {
+                if (bundle.containsKey("accomplishments_for_user")) {
+                    String username = bundle.getString("accomplishments_for_user");
+                    populateUserAccomplishments(username);
+                } else if (bundle.containsKey("accomplishments_for_challenge")) {
+                    Challenge challenge = (Challenge) bundle.getSerializable("accomplishments_for_challenge");
+                    populateChallengeAccomplishments(challenge);
+                } else {
+                    populateLatest();
+                }
+            } else {
+                populateLatest();
+            }
+        } else {
+            showInfo(true, false);
+        }
+    }
+
     private void refresh() {
-        accomplishmentController.getLatest(getAccomplishmentsCallback);
+        populate();
     }
 
     private void populateLatest() {
         showInfo(false, true);
+        getArguments().clear();
         accomplishmentController.getLatest(getAccomplishmentsCallback);
     }
 
@@ -190,7 +197,7 @@ public class FeedFragment extends InfoFragment {
         accomplishmentController.getLatest(range, getPaginationCallback);
     }
 
-    public void populateUserAccomplishments(String username) {
+    private void populateUserAccomplishments(String username) {
         showInfo(false, true);
         userController.getAccomplishments(username, getAccomplishmentsCallback);
         String infoText = getString(R.string.feed_user, username);
@@ -198,7 +205,7 @@ public class FeedFragment extends InfoFragment {
         searchInfoBar.show();
     }
 
-    public void populateChallengeAccomplishments(Challenge Challenge) {
+    private void populateChallengeAccomplishments(Challenge Challenge) {
         showInfo(false, true);
         ChallengeController.getAccomplishments(Challenge.id, getAccomplishmentsCallback);
         String infoText = getString(R.string.feed_challenge, Challenge.title);

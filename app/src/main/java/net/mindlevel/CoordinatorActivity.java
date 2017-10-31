@@ -136,21 +136,27 @@ public class CoordinatorActivity
         super.onNewIntent(intent);
         if (intent.hasExtra("username")) {
             String username = intent.getStringExtra("username");
-            userFragment.populate(username);
+            getCleanFragmentBundle(userFragment).putString("username", username);
             scrollToFragment(userFragment);
         } else if (intent.hasExtra("user")) {
             User user = (User) intent.getSerializableExtra("user");
-            userFragment.populate(user);
+            getCleanFragmentBundle(userFragment).putSerializable("user", user);
             scrollToFragment(userFragment);
         } else if (intent.hasExtra("accomplishments_for_user")) {
             String username = intent.getStringExtra("accomplishments_for_user");
+            getCleanFragmentBundle(feedFragment).putString("accomplishments_for_user", username);
             scrollToFragment(feedFragment);
-            feedFragment.populateUserAccomplishments(username);
         } else if (intent.hasExtra("accomplishments_for_challenge")) {
-            Challenge Challenge = (Challenge) intent.getSerializableExtra("accomplishments_for_challenge");
+            Challenge challenge = (Challenge) intent.getSerializableExtra("accomplishments_for_challenge");
+            getCleanFragmentBundle(feedFragment).putSerializable("accomplishments_for_challenge", challenge);
             scrollToFragment(feedFragment);
-            feedFragment.populateChallengeAccomplishments(Challenge);
         }
+    }
+
+    private Bundle getCleanFragmentBundle(Fragment fragment) {
+        Bundle bundle = fragment.getArguments() != null ? fragment.getArguments() : new Bundle();
+        bundle.clear();
+        return bundle;
     }
 
     @Override
@@ -205,14 +211,14 @@ public class CoordinatorActivity
         startActivity(accomplishmentIntent);
     }
 
-    public void onListFragmentInteraction(Challenge Challenge) {
-        Intent ChallengeIntent = new Intent(this, ChallengeActivity.class);
-        ChallengeIntent.putExtra("challenge", Challenge);
-        startActivity(ChallengeIntent);
+    public void onListFragmentInteraction(Challenge challenge) {
+        Intent challengeIntent = new Intent(this, ChallengeActivity.class);
+        challengeIntent.putExtra("challenge", challenge);
+        startActivity(challengeIntent);
     }
 
     public void onListFragmentInteraction(User user) {
-        userFragment.setUser(user);
+        getCleanFragmentBundle(userFragment).putSerializable("user", user);
         scrollToFragment(userFragment);
     }
 
