@@ -32,7 +32,9 @@ import net.mindlevel.model.User;
 import net.mindlevel.util.ImageUtil;
 import net.mindlevel.util.PreferencesUtil;
 
+import java.util.ArrayDeque;
 import java.util.Arrays;
+import java.util.Deque;
 import java.util.LinkedHashMap;
 
 public class CoordinatorActivity
@@ -47,10 +49,14 @@ public class CoordinatorActivity
     private final HighscoreFragment highscoreFragment = new HighscoreFragment();
     private final UserFragment userFragment = new UserFragment();
     private final LinkedHashMap<Integer, Fragment> fragments = new LinkedHashMap<>();
+    private final Deque<Fragment> fragmentHistory = new ArrayDeque<>();
 
     private Fragment currentFragment;
     private BottomNavigationView navigation;
     private ViewPager viewPager;
+
+    // TODO: Refactor this
+    private boolean isBack = false;
 
     private BottomNavigationView.OnNavigationItemSelectedListener navigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -59,6 +65,10 @@ public class CoordinatorActivity
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             Fragment selectedFragment = fragments.get(item.getItemId());
             if (selectedFragment != currentFragment) {
+                if (!isBack) {
+                    fragmentHistory.push(currentFragment);
+                }
+                isBack = false;
                 scrollToFragment(selectedFragment);
             }
             return true;
@@ -74,7 +84,7 @@ public class CoordinatorActivity
 
         public Fragment getItem(int i) {
             // i is incremental from the left, the selected fragment
-            return (Fragment)fragments.values().toArray()[i];
+            return (Fragment) fragments.values().toArray()[i];
         }
 
         public int getCount() {
@@ -97,6 +107,8 @@ public class CoordinatorActivity
         fragments.put(R.id.navigation_challenges, challengesFragment);
         fragments.put(R.id.navigation_highscore, highscoreFragment);
         fragments.put(R.id.navigation_profile, userFragment);
+
+        currentFragment = feedFragment;
 
         if (PreferencesUtil.getSessionId(getApplicationContext()).isEmpty()) {
             Intent loginIntent = new Intent(this, LoginActivity.class);
@@ -193,12 +205,14 @@ public class CoordinatorActivity
         fm.executePendingTransactions();
         int count = fm.getBackStackEntryCount();
 
-        if (count == 0) {
+        if (count == 0 && !fragmentHistory.isEmpty()) {
+            isBack = true;
+            scrollToFragment(fragmentHistory.pop());
+        } else if (count == 0) {
             super.onBackPressed();
         } else {
             fm.popBackStackImmediate();
         }
-
     }
 
     public void onFragmentInteraction(Uri uri) {
