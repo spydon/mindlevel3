@@ -5,20 +5,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.pchmn.materialchips.ChipView;
 
 import net.mindlevel.R;
-import net.mindlevel.model.Challenge;
 import net.mindlevel.model.User;
-import net.mindlevel.model.UserChip;
 import net.mindlevel.util.CoordinatorUtil;
-import net.mindlevel.util.ImageUtil;
-import net.mindlevel.util.ProgressController;
 
 import java.util.List;
 

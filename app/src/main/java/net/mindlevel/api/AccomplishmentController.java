@@ -2,8 +2,6 @@ package net.mindlevel.api;
 
 import android.content.Context;
 import android.net.Uri;
-import android.os.Environment;
-import android.renderscript.ScriptGroup;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
@@ -14,13 +12,11 @@ import net.mindlevel.model.Like;
 import net.mindlevel.model.User;
 
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.IOUtils;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
-import java.util.Random;
 import java.util.Set;
 
 import id.zelory.compressor.Compressor;

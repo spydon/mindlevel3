@@ -11,7 +11,7 @@
 
     <ImageView
         android:id="@+id/error_image"
-        android:src="@mipmap/logo"
+        android:src="@drawable/logo"
         android:layout_gravity="center"
         android:visibility="visible"
         android:layout_width="@dimen/error_image_large"

@@ -15,10 +15,7 @@ import net.mindlevel.R;
 import net.mindlevel.model.Accomplishment;
 import net.mindlevel.util.ImageUtil;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
-import java.util.SortedSet;
 
 /**
  * {@link RecyclerView.Adapter} that can display a {@link Accomplishment} and makes a call to the

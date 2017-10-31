@@ -7,10 +7,6 @@ import com.pchmn.materialchips.model.ChipInterface;
 
 import net.mindlevel.model.User;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-
 public class UserChip implements ChipInterface {
 
     private User user;

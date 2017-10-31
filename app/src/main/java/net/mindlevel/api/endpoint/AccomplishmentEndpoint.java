@@ -5,8 +5,6 @@ import net.mindlevel.model.Contributors;
 import net.mindlevel.model.Like;
 import net.mindlevel.model.User;
 
-import org.json.JSONArray;
-
 import java.util.List;
 
 import okhttp3.MultipartBody;

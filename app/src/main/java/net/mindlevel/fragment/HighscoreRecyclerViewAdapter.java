@@ -16,7 +16,6 @@ import net.mindlevel.model.Challenge;
 import net.mindlevel.model.User;
 import net.mindlevel.util.ImageUtil;
 
-import java.util.List;
 import java.util.Set;
 
 /**
