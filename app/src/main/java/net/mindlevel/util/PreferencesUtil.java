@@ -21,6 +21,18 @@ public class PreferencesUtil {
         return new Login(pref.getString("username", ""), "", pref.getString("session", ""));
     }
 
+    public static boolean getTutorialSeen(Context context) {
+        SharedPreferences pref = context.getSharedPreferences("session", Context.MODE_PRIVATE);
+        return pref.getBoolean("tutorial_seen", false);
+    }
+
+    public static void setTutorialSeen(Context context, boolean seen) {
+        SharedPreferences pref = context.getSharedPreferences("session", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putBoolean("tutorial_seen", seen);
+        editor.apply();
+    }
+
     public static void clearSession(Context context) {
         SharedPreferences sharedPreferences = context.getSharedPreferences("session", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();

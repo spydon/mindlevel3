@@ -25,7 +25,6 @@
     <string name="error_offline">Inte tillgänglig offline</string>
     <string name="feed_challenge">Visa utföranden för uppdrag \"%1$s\"</string>
     <string name="feed_user">Visa utföranden för användare \"%1$s\"</string>
-    <string name="hint_contributors">Lägg till utförare</string>
     <string name="hint_email">Din E-Mail</string>
     <string name="hint_upload_description">Beskriv hur du utförde uppdraget</string>
     <string name="hint_upload_title">Lägg till titel</string>

@@ -112,5 +112,11 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="@string/tutorial_share" />
+
+        <Button
+            android:id="@+id/tutorial_finished"
+            android:text="@string/tutorial_got_it"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
     </LinearLayout>
 </ScrollView>

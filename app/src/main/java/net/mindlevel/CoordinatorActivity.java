@@ -110,6 +110,12 @@ public class CoordinatorActivity
 
         currentFragment = feedFragment;
 
+        if (!PreferencesUtil.getTutorialSeen(getApplicationContext())) {
+            Intent tutorialIntent = new Intent(this, TutorialActivity.class);
+            startActivity(tutorialIntent);
+            PreferencesUtil.setTutorialSeen(getApplicationContext(), true);
+        }
+
         if (PreferencesUtil.getSessionId(getApplicationContext()).isEmpty()) {
             Intent loginIntent = new Intent(this, LoginActivity.class);
             startActivity(loginIntent);

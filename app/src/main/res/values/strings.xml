@@ -129,5 +129,6 @@
     <string name="tutorial_upload">Upload a picture for a finished challenge</string>
     <string name="tutorial_share">Share the current picture</string>
     <string name="tutorial_icons">Explanation of the icons that can be found in the app:</string>
+    <string name="tutorial_got_it">Got it!</string>
 
 </resources>
