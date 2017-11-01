@@ -35,7 +35,6 @@
     <!-- Hints -->
     <string name="hint_upload_description">Describe how you accomplished the challenge</string>
     <string name="hint_user_description">Describe yourself, or write anything really</string>
-    <string name="hint_contributors">Add contributors</string>
     <string name="hint_upload_title">Your title</string>
 
     <!-- Login -->

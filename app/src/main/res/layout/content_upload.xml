@@ -61,7 +61,7 @@
                     android:layout_marginStart="5dip"
 
                     app:chip_hasAvatarIcon="false"
-                    app:hint="@string/hint_contributors" />
+                    app:hint="@string/accomplishment_by" />
 
                 <ProgressBar
                     style="?android:attr/progressBarStyleSmall"

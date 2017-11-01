@@ -137,16 +137,15 @@ public class UserFragment extends InfoFragment {
     }
 
     private void populate() {
-        showInfo(false, true);
         NetworkUtil.connectionCheck(getContext(), coordinator);
         Bundle bundle = this.getArguments();
         if (bundle != null) {
-            if (bundle.containsKey("username")) {
-                String username = bundle.getString("username");
-                populate(username);
-            } else if (bundle.containsKey("user")) {
+            if (bundle.containsKey("user")) {
                 User user = (User) bundle.getSerializable("user");
                 populate(user);
+            } else if (bundle.containsKey("username")) {
+                String username = bundle.getString("username");
+                populate(username);
             } else {
                 populateWithSelf();
             }
@@ -156,23 +155,29 @@ public class UserFragment extends InfoFragment {
     }
 
     private void populateWithSelf() {
+        showInfo(false, true);
         getArguments().clear();
         String username = PreferencesUtil.getUsername(context);
         populate(username);
     }
 
     private void populate(String username) {
+        showInfo(false, true);
         controller.getUser(username, userCallback);
     }
 
     private void populate(User user) {
+        showInfo(false, false);
+        if (user.equals(this.user)) {
+            return;
+        }
+
         this.user = user;
         if (isAdded()) {
             Glide.with(imageView.getContext()).clear(imageView);
         }
 
         ProgressController loading = new ProgressController(imageProgressBar);
-        showInfo(false, false);
         if (!TextUtils.isEmpty(user.image)) {
             String url = ImageUtil.getUrl(user.image);
             Glide.with(imageView.getContext())
