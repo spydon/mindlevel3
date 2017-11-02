@@ -4,6 +4,7 @@ import android.content.Context;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
+import android.util.Log;
 
 import net.mindlevel.R;
 import net.mindlevel.api.endpoint.UserEndpoint;
@@ -57,6 +58,7 @@ public class UserController extends BackendService {
             public void onFailure(@NonNull Call<List<User>> call, @NonNull Throwable t) {
                 callback.onPostExecute(false, null);
                 t.printStackTrace();
+                Log.w("mindlevel", "getAll users failed");
             }
         });
     }
@@ -79,6 +81,7 @@ public class UserController extends BackendService {
             public void onFailure(@NonNull Call<List<User>> call, @NonNull Throwable t) {
                 callback.onPostExecute(false, null);
                 t.printStackTrace();
+                Log.w("mindlevel", "getHighscore call failed");
             }
         });
     }
@@ -104,6 +107,7 @@ public class UserController extends BackendService {
                 if (user == null) {
                     t.printStackTrace();
                     callback.onPostExecute(false, null);
+                    Log.w("mindlevel", "getUser call failed");
                 } else {
                     callback.onPostExecute(true, user);
                 }
@@ -130,6 +134,7 @@ public class UserController extends BackendService {
             public void onFailure(@NonNull Call<List<Accomplishment>> call, @NonNull Throwable t) {
                 callback.onPostExecute(false, null);
                 t.printStackTrace();
+                Log.w("mindlevel", "getAccomplishments for user call failed");
             }
         });
     }
@@ -152,6 +157,7 @@ public class UserController extends BackendService {
             public void onFailure(@NonNull Call<String[]> call, @NonNull Throwable t) {
                 callback.onPostExecute(false, null);
                 t.printStackTrace();
+                Log.w("mindlevel", "getUsernames call failed");
             }
         });
     }
@@ -173,6 +179,7 @@ public class UserController extends BackendService {
             public void onFailure(@NonNull Call<String> call, @NonNull Throwable t) {
                 callback.onPostExecute(false, null);
                 t.printStackTrace();
+                Log.w("mindlevel", "getEmail call failed");
             }
         });
     }
@@ -204,6 +211,7 @@ public class UserController extends BackendService {
                 public void onFailure(@NonNull Call<Void> call, @NonNull Throwable t) {
                     callback.onPostExecute(false, null);
                     t.printStackTrace();
+                    Log.w("mindlevel", "Failed update call for user");
                 }
             });
         } catch (IOException e) {
@@ -237,6 +245,7 @@ public class UserController extends BackendService {
             public void onFailure(@NonNull Call<Void> call, @NonNull Throwable t) {
                 callback.onPostExecute(false, null);
                 t.printStackTrace();
+                Log.w("mindlevel", "register call failed");
             }
         });
     }
@@ -254,6 +263,7 @@ public class UserController extends BackendService {
             FileUtils.writeStringToFile(targetFile, marshalled, Charset.defaultCharset());
         } catch (IOException e) {
             e.printStackTrace();
+            Log.e("mindlevel", "Failed to cache user");
         }
     }
 
@@ -269,6 +279,7 @@ public class UserController extends BackendService {
             marshalled = FileUtils.readFileToString(targetFile, Charset.defaultCharset());
         } catch (IOException e) {
             e.printStackTrace();
+            Log.w("mindlevel", "Failed to read user cache file");
         }
 
         User user = null;

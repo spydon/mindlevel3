@@ -4,6 +4,7 @@ import android.content.Context;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
+import android.util.Log;
 
 import net.mindlevel.api.endpoint.AccomplishmentEndpoint;
 import net.mindlevel.model.Accomplishment;
@@ -82,6 +83,7 @@ public class AccomplishmentController extends BackendService {
                     public void onFailure(@NonNull Call<Accomplishment> call, @NonNull Throwable t) {
                         callback.onPostExecute(false, null);
                         t.printStackTrace();
+                        Log.w("mindlevel", "add accomplishment call failed");
                     }
                 });
             } else {
@@ -108,6 +110,7 @@ public class AccomplishmentController extends BackendService {
             public void onFailure(@NonNull Call<List<User>> call, @NonNull Throwable t) {
                 callback.onPostExecute(false, null);
                 t.printStackTrace();
+                Log.w("mindlevel", "getContributors accomplishment call failed");
             }
         });
     }
@@ -128,6 +131,7 @@ public class AccomplishmentController extends BackendService {
             public void onFailure(@NonNull Call<Like> call, @NonNull Throwable t) {
                 callback.onPostExecute(false, null);
                 t.printStackTrace();
+                Log.w("mindlevel", "like accomplishment call failed");
             }
         });
     }
@@ -148,6 +152,7 @@ public class AccomplishmentController extends BackendService {
             public void onFailure(@NonNull Call<List<Accomplishment>> call, @NonNull Throwable t) {
                 callback.onPostExecute(false, null);
                 t.printStackTrace();
+                Log.w("mindlevel", "getLatest accomplishments call failed");
             }
         });
     }
@@ -168,6 +173,7 @@ public class AccomplishmentController extends BackendService {
             public void onFailure(@NonNull Call<List<Accomplishment>> call, @NonNull Throwable t) {
                 callback.onPostExecute(false, null);
                 t.printStackTrace();
+                Log.w("mindlevel", "getLatest range of accomplishments call failed");
             }
         });
     }

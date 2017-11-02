@@ -2,6 +2,7 @@ package net.mindlevel.api;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import net.mindlevel.api.endpoint.PingEndpoint;
 
@@ -36,6 +37,7 @@ public class PingController extends BackendService {
             public void onFailure(@NonNull Call<Void> call, @NonNull Throwable t) {
                 callback.onPostExecute(false, null);
                 t.printStackTrace();
+                Log.w("mindlevel", "Ping failed");
             }
         });
     }

@@ -3,6 +3,7 @@ package net.mindlevel.api;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
+import android.util.Log;
 
 import net.mindlevel.R;
 import net.mindlevel.api.endpoint.ChallengeEndpoint;
@@ -52,6 +53,7 @@ public class ChallengeController extends BackendService {
                     callback.onPostExecute(true, Challenges);
                 }
                 t.printStackTrace();
+                Log.w("mindlevel", "getAll challanges call failed");
             }
         });
     }
@@ -73,6 +75,7 @@ public class ChallengeController extends BackendService {
             public void onFailure(@NonNull Call<Challenge> call, @NonNull Throwable t) {
                 callback.onPostExecute(false, null);
                 t.printStackTrace();
+                Log.w("mindlevel", "get challange call failed");
             }
         });
     }
@@ -96,6 +99,7 @@ public class ChallengeController extends BackendService {
             public void onFailure(@NonNull Call<List<Accomplishment>> call, @NonNull Throwable t) {
                 callback.onPostExecute(false, null);
                 t.printStackTrace();
+                Log.w("mindlevel", "get accomplishments for challenge call failed");
             }
         });
     }
@@ -113,7 +117,7 @@ public class ChallengeController extends BackendService {
         try {
             FileUtils.writeStringToFile(targetFile, marshalled, Charset.defaultCharset());
         } catch (IOException e) {
-            e.printStackTrace();
+            Log.e("mindlevel", "Could not write to challenge cache");
         }
     }
 
@@ -126,7 +130,7 @@ public class ChallengeController extends BackendService {
         try {
             marshalled = FileUtils.readFileToString(targetFile, Charset.defaultCharset());
         } catch (IOException e) {
-            e.printStackTrace();
+            Log.w("mindlevel", "No challenges cached yet");
             return challenges;
         }
 

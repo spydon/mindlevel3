@@ -2,6 +2,7 @@ package net.mindlevel.api;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import net.mindlevel.api.endpoint.LoginEndpoint;
 import net.mindlevel.model.Login;
@@ -40,6 +41,7 @@ public class LoginController extends BackendService {
             public void onFailure(@NonNull Call<String> call, @NonNull Throwable t) {
                 callback.onPostExecute(false, null);
                 t.printStackTrace();
+                Log.w("mindlevel", "login call failed");
             }
         });
     }
@@ -66,6 +68,7 @@ public class LoginController extends BackendService {
             @Override
             public void onFailure(@NonNull Call<Void> call, @NonNull Throwable t) {
                 t.printStackTrace();
+                Log.w("mindlevel", "logout call failed");
                 if (callback == null){
                     return;
                 }
