@@ -1,0 +1,5 @@
+<bitmap
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:alpha="0.7"
+    android:src="@drawable/bg"
+    android:gravity="fill" />
