@@ -110,15 +110,16 @@ public class CoordinatorActivity
 
         currentFragment = feedFragment;
 
+       if (PreferencesUtil.getSessionId(getApplicationContext()).isEmpty()) {
+            Intent loginIntent = new Intent(this, LoginActivity.class);
+            startActivity(loginIntent);
+        }
+
+        PreferencesUtil.setTutorialSeen(getApplicationContext(), false);
         if (!PreferencesUtil.getTutorialSeen(getApplicationContext())) {
             Intent tutorialIntent = new Intent(this, TutorialActivity.class);
             startActivity(tutorialIntent);
             PreferencesUtil.setTutorialSeen(getApplicationContext(), true);
-        }
-
-        if (PreferencesUtil.getSessionId(getApplicationContext()).isEmpty()) {
-            Intent loginIntent = new Intent(this, LoginActivity.class);
-            startActivity(loginIntent);
         }
 
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);

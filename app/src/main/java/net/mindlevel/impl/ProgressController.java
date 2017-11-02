@@ -1,4 +1,4 @@
-package net.mindlevel.util;
+package net.mindlevel.impl;
 
 import android.graphics.drawable.Drawable;
 import android.support.annotation.Nullable;

@@ -1,4 +1,4 @@
-package net.mindlevel.util;
+package net.mindlevel.impl;
 
 import android.support.annotation.NonNull;
 import android.support.design.widget.BaseTransientBottomBar;

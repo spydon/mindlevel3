@@ -21,7 +21,7 @@ import net.mindlevel.api.ChallengeController;
 import net.mindlevel.api.UserController;
 import net.mindlevel.model.Accomplishment;
 import net.mindlevel.model.Challenge;
-import net.mindlevel.util.Glassbar;
+import net.mindlevel.impl.Glassbar;
 import net.mindlevel.util.NetworkUtil;
 
 import java.util.HashSet;

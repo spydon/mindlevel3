@@ -1,4 +1,4 @@
-package net.mindlevel.view;
+package net.mindlevel.impl;
 
 import android.content.Context;
 import android.support.v7.widget.AppCompatImageView;

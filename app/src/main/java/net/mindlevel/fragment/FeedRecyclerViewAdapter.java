@@ -9,8 +9,8 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
-import net.mindlevel.view.ImageLikeView;
-import net.mindlevel.util.ProgressController;
+import net.mindlevel.impl.ImageLikeView;
+import net.mindlevel.impl.ProgressController;
 import net.mindlevel.R;
 import net.mindlevel.model.Accomplishment;
 import net.mindlevel.util.ImageUtil;

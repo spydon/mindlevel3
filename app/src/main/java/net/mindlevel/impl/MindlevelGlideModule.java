@@ -1,4 +1,4 @@
-package net.mindlevel.util;
+package net.mindlevel.impl;
 
 import com.bumptech.glide.annotation.GlideModule;
 import com.bumptech.glide.module.AppGlideModule;

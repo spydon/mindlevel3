@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
-import net.mindlevel.util.ProgressController;
+import net.mindlevel.impl.ProgressController;
 import net.mindlevel.R;
 import net.mindlevel.model.Challenge;
 import net.mindlevel.model.User;

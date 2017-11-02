@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import net.mindlevel.R;
+import net.mindlevel.impl.Glassbar;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;

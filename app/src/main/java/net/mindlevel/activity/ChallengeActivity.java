@@ -17,7 +17,7 @@ import com.bumptech.glide.Glide;
 import com.pchmn.materialchips.ChipView;
 
 import net.mindlevel.util.CoordinatorUtil;
-import net.mindlevel.util.ProgressController;
+import net.mindlevel.impl.ProgressController;
 import net.mindlevel.R;
 import net.mindlevel.api.ControllerCallback;
 import net.mindlevel.api.ChallengeController;
