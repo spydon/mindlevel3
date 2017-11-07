@@ -40,27 +40,28 @@ public class ChallengeController extends BackendService {
                     callback.onPostExecute(true, response.body());
                     cacheChallenges(response.body());
                 } else {
-                    onFailure(call, new Throwable("Could not fetch Challenges remotely"));
+                    onFailure(call, new Throwable("Could not fetch challenges remotely"));
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<List<Challenge>> call, @NonNull Throwable t) {
-                List<Challenge> Challenges = readFromCache();
-                if (Challenges.isEmpty()) {
+                List<Challenge> challenges = readFromCache();
+                if (challenges.isEmpty()) {
                     callback.onPostExecute(false, null);
+                    t.printStackTrace();
+                    Log.w("mindlevel", "getAll challenges call failed");
                 } else {
-                    callback.onPostExecute(true, Challenges);
+                    Log.i("mindlevel", "Got challenges from cache");
+                    callback.onPostExecute(true, challenges);
                 }
-                t.printStackTrace();
-                Log.w("mindlevel", "getAll challanges call failed");
             }
         });
     }
 
     // TODO: Get from cached json file when call fails
-    public void get(final int ChallengeId, final ControllerCallback<Challenge> callback) {
-        Call<Challenge> call = endpoint.get(ChallengeId);
+    public void get(final int challengeId, final ControllerCallback<Challenge> callback) {
+        Call<Challenge> call = endpoint.get(challengeId);
         call.enqueue(new Callback<Challenge>() {
             @Override
             public void onResponse(@NonNull Call<Challenge> call, @NonNull Response<Challenge> response) {
@@ -80,8 +81,8 @@ public class ChallengeController extends BackendService {
         });
     }
 
-    public void getAccomplishments(final int ChallengeId, final ControllerCallback<List<Accomplishment>> callback) {
-        Call<List<Accomplishment>> accomplishmentsCall = endpoint.getAccomplishments(ChallengeId);
+    public void getAccomplishments(final int challengeId, final ControllerCallback<List<Accomplishment>> callback) {
+        Call<List<Accomplishment>> accomplishmentsCall = endpoint.getAccomplishments(challengeId);
 
         accomplishmentsCall.enqueue(new Callback<List<Accomplishment>>() {
             @Override
@@ -104,12 +105,12 @@ public class ChallengeController extends BackendService {
         });
     }
 
-    private void cacheChallenges(List<Challenge> Challenges) {
+    private void cacheChallenges(List<Challenge> challenges) {
         File outputDir = context.getFilesDir(); // TODO: getDataDir?
-        String ChallengesFilename = context.getString(R.string.challenges_file);
-        File targetFile = new File(outputDir + "/" + ChallengesFilename);
+        String challengesFilename = context.getString(R.string.challenges_file);
+        File targetFile = new File(outputDir + "/" + challengesFilename);
         ArrayList<String> marshallList = new ArrayList<>();
-        for(Challenge m : Challenges) {
+        for(Challenge m : challenges) {
             marshallList.add(m.toString(context));
         }
         String marshalled = TextUtils.join("\n" , marshallList);
@@ -124,8 +125,8 @@ public class ChallengeController extends BackendService {
     private List<Challenge> readFromCache() {
         File outputDir = context.getFilesDir(); // TODO: getDataDir?
         ArrayList<Challenge> challenges = new ArrayList<>();
-        String ChallengesFilename = context.getString(R.string.challenges_file);
-        File targetFile = new File(outputDir + "/" + ChallengesFilename);
+        String challengesFilename = context.getString(R.string.challenges_file);
+        File targetFile = new File(outputDir + "/" + challengesFilename);
         String marshalled;
         try {
             marshalled = FileUtils.readFileToString(targetFile, Charset.defaultCharset());

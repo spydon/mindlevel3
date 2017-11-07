@@ -19,7 +19,6 @@ import android.view.MenuItem;
 import net.mindlevel.activity.AboutActivity;
 import net.mindlevel.activity.AccomplishmentActivity;
 import net.mindlevel.activity.ChallengeActivity;
-import net.mindlevel.activity.EditUserActivity;
 import net.mindlevel.activity.LoginActivity;
 import net.mindlevel.activity.TutorialActivity;
 import net.mindlevel.api.LoginController;
@@ -113,7 +112,7 @@ public class CoordinatorActivity
         currentFragment = feedFragment;
 
        if (PreferencesUtil.getSessionId(getApplicationContext()).isEmpty()) {
-            Intent loginIntent = new Intent(this, EditUserActivity.class);
+            Intent loginIntent = new Intent(this, LoginActivity.class);
             startActivity(loginIntent);
         }
 

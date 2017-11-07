@@ -28,8 +28,8 @@ public abstract class InfoFragment extends Fragment {
             return;
         }
 
-        TextView errorText = (TextView)errorView.findViewById(R.id.error_text);
-        TextView progressText = (TextView)progressView.findViewById(R.id.progress_text);
+        TextView errorText = (TextView) errorView.findViewById(R.id.error_text);
+        TextView progressText = (TextView) progressView.findViewById(R.id.progress_text);
 
         final boolean isNormal = !isError && !isProgress;
         if (isNormal) {
@@ -68,9 +68,9 @@ public abstract class InfoFragment extends Fragment {
                     other.setVisibility(GONE);
                 }
             }
+            view.setAlpha(0);
             view.setVisibility(VISIBLE);
-            view.setAlpha(0F);
-            view.animate().setDuration(shortAnimTime).alpha(1F).setListener(null);
+            view.animate().setDuration(shortAnimTime).alpha(1);
         }
     }
 }

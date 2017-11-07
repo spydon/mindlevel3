@@ -28,10 +28,11 @@ public class NetworkUtil {
                 showMessage(message, context, coordinator);
             }
             return false;
-        } else {
+        } else if (showNotice) {
+            // BackendCheck without showing the result is unnecessary, since it takes no callback and is async
             backendCheck(context, coordinator);
-            return true;
         }
+        return true;
     }
 
     public static boolean isConnected(Context context) {
@@ -40,7 +41,7 @@ public class NetworkUtil {
         return activeNetworkInfo != null && activeNetworkInfo.isConnectedOrConnecting();
     }
 
-    public static void backendCheck(final Context context, final View coordinator) {
+    private static void backendCheck(final Context context, final View coordinator) {
         AsyncTask<Void, Void, Boolean> backendCheckTask = new AsyncTask<Void, Void, Boolean>() {
             @Override
             protected Boolean doInBackground(Void... params) {
