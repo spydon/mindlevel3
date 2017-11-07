@@ -28,6 +28,7 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+
         <activity
             android:name=".activity.ChallengeActivity"
             android:launchMode="standard"
@@ -37,6 +38,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="net.mindlevel.CoordinatorActivity"/>
         </activity>
+
         <activity
             android:name=".activity.AccomplishmentActivity"
             android:parentActivityName=".CoordinatorActivity"
@@ -45,6 +47,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="net.mindlevel.CoordinatorActivity"/>
         </activity>
+
         <activity
             android:name=".activity.EditUserActivity"
             android:parentActivityName=".CoordinatorActivity"
@@ -53,6 +56,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="net.mindlevel.CoordinatorActivity"/>
         </activity>
+
         <activity
             android:name=".activity.UploadActivity"
             android:parentActivityName=".CoordinatorActivity"
@@ -61,26 +65,26 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="net.mindlevel.CoordinatorActivity"/>
         </activity>
+
         <activity
             android:name=".activity.LoginActivity"
-            android:label="@string/title_login">
-        </activity>
+            android:label="" />
+
         <activity
             android:name=".activity.AboutActivity"
-            android:label="@string/title_about">
-        </activity>
+            android:label="@string/title_about" />
+
         <activity
             android:name=".activity.TutorialActivity"
-            android:label="@string/tutorial">
-        </activity>
+            android:label="@string/tutorial" />
+
         <activity
             android:name=".activity.TermsActivity"
-            android:label="@string/terms_of_service">
-        </activity>
+            android:label="@string/terms_of_service" />
+
         <activity
             android:name=".activity.PrivacyActivity"
-            android:label="@string/privacy_policy">
-        </activity>
+            android:label="@string/privacy_policy" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"
@@ -91,7 +95,5 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths"/>
         </provider>
-
     </application>
-
 </manifest>

@@ -2,6 +2,7 @@ package net.mindlevel.activity;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -15,25 +16,27 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
-import net.mindlevel.model.UserExtra;
-import net.mindlevel.util.KeyboardUtil;
-import net.mindlevel.util.PreferencesUtil;
-import net.mindlevel.impl.ProgressController;
 import net.mindlevel.R;
 import net.mindlevel.api.ControllerCallback;
 import net.mindlevel.api.UserController;
+import net.mindlevel.impl.ProgressController;
 import net.mindlevel.model.User;
+import net.mindlevel.model.UserExtra;
 import net.mindlevel.util.ImageUtil;
+import net.mindlevel.util.KeyboardUtil;
+import net.mindlevel.util.PreferencesUtil;
 
 import java.io.File;
 
 import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
 import static net.mindlevel.util.ImageUtil.PICK_IMAGE;
 import static net.mindlevel.util.ImageUtil.REQUEST_IMAGE_CAPTURE;
 
@@ -57,6 +60,7 @@ public class EditUserActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        final Activity activity = this;
         setContentView(R.layout.activity_edit_user);
         userController = new UserController(getApplicationContext());
 
@@ -104,6 +108,14 @@ public class EditUserActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 attemptEdit();
+            }
+        });
+
+        final ImageButton removeImageButton = (ImageButton) findViewById(R.id.image_remove);
+        removeImageButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                noImage(true);
             }
         });
 
@@ -189,23 +201,51 @@ public class EditUserActivity extends AppCompatActivity {
     }
 
     private void showProgress(final boolean show) {
+        fade(editFormView, !show);
+        fade(progressView, show);
+    }
+
+    private void noImage(final boolean clear) {
+        int longAnimTime = getResources().getInteger(android.R.integer.config_longAnimTime);
+        final View container = findViewById(R.id.image_container);
+        final Activity activity = this;
+        Runnable endRunner = null;
+        if (clear) {
+            path = null; //TODO: Set path to default image
+            endRunner = new Runnable() {
+                @Override
+                public void run() {
+                    Glide.with(activity)
+                            .load(R.drawable.default_user)
+                            .listener(new ProgressController(progressBar))
+                            .into(imageView);
+                    fade(container, true);
+                }
+            };
+        }
+
+        fade(container, !clear, longAnimTime, endRunner);
+    }
+
+    private void fade(final View view, final boolean show) {
         int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
+        fade(view, show, shortAnimTime, null);
+    }
 
-        editFormView.setVisibility(show ? GONE : View.VISIBLE);
-        editFormView.animate().setDuration(shortAnimTime).alpha(
-                show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
+    private void fade(final View view, final boolean show, final int animTime, final Runnable callback) {
+        view.setVisibility(VISIBLE);
+        view.animate().setDuration(animTime).alpha(show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
             @Override
-            public void onAnimationEnd(Animator animation) {
-                editFormView.setVisibility(show ? GONE : View.VISIBLE);
+            public void onAnimationStart(Animator animation) {
+                view.setAlpha(show ? 0 : 1);
             }
-        });
 
-        progressView.setVisibility(show ? View.VISIBLE : GONE);
-        progressView.animate().setDuration(shortAnimTime).alpha(
-                show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
-                progressView.setVisibility(show ? View.VISIBLE : GONE);
+                view.setVisibility(show ? VISIBLE : GONE);
+                if (callback != null) {
+                    callback.run();
+                }
             }
         });
     }
@@ -223,6 +263,7 @@ public class EditUserActivity extends AppCompatActivity {
                 path = data.getData();
             }
             utils.setImage(path, imageView);
+            noImage(false);
         }
     }
 

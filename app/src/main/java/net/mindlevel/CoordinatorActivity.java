@@ -1,14 +1,15 @@
 package net.mindlevel;
 
 // TODO: Change back to non-support lib
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.app.FragmentManager;
+
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -17,17 +18,18 @@ import android.view.MenuItem;
 
 import net.mindlevel.activity.AboutActivity;
 import net.mindlevel.activity.AccomplishmentActivity;
-import net.mindlevel.activity.LoginActivity;
 import net.mindlevel.activity.ChallengeActivity;
+import net.mindlevel.activity.EditUserActivity;
+import net.mindlevel.activity.LoginActivity;
 import net.mindlevel.activity.TutorialActivity;
 import net.mindlevel.api.LoginController;
+import net.mindlevel.fragment.ChallengesFragment;
 import net.mindlevel.fragment.FeedFragment;
 import net.mindlevel.fragment.HighscoreFragment;
-import net.mindlevel.fragment.ChallengesFragment;
 import net.mindlevel.fragment.UserFragment;
 import net.mindlevel.model.Accomplishment;
-import net.mindlevel.model.Login;
 import net.mindlevel.model.Challenge;
+import net.mindlevel.model.Login;
 import net.mindlevel.model.User;
 import net.mindlevel.util.ImageUtil;
 import net.mindlevel.util.PreferencesUtil;
@@ -111,8 +113,8 @@ public class CoordinatorActivity
         currentFragment = feedFragment;
 
        if (PreferencesUtil.getSessionId(getApplicationContext()).isEmpty()) {
-            Intent loginIntent = new Intent(this, LoginActivity.class);
-            //startActivity(loginIntent);
+            Intent loginIntent = new Intent(this, EditUserActivity.class);
+            startActivity(loginIntent);
         }
 
         if (!PreferencesUtil.getTutorialSeen(getApplicationContext())) {

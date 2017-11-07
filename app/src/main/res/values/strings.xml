@@ -116,7 +116,7 @@
     <string name="tutorial">Tutorial</string>
     <string name="tutorial_description">
         The aim of the game is simple; choose a challenge, complete it and upload a picture of the result.
-        Other users can then like your images and you get points.
+        Other users can then like your images and you get points. To like an image, double click on it.
     </string>
     <string name="tutorial_challenge">This will take you to challenge related things</string>
     <string name="tutorial_accomplishment">An accomplishment, a finished challenge</string>
