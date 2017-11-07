@@ -52,7 +52,6 @@ public class FeedFragment extends InfoFragment {
     private View paginationProgress;
     private SwipeRefreshLayout swipe;
     private int page = 0;
-    private boolean isFirstRun;
 
     public FeedFragment() {
         if (getArguments() == null) {
@@ -69,7 +68,6 @@ public class FeedFragment extends InfoFragment {
         this.shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
         this.accomplishments = new HashSet<>();
         this.adapter = new FeedRecyclerViewAdapter(accomplishments, listener);
-        this.isFirstRun = true;
     }
 
     @Override
@@ -133,19 +131,13 @@ public class FeedFragment extends InfoFragment {
             }
         });
 
-        if (isFirstRun) {
-            isFirstRun = false;
-            populate();
-        }
         return view;
     }
 
     @Override
-    public void setUserVisibleHint(boolean isVisible) {
-        super.setUserVisibleHint(isVisible);
-        if (isVisible && isAdded()) {
-            populate();
-        }
+    public void onResume() {
+        super.onResume();
+        populate();
     }
 
     @Override

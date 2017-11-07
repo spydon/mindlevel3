@@ -96,13 +96,13 @@ public class HighscoreFragment extends InfoFragment {
         swipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                controller.getHighscore(getHighscoreCallback);
+                populate();
             }
         });
 
         if (NetworkUtil.connectionCheck(getContext(), coordinator)) {
             showInfo(false, true);
-            controller.getHighscore(getHighscoreCallback);
+            populate();
         } else {
             showInfo(true, false);
         }
@@ -125,6 +125,10 @@ public class HighscoreFragment extends InfoFragment {
     public void onDetach() {
         super.onDetach();
         listener = null;
+    }
+
+    private void populate() {
+        controller.getHighscore(getHighscoreCallback);
     }
 
     /**

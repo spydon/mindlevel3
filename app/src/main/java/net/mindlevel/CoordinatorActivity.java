@@ -112,10 +112,9 @@ public class CoordinatorActivity
 
        if (PreferencesUtil.getSessionId(getApplicationContext()).isEmpty()) {
             Intent loginIntent = new Intent(this, LoginActivity.class);
-            startActivity(loginIntent);
+            //startActivity(loginIntent);
         }
 
-        PreferencesUtil.setTutorialSeen(getApplicationContext(), false);
         if (!PreferencesUtil.getTutorialSeen(getApplicationContext())) {
             Intent tutorialIntent = new Intent(this, TutorialActivity.class);
             startActivity(tutorialIntent);
@@ -245,7 +244,11 @@ public class CoordinatorActivity
 
     private void scrollToFragment(Fragment selectedFragment) {
         int fragmentOrderId = Arrays.asList(fragments.values().toArray()).indexOf(selectedFragment);
+        boolean isResumed = selectedFragment.isResumed();
         viewPager.setCurrentItem(fragmentOrderId, true);
+        if (isResumed) {
+            selectedFragment.onResume();
+        }
         currentFragment = selectedFragment;
     }
 }

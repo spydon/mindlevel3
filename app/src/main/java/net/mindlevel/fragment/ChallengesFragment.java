@@ -92,12 +92,12 @@ public class ChallengesFragment extends InfoFragment {
         swipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                controller.getAll(getAllCallback);
+                populate();
             }
         });
 
         showInfo(false, true);
-        controller.getAll(getAllCallback);
+        populate();
         return view;
     }
 
@@ -116,6 +116,10 @@ public class ChallengesFragment extends InfoFragment {
     public void onDetach() {
         super.onDetach();
         listener = null;
+    }
+
+    private void populate() {
+        controller.getAll(getAllCallback);
     }
 
     /**
