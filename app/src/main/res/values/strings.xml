@@ -80,6 +80,7 @@
     <string name="tip_contributor">Contributors receive all points too</string>
     <string name="tip_share">You can share images to social media</string>
     <string name="tip_swipe">Swipe the screen to navigate</string>
+    <string name="tip_new">Click the tip to see a new one</string>
 
     <!-- Progress motivations -->
     <string name="progress_satelite">Moving satellites into position</string>

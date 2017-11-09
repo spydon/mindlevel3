@@ -5,13 +5,11 @@ import android.animation.AnimatorListenerAdapter;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-
-
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -29,8 +27,8 @@ import net.mindlevel.R;
 import net.mindlevel.api.ControllerCallback;
 import net.mindlevel.api.LoginController;
 import net.mindlevel.api.UserController;
-import net.mindlevel.model.Login;
 import net.mindlevel.impl.Glassbar;
+import net.mindlevel.model.Login;
 import net.mindlevel.util.KeyboardUtil;
 import net.mindlevel.util.NetworkUtil;
 
@@ -131,6 +129,14 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         progressView = findViewById(R.id.progress);
+        TextView tip = (TextView) findViewById(R.id.tip);
+        tip.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setRandomTip();
+            }
+        });
+
         setRandomTip();
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION, WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
         ActionBar actionBar = getSupportActionBar();
@@ -140,16 +146,22 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void setRandomTip() {
-        TextView random = (TextView) findViewById(R.id.tip);
+        TextView tipView = (TextView) findViewById(R.id.tip);
         String[] tips = {
                 getString(R.string.tip_like),
                 getString(R.string.tip_contributor),
                 getString(R.string.tip_swipe),
                 getString(R.string.tip_share),
+                getString(R.string.tip_new),
                 getString(R.string.tip_points)
         };
-        String tip = tips[new Random().nextInt(tips.length)];
-        random.setText(getString(R.string.tip, tip));
+        String current = tipView.getText().toString();
+        int index = new Random().nextInt(tips.length);
+        String tip = getString(R.string.tip, tips[index]);
+        if (tip.equals(current)) {
+            tip = getString(R.string.tip, tips[(index+1)%tips.length]);
+        }
+        tipView.setText(tip);
     }
 
     /**
