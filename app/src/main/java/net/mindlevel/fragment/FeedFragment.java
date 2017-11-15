@@ -2,6 +2,7 @@ package net.mindlevel.fragment;
 
 // TODO: Change back to non-support lib
 //import android.app.Fragment;
+
 import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -16,15 +17,15 @@ import android.view.ViewGroup;
 
 import net.mindlevel.R;
 import net.mindlevel.api.AccomplishmentController;
-import net.mindlevel.api.ControllerCallback;
 import net.mindlevel.api.ChallengeController;
+import net.mindlevel.api.ControllerCallback;
 import net.mindlevel.api.UserController;
+import net.mindlevel.impl.Glassbar;
 import net.mindlevel.model.Accomplishment;
 import net.mindlevel.model.Challenge;
-import net.mindlevel.impl.Glassbar;
 import net.mindlevel.util.NetworkUtil;
 
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -57,6 +58,7 @@ public class FeedFragment extends InfoFragment {
         if (getArguments() == null) {
             setArguments(new Bundle());
         }
+        this.accomplishments = new LinkedHashSet<>();
     }
 
     @Override
@@ -66,7 +68,6 @@ public class FeedFragment extends InfoFragment {
         this.userController = new UserController(getContext());
         this.ChallengeController = new ChallengeController(getContext());
         this.shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
-        this.accomplishments = new HashSet<>();
         this.adapter = new FeedRecyclerViewAdapter(accomplishments, listener);
     }
 
@@ -122,7 +123,7 @@ public class FeedFragment extends InfoFragment {
                 if (!recyclerView.canScrollVertically(-1)) {
                     // Already handled by SwipeRefreshLayout
                 } else if (!recyclerView.canScrollVertically(1)) {
-                    populatePage(page++);
+                    populatePage(page+1);
                 } else if (dy < 0) {
                     System.out.println("dy");
                 } else if (dy > 0) {
@@ -253,13 +254,14 @@ public class FeedFragment extends InfoFragment {
             showPaginationProgress(false);
             if (getActivity() != null) {
                 if (isSuccess) {
-                    if (response.isEmpty()) {
+                    if (response.isEmpty() && accomplishments.isEmpty()) {
                         showInfo(true, false, getString(R.string.error_not_found));
-                    } else {
+                    } else if (!response.isEmpty()){
+                        page++;
                         accomplishments.addAll(response);
+                        adapter.notifyDataSetChanged();
                         showInfo(false, false);
                     }
-                    adapter.notifyDataSetChanged();
                 } else {
                     showInfo(true, false);
                 }

@@ -2,22 +2,23 @@ package net.mindlevel.fragment;
 
 // TODO: Change back to non-support lib
 //import android.app.Fragment;
+
+import android.content.Context;
+import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.content.Context;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import net.mindlevel.R;
-import net.mindlevel.api.ControllerCallback;
 import net.mindlevel.api.ChallengeController;
+import net.mindlevel.api.ControllerCallback;
 import net.mindlevel.model.Challenge;
 
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -29,44 +30,23 @@ import java.util.Set;
  */
 public class ChallengesFragment extends InfoFragment {
 
-    // TODO: Customize parameter argument names
-    private static final String ARG_COLUMN_COUNT = "column-count";
-    // TODO: Customize parameters
     private int columnCount = 1;
     private OnListFragmentInteractionListener listener;
     private ChallengeController controller;
     private SwipeRefreshLayout swipe;
     private RecyclerView recyclerView;
     private ChallengesRecyclerViewAdapter adapter;
-    private Set<Challenge> Challenges;
+    private Set<Challenge> challenges;
 
-    /**
-     * Mandatory empty constructor for the fragment manager to instantiate the
-     * fragment (e.g. upon screen orientation changes).
-     */
     public ChallengesFragment() {
-    }
-
-    // TODO: Customize parameter initialization
-    @SuppressWarnings("unused")
-    public static ChallengesFragment newInstance(int columnCount) {
-        ChallengesFragment fragment = new ChallengesFragment();
-        Bundle args = new Bundle();
-        args.putInt(ARG_COLUMN_COUNT, columnCount);
-        fragment.setArguments(args);
-        return fragment;
+        this.challenges = new LinkedHashSet<>();
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.controller = new ChallengeController(getContext());
-        this.Challenges = new HashSet<>();
-        this.adapter = new ChallengesRecyclerViewAdapter(Challenges, listener);
-
-        if (getArguments() != null) {
-            columnCount = getArguments().getInt(ARG_COLUMN_COUNT);
-        }
+        this.adapter = new ChallengesRecyclerViewAdapter(challenges, listener);
     }
 
     @Override
@@ -141,8 +121,8 @@ public class ChallengesFragment extends InfoFragment {
                      showInfo(true, false, getString(R.string.error_not_found));
                  } else {
                      showInfo(false, false);
-                     if (!Challenges.containsAll(response)) {
-                         Challenges.addAll(response);
+                     if (!challenges.containsAll(response)) {
+                         challenges.addAll(response);
                          adapter.notifyDataSetChanged();
                      }
                  }

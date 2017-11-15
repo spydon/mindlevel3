@@ -46,6 +46,6 @@ public interface AccomplishmentEndpoint {
     @GET("accomplishment/latest")
     Call<List<Accomplishment>> getLatest();
 
-    @GET("accomplishment/latest/{range]")
+    @GET("accomplishment/latest/{range}")
     Call<List<Accomplishment>> getLatest(@Path("range") String range);
 }
