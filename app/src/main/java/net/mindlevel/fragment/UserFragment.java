@@ -1,12 +1,13 @@
 package net.mindlevel.fragment;
 
 // TODO: Change back to non-support lib
-import android.content.Intent;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.Fragment;
+
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,19 +17,19 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
+import net.mindlevel.R;
 import net.mindlevel.activity.EditUserActivity;
 import net.mindlevel.activity.LoginActivity;
-import net.mindlevel.util.CoordinatorUtil;
-import net.mindlevel.util.PreferencesUtil;
-import net.mindlevel.impl.ProgressController;
-import net.mindlevel.R;
 import net.mindlevel.api.ControllerCallback;
 import net.mindlevel.api.LoginController;
 import net.mindlevel.api.UserController;
+import net.mindlevel.impl.ProgressController;
 import net.mindlevel.model.Login;
 import net.mindlevel.model.User;
+import net.mindlevel.util.CoordinatorUtil;
 import net.mindlevel.util.ImageUtil;
 import net.mindlevel.util.NetworkUtil;
+import net.mindlevel.util.PreferencesUtil;
 
 import static android.app.Activity.RESULT_OK;
 import static android.view.View.GONE;
@@ -165,9 +166,6 @@ public class UserFragment extends InfoFragment {
 
     private void populate(User user) {
         showInfo(false, false);
-        if (user.equals(this.user)) {
-            return;
-        }
 
         this.user = user;
         if (isAdded()) {
