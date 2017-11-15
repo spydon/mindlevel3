@@ -16,19 +16,19 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.pchmn.materialchips.ChipView;
 
-import net.mindlevel.util.CoordinatorUtil;
-import net.mindlevel.impl.ProgressController;
 import net.mindlevel.R;
-import net.mindlevel.api.ControllerCallback;
 import net.mindlevel.api.ChallengeController;
+import net.mindlevel.api.ControllerCallback;
+import net.mindlevel.impl.ProgressController;
 import net.mindlevel.model.Challenge;
+import net.mindlevel.util.CoordinatorUtil;
 import net.mindlevel.util.ImageUtil;
 import net.mindlevel.util.NetworkUtil;
 
 public class ChallengeActivity extends AppCompatActivity {
 
     private ChallengeController controller;
-    private View ChallengeView, progressView;
+    private View challengeView, progressView;
     private ProgressBar imageProgressView;
     private Context context;
 
@@ -36,33 +36,33 @@ public class ChallengeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_challenge);
-        ChallengeView = findViewById(R.id.challenge_content);
+        challengeView = findViewById(R.id.challenge_content);
         progressView = findViewById(R.id.progress);
         imageProgressView = (ProgressBar) findViewById(R.id.image_progress);
-        controller = new ChallengeController(ChallengeView.getContext());
+        controller = new ChallengeController(challengeView.getContext());
         context = this;
 
         showProgress(true);
         if (getIntent().hasExtra("challenge")) {
-            Challenge Challenge = (Challenge) getIntent().getSerializableExtra("challenge");
+            Challenge challenge = (Challenge) getIntent().getSerializableExtra("challenge");
             Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-            toolbar.setTitle(Challenge.title);
-            ChallengeCallback.onPostExecute(true, Challenge);
-        } else if (getIntent().hasExtra("ChallengeId")) {
-            int ChallengeId = getIntent().getIntExtra("ChallengeId", -1);
-            controller.get(ChallengeId, ChallengeCallback);
+            toolbar.setTitle(challenge.title);
+            challengeCallback.onPostExecute(true, challenge);
+        } else if (getIntent().hasExtra("challenge_id")) {
+            int ChallengeId = getIntent().getIntExtra("challenge_id", -1);
+            controller.get(ChallengeId, challengeCallback);
         }
     }
 
     private void showProgress(final boolean show) {
         int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
 
-        ChallengeView.setVisibility(show ? View.GONE : View.VISIBLE);
-        ChallengeView.animate().setDuration(shortAnimTime).alpha(
+        challengeView.setVisibility(show ? View.GONE : View.VISIBLE);
+        challengeView.animate().setDuration(shortAnimTime).alpha(
                 show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
-                ChallengeView.setVisibility(show ? View.GONE : View.VISIBLE);
+                challengeView.setVisibility(show ? View.GONE : View.VISIBLE);
             }
         });
 
@@ -76,7 +76,7 @@ public class ChallengeActivity extends AppCompatActivity {
         });
     }
 
-    private ControllerCallback<Challenge> ChallengeCallback = new ControllerCallback<Challenge>() {
+    private ControllerCallback<Challenge> challengeCallback = new ControllerCallback<Challenge>() {
 
         @Override
         public void onPostExecute(final Boolean success, final Challenge Challenge) {
@@ -130,7 +130,7 @@ public class ChallengeActivity extends AppCompatActivity {
                         .listener(new ProgressController(imageProgressView))
                         .into(imageView);
 
-                if (!NetworkUtil.connectionCheck(context, ChallengeView)) {
+                if (!NetworkUtil.connectionCheck(context, challengeView)) {
                     uploadButton.setVisibility(View.GONE);
                     accomplishmentsButton.setVisibility(View.GONE);
                 }

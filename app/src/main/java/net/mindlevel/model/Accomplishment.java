@@ -5,21 +5,21 @@ import java.io.Serializable;
 public class Accomplishment implements Serializable {
 
     public final String title, description, image;
-    public final int id, ChallengeId, score;
+    public final int id, challengeId, score;
     public final long created;
 
     public Accomplishment(int id,
                           String title,
                           String description,
                           String image,
-                          int ChallengeId,
+                          int challengeId,
                           int score,
                           long created) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.image = image;
-        this.ChallengeId = ChallengeId;
+        this.challengeId = challengeId;
         this.score = score;
         this.created = created;
     }

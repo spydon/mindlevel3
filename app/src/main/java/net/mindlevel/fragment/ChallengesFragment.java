@@ -109,7 +109,7 @@ public class ChallengesFragment extends InfoFragment {
      * activity.
      */
     public interface OnListFragmentInteractionListener {
-        void onListFragmentInteraction(Challenge Challenge);
+        void onListFragmentInteraction(Challenge challenge);
     }
 
     private ControllerCallback<List<Challenge>> getAllCallback = new ControllerCallback<List<Challenge>>() {

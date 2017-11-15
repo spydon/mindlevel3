@@ -21,13 +21,13 @@ import com.pchmn.materialchips.ChipsInput;
 import com.pchmn.materialchips.model.ChipInterface;
 
 import net.mindlevel.R;
-import net.mindlevel.model.UserChip;
 import net.mindlevel.api.AccomplishmentController;
 import net.mindlevel.api.ControllerCallback;
 import net.mindlevel.api.UserController;
 import net.mindlevel.model.Accomplishment;
 import net.mindlevel.model.Challenge;
 import net.mindlevel.model.User;
+import net.mindlevel.model.UserChip;
 import net.mindlevel.util.ImageUtil;
 import net.mindlevel.util.KeyboardUtil;
 
@@ -48,11 +48,11 @@ public class UploadActivity extends AppCompatActivity {
     private UserController userController;
     private ScrollView containerView;
     private View progressView;
-    private TextView titleView, ChallengeTitleView, descriptionView, errorView;
+    private TextView titleView, challengeTitleView, descriptionView, errorView;
     private ChipsInput contributorInput;
     private Button uploadButton;
     private Context context;
-    private int ChallengeId = -1;
+    private int challengeId = -1;
     private Uri path = null;
     private ImageUtil utils;
 
@@ -66,7 +66,7 @@ public class UploadActivity extends AppCompatActivity {
         utils = new ImageUtil(this);
 
         final Challenge challenge = (Challenge) getIntent().getSerializableExtra("challenge");
-        ChallengeId = challenge.id;
+        challengeId = challenge.id;
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(challenge.title);
         setSupportActionBar(toolbar);
@@ -98,10 +98,10 @@ public class UploadActivity extends AppCompatActivity {
         showProgress(false);
 
         errorView = (TextView) findViewById(R.id.error_text);
-        ChallengeTitleView = (TextView) findViewById(R.id.challenge_title);
+        challengeTitleView = (TextView) findViewById(R.id.challenge_title);
         titleView = (TextView) findViewById(R.id.title);
         descriptionView = (TextView) findViewById(R.id.description);
-        ChallengeTitleView.setText(challenge.title);
+        challengeTitleView.setText(challenge.title);
         uploadButton = (Button) findViewById(R.id.upload_button);
         uploadButton.setActivated(false);
 
@@ -124,7 +124,7 @@ public class UploadActivity extends AppCompatActivity {
                     String writtenTitle = titleView.getText().toString();
                     String title = writtenTitle.isEmpty() ? challenge.title : writtenTitle;
                     Accomplishment accomplishment = new Accomplishment(0, title, description, "",
-                            ChallengeId, 0, 0);
+                            challengeId, 0, 0);
                     accomplishmentController.add(accomplishment, contributors, path, uploadCallback);
                 }
             }

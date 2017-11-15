@@ -10,8 +10,8 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
-import net.mindlevel.impl.ProgressController;
 import net.mindlevel.R;
+import net.mindlevel.impl.ProgressController;
 import net.mindlevel.model.Challenge;
 import net.mindlevel.util.ImageUtil;
 
@@ -23,12 +23,12 @@ import java.util.Set;
  */
 class ChallengesRecyclerViewAdapter extends RecyclerView.Adapter<ChallengesRecyclerViewAdapter.ViewHolder> {
 
-    private final Set<Challenge> Challenges;
+    private final Set<Challenge> challenges;
     private final ChallengesFragment.OnListFragmentInteractionListener listener;
 
-    ChallengesRecyclerViewAdapter(Set<Challenge> Challenges, ChallengesFragment.OnListFragmentInteractionListener
+    ChallengesRecyclerViewAdapter(Set<Challenge> challenges, ChallengesFragment.OnListFragmentInteractionListener
             listener) {
-        this.Challenges = Challenges;
+        this.challenges = challenges;
         this.listener = listener;
     }
 
@@ -41,10 +41,10 @@ class ChallengesRecyclerViewAdapter extends RecyclerView.Adapter<ChallengesRecyc
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        Challenge Challenge = (Challenge)Challenges.toArray()[position];
-        holder.item = Challenge;
-        holder.titleView.setText(Challenge.title);
-        holder.descriptionView.setText(Challenge.description);
+        Challenge challenge = (Challenge) challenges.toArray()[position];
+        holder.item = challenge;
+        holder.titleView.setText(challenge.title);
+        holder.descriptionView.setText(challenge.description);
 
         ImageView imageView = holder.imageView;
         String url = ImageUtil.getUrl(holder.item.image);
@@ -67,7 +67,7 @@ class ChallengesRecyclerViewAdapter extends RecyclerView.Adapter<ChallengesRecyc
 
     @Override
     public int getItemCount() {
-        return Challenges.size();
+        return challenges.size();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {

@@ -18,14 +18,14 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
+import net.mindlevel.R;
 import net.mindlevel.api.AccomplishmentController;
 import net.mindlevel.api.ControllerCallback;
 import net.mindlevel.fragment.ContributorRecyclerViewAdapter;
-import net.mindlevel.model.User;
 import net.mindlevel.impl.ImageLikeView;
 import net.mindlevel.impl.ProgressController;
-import net.mindlevel.R;
 import net.mindlevel.model.Accomplishment;
+import net.mindlevel.model.User;
 import net.mindlevel.util.ImageUtil;
 
 import java.util.ArrayList;
@@ -39,7 +39,6 @@ public class AccomplishmentActivity extends AppCompatActivity {
     private Activity activity;
     private ContributorRecyclerViewAdapter adapter;
     private View contributorProgress;
-    private RecyclerView recyclerView;
     private List<User> contributors;
 
     private final int SHARE = 1;
@@ -59,13 +58,13 @@ public class AccomplishmentActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         this.contributorProgress = findViewById(R.id.contributor_progress);
-        FloatingActionButton ChallengeButton = (FloatingActionButton) findViewById(R.id.fab_challenge);
-        ChallengeButton.setOnClickListener(new View.OnClickListener() {
+        FloatingActionButton challengeButton = (FloatingActionButton) findViewById(R.id.fab_challenge);
+        challengeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent ChallengeIntent = new Intent(activity, ChallengeActivity.class);
-                ChallengeIntent.putExtra("ChallengeId", accomplishment.ChallengeId);
-                startActivity(ChallengeIntent);
+                Intent challengeIntent = new Intent(activity, ChallengeActivity.class);
+                challengeIntent.putExtra("challenge_id", accomplishment.challengeId);
+                startActivity(challengeIntent);
             }
         });
 
@@ -111,7 +110,7 @@ public class AccomplishmentActivity extends AppCompatActivity {
         AccomplishmentController controller = new AccomplishmentController(this);
         controller.getContributors(accomplishment.id, contributorsCallback);
 
-        recyclerView = (RecyclerView) findViewById(R.id.contributors);
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.contributors);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         recyclerView.setAdapter(adapter);
     }
