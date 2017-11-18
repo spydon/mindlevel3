@@ -1,12 +1,14 @@
 package net.mindlevel.api;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import net.mindlevel.R;
+import net.mindlevel.activity.LoginActivity;
 import net.mindlevel.util.NetworkUtil;
 import net.mindlevel.util.PreferencesUtil;
 
@@ -16,8 +18,8 @@ import java.util.concurrent.TimeUnit;
 
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
-import okhttp3.Response;
 import okhttp3.Request;
+import okhttp3.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -43,10 +45,23 @@ abstract class BackendService {
         Interceptor errorInterceptor = new Interceptor() {
             @Override
             public Response intercept(@NonNull Chain chain) throws IOException {
+                // Handle no network on client side
                 if (!NetworkUtil.isConnected(context)) {
                     throw new SocketException("No network");
                 }
-                return chain.proceed(chain.request());
+
+                // Handle old session token
+                Response response = chain.proceed(chain.request());
+                int code = response.code();
+                switch (code) {
+                    case 401:
+                    case 403:
+                        PreferencesUtil.clearSession(context);
+                        Intent loginIntent = new Intent(context, LoginActivity.class);
+                        context.startActivity(loginIntent);
+                        break;
+                }
+                return response;
             }
         };
 
