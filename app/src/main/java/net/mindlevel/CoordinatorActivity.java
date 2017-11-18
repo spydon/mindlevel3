@@ -2,12 +2,10 @@ package net.mindlevel;
 
 // TODO: Change back to non-support lib
 
-import android.app.ActivityManager;
 import android.app.ActivityManager.TaskDescription;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -232,7 +230,7 @@ public class CoordinatorActivity
 
     private void forceWhiteTitle() {
         Bitmap icon = BitmapFactory.decodeResource(getResources(), R.drawable.logo);
-        int primaryDark = ContextCompat.getColor(this, R.color.colorPrimaryDark);
+        int primaryDark = ContextCompat.getColor(this, R.color.colorBarDark);
         TaskDescription taskDescription = new TaskDescription(getString(R.string.app_name), icon, primaryDark);
         setTaskDescription(taskDescription);
         ImageUtil.setBucketAddress(getString(R.string.bucket_address));
