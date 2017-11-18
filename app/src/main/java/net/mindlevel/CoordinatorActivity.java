@@ -2,7 +2,12 @@ package net.mindlevel;
 
 // TODO: Change back to non-support lib
 
+import android.app.ActivityManager;
+import android.app.ActivityManager.TaskDescription;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -10,6 +15,7 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -102,7 +108,8 @@ public class CoordinatorActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_coordinator);
-        ImageUtil.setBucketAddress(getString(R.string.bucket_address));
+
+        forceWhiteTitle();
 
         fragments.put(R.id.navigation_feed, feedFragment);
         fragments.put(R.id.navigation_challenges, challengesFragment);
@@ -149,6 +156,7 @@ public class CoordinatorActivity
             public void onPageScrollStateChanged(int state) { /* Do nothing */ }
         });
     }
+
 
     @Override
     public void onNewIntent(Intent intent) {
@@ -220,6 +228,14 @@ public class CoordinatorActivity
         } else {
             fm.popBackStackImmediate();
         }
+    }
+
+    private void forceWhiteTitle() {
+        Bitmap icon = BitmapFactory.decodeResource(getResources(), R.drawable.logo);
+        int primaryDark = ContextCompat.getColor(this, R.color.colorPrimaryDark);
+        TaskDescription taskDescription = new TaskDescription(getString(R.string.app_name), icon, primaryDark);
+        setTaskDescription(taskDescription);
+        ImageUtil.setBucketAddress(getString(R.string.bucket_address));
     }
 
     public void onFragmentInteraction(Uri uri) {

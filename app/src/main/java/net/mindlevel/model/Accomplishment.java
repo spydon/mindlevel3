@@ -8,6 +8,9 @@ public class Accomplishment implements Serializable {
     public final int id, challengeId, score;
     public final long created;
 
+    public Accomplishment(String title, String description, int challengeId) {
+        this(0, title, description, "", challengeId, 0, 0);
+    }
     public Accomplishment(int id,
                           String title,
                           String description,

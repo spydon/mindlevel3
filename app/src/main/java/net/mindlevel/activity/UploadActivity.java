@@ -123,8 +123,7 @@ public class UploadActivity extends AppCompatActivity {
                     }
                     String writtenTitle = titleView.getText().toString();
                     String title = writtenTitle.isEmpty() ? challenge.title : writtenTitle;
-                    Accomplishment accomplishment = new Accomplishment(0, title, description, "",
-                            challengeId, 0, 0);
+                    Accomplishment accomplishment = new Accomplishment(title, description, challengeId);
                     accomplishmentController.add(accomplishment, contributors, path, uploadCallback);
                 }
             }

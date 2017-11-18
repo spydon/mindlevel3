@@ -235,7 +235,8 @@ public class FeedFragment extends InfoFragment {
                         showInfo(true, false, getString(R.string.error_not_found));
                     } else {
                         showInfo(false, false);
-                        if (!accomplishments.containsAll(response)) {
+                        if (!accomplishments.equals(response)) {
+                            accomplishments.clear();
                             accomplishments.addAll(response);
                             adapter.notifyDataSetChanged();
                         }
