@@ -140,7 +140,8 @@ public class UserFragment extends InfoFragment {
         if (bundle != null) {
             if (bundle.containsKey("user")) {
                 User user = (User) bundle.getSerializable("user");
-                populate(user);
+                // TODO: pass user instead and make sure it doesn't always cache
+                populate(user != null ? user.username : "");
             } else if (bundle.containsKey("username")) {
                 String username = bundle.getString("username");
                 populate(username);

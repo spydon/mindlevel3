@@ -76,7 +76,7 @@ public class AccomplishmentActivity extends AppCompatActivity {
                 sharingIntent.setType("image/*");
                 sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, accomplishment.title);
                 sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, accomplishment.description);
-                Bitmap bitmap = ((BitmapDrawable)imageView.getDrawable()).getBitmap();
+                Bitmap bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
                 String path = MediaStore.Images.Media.insertImage(getContentResolver(), bitmap, "", null);
                 Uri uri = Uri.parse(path);
                 sharingIntent.putExtra(Intent.EXTRA_STREAM, uri);

@@ -32,9 +32,6 @@ import java.util.TreeSet;
  */
 public class HighscoreFragment extends InfoFragment {
 
-    // TODO: Customize parameter argument names
-    private static final String ARG_COLUMN_COUNT = "column-count";
-    // TODO: Customize parameters
     private int columnCount = 1;
     private OnListFragmentInteractionListener listener;
     private UserController controller;
@@ -50,16 +47,6 @@ public class HighscoreFragment extends InfoFragment {
     public HighscoreFragment() {
     }
 
-    // TODO: Customize parameter initialization
-    @SuppressWarnings("unused")
-    public static HighscoreFragment newInstance(int columnCount) {
-        HighscoreFragment fragment = new HighscoreFragment();
-        Bundle args = new Bundle();
-        args.putInt(ARG_COLUMN_COUNT, columnCount);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,10 +54,6 @@ public class HighscoreFragment extends InfoFragment {
         this.shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
         this.highscores = new TreeSet<>();
         this.adapter = new HighscoreRecyclerViewAdapter(highscores, listener);
-
-        if (getArguments() != null) {
-            columnCount = getArguments().getInt(ARG_COLUMN_COUNT);
-        }
     }
 
     @Override

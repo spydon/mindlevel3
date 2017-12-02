@@ -56,9 +56,10 @@ abstract class BackendService {
                 switch (code) {
                     case 401:
                     case 403:
-                        PreferencesUtil.clearSession(context);
-                        Intent loginIntent = new Intent(context, LoginActivity.class);
-                        context.startActivity(loginIntent);
+                        Context baseContext = context.getApplicationContext();
+                        PreferencesUtil.clearSession(baseContext);
+                        Intent loginIntent = new Intent(baseContext, LoginActivity.class);
+                        baseContext.startActivity(loginIntent);
                         break;
                 }
                 return response;
