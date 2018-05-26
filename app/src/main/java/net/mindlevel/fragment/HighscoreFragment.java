@@ -134,6 +134,7 @@ public class HighscoreFragment extends InfoFragment {
                 } else {
                     showInfo(false, false);
                     if (!highscores.containsAll(response)) {
+                        // This sometimes works insanely strange, but keep it a TreeSet, otherwise it wont be ordered
                         highscores.addAll(response);
                         adapter.notifyDataSetChanged();
                     }
