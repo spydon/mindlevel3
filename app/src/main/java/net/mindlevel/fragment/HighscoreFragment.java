@@ -60,13 +60,13 @@ public class HighscoreFragment extends InfoFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_highscore_list, container, false);
-        this.recyclerView = (RecyclerView) view.findViewById(R.id.list);
+        this.recyclerView = view.findViewById(R.id.list);
         recyclerView.setAdapter(adapter);
 
         contentView = recyclerView;
         progressView = view.findViewById(R.id.progress);
         errorView = view.findViewById(R.id.error);
-        this.swipe = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh_layout);
+        this.swipe = view.findViewById(R.id.swipe_refresh_layout);
         Context context = getContext();
         View coordinator = contentView.getRootView();
 
@@ -133,11 +133,18 @@ public class HighscoreFragment extends InfoFragment {
                     showInfo(true, false, getString(R.string.error_not_found));
                 } else {
                     showInfo(false, false);
-                    if (!highscores.containsAll(response)) {
-                        // This sometimes works insanely strange, but keep it a TreeSet, otherwise it wont be ordered
-                        highscores.addAll(response);
-                        adapter.notifyDataSetChanged();
-                    }
+                    highscores.clear();
+                    highscores.addAll(response);
+                    adapter.notifyDataSetChanged();
+                    /* For some reason this causes duplication of users in the list even though equals and hashcode are
+                    overridden, if the app ever gets enough users you can put more hours into this.
+                    Clearly the set should only contain each element once.
+                     */
+                    //if (!highscores.containsAll(response)) {
+                    //    // This sometimes works insanely strange, but keep it a TreeSet, otherwise it wont be ordered
+                    //    highscores.addAll(response);
+                    //    adapter.notifyDataSetChanged();
+                    //}
                 }
             } else {
                 showInfo(true, false);

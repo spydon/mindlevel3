@@ -39,6 +39,14 @@
             android:layout_height="wrap_content" />
 
         <TextView
+            android:id="@+id/version"
+            android:textStyle="bold"
+            android:typeface="monospace"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
             android:id="@+id/description"
             android:text="@string/app_description"
             android:layout_width="match_parent"

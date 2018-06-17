@@ -16,3 +16,7 @@ I think that most people wouldn't even appreciate these parts of their lives if 
 option of doing something more exciting sometimes, something that would be worth remembering.
 
 This is my attempt of giving you that option.
+
+## Notes to self
+keystore.jks has an alias called upload used for doing signed bundles.
+upload_certificate.pem is the certificate for uploading bundles.
