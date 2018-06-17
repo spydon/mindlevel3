@@ -83,11 +83,11 @@ class HighscoreRecyclerViewAdapter extends RecyclerView.Adapter<HighscoreRecycle
         ViewHolder(View view) {
             super(view);
             this.view = view;
-            imageView = (ImageView) view.findViewById(R.id.image);
-            usernameView = (TextView) view.findViewById(R.id.username);
-            scoreView = (TextView) view.findViewById(R.id.score);
-            positionView = (TextView) view.findViewById(R.id.position);
-            progressBar = (ProgressBar) view.findViewById(R.id.image_progress);
+            imageView = view.findViewById(R.id.image);
+            usernameView = view.findViewById(R.id.username);
+            scoreView = view.findViewById(R.id.score);
+            positionView = view.findViewById(R.id.position);
+            progressBar = view.findViewById(R.id.image_progress);
         }
 
         @Override

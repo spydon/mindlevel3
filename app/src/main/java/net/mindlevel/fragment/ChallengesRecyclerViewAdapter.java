@@ -81,10 +81,10 @@ class ChallengesRecyclerViewAdapter extends RecyclerView.Adapter<ChallengesRecyc
         ViewHolder(View view) {
             super(view);
             this.view = view;
-            imageView = (ImageView) view.findViewById(R.id.image);
-            titleView = (TextView) view.findViewById(R.id.title);
-            descriptionView = (TextView) view.findViewById(R.id.description);
-            progressBar = (ProgressBar) view.findViewById(R.id.image_progress);
+            imageView = view.findViewById(R.id.image);
+            titleView = view.findViewById(R.id.title);
+            descriptionView = view.findViewById(R.id.description);
+            progressBar = view.findViewById(R.id.image_progress);
         }
 
         @Override

@@ -80,11 +80,11 @@ class FeedRecyclerViewAdapter extends RecyclerView.Adapter<FeedRecyclerViewAdapt
         ViewHolder(View view) {
             super(view);
             this.view = view;
-            titleView = (TextView) view.findViewById(R.id.title);
-            imageView = (ImageLikeView) view.findViewById(R.id.image);
-            progressBar = (ProgressBar) view.findViewById(R.id.progress);
-            TextView imageText = (TextView) view.findViewById(R.id.image_text);
-            ProgressBar likeProgress = (ProgressBar) view.findViewById(R.id.progress_like);
+            titleView = view.findViewById(R.id.title);
+            imageView = view.findViewById(R.id.image);
+            progressBar = view.findViewById(R.id.progress);
+            TextView imageText = view.findViewById(R.id.image_text);
+            ProgressBar likeProgress = view.findViewById(R.id.progress_like);
             imageView.setTextView(imageText);
             imageView.setProgressLike(likeProgress);
         }

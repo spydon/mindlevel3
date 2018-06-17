@@ -261,7 +261,7 @@ public class CoordinatorActivity
         int fragmentOrderId = Arrays.asList(fragments.values().toArray()).indexOf(selectedFragment);
         boolean isResumed = selectedFragment.isResumed();
         viewPager.setCurrentItem(fragmentOrderId, true);
-        if (isResumed) {
+        if (isResumed && currentFragment != selectedFragment) {
             selectedFragment.onResume();
         }
         currentFragment = selectedFragment;
