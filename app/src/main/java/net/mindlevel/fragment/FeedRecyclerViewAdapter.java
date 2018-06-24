@@ -35,6 +35,7 @@ class FeedRecyclerViewAdapter extends RecyclerView.Adapter<FeedRecyclerViewAdapt
                             FeedFragment.OnListFragmentInteractionListener listener) {
         this.items = items;
         this.listener = listener;
+        setHasStableIds(true);
     }
 
     @Override
@@ -79,6 +80,7 @@ class FeedRecyclerViewAdapter extends RecyclerView.Adapter<FeedRecyclerViewAdapt
         List<Accomplishment> indexed = new ArrayList<>(items);
         return indexed.get(position).hashCode();
     }
+
 
     class ViewHolder extends RecyclerView.ViewHolder {
         public final View view;

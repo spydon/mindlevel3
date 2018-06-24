@@ -12,6 +12,7 @@ import net.mindlevel.R;
 import net.mindlevel.model.User;
 import net.mindlevel.util.CoordinatorUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ContributorRecyclerViewAdapter extends RecyclerView.Adapter<ContributorRecyclerViewAdapter.ViewHolder> {
@@ -26,6 +27,7 @@ public class ContributorRecyclerViewAdapter extends RecyclerView.Adapter<Contrib
         this.context = context;
         this.inflater = LayoutInflater.from(context);
         this.contributors = contributors;
+        setHasStableIds(true);
     }
 
     // inflates the row layout from xml when needed
@@ -53,6 +55,11 @@ public class ContributorRecyclerViewAdapter extends RecyclerView.Adapter<Contrib
         return contributors.size();
     }
 
+    @Override
+    public long getItemId(int position) {
+        List<User> indexed = new ArrayList<>(contributors);
+        return indexed.get(position).hashCode();
+    }
 
     // stores and recycles views as they are scrolled off screen
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

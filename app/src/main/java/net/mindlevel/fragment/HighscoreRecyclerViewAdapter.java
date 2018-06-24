@@ -16,6 +16,8 @@ import net.mindlevel.model.Challenge;
 import net.mindlevel.model.User;
 import net.mindlevel.util.ImageUtil;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -30,6 +32,7 @@ class HighscoreRecyclerViewAdapter extends RecyclerView.Adapter<HighscoreRecycle
     HighscoreRecyclerViewAdapter(Set<User> users, HighscoreFragment.OnListFragmentInteractionListener listener) {
         this.users = users;
         this.listener = listener;
+        setHasStableIds(true);
     }
 
     @Override
@@ -70,6 +73,13 @@ class HighscoreRecyclerViewAdapter extends RecyclerView.Adapter<HighscoreRecycle
     public int getItemCount() {
         return users.size();
     }
+
+    @Override
+    public long getItemId(int position) {
+        List<User> indexed = new ArrayList<>(users);
+        return indexed.get(position).hashCode();
+    }
+
 
     class ViewHolder extends RecyclerView.ViewHolder {
         public User item;

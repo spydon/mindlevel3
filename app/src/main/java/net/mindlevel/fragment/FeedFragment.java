@@ -10,7 +10,6 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SimpleItemAnimator;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -74,9 +73,8 @@ public class FeedFragment extends InfoFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_feed_list, container, false);
+        final View view = inflater.inflate(R.layout.fragment_feed_list, container, false);
         this.recyclerView = view.findViewById(R.id.list);
-        adapter.setHasStableIds(true);
         recyclerView.setAdapter(adapter);
 
         this.contentView = recyclerView;
@@ -114,12 +112,18 @@ public class FeedFragment extends InfoFragment {
 
         // Handles pagination
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            int lastOffset = 0;
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int state) {
                 super.onScrollStateChanged(recyclerView, state);
+                int currentOffset = recyclerView.computeVerticalScrollOffset();
+                int delta = currentOffset - lastOffset;
+                lastOffset = currentOffset;
 
-                if (recyclerView.isShown() && state == 2 && !recyclerView.canScrollVertically(1)) {
-                    populatePage();
+                if (recyclerView.isShown() &&
+                        delta > 0 &&
+                        !recyclerView.canScrollVertically(1)) {
+                    populateNextPage();
                 }
             }
         });
@@ -181,7 +185,7 @@ public class FeedFragment extends InfoFragment {
         accomplishmentController.getLatest(getAccomplishmentsCallback);
     }
 
-    private void populatePage() {
+    private void populateNextPage() {
         showPaginationProgress(true);
         String from = String.valueOf(accomplishments.size() + 1);
         String to = String.valueOf(accomplishments.size() + AccomplishmentController.PAGE_SIZE);

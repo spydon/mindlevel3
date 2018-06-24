@@ -15,6 +15,8 @@ import net.mindlevel.impl.ProgressController;
 import net.mindlevel.model.Challenge;
 import net.mindlevel.util.ImageUtil;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -30,6 +32,7 @@ class ChallengesRecyclerViewAdapter extends RecyclerView.Adapter<ChallengesRecyc
             listener) {
         this.challenges = challenges;
         this.listener = listener;
+        setHasStableIds(true);
     }
 
     @Override
@@ -68,6 +71,12 @@ class ChallengesRecyclerViewAdapter extends RecyclerView.Adapter<ChallengesRecyc
     @Override
     public int getItemCount() {
         return challenges.size();
+    }
+
+    @Override
+    public long getItemId(int position) {
+        List<Challenge> indexed = new ArrayList<>(challenges);
+        return indexed.get(position).hashCode();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
