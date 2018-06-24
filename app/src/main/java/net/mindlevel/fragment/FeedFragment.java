@@ -53,6 +53,9 @@ public class FeedFragment extends InfoFragment {
     private View paginationProgress;
     private SwipeRefreshLayout swipe;
 
+    private State state = State.NORMAL;
+    private enum State { NORMAL, FOR_USER, FOR_CHALLENGE }
+
     public FeedFragment() {
         if (getArguments() == null) {
             setArguments(new Bundle());
@@ -114,13 +117,14 @@ public class FeedFragment extends InfoFragment {
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             int lastOffset = 0;
             @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int state) {
-                super.onScrollStateChanged(recyclerView, state);
+            public void onScrollStateChanged(RecyclerView recyclerView, int scrollState) {
+                super.onScrollStateChanged(recyclerView, scrollState);
                 int currentOffset = recyclerView.computeVerticalScrollOffset();
                 int delta = currentOffset - lastOffset;
                 lastOffset = currentOffset;
 
                 if (recyclerView.isShown() &&
+                        state == State.NORMAL &&
                         delta > 0 &&
                         !recyclerView.canScrollVertically(1)) {
                     populateNextPage();
@@ -182,6 +186,7 @@ public class FeedFragment extends InfoFragment {
     private void populateLatest() {
         showInfo(false, true);
         getArguments().clear();
+        state = State.NORMAL;
         accomplishmentController.getLatest(getAccomplishmentsCallback);
     }
 
@@ -195,6 +200,7 @@ public class FeedFragment extends InfoFragment {
 
     private void populateUserAccomplishments(String username) {
         showInfo(false, true);
+        state = State.FOR_USER;
         userController.getAccomplishments(username, getAccomplishmentsCallback);
         String infoText = getString(R.string.feed_user, username);
         searchInfoBar.setText(infoText);
@@ -203,6 +209,7 @@ public class FeedFragment extends InfoFragment {
 
     private void populateChallengeAccomplishments(Challenge Challenge) {
         showInfo(false, true);
+        state = State.FOR_CHALLENGE;
         ChallengeController.getAccomplishments(Challenge.id, getAccomplishmentsCallback);
         String infoText = getString(R.string.feed_challenge, Challenge.title);
         searchInfoBar.setText(infoText);
