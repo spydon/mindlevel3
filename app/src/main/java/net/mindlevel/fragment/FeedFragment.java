@@ -113,8 +113,8 @@ public class FeedFragment extends InfoFragment {
 
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
+            public void onScrollStateChanged(RecyclerView recyclerView, int state) {
+                super.onScrollStateChanged(recyclerView, state);
 
                 if (!recyclerView.isShown()) {
                     return;
@@ -124,10 +124,6 @@ public class FeedFragment extends InfoFragment {
                     // Already handled by SwipeRefreshLayout
                 } else if (!recyclerView.canScrollVertically(1)) {
                     populatePage(page+1);
-                } else if (dy < 0) {
-                    System.out.println("dy");
-                } else if (dy > 0) {
-                    System.out.println("dy2");
                 }
             }
         });
@@ -259,8 +255,10 @@ public class FeedFragment extends InfoFragment {
                         showInfo(true, false, getString(R.string.error_not_found));
                     } else if (!response.isEmpty()){
                         page++;
+                        int preSize = accomplishments.size();
                         accomplishments.addAll(response);
-                        adapter.notifyDataSetChanged();
+                        //adapter.notifyDataSetChanged();
+                        adapter.notifyItemRangeChanged(preSize, response.size());
                         showInfo(false, false);
                     }
                 } else {
