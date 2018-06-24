@@ -15,7 +15,11 @@ import net.mindlevel.R;
 import net.mindlevel.model.Accomplishment;
 import net.mindlevel.util.ImageUtil;
 
+import java.util.ArrayList;
+import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * {@link RecyclerView.Adapter} that can display a {@link Accomplishment} and makes a call to the
@@ -68,6 +72,12 @@ class FeedRecyclerViewAdapter extends RecyclerView.Adapter<FeedRecyclerViewAdapt
     @Override
     public int getItemCount() {
         return items.size();
+    }
+
+    @Override
+    public long getItemId(int position) {
+        List<Accomplishment> indexed = new ArrayList<>(items);
+        return indexed.get(position).hashCode();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {

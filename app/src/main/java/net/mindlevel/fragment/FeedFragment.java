@@ -10,6 +10,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SimpleItemAnimator;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -52,7 +53,6 @@ public class FeedFragment extends InfoFragment {
     private Snackbar searchInfoBar;
     private View paginationProgress;
     private SwipeRefreshLayout swipe;
-    private int page = 0;
 
     public FeedFragment() {
         if (getArguments() == null) {
@@ -76,6 +76,7 @@ public class FeedFragment extends InfoFragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_feed_list, container, false);
         this.recyclerView = view.findViewById(R.id.list);
+        adapter.setHasStableIds(true);
         recyclerView.setAdapter(adapter);
 
         this.contentView = recyclerView;
@@ -111,19 +112,14 @@ public class FeedFragment extends InfoFragment {
             }
         });
 
+        // Handles pagination
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int state) {
                 super.onScrollStateChanged(recyclerView, state);
 
-                if (!recyclerView.isShown()) {
-                    return;
-                }
-
-                if (!recyclerView.canScrollVertically(-1)) {
-                    // Already handled by SwipeRefreshLayout
-                } else if (!recyclerView.canScrollVertically(1)) {
-                    populatePage(page+1);
+                if (recyclerView.isShown() && state == 2 && !recyclerView.canScrollVertically(1)) {
+                    populatePage();
                 }
             }
         });
@@ -185,9 +181,11 @@ public class FeedFragment extends InfoFragment {
         accomplishmentController.getLatest(getAccomplishmentsCallback);
     }
 
-    private void populatePage(int page) {
+    private void populatePage() {
         showPaginationProgress(true);
-        String range = page*AccomplishmentController.PAGE_SIZE + "-" + ((page+1)*AccomplishmentController.PAGE_SIZE);
+        String from = String.valueOf(accomplishments.size() + 1);
+        String to = String.valueOf(accomplishments.size() + AccomplishmentController.PAGE_SIZE);
+        String range = from + "-" + to;
         accomplishmentController.getLatest(range, getPaginationCallback);
     }
 
@@ -254,7 +252,6 @@ public class FeedFragment extends InfoFragment {
                     if (response.isEmpty() && accomplishments.isEmpty()) {
                         showInfo(true, false, getString(R.string.error_not_found));
                     } else if (!response.isEmpty()){
-                        page++;
                         int preSize = accomplishments.size();
                         accomplishments.addAll(response);
                         //adapter.notifyDataSetChanged();
