@@ -53,13 +53,13 @@ public class ChallengesFragment extends InfoFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_challenge_list, container, false);
-        this.recyclerView = (RecyclerView) view.findViewById(R.id.list);
+        this.recyclerView = view.findViewById(R.id.list);
         this.contentView = recyclerView;
         this.shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
 
         this.progressView = view.findViewById(R.id.progress);
         this.errorView = view.findViewById(R.id.error);
-        this.swipe = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh_layout);
+        this.swipe = view.findViewById(R.id.swipe_refresh_layout);
         Context context = getContext();
 
         if (columnCount <= 1) {

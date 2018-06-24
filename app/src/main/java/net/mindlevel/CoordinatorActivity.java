@@ -95,11 +95,6 @@ public class CoordinatorActivity
         public int getCount() {
             return fragments.size();
         }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return "OBJECT " + (position + 1);
-        }
     }
 
     @Override
@@ -130,14 +125,14 @@ public class CoordinatorActivity
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(R.layout.toolbar);
 
-        navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        navigation = findViewById(R.id.navigation);
         // TODO: Remove support lib once not on S5
         //PagerAdapter pager = new PagerAdapter(getFragmentManager());
         PagerAdapter pager = new PagerAdapter(getSupportFragmentManager());
         // Bottom navigation listener
         navigation.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
         // Swipe between fragments
-        viewPager = (ViewPager) findViewById(R.id.content_frame);
+        viewPager = findViewById(R.id.content_frame);
         viewPager.setAdapter(pager);
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override

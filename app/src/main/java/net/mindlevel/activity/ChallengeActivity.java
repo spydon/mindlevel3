@@ -38,14 +38,14 @@ public class ChallengeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_challenge);
         challengeView = findViewById(R.id.challenge_content);
         progressView = findViewById(R.id.progress);
-        imageProgressView = (ProgressBar) findViewById(R.id.image_progress);
+        imageProgressView = findViewById(R.id.image_progress);
         controller = new ChallengeController(challengeView.getContext());
         context = this;
 
         showProgress(true);
         if (getIntent().hasExtra("challenge")) {
             Challenge challenge = (Challenge) getIntent().getSerializableExtra("challenge");
-            Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+            Toolbar toolbar = findViewById(R.id.toolbar);
             toolbar.setTitle(challenge.title);
             challengeCallback.onPostExecute(true, challenge);
         } else if (getIntent().hasExtra("challenge_id")) {
@@ -83,18 +83,18 @@ public class ChallengeActivity extends AppCompatActivity {
             showProgress(false);
 
             if (success) {
-                Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+                Toolbar toolbar = findViewById(R.id.toolbar);
                 setSupportActionBar(toolbar);
                 getSupportActionBar().setDisplayHomeAsUpEnabled(true);
                 toolbar.setTitle(Challenge.title);
 
-                TextView titleView = (TextView) findViewById(R.id.title);
+                TextView titleView = findViewById(R.id.title);
                 titleView.setText(Challenge.title);
 
-                TextView descriptionView = (TextView) findViewById(R.id.description);
+                TextView descriptionView = findViewById(R.id.description);
                 descriptionView.setText(Challenge.description);
 
-                ChipView creatorView = (ChipView) findViewById(R.id.creator);
+                ChipView creatorView = findViewById(R.id.creator);
                 creatorView.setLabel(Challenge.creator);
 
                 creatorView.setOnChipClicked(new View.OnClickListener() {
@@ -104,7 +104,7 @@ public class ChallengeActivity extends AppCompatActivity {
                     }
                 });
 
-                FloatingActionButton uploadButton = (FloatingActionButton) findViewById(R.id.upload_button);
+                FloatingActionButton uploadButton = findViewById(R.id.upload_button);
                 uploadButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -115,7 +115,7 @@ public class ChallengeActivity extends AppCompatActivity {
                 });
 
                 FloatingActionButton accomplishmentsButton =
-                        (FloatingActionButton) findViewById(R.id.accomplishments_button);
+                        findViewById(R.id.accomplishments_button);
                 accomplishmentsButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -123,7 +123,7 @@ public class ChallengeActivity extends AppCompatActivity {
                     }
                 });
 
-                ImageView imageView = (ImageView) findViewById(R.id.image);
+                ImageView imageView = findViewById(R.id.image);
                 String url = ImageUtil.getUrl(Challenge.image);
                 Glide.with(context)
                         .load(url)

@@ -53,14 +53,14 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         coordinatorLayout = findViewById(R.id.login_outer);
         loginFormView = findViewById(R.id.login_inner_form);
-        final ScrollView scrollView = (ScrollView) findViewById(R.id.login_form);
+        final ScrollView scrollView = findViewById(R.id.login_form);
         loginController = new LoginController(loginFormView.getContext());
         userController = new UserController(loginFormView.getContext());
 
         // Set up the login form.
-        usernameView = (EditText) findViewById(R.id.username);
+        usernameView = findViewById(R.id.username);
 
-        passwordView = (EditText) findViewById(R.id.password);
+        passwordView = findViewById(R.id.password);
         passwordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
@@ -81,7 +81,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        outerPasswordView = (TextInputLayout) findViewById(R.id.password_outer);
+        outerPasswordView = findViewById(R.id.password_outer);
 
         View tosView = findViewById(R.id.terms);
         tosView.setOnClickListener(new OnClickListener() {
@@ -112,7 +112,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        Button signInButton = (Button) findViewById(R.id.sign_in_button);
+        Button signInButton = findViewById(R.id.sign_in_button);
         signInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -120,7 +120,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        Button registerButton = (Button) findViewById(R.id.register_button);
+        Button registerButton = findViewById(R.id.register_button);
         registerButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -129,7 +129,7 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         progressView = findViewById(R.id.progress);
-        TextView tip = (TextView) findViewById(R.id.tip);
+        TextView tip = findViewById(R.id.tip);
         tip.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -146,7 +146,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void setRandomTip() {
-        TextView tipView = (TextView) findViewById(R.id.tip);
+        TextView tipView = findViewById(R.id.tip);
         String[] tips = {
                 getString(R.string.tip_like),
                 getString(R.string.tip_contributor),

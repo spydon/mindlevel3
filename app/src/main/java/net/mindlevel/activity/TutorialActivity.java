@@ -15,7 +15,7 @@ public class TutorialActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tutorial);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        Button finishedButton = (Button) findViewById(R.id.tutorial_finished);
+        Button finishedButton = findViewById(R.id.tutorial_finished);
         finishedButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

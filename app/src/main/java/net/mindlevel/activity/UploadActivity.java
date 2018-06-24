@@ -67,11 +67,11 @@ public class UploadActivity extends AppCompatActivity {
 
         final Challenge challenge = (Challenge) getIntent().getSerializableExtra("challenge");
         challengeId = challenge.id;
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle(challenge.title);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton choosePicture = (FloatingActionButton) findViewById(R.id.choose_picture);
+        FloatingActionButton choosePicture = findViewById(R.id.choose_picture);
         choosePicture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -79,7 +79,7 @@ public class UploadActivity extends AppCompatActivity {
             }
         });
 
-        FloatingActionButton takePicture = (FloatingActionButton) findViewById(R.id.take_picture);
+        FloatingActionButton takePicture = findViewById(R.id.take_picture);
         takePicture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -93,16 +93,16 @@ public class UploadActivity extends AppCompatActivity {
             takePicture.setVisibility(View.INVISIBLE);
         }
 
-        containerView = (ScrollView) findViewById(R.id.scroll);
+        containerView = findViewById(R.id.scroll);
         progressView = findViewById(R.id.progress);
         showProgress(false);
 
-        errorView = (TextView) findViewById(R.id.error_text);
-        challengeTitleView = (TextView) findViewById(R.id.challenge_title);
-        titleView = (TextView) findViewById(R.id.title);
-        descriptionView = (TextView) findViewById(R.id.description);
+        errorView = findViewById(R.id.error_text);
+        challengeTitleView = findViewById(R.id.challenge_title);
+        titleView = findViewById(R.id.title);
+        descriptionView = findViewById(R.id.description);
         challengeTitleView.setText(challenge.title);
-        uploadButton = (Button) findViewById(R.id.upload_button);
+        uploadButton = findViewById(R.id.upload_button);
         uploadButton.setActivated(false);
 
         uploadButton.setOnClickListener(new View.OnClickListener() {
@@ -129,7 +129,7 @@ public class UploadActivity extends AppCompatActivity {
             }
         });
 
-        contributorInput = (ChipsInput) findViewById(R.id.contributor_input);
+        contributorInput = findViewById(R.id.contributor_input);
         contributorInput.setEnabled(false);
         userController.getAll(usernamesCallback);
     }
@@ -174,7 +174,7 @@ public class UploadActivity extends AppCompatActivity {
                 path = data.getData();
             }
 
-            ImageView imageView = (ImageView) findViewById(R.id.image);
+            ImageView imageView = findViewById(R.id.image);
             utils.setImage(path, imageView);
         }
     }
@@ -213,7 +213,7 @@ public class UploadActivity extends AppCompatActivity {
         public void onPostExecute(final Boolean success, final List<User> users) {
             if (success) {
                 ArrayList<UserChip> userChips = new ArrayList<>();
-                contributorInput = (ChipsInput) findViewById(R.id.contributor_input);
+                contributorInput = findViewById(R.id.contributor_input);
                 for(User user : users) {
                     userChips.add(new UserChip(user));
                 }

@@ -70,10 +70,10 @@ public class UserFragment extends InfoFragment {
         this.view = inflater.inflate(R.layout.fragment_user, container, false);
         this.contentView = view.findViewById(R.id.content);
 
-        this.imageView = (ImageView) view.findViewById(R.id.image);
-        this.usernameView = (TextView) view.findViewById(R.id.username);
-        this.scoreView = (TextView) view.findViewById(R.id.score);
-        this.descriptionView = (TextView) view.findViewById(R.id.description);
+        this.imageView = view.findViewById(R.id.image);
+        this.usernameView = view.findViewById(R.id.username);
+        this.scoreView = view.findViewById(R.id.score);
+        this.descriptionView = view.findViewById(R.id.description);
         this.progressView = view.findViewById(R.id.progress);
         this.errorView = view.findViewById(R.id.error);
         this.imageProgressBar = view.findViewById(R.id.progress_image);
@@ -84,7 +84,7 @@ public class UserFragment extends InfoFragment {
 
         this.shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
 
-        editButton = (FloatingActionButton) view.findViewById(R.id.edit_button);
+        editButton = view.findViewById(R.id.edit_button);
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -94,7 +94,7 @@ public class UserFragment extends InfoFragment {
             }
         });
 
-        signOutButton = (FloatingActionButton) view.findViewById(R.id.sign_out_button);
+        signOutButton = view.findViewById(R.id.sign_out_button);
         signOutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -104,7 +104,7 @@ public class UserFragment extends InfoFragment {
             }
         });
 
-        selfButton = (FloatingActionButton) view.findViewById(R.id.self_button);
+        selfButton = view.findViewById(R.id.self_button);
         selfButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -112,7 +112,7 @@ public class UserFragment extends InfoFragment {
             }
         });
 
-        accomplishmentButton = (FloatingActionButton) view.findViewById(R.id.accomplishments_button);
+        accomplishmentButton = view.findViewById(R.id.accomplishments_button);
         accomplishmentButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

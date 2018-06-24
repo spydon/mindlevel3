@@ -52,13 +52,13 @@ public class AccomplishmentActivity extends AppCompatActivity {
         this.adapter = new ContributorRecyclerViewAdapter(activity, contributors);
         final Accomplishment accomplishment = (Accomplishment) getIntent().getSerializableExtra("accomplishment");
         final String url = ImageUtil.getUrl(accomplishment.image);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle(accomplishment.title);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         this.contributorProgress = findViewById(R.id.contributor_progress);
-        FloatingActionButton challengeButton = (FloatingActionButton) findViewById(R.id.fab_challenge);
+        FloatingActionButton challengeButton = findViewById(R.id.fab_challenge);
         challengeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -68,7 +68,7 @@ public class AccomplishmentActivity extends AppCompatActivity {
             }
         });
 
-        final FloatingActionButton shareButton = (FloatingActionButton) findViewById(R.id.fab_share);
+        final FloatingActionButton shareButton = findViewById(R.id.fab_share);
         shareButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -84,22 +84,22 @@ public class AccomplishmentActivity extends AppCompatActivity {
             }
         });
 
-        TextView imageText = (TextView) findViewById(R.id.image_text);
-        ProgressBar likeProgress = (ProgressBar) findViewById(R.id.progress_like);
-        this.imageView = (ImageLikeView) findViewById(R.id.image);
+        TextView imageText = findViewById(R.id.image_text);
+        ProgressBar likeProgress = findViewById(R.id.progress_like);
+        this.imageView = findViewById(R.id.image);
         imageView.setTextView(imageText);
         imageView.setProgressLike(likeProgress);
         imageView.setId(accomplishment.id);
 
-        ProgressBar progressBar = (ProgressBar) findViewById(R.id.progress);
+        ProgressBar progressBar = findViewById(R.id.progress);
         Glide.with(this)
                 .load(url)
                 .listener(new ProgressController(progressBar))
                 .into(imageView);
 
-        TextView titleView = (TextView) findViewById(R.id.title);
-        TextView scoreView = (TextView) findViewById(R.id.score);
-        TextView descriptionView = (TextView) findViewById(R.id.description);
+        TextView titleView = findViewById(R.id.title);
+        TextView scoreView = findViewById(R.id.score);
+        TextView descriptionView = findViewById(R.id.description);
         titleView.setText(accomplishment.title);
         scoreView.setText(Integer.toString(accomplishment.score));
         descriptionView.setText(accomplishment.description);
@@ -110,7 +110,7 @@ public class AccomplishmentActivity extends AppCompatActivity {
         AccomplishmentController controller = new AccomplishmentController(this);
         controller.getContributors(accomplishment.id, contributorsCallback);
 
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.contributors);
+        RecyclerView recyclerView = findViewById(R.id.contributors);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         recyclerView.setAdapter(adapter);
     }

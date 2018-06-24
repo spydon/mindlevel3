@@ -60,7 +60,7 @@ public class ContributorRecyclerViewAdapter extends RecyclerView.Adapter<Contrib
 
         ViewHolder(View itemView) {
             super(itemView);
-            chip = (ChipView) itemView.findViewById(R.id.contributor);
+            chip = itemView.findViewById(R.id.contributor);
         }
 
         @Override

@@ -75,14 +75,14 @@ public class FeedFragment extends InfoFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_feed_list, container, false);
-        this.recyclerView = (RecyclerView) view.findViewById(R.id.list);
+        this.recyclerView = view.findViewById(R.id.list);
         recyclerView.setAdapter(adapter);
 
         this.contentView = recyclerView;
         this.progressView = view.findViewById(R.id.progress);
         this.errorView = view.findViewById(R.id.error);
         this.paginationProgress = view.findViewById(R.id.progress_pagination);
-        this.swipe = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh_layout);
+        this.swipe = view.findViewById(R.id.swipe_refresh_layout);
         Context context = getContext();
 
         if (columnCount <= 1) {

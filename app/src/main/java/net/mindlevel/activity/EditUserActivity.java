@@ -64,7 +64,7 @@ public class EditUserActivity extends AppCompatActivity {
         setContentView(R.layout.activity_edit_user);
         userController = new UserController(getApplicationContext());
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.title_edit_profile);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
@@ -73,7 +73,7 @@ public class EditUserActivity extends AppCompatActivity {
         }
 
         utils = new ImageUtil(this);
-        FloatingActionButton choosePicture = (FloatingActionButton) findViewById(R.id.choose_picture);
+        FloatingActionButton choosePicture = findViewById(R.id.choose_picture);
         choosePicture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -81,7 +81,7 @@ public class EditUserActivity extends AppCompatActivity {
             }
         });
 
-        FloatingActionButton takePicture = (FloatingActionButton) findViewById(R.id.take_picture);
+        FloatingActionButton takePicture = findViewById(R.id.take_picture);
         takePicture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -94,16 +94,16 @@ public class EditUserActivity extends AppCompatActivity {
             takePicture.setVisibility(View.INVISIBLE);
         }
 
-        imageView = (ImageView) findViewById(R.id.image);
+        imageView = findViewById(R.id.image);
 
-        passwordView1 = (EditText) findViewById(R.id.password1);
-        passwordView2 = (EditText) findViewById(R.id.password2);
+        passwordView1 = findViewById(R.id.password1);
+        passwordView2 = findViewById(R.id.password2);
         passwordView1.requestFocus();
 
-        descriptionView = (EditText) findViewById(R.id.description);
-        emailView = (EditText) findViewById(R.id.email);
+        descriptionView = findViewById(R.id.description);
+        emailView = findViewById(R.id.email);
 
-        Button applyButton = (Button) findViewById(R.id.apply_button);
+        Button applyButton = findViewById(R.id.apply_button);
         applyButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -111,7 +111,7 @@ public class EditUserActivity extends AppCompatActivity {
             }
         });
 
-        final ImageButton removeImageButton = (ImageButton) findViewById(R.id.image_remove);
+        final ImageButton removeImageButton = findViewById(R.id.image_remove);
         removeImageButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -120,8 +120,8 @@ public class EditUserActivity extends AppCompatActivity {
         });
 
         editFormView = findViewById(R.id.edit_form);
-        progressBar = (ProgressBar) findViewById(R.id.progress_image);
-        progressEmail = (ProgressBar) findViewById(R.id.progress_email);
+        progressBar = findViewById(R.id.progress_image);
+        progressEmail = findViewById(R.id.progress_email);
         progressView = findViewById(R.id.progress);
         showProgress(false);
 
