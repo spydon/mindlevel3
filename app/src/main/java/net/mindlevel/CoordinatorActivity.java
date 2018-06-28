@@ -196,6 +196,10 @@ public class CoordinatorActivity
                 Intent tutorialIntent = new Intent(this, TutorialActivity.class);
                 startActivity(tutorialIntent);
                 return true;
+            case R.id.facebook_menu:
+                Intent facebookIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.facebook.com/mindlvl/"));
+                startActivity(facebookIntent);
+                return true;
             case R.id.sign_out_menu:
                 PreferencesUtil.clearSession(this);
                 Login login = PreferencesUtil.getLogin(this);

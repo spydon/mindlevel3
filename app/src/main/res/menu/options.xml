@@ -3,6 +3,9 @@
     <item android:id="@+id/tutorial_menu"
           android:title="@string/tutorial"
           android:icon="@android:drawable/ic_menu_myplaces"/>
+    <item android:id="@+id/facebook_menu"
+          android:title="@string/title_facebook"
+          android:icon="@android:drawable/ic_input_get"/>
     <item android:id="@+id/about_menu"
           android:title="@string/title_about"
           android:icon="@android:drawable/ic_dialog_info"/>

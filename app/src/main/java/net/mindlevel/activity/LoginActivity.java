@@ -5,6 +5,7 @@ import android.animation.AnimatorListenerAdapter;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
@@ -296,6 +297,10 @@ public class LoginActivity extends AppCompatActivity {
 	        case R.id.about_menu:
 	            Intent aboutIntent = new Intent(this, AboutActivity.class);
                 startActivity(aboutIntent);
+                return true;
+            case R.id.facebook_menu:
+                Intent facebookIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.facebook.com/mindlvl/"));
+                startActivity(facebookIntent);
                 return true;
             case R.id.tutorial_menu:
                 Intent tutorialIntent = new Intent(this, TutorialActivity.class);
