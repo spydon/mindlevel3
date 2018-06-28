@@ -51,7 +51,7 @@
     <string name="action_save">Save</string>
     <string name="action_edit">Edit</string>
     <string name="action_upload">Upload</string>
-    <string name="action_like">+1</string>
+    <string name="action_like">✊</string>
 
     <!-- Successful -->
     <string name="successful_upload">Upload was successful</string>
