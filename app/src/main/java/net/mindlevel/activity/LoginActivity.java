@@ -271,14 +271,13 @@ public class LoginActivity extends AppCompatActivity {
     private ControllerCallback<String> registerCallback = new ControllerCallback<String>() {
 
         @Override
-        public void onPostExecute(final Boolean success, final String username) {
+        public void onPostExecute(final Boolean success, final String response) {
             showProgress(false);
 
             if (success) {
-                String registrationText = getString(R.string.successful_registration, username);
-                Glassbar.make(coordinatorLayout, registrationText, Snackbar.LENGTH_LONG).show();
+                Glassbar.make(coordinatorLayout, response, Snackbar.LENGTH_LONG).show();
             } else {
-                passwordView.setError(getString(R.string.error_incorrect_password));
+                outerPasswordView.setError(response);
                 passwordView.requestFocus();
             }
         }

@@ -50,7 +50,6 @@
     <string name="action_register">Register</string>
     <string name="action_settings">Settings</string>
     <string name="action_save">Save</string>
-    <string name="action_edit">Edit</string>
     <string name="action_upload">Upload</string>
     <string name="action_like">✊</string>
 
@@ -63,7 +62,7 @@
     <string name="error_invalid_username">This username is too short</string>
     <string name="error_invalid_password">This password is too short</string>
     <string name="error_invalid_password2">The passwords don\'t match</string>
-    <string name="error_incorrect_password">Incorrect password</string>
+    <string name="error_incorrect_password">Incorrect password, did you forget to register?</string>
     <string name="error_field_required">This field is required</string>
     <string name="error_no_image">No image chosen, use buttons to the right</string>
     <string name="error_image_loading">Failed to load image</string>
@@ -73,6 +72,9 @@
     <string name="error_offline">Not available offline</string>
     <string name="error_no_description">Please add a description</string>
     <string name="error_upload_timeout">Upload timed out, try again</string>
+    <string name="error_network_login">Network error, try to login.</string>
+    <string name="error_network_code">%1$s: Network error, try again.</string>
+    <string name="error_user_exists">User already exists</string>
 
     <!--  Tips -->
     <string name="tip">Tip: %1$s</string>

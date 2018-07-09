@@ -235,15 +235,16 @@ public class UserController extends BackendService {
             @Override
             public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
                 if (response.isSuccessful()) {
-                    callback.onPostExecute(true, user.username);
+                    String registrationText = context.getString(R.string.successful_registration, user.username);
+                    callback.onPostExecute(true, registrationText);
                 } else {
-                    callback.onPostExecute(false, null);
+                    callback.onPostExecute(false, context.getString(R.string.error_user_exists));
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<Void> call, @NonNull Throwable t) {
-                callback.onPostExecute(false, null);
+                callback.onPostExecute(false, context.getString(R.string.error_network_login));
                 t.printStackTrace();
                 Log.w("mindlevel", "register call failed");
             }

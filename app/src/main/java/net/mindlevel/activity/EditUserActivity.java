@@ -56,6 +56,7 @@ public class EditUserActivity extends AppCompatActivity {
     private EditText emailView;
     private ProgressBar progressBar, progressEmail;
     private View editFormView, progressView;
+    private Button applyButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,7 +104,7 @@ public class EditUserActivity extends AppCompatActivity {
         descriptionView = findViewById(R.id.description);
         emailView = findViewById(R.id.email);
 
-        Button applyButton = findViewById(R.id.apply_button);
+        applyButton = findViewById(R.id.apply_button);
         applyButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {

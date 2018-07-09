@@ -3,7 +3,6 @@
     <string name="app_name">MindLevel</string>
     <string name="accessibility_user_image">Användarens bild</string>
     <string name="accomplishment_by">Av:</string>
-    <string name="action_edit">Ändra</string>
     <string name="action_register">Registrera</string>
     <string name="action_save">Spara</string>
     <string name="action_settings">Inställningar</string>
@@ -15,7 +14,7 @@
     <string name="error_backend">Kan inte nå servern</string>
     <string name="error_field_required">Detta fält behövs</string>
     <string name="error_image_loading">Misslyckades ladda bilden</string>
-    <string name="error_incorrect_password">Fel lösenord</string>
+    <string name="error_incorrect_password">Fel lösenord, glömt att registrera dig?</string>
     <string name="error_invalid_password">Lösenordet är för kort</string>
     <string name="error_invalid_password2">Lösenorden är inte samma</string>
     <string name="error_invalid_username">Användarnamnet är för kort</string>
@@ -65,4 +64,14 @@
     <string name="tutorial_share">Dela bilden som du kollar på</string>
     <string name="tutorial_upload">Ladda upp en bild för ett avklarat uppdrag</string>
     <string name="tutorial_user">Återvänd till din profil</string>
+    <string name="error_no_description">Lägg till en beskrivning</string>
+    <string name="error_network_login">Nätverksfel, försök att logga in.</string>
+    <string name="error_upload_timeout">Timeout för uppladdningen, försök igen.</string>
+    <string name="error_network_code">%1$s: Nätverksfel, försök igen.</string>
+    <string name="error_user_exists">Användaren finns redan.</string>
+    <string name="tip_share">Du kan dela bilder på sociala medier</string>
+    <string name="tip_swipe">Swipa skärmen för att navigera</string>
+    <string name="tip_new">Klicka på tipsen för att se ett nytt</string>
+    <string name="and">och</string>
+    <string name="title_login">Logga in</string>
 </resources>
