@@ -75,6 +75,8 @@ public class CoordinatorActivity
                 }
                 isBack = false;
                 scrollToFragment(selectedFragment);
+            } else if (selectedFragment == userFragment) { // To set profile to self on menu click
+                selectedFragment.onResume();
             }
             return true;
         }

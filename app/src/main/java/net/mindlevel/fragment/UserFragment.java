@@ -148,6 +148,7 @@ public class UserFragment extends InfoFragment {
             } else {
                 populateWithSelf();
             }
+            getArguments().clear();
         } else {
             populateWithSelf();
         }
