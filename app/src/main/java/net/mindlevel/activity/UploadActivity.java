@@ -30,6 +30,7 @@ import net.mindlevel.model.User;
 import net.mindlevel.model.UserChip;
 import net.mindlevel.util.ImageUtil;
 import net.mindlevel.util.KeyboardUtil;
+import net.mindlevel.util.PreferencesUtil;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -214,11 +215,21 @@ public class UploadActivity extends AppCompatActivity {
             if (success) {
                 ArrayList<UserChip> userChips = new ArrayList<>();
                 contributorInput = findViewById(R.id.contributor_input);
+                String username = PreferencesUtil.getUsername(context);
+                UserChip self = null;
+
                 for(User user : users) {
-                    userChips.add(new UserChip(user));
+                    UserChip chip = new UserChip(user);
+                    userChips.add(chip);
+                    if (user.username.equals(username)) {
+                        self = chip;
+                    }
                 }
                 contributorInput.setFilterableList(userChips);
                 contributorInput.setEnabled(true);
+                if (self != null) {
+                    contributorInput.addChip(self);
+                }
                 findViewById(R.id.progress_contributor_input).setVisibility(GONE);
             }
         }
