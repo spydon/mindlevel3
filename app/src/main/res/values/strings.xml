@@ -52,6 +52,7 @@
     <string name="action_save">Save</string>
     <string name="action_upload">Upload</string>
     <string name="action_like">✊</string>
+    <string name="action_share_using">Share using</string>
 
     <!-- Successful -->
     <string name="successful_upload">Upload was successful</string>
@@ -134,5 +135,8 @@
     <string name="tutorial_share">Share the current picture</string>
     <string name="tutorial_icons">Explanation of the icons that can be found in the app:</string>
     <string name="tutorial_got_it">Got it!</string>
+
+    <!-- Permissions -->
+    <string name="permission_sharing_denied">Denied sharing permission</string>
 
 </resources>
