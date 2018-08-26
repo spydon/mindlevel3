@@ -1,6 +1,7 @@
 package net.mindlevel.api.endpoint;
 
 import net.mindlevel.model.Accomplishment;
+import net.mindlevel.model.Category;
 import net.mindlevel.model.Challenge;
 
 import java.util.List;
@@ -21,6 +22,12 @@ public interface ChallengeEndpoint {
 
     @POST("challenge")
     Call<Void> add(@Body Challenge Challenge);
+
+    @GET("challenge/category")
+    Call<List<Category>> getCategories();
+
+    @GET("challenge/category/{id}")
+    Call<List<Challenge>> getChallengesByCategory(@Path("id") int id);
 
     @GET("challenge/{id}")
     Call<Challenge> get(@Path("id") int id);

@@ -8,6 +8,7 @@ import android.util.Log;
 import net.mindlevel.R;
 import net.mindlevel.api.endpoint.ChallengeEndpoint;
 import net.mindlevel.model.Accomplishment;
+import net.mindlevel.model.Category;
 import net.mindlevel.model.Challenge;
 
 import org.apache.commons.io.FileUtils;
@@ -55,6 +56,29 @@ public class ChallengeController extends BackendService {
                     Log.i("mindlevel", "Got challenges from cache");
                     callback.onPostExecute(true, challenges);
                 }
+            }
+        });
+    }
+
+    public void getCategories(final ControllerCallback<List<Category>> callback) {
+        Call<List<Category>> call = endpoint.getCategories();
+        call.enqueue(new Callback<List<Category>>() {
+            @Override
+            public void onResponse(@NonNull Call<List<Category>> call, @NonNull Response<List<Category>> response) {
+                if (response.isSuccessful()) {
+                    callback.onPostExecute(true, response.body());
+                    // TODO: Cache categories
+                } else {
+                    onFailure(call, new Throwable("Could not fetch challenges remotely"));
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<List<Category>> call, @NonNull Throwable t) {
+                // TODO: Read categories from cache
+                t.printStackTrace();
+                Log.w("mindlevel", "getAll challenges call failed");
+                callback.onPostExecute(false, new ArrayList <Category>());
             }
         });
     }

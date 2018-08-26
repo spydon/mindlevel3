@@ -16,8 +16,10 @@ import android.view.ViewGroup;
 import net.mindlevel.R;
 import net.mindlevel.api.ChallengeController;
 import net.mindlevel.api.ControllerCallback;
+import net.mindlevel.model.Category;
 import net.mindlevel.model.Challenge;
 
+import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
@@ -34,12 +36,15 @@ public class ChallengesFragment extends InfoFragment {
     private OnListFragmentInteractionListener listener;
     private ChallengeController controller;
     private SwipeRefreshLayout swipe;
-    private RecyclerView recyclerView;
+    private RecyclerView recyclerView, categoryRecyclerView;
     private ChallengesRecyclerViewAdapter adapter;
+    private CategoryRecyclerViewAdapter categoryAdapter;
     private Set<Challenge> challenges;
+    private List<Category> categories;
 
     public ChallengesFragment() {
         this.challenges = new LinkedHashSet<>();
+        this.categories = new ArrayList<>();
     }
 
     @Override
@@ -47,6 +52,7 @@ public class ChallengesFragment extends InfoFragment {
         super.onCreate(savedInstanceState);
         this.controller = new ChallengeController(getContext());
         this.adapter = new ChallengesRecyclerViewAdapter(challenges, listener);
+        this.categoryAdapter = new CategoryRecyclerViewAdapter(getActivity(), categories);
     }
 
     @Override
@@ -54,6 +60,7 @@ public class ChallengesFragment extends InfoFragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_challenge_list, container, false);
         this.recyclerView = view.findViewById(R.id.list);
+        this.categoryRecyclerView = view.findViewById(R.id.category_list);
         this.contentView = recyclerView;
         this.shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
 
@@ -69,6 +76,8 @@ public class ChallengesFragment extends InfoFragment {
         }
 
         recyclerView.setAdapter(adapter);
+        categoryRecyclerView.setAdapter(categoryAdapter);
+
         swipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -88,7 +97,7 @@ public class ChallengesFragment extends InfoFragment {
             listener = (OnListFragmentInteractionListener) context;
         } else {
             throw new RuntimeException(context.toString()
-                    + " must implement OnListFragmentInteractionListener");
+                    + " must implement all InteractionListeners");
         }
     }
 
@@ -99,11 +108,12 @@ public class ChallengesFragment extends InfoFragment {
     }
 
     private void populate() {
+        controller.getCategories(getCategoriesCallback);
         controller.getAll(getAllCallback);
     }
 
     /**
-     * This interface must be implemented by activities that contain this
+     * These interfaces must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
      * to the activity and potentially other fragments contained in that
      * activity.
@@ -111,6 +121,26 @@ public class ChallengesFragment extends InfoFragment {
     public interface OnListFragmentInteractionListener {
         void onListFragmentInteraction(Challenge challenge);
     }
+
+    private ControllerCallback<List<Category>> getCategoriesCallback = new ControllerCallback<List<Category>>() {
+        @Override
+        public void onPostExecute(Boolean isSuccess, List<Category> response) {
+            if (isSuccess) {
+                 if (response.isEmpty()) {
+                     // TODO: Hide category section
+                     //showInfo(true, false, getString(R.string.error_not_found));
+                 } else {
+                     if (!categories.containsAll(response)) {
+                         categories.clear();
+                         categories.addAll(response);
+                         categoryAdapter.notifyDataSetChanged();
+                     }
+                 }
+            } else {
+                // TODO: Hide category section
+            }
+        }
+    };
 
     private ControllerCallback<List<Challenge>> getAllCallback = new ControllerCallback<List<Challenge>>() {
         @Override
