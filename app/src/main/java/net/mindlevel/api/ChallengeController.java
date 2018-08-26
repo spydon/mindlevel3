@@ -77,11 +77,35 @@ public class ChallengeController extends BackendService {
             public void onFailure(@NonNull Call<List<Category>> call, @NonNull Throwable t) {
                 // TODO: Read categories from cache
                 t.printStackTrace();
-                Log.w("mindlevel", "getAll challenges call failed");
+                Log.w("mindlevel", "getCategories call failed");
                 callback.onPostExecute(false, new ArrayList <Category>());
             }
         });
     }
+
+    public void getChallengesByCategory(final Category category, final ControllerCallback<List<Challenge>> callback) {
+        Call<List<Challenge>> call = endpoint.getChallengesByCategory(category.id);
+        call.enqueue(new Callback<List<Challenge>>() {
+            @Override
+            public void onResponse(@NonNull Call<List<Challenge>> call, @NonNull Response<List<Challenge>> response) {
+                if (response.isSuccessful()) {
+                    callback.onPostExecute(true, response.body());
+                    // TODO: Cache category challenges
+                } else {
+                    onFailure(call, new Throwable("Could not fetch challenges remotely"));
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<List<Challenge>> call, @NonNull Throwable t) {
+                // TODO: Read challenges from cache
+                t.printStackTrace();
+                Log.w("mindlevel", "getChallengesByCategory call failed");
+                callback.onPostExecute(false, new ArrayList <Challenge>());
+            }
+        });
+    }
+
 
     // TODO: Get from cached json file when call fails
     public void get(final int challengeId, final ControllerCallback<Challenge> callback) {

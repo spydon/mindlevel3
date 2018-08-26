@@ -10,6 +10,7 @@ import com.pchmn.materialchips.ChipView;
 
 import net.mindlevel.R;
 import net.mindlevel.model.Category;
+import net.mindlevel.util.CoordinatorUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,10 +22,11 @@ public class CategoryRecyclerViewAdapter extends RecyclerView.Adapter<CategoryRe
     private ItemClickListener clickListener;
     private Context context;
 
-    public CategoryRecyclerViewAdapter(Context context, List<Category> categories) {
+    public CategoryRecyclerViewAdapter(Context context, List<Category> categories, ItemClickListener clickListener) {
         this.context = context;
         this.inflater = LayoutInflater.from(context);
         this.categories = categories;
+        this.clickListener = clickListener;
         setHasStableIds(true);
     }
 
@@ -43,8 +45,7 @@ public class CategoryRecyclerViewAdapter extends RecyclerView.Adapter<CategoryRe
         holder.chip.setOnChipClicked(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.println("Change challenges");
-                //CoordinatorUtil somethings context
+                clickListener.onItemClick(category);
             }
         });
     }
@@ -74,16 +75,11 @@ public class CategoryRecyclerViewAdapter extends RecyclerView.Adapter<CategoryRe
 
         @Override
         public void onClick(View view) {
-            if (clickListener != null) clickListener.onItemClick(view, getAdapterPosition());
+            if (clickListener != null) clickListener.onItemClick(item);
         }
     }
 
-    public void setClickListener(ItemClickListener clickListener) {
-        this.clickListener = clickListener;
-    }
-
-    // parent activity will implement this method to respond to click events
     public interface ItemClickListener {
-        void onItemClick(View view, int position);
+        void onItemClick(Category category);
     }
 }

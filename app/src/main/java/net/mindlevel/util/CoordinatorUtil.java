@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import net.mindlevel.CoordinatorActivity;
+import net.mindlevel.model.Category;
 import net.mindlevel.model.Challenge;
 import net.mindlevel.model.User;
 
@@ -26,9 +27,15 @@ public class CoordinatorUtil {
         context.startActivity(coordinatorIntent);
     }
 
-    public static void toFeed(Context context, Challenge Challenge) {
+    public static void toFeed(Context context, Challenge challenge) {
         Intent coordinatorIntent = new Intent(context, CoordinatorActivity.class);
-        coordinatorIntent.putExtra("accomplishments_for_challenge", Challenge);
+        coordinatorIntent.putExtra("accomplishments_for_challenge", challenge);
+        context.startActivity(coordinatorIntent);
+    }
+
+    public static void toChallenges(Context context, Category category) {
+        Intent coordinatorIntent = new Intent(context, CoordinatorActivity.class);
+        coordinatorIntent.putExtra("challenges_by_category", category);
         context.startActivity(coordinatorIntent);
     }
 }

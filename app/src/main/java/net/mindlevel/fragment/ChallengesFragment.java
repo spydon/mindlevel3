@@ -52,7 +52,7 @@ public class ChallengesFragment extends InfoFragment {
         super.onCreate(savedInstanceState);
         this.controller = new ChallengeController(getContext());
         this.adapter = new ChallengesRecyclerViewAdapter(challenges, listener);
-        this.categoryAdapter = new CategoryRecyclerViewAdapter(getActivity(), categories);
+        this.categoryAdapter = new CategoryRecyclerViewAdapter(getActivity(), categories, categoryClickListener);
     }
 
     @Override
@@ -86,6 +86,8 @@ public class ChallengesFragment extends InfoFragment {
         });
 
         showInfo(false, true);
+        controller.getCategories(getCategoriesCallback);
+
         populate();
         return view;
     }
@@ -108,8 +110,11 @@ public class ChallengesFragment extends InfoFragment {
     }
 
     private void populate() {
-        controller.getCategories(getCategoriesCallback);
         controller.getAll(getAllCallback);
+    }
+
+    private void populateChallengesByCategory(Category category) {
+        controller.getChallengesByCategory(category, getAllCallback);
     }
 
     /**
@@ -151,7 +156,8 @@ public class ChallengesFragment extends InfoFragment {
                      showInfo(true, false, getString(R.string.error_not_found));
                  } else {
                      showInfo(false, false);
-                     if (!challenges.containsAll(response)) {
+                     if (!challenges.containsAll(response) || !response.containsAll(challenges)) {
+                         challenges.clear();
                          challenges.addAll(response);
                          adapter.notifyDataSetChanged();
                      }
@@ -159,6 +165,14 @@ public class ChallengesFragment extends InfoFragment {
             } else {
                 showInfo(true, false);
             }
+        }
+    };
+
+    private CategoryRecyclerViewAdapter.ItemClickListener categoryClickListener =
+            new CategoryRecyclerViewAdapter.ItemClickListener() {
+        @Override
+        public void onItemClick(Category category) {
+            populateChallengesByCategory(category);
         }
     };
 }

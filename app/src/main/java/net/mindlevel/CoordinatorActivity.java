@@ -178,6 +178,7 @@ public class CoordinatorActivity
     private Bundle getCleanFragmentBundle(Fragment fragment) {
         Bundle bundle = fragment.getArguments() != null ? fragment.getArguments() : new Bundle();
         bundle.clear();
+        fragment.setArguments(bundle);
         return bundle;
     }
 
