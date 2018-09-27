@@ -44,6 +44,14 @@
     <string name="new_password">New Password</string>
     <string name="repeat_password">Repeat Password</string>
 
+    <!-- Integration -->
+    <string name="integration_successful">Successfully joined %1$s, no responsibility will be taken of what
+        material is on the other side of this login. You need to be an adult according to your countries
+        legislation to use this integration.</string>
+    <string name="integration_failed">Failed to join with that password</string>
+    <string name="integration_description">You manage to get into the secret section, if you have gotten a password we do not take any responsibility for what content that will display after the login. You have to be an adult in all senses of the word by your countries laws to use this.</string>
+    <string name="integration_title">Secret section</string>
+
     <!-- Actions -->
     <string name="action_sign_in">Sign in</string>
     <string name="action_sign_out">Sign out</string>

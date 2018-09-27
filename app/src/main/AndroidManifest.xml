@@ -80,6 +80,10 @@
             android:label="@string/tutorial" />
 
         <activity
+            android:name=".activity.IntegrationActivity"
+            android:label="@string/integration_title" />
+
+        <activity
             android:name=".activity.TermsActivity"
             android:label="@string/terms_of_service" />
 

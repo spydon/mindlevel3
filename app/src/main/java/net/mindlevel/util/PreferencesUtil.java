@@ -16,6 +16,18 @@ public class PreferencesUtil {
         return sharedPreferences.getString("sessionId", "");
     }
 
+    public static String getIntegration(Context context) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences("integration", Context.MODE_PRIVATE);
+        return sharedPreferences.getString("integration", "");
+    }
+
+    public static void setIntegration(Context context, String integration) {
+        SharedPreferences pref = context.getSharedPreferences("integration", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putString("integration", integration);
+        editor.apply();
+    }
+
     public static Login getLogin(Context context) {
         SharedPreferences pref = context.getSharedPreferences("session", Context.MODE_PRIVATE);
         return new Login(pref.getString("username", ""), "", pref.getString("session", ""));

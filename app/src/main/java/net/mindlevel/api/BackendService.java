@@ -42,6 +42,18 @@ abstract class BackendService {
             }
         };
 
+        Interceptor integrationHeaderInterceptor = new Interceptor() {
+            @Override
+            public Response intercept(@NonNull Chain chain) throws IOException {
+                String integration = PreferencesUtil.getIntegration(context);
+                Request request = chain.request();
+                if (!integration.equals("")) {
+                    request = request.newBuilder().addHeader("X-Integration", integration).build();
+                }
+                return chain.proceed(request);
+            }
+        };
+
         Interceptor errorInterceptor = new Interceptor() {
             @Override
             public Response intercept(@NonNull Chain chain) throws IOException {
@@ -72,6 +84,7 @@ abstract class BackendService {
         httpClient.writeTimeout(120, TimeUnit.SECONDS);
         httpClient.addInterceptor(errorInterceptor);
         httpClient.addInterceptor(sessionHeaderInterceptor);
+        httpClient.addInterceptor(integrationHeaderInterceptor);
 
         retrofit = new Retrofit.Builder()
                 .baseUrl(context.getString(R.string.backend_address))

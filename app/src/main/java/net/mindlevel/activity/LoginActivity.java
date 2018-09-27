@@ -2,6 +2,7 @@ package net.mindlevel.activity;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -21,17 +22,21 @@ import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
 import net.mindlevel.R;
 import net.mindlevel.api.ControllerCallback;
+import net.mindlevel.api.IntegrationController;
 import net.mindlevel.api.LoginController;
 import net.mindlevel.api.UserController;
 import net.mindlevel.impl.Glassbar;
+import net.mindlevel.model.Integration;
 import net.mindlevel.model.Login;
 import net.mindlevel.util.KeyboardUtil;
 import net.mindlevel.util.NetworkUtil;
+import net.mindlevel.util.PreferencesUtil;
 
 import java.util.Random;
 
@@ -41,6 +46,7 @@ public class LoginActivity extends AppCompatActivity {
     private UserController userController;
 
     // UI references.
+    private LoginActivity activity;
     private View coordinatorLayout;
     private EditText usernameView;
     private EditText passwordView;
@@ -52,6 +58,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        activity = this;
         coordinatorLayout = findViewById(R.id.login_outer);
         loginFormView = findViewById(R.id.login_inner_form);
         final ScrollView scrollView = findViewById(R.id.login_form);
@@ -126,6 +133,21 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 attemptLogin(true);
+            }
+        });
+
+        ImageView logoView = findViewById(R.id.logo);
+        logoView.setOnClickListener(new OnClickListener() {
+            final int magicNumber = 6;
+            int clicks = 0;
+            @Override
+            public void onClick(View view) {
+                clicks++;
+                if (clicks == magicNumber) {
+                    Intent integrationIntent = new Intent(activity, IntegrationActivity.class);
+                    startActivity(integrationIntent);
+                }
+                clicks = clicks % magicNumber;
             }
         });
 
