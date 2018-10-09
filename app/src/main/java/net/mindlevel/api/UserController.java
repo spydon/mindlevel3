@@ -33,7 +33,7 @@ import retrofit2.Response;
 public class UserController extends BackendService {
 
     private static UserEndpoint endpoint;
-    private final int HIGHSCORE_AMOUNT = 20;
+    private final int HIGHSCORE_AMOUNT = 100;
 
     public UserController(Context context) {
         super(context);
