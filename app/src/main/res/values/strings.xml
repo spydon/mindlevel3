@@ -51,6 +51,9 @@
     <string name="integration_failed">Failed to join with that password</string>
     <string name="integration_description">You manage to get into the secret section, if you have gotten a password we do not take any responsibility for what content that will display after the login. You have to be an adult in all senses of the word by your countries laws to use this.</string>
     <string name="integration_title">Secret section</string>
+    <string name="integration_try_button">Try password!</string>
+    <string name="integration_default_button">Use normal MindLevel</string>
+    <string name="integration_default">default</string>
 
     <!-- Actions -->
     <string name="action_sign_in">Sign in</string>

@@ -45,8 +45,14 @@
             android:maxLines="1" />
 
         <Button
+            android:id="@+id/integration_default"
+            android:text="@string/integration_default_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <Button
             android:id="@+id/integration_finished"
-            android:text="@string/tutorial_got_it"
+            android:text="@string/integration_try_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </LinearLayout>

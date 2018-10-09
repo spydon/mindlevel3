@@ -29,11 +29,20 @@ public class IntegrationActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         integrationController = new IntegrationController(view.getContext());
         final EditText password = findViewById(R.id.password);
+
         Button finishedButton = findViewById(R.id.integration_finished);
         finishedButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 integrationController.get(password.getText().toString(), integrationCallback);
+            }
+        });
+
+        Button defaultButton = findViewById(R.id.integration_default);
+        defaultButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                integrationController.get(getString(R.string.integration_default), integrationCallback);
             }
         });
     }
@@ -65,5 +74,4 @@ public class IntegrationActivity extends AppCompatActivity {
             Glassbar.make(view, integrationText, Snackbar.LENGTH_LONG).show();
         }
     };
-
 }
