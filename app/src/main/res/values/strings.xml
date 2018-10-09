@@ -64,7 +64,7 @@
 
     <!-- Successful -->
     <string name="successful_upload">Upload was successful</string>
-    <string name="successful_registration">Successfully registered as %1$s, please login</string>
+    <string name="successful_registration">Successfully registered as %1$s</string>
     <string name="successful_edit">Successful edit!</string>
 
     <!-- Errors -->

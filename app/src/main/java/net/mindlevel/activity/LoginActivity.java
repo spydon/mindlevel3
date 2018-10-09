@@ -298,6 +298,9 @@ public class LoginActivity extends AppCompatActivity {
 
             if (success) {
                 Glassbar.make(coordinatorLayout, response, Snackbar.LENGTH_LONG).show();
+                usernameView.setEnabled(false);
+                passwordView.setEnabled(false);
+                attemptLogin(false);
             } else {
                 outerPasswordView.setError(response);
                 passwordView.requestFocus();

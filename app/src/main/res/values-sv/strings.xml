@@ -40,7 +40,7 @@
     <string name="prompt_username">Användarnamn</string>
     <string name="repeat_password">Upprepa lösenord</string>
     <string name="successful_edit">Ändringen lyckades!</string>
-    <string name="successful_registration">Registreringen lyckades för %1$s, logga in!</string>
+    <string name="successful_registration">Registreringen lyckades för %1$s</string>
     <string name="successful_upload">Uppladdningen lyckades</string>
     <string name="terms_agree">Genom att använda MindLevel så accepterar du</string>
     <string name="tip">Tips: %1$s</string>
