@@ -1,6 +1,8 @@
 package net.mindlevel.activity;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -14,6 +16,7 @@ import net.mindlevel.api.ControllerCallback;
 import net.mindlevel.api.IntegrationController;
 import net.mindlevel.impl.Glassbar;
 import net.mindlevel.model.Integration;
+import net.mindlevel.util.CoordinatorUtil;
 import net.mindlevel.util.PreferencesUtil;
 
 public class IntegrationActivity extends AppCompatActivity {
@@ -66,12 +69,19 @@ public class IntegrationActivity extends AppCompatActivity {
             Context context = getBaseContext();
             if (success) {
                 PreferencesUtil.setIntegration(context, integration.db);
-                integrationText = context.getString(R.string.integration_successful, integration.pass);
+                if (!integration.pass.equals("default")) {
+                    integrationText = context.getString(R.string.integration_successful, integration.pass);
+                } else {
+                    integrationText = context.getString(R.string.integration_normal);
+                }
+                Intent data = new Intent();
+                data.setData(Uri.parse(integrationText));
+                setResult(RESULT_OK, data);
                 finish();
             } else {
                 integrationText = context.getString(R.string.integration_failed);
+                Glassbar.make(view, integrationText, Snackbar.LENGTH_LONG).show();
             }
-            Glassbar.make(view, integrationText, Snackbar.LENGTH_LONG).show();
         }
     };
 }

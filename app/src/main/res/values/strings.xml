@@ -54,6 +54,7 @@
     <string name="integration_try_button">Try password!</string>
     <string name="integration_default_button">Use normal MindLevel</string>
     <string name="integration_default">default</string>
+    <string name="integration_normal">Using normal MindLevel</string>
 
     <!-- Actions -->
     <string name="action_sign_in">Sign in</string>

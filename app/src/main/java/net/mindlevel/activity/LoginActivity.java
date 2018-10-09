@@ -54,6 +54,8 @@ public class LoginActivity extends AppCompatActivity {
     private View loginFormView;
     private TextInputLayout outerPasswordView;
 
+    private static int REQUEST_INTEGRATION = 1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -145,7 +147,7 @@ public class LoginActivity extends AppCompatActivity {
                 clicks++;
                 if (clicks == magicNumber) {
                     Intent integrationIntent = new Intent(activity, IntegrationActivity.class);
-                    startActivity(integrationIntent);
+                    startActivityForResult(integrationIntent, REQUEST_INTEGRATION);
                 }
                 clicks = clicks % magicNumber;
             }
@@ -337,6 +339,15 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         moveTaskToBack(true);
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_INTEGRATION) {
+            if (resultCode == RESULT_OK) {
+                String integrationText = data.getData().toString();
+                Glassbar.make(coordinatorLayout, integrationText, 10000).show();
+            }
+        }
     }
 }
 
