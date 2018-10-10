@@ -37,85 +37,32 @@
             android:layout_height="wrap_content" />
 
         <TextView
-            android:text="@string/tutorial_icons"
-            android:textStyle="bold"
-            android:layout_marginBottom="10dip"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dip"
+            android:gravity="center_horizontal"
+            android:text="@string/tutorial_icons"
+            android:textStyle="bold" />
 
         <TextView
-            android:drawableStart="@drawable/challenge"
-            android:layout_width="wrap_content"
+            android:drawableTop="@drawable/challenge"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="@string/tutorial_challenge" />
 
         <TextView
-            android:drawableStart="@drawable/accomplishment"
-            android:layout_width="wrap_content"
+            android:drawableTop="@drawable/accomplishment"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/tutorial_text_margin"
             android:gravity="center"
             android:text="@string/tutorial_accomplishment" />
-
-        <TextView
-            android:drawableStart="@drawable/camera"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="@string/tutorial_camera" />
-
-        <TextView
-            android:drawableStart="@drawable/gallery"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="@string/tutorial_gallery" />
-
-        <TextView
-            android:drawableStart="@drawable/upload"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="@string/tutorial_upload" />
-
-        <TextView
-            android:drawableStart="@drawable/highscore"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="@string/tutorial_highscore" />
-
-        <TextView
-            android:drawableStart="@drawable/user"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="@string/tutorial_user" />
-
-        <TextView
-            android:drawableStart="@drawable/edit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="@string/tutorial_edit" />
-
-        <TextView
-            android:drawableStart="@drawable/logout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="@string/tutorial_logout" />
-
-        <TextView
-            android:drawableStart="@drawable/share"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="@string/tutorial_share" />
 
         <Button
             android:id="@+id/tutorial_finished"
             android:text="@string/tutorial_got_it"
+            android:layout_marginTop="@dimen/tutorial_text_margin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </LinearLayout>

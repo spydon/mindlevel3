@@ -5,8 +5,8 @@
         can relate. Repetitive tasks that we have grown to think that we like, things that take up a lot of our time
         but don\'t add anything to our lives.
         \n\nThe things that we won\'t remember when we grow old.
-        \n\nI think that most people wouldn\'t even appreciate these parts of their lives if they had an easy
-        option of doing something more exciting sometimes, something that would be worth remembering.
+        \n\nI think that most people don\'t even appreciate these parts of their lives, but it\'s not easy to find an
+        option of doing something more exciting, something that would be worth remembering.
         \n\nThis is my attempt of giving you that option.
     </string>
     <string name="backend_address">https://api.mindlevel.net/</string>
@@ -132,11 +132,19 @@
     <!-- Tutorial-->
     <string name="tutorial">Tutorial</string>
     <string name="tutorial_description">
-        The aim of the game is simple; choose a challenge, complete it and upload a picture of the result.
+        The aim of the game is simple - choose a challenge, complete it and upload a picture of the result.
         Other users can then like your images and you get points. To like an image, double click on it.
     </string>
-    <string name="tutorial_challenge">This will take you to challenge related things</string>
-    <string name="tutorial_accomplishment">An accomplishment, a finished challenge</string>
+    <string name="tutorial_challenge">This will take you to challenges</string>
+    <string name="tutorial_accomplishment">This will take you to an accomplishment, an accomplishment is a
+        finished challenge\n(image+text uploaded by a user)</string>
+
+    <string name="tutorial_icons">Most icons in the game should be self-explanatory, but the following two are
+        special:
+    </string>
+    <string name="tutorial_got_it">Got it!</string>
+
+    <!-- Deprecated tutorial -->
     <string name="tutorial_camera">Take a picture from within the app</string>
     <string name="tutorial_gallery">Choose a picture from your local gallery</string>
     <string name="tutorial_highscore">See the top players</string>
@@ -145,8 +153,6 @@
     <string name="tutorial_logout">Log out of the app</string>
     <string name="tutorial_upload">Upload a picture for a finished challenge</string>
     <string name="tutorial_share">Share the current picture</string>
-    <string name="tutorial_icons">Explanation of the icons that can be found in the app:</string>
-    <string name="tutorial_got_it">Got it!</string>
 
     <!-- Permissions -->
     <string name="permission_sharing_denied">Denied sharing permission</string>

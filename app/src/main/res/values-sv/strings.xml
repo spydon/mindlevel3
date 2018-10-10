@@ -46,14 +46,19 @@
     <string name="tip">Tips: %1$s</string>
     <string name="tip_contributor">Alla utförare får poäng</string>
     <string name="tip_like">Dubbelklicka på en bild för att gilla den</string>
-    <string name="tip_points">Efter att du har avklarat ett uppdrag så kan du gilla bilder</string>
+    <string name="tip_points">Efter att du har klarat ett uppdrag så kan du gilla bilder</string>
     <string name="title_about">Om</string>
     <string name="title_edit_profile">Ändra profil</string>
     <string name="title_challenges">Uppdrag</string>
     <string name="title_profile">Profil</string>
     <string name="title_settings">Inställningar</string>
     <string name="title_facebook">Vår Facebook</string>
-    <string name="tutorial_accomplishment">Ett utförande, ett avklarat uppdrag</string>
+    <string name="tutorial_description">
+        Spelets mål är enkelt - välj ett uppdrag, slutför det och ladda upp en bild av resultatet.
+        Andra användare kan gilla dina bilder och du får poäng. För att gilla en bild, dubbelklicka på den.
+    </string>
+    <string name="tutorial_accomplishment">Ett utförande, ett avklarat uppdrag\n(bild+text uppladdad av en
+        användare)</string>
     <string name="tutorial_camera">Ta en bild med kameran</string>
     <string name="tutorial_edit">Modifera det du kollar på</string>
     <string name="tutorial_gallery">Välj en bild ifrån ditt lokal galleri</string>
