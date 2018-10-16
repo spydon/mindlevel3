@@ -135,6 +135,10 @@
         The aim of the game is simple - choose a challenge, complete it and upload a picture of the result.
         Other users can then like your images and you get points. To like an image, double click on it.
     </string>
+    <string name="tutorial_description_more">
+        The more points you get and challenges you finish the more challenges and other peoples accomplishments
+        you can see.
+    </string>
     <string name="tutorial_challenge">This will take you to challenges</string>
     <string name="tutorial_accomplishment">This will take you to an accomplishment, an accomplishment is a
         finished challenge\n(image+text uploaded by a user)</string>

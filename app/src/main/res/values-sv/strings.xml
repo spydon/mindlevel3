@@ -57,6 +57,10 @@
         Spelets mål är enkelt - välj ett uppdrag, slutför det och ladda upp en bild av resultatet.
         Andra användare kan gilla dina bilder och du får poäng. För att gilla en bild, dubbelklicka på den.
     </string>
+    <string name="tutorial_description_more">
+        Ju mer poäng du får och ju fler uppdrag du klarar ju fler uppdrag och andra användares uppladdningar kommer
+        du att kunna se.
+    </string>
     <string name="tutorial_accomplishment">Ett utförande, ett avklarat uppdrag\n(bild+text uppladdad av en
         användare)</string>
     <string name="tutorial_camera">Ta en bild med kameran</string>

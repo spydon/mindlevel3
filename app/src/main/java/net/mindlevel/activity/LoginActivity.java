@@ -111,17 +111,6 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        passwordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    attemptLogin(false);
-                    return true;
-                }
-                return false;
-            }
-        });
-
         Button signInButton = findViewById(R.id.sign_in_button);
         signInButton.setOnClickListener(new OnClickListener() {
             @Override
@@ -229,6 +218,7 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         if (cancel) {
+            enableInput(true);
             // There was an error; don't attempt login and focus the first
             // form field with an error.
             focusView.requestFocus();
@@ -247,12 +237,17 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    private boolean isUsernameValid(String email) {
-        return email.length() > 3;
+    private boolean isUsernameValid(String username) {
+        return username.length() > 3;
     }
 
     private boolean isPasswordValid(String password) {
         return password.length() > 4;
+    }
+
+    private void enableInput(boolean enable) {
+        usernameView.setEnabled(enable);
+        passwordView.setEnabled(enable);
     }
 
     private void showProgress(final boolean show) {
@@ -287,6 +282,7 @@ public class LoginActivity extends AppCompatActivity {
                 finish();
             } else {
                 outerPasswordView.setError(getString(R.string.error_incorrect_password));
+                enableInput(true);
                 passwordView.requestFocus();
             }
         }
@@ -300,10 +296,10 @@ public class LoginActivity extends AppCompatActivity {
 
             if (success) {
                 Glassbar.make(coordinatorLayout, response, Snackbar.LENGTH_LONG).show();
-                usernameView.setEnabled(false);
-                passwordView.setEnabled(false);
+                enableInput(false);
                 attemptLogin(false);
             } else {
+                enableInput(true);
                 outerPasswordView.setError(response);
                 passwordView.requestFocus();
             }
