@@ -178,14 +178,17 @@ public class ChallengeController extends BackendService {
         String marshalled;
         try {
             marshalled = FileUtils.readFileToString(targetFile, Charset.defaultCharset());
+            for(String m : marshalled.split("\n")) {
+                challenges.add(Challenge.fromString(m, context));
+            }
         } catch (IOException e) {
             Log.w("mindlevel", "No challenges cached yet");
             return challenges;
+        } catch (ArrayIndexOutOfBoundsException e) {
+            Log.w("mindlevel", "Wrong/corrupt format on cached file");
+            return challenges;
         }
 
-        for(String m : marshalled.split("\n")) {
-            challenges.add(Challenge.fromString(m, context));
-        }
         return challenges;
     }
 }

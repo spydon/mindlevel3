@@ -31,6 +31,8 @@ import net.mindlevel.util.ImageUtil;
 import net.mindlevel.util.NetworkUtil;
 import net.mindlevel.util.PreferencesUtil;
 
+import java.util.Collections;
+
 import static android.app.Activity.RESULT_OK;
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
@@ -50,6 +52,7 @@ public class UserFragment extends InfoFragment {
     private ImageView imageView;
     private TextView usernameView;
     private TextView scoreView;
+    private TextView levelView;
     private TextView descriptionView;
     private View view, imageProgressBar;
     private FloatingActionButton editButton, signOutButton, selfButton, accomplishmentButton;
@@ -73,6 +76,7 @@ public class UserFragment extends InfoFragment {
         this.imageView = view.findViewById(R.id.image);
         this.usernameView = view.findViewById(R.id.username);
         this.scoreView = view.findViewById(R.id.score);
+        this.levelView = view.findViewById(R.id.level);
         this.descriptionView = view.findViewById(R.id.description);
         this.progressView = view.findViewById(R.id.progress);
         this.errorView = view.findViewById(R.id.error);
@@ -185,8 +189,10 @@ public class UserFragment extends InfoFragment {
             loading.hide();
         }
 
-        usernameView.setText(user.username);
+        String capitalizedUsername = user.username.toUpperCase().substring(0, 1) + user.username.substring(1);
+        usernameView.setText(capitalizedUsername);
         scoreView.setText(String.valueOf(user.score));
+        levelView.setText(getLevel(user));
         descriptionView.setText(user.description);
 
         if (PreferencesUtil.getUsername(context).equals(user.username)) {
@@ -198,6 +204,19 @@ public class UserFragment extends InfoFragment {
         } else {
             buttonVisibility(true, false);
         }
+    }
+
+    private String getLevel(User user) {
+        int level = user.level;
+        StringBuilder b = new StringBuilder();
+        for (String c : Collections.nCopies(level, "✊")) {
+            b.append(c);
+        }
+        String result = b.toString();
+        if (result.isEmpty()) {
+            result = "\uD83D\uDC76";
+        }
+        return result;
     }
 
     /**

@@ -12,7 +12,7 @@ import java.util.List;
 
 public class User implements Serializable, Comparable<User> {
     public final String username, password, description, image;
-    public final int score;
+    public final int score, level;
     public final long created, lastActive;
 
     public User(String username, String password, String description) {
@@ -21,17 +21,19 @@ public class User implements Serializable, Comparable<User> {
         this.description = description;
         this.image = "";
         this.score = 0;
+        this.level = 0;
         this.created = 0L;
         this.lastActive = 0L;
     }
 
-    public User(String username, String password, String description, String image, int score, long created, long
-            lastActive) {
+    public User(String username, String password, String description, String image, int score, int level, long created,
+                long lastActive) {
         this.username = username;
         this.password = password;
         this.description = description;
         this.image = image;
         this.score = score;
+        this.level = level;
         this.created = created;
         this.lastActive = lastActive;
     }
@@ -43,6 +45,7 @@ public class User implements Serializable, Comparable<User> {
         tokens.add(description);
         tokens.add(image);
         tokens.add(Integer.toString(score));
+        tokens.add(Integer.toString(level));
         tokens.add(Long.toString(created));
         tokens.add(Long.toString(lastActive));
         return TextUtils.join(context.getString(R.string.field_delim), tokens);
@@ -55,9 +58,10 @@ public class User implements Serializable, Comparable<User> {
         String description = fields[2];
         String image = fields[3];
         int score = Integer.valueOf(fields[4]);
-        long created = Long.valueOf(fields[5]);
-        long lastActive = Long.valueOf(fields[6]);
-        return new User(username, password, description, image, score, created, lastActive);
+        int level = Integer.valueOf(fields[5]);
+        long created = Long.valueOf(fields[6]);
+        long lastActive = Long.valueOf(fields[7]);
+        return new User(username, password, description, image, score, level, created, lastActive);
     }
 
     @Override

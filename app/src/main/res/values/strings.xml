@@ -129,6 +129,10 @@
     <string name="and">and</string>
     <string name="privacy_policy">Privacy Policy</string>
 
+    <!-- User -->
+    <string name="user_level">Level:</string>
+    <string name="user_score">Score:</string>
+
     <!-- Tutorial-->
     <string name="tutorial">Tutorial</string>
     <string name="tutorial_description">
