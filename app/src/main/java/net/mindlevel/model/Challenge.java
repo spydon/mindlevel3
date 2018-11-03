@@ -11,23 +11,27 @@ import java.util.List;
 
 public class Challenge implements Serializable {
     public final String title, description, image, creator;
-    public final int id;
+    public final int id, levelRestriction, scoreRestriction;
     public final long created;
     public final boolean validated;
 
     public Challenge(int id,
-                   String title,
-                   String description,
-                   String image,
-                   long created,
-                   String creator,
-                   boolean validated) {
+                     String title,
+                     String description,
+                     String image,
+                     long created,
+                     String creator,
+                     int levelRestriction,
+                     int scoreRestriction,
+                     boolean validated) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.image = image;
         this.created = created;
         this.creator = creator;
+        this.levelRestriction = levelRestriction;
+        this.scoreRestriction = scoreRestriction;
         this.validated = validated;
     }
 
@@ -39,6 +43,8 @@ public class Challenge implements Serializable {
         tokens.add(image);
         tokens.add(Long.toString(created));
         tokens.add(creator);
+        tokens.add(Integer.toString(levelRestriction));
+        tokens.add(Integer.toString(scoreRestriction));
         tokens.add(Boolean.toString(validated));
         return TextUtils.join(context.getString(R.string.field_delim), tokens);
     }
@@ -51,8 +57,11 @@ public class Challenge implements Serializable {
         String image = fields[3];
         long created = Long.valueOf(fields[4]);
         String creator = fields[5];
-        boolean validated = Boolean.valueOf(fields[6]);
-        return new Challenge(id, title, description, image, created, creator, validated);
+        int levelRestriction = Integer.valueOf(fields[6]);
+        int scoreRestriction = Integer.valueOf(fields[7]);
+        boolean validated = Boolean.valueOf(fields[8]);
+        return new Challenge(id, title, description, image, created, creator, levelRestriction, scoreRestriction,
+                             validated);
     }
 
     @Override

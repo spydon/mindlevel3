@@ -32,8 +32,8 @@
 
         <activity
             android:name=".activity.ChallengeActivity"
-            android:launchMode="standard"
             android:parentActivityName=".CoordinatorActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -43,6 +43,7 @@
         <activity
             android:name=".activity.AccomplishmentActivity"
             android:parentActivityName=".CoordinatorActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -52,6 +53,7 @@
         <activity
             android:name=".activity.EditUserActivity"
             android:parentActivityName=".CoordinatorActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -61,6 +63,7 @@
         <activity
             android:name=".activity.UploadActivity"
             android:parentActivityName=".CoordinatorActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -69,26 +72,37 @@
 
         <activity
             android:name=".activity.LoginActivity"
+            android:screenOrientation="portrait"
             android:label="" />
 
         <activity
+            android:name=".activity.ChallengeTreeActivity"
+            android:screenOrientation="portrait"
+            android:label="@string/title_challenge_tree" />
+
+        <activity
             android:name=".activity.AboutActivity"
+            android:screenOrientation="portrait"
             android:label="@string/title_about" />
 
         <activity
             android:name=".activity.TutorialActivity"
+            android:screenOrientation="portrait"
             android:label="@string/tutorial" />
 
         <activity
             android:name=".activity.IntegrationActivity"
+            android:screenOrientation="portrait"
             android:label="@string/integration_title" />
 
         <activity
             android:name=".activity.TermsActivity"
+            android:screenOrientation="portrait"
             android:label="@string/terms_of_service" />
 
         <activity
             android:name=".activity.PrivacyActivity"
+            android:screenOrientation="portrait"
             android:label="@string/privacy_policy" />
 
         <provider

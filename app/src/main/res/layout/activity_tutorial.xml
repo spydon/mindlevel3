@@ -66,6 +66,14 @@
             android:gravity="center"
             android:text="@string/tutorial_accomplishment" />
 
+        <TextView
+            android:drawableTop="@drawable/tutorial"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/tutorial_text_margin"
+            android:gravity="center"
+            android:text="@string/tutorial_location" />
+
         <Button
             android:id="@+id/tutorial_finished"
             android:text="@string/tutorial_got_it"

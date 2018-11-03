@@ -8,9 +8,11 @@ import android.util.Log;
 
 import net.mindlevel.api.endpoint.AccomplishmentEndpoint;
 import net.mindlevel.model.Accomplishment;
+import net.mindlevel.model.Challenge;
 import net.mindlevel.model.Contributors;
 import net.mindlevel.model.Like;
 import net.mindlevel.model.User;
+import net.mindlevel.util.CoordinatorUtil;
 
 import org.apache.commons.io.FileUtils;
 
@@ -144,7 +146,13 @@ public class AccomplishmentController extends BackendService {
                 if (response.isSuccessful()) {
                     callback.onPostExecute(true, response.body());
                 } else {
-                    callback.onPostExecute(false, null);
+                    switch (response.code()) {
+                        case 500:
+                            // TODO: Logout on invalid session
+                            callback.onPostExecute(false, null);
+                        default:
+                            callback.onPostExecute(false, null);
+                    }
                 }
             }
 

@@ -5,11 +5,11 @@ import java.io.Serializable;
 public class Accomplishment implements Serializable {
 
     public final String title, description, image;
-    public final int id, challengeId, score;
+    public final int id, challengeId, score, levelRestriction, scoreRestriction;
     public final long created;
 
-    public Accomplishment(String title, String description, int challengeId) {
-        this(0, title, description, "", challengeId, 0, 0);
+    public Accomplishment(String title, String description, int challengeId, int levelRestriction) {
+        this(0, title, description, "", challengeId, 0, levelRestriction, 0, 0);
     }
     public Accomplishment(int id,
                           String title,
@@ -17,6 +17,8 @@ public class Accomplishment implements Serializable {
                           String image,
                           int challengeId,
                           int score,
+                          int levelRestriction,
+                          int scoreRestriction,
                           long created) {
         this.id = id;
         this.title = title;
@@ -24,6 +26,8 @@ public class Accomplishment implements Serializable {
         this.image = image;
         this.challengeId = challengeId;
         this.score = score;
+        this.levelRestriction = levelRestriction;
+        this.scoreRestriction = scoreRestriction;
         this.created = created;
     }
 

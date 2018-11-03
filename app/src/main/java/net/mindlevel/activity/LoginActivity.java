@@ -279,7 +279,7 @@ public class LoginActivity extends AppCompatActivity {
             showProgress(false);
 
             if (success) {
-                finish();
+                finishAndRemoveTask();
             } else {
                 outerPasswordView.setError(getString(R.string.error_incorrect_password));
                 enableInput(true);

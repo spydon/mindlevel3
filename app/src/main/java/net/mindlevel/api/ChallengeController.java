@@ -41,6 +41,35 @@ public class ChallengeController extends BackendService {
                     callback.onPostExecute(true, response.body());
                     cacheChallenges(response.body());
                 } else {
+                    // TODO: Log out if session is invalid
+                    onFailure(call, new Throwable("Could not fetch challenges remotely"));
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<List<Challenge>> call, @NonNull Throwable t) {
+                List<Challenge> challenges = readFromCache();
+                if (challenges.isEmpty()) {
+                    callback.onPostExecute(false, null);
+                    t.printStackTrace();
+                    Log.w("mindlevel", "getAll challenges call failed");
+                } else {
+                    Log.i("mindlevel", "Got challenges from cache");
+                    callback.onPostExecute(true, challenges);
+                }
+            }
+        });
+    }
+
+    public void getAllRestricted(final ControllerCallback<List<Challenge>> callback) {
+        Call<List<Challenge>> call = endpoint.getAllRestricted();
+        call.enqueue(new Callback<List<Challenge>>() {
+            @Override
+            public void onResponse(@NonNull Call<List<Challenge>> call, @NonNull Response<List<Challenge>> response) {
+                if (response.isSuccessful()) {
+                    callback.onPostExecute(true, response.body());
+                    cacheChallenges(response.body());
+                } else {
                     onFailure(call, new Throwable("Could not fetch challenges remotely"));
                 }
             }

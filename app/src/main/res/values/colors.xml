@@ -7,4 +7,5 @@
     <color name="background">#c7c7c7</color>
     <color name="colorLike">#ffffff</color>
     <color name="snackbar">#80000000</color>
+    <color name="disabledBackground">#000</color>
 </resources>

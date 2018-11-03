@@ -20,6 +20,9 @@ public interface ChallengeEndpoint {
     @GET("challenge")
     Call<List<Challenge>> getAll();
 
+    @GET("challenge/restricted")
+    Call<List<Challenge>> getAllRestricted(); // Gives all challenges, but not with all content
+
     @POST("challenge")
     Call<Void> add(@Body Challenge Challenge);
 

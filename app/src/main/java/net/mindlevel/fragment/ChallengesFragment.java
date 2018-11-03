@@ -18,6 +18,8 @@ import net.mindlevel.api.ChallengeController;
 import net.mindlevel.api.ControllerCallback;
 import net.mindlevel.model.Category;
 import net.mindlevel.model.Challenge;
+import net.mindlevel.util.PermissionUtil;
+import net.mindlevel.util.PreferencesUtil;
 
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
@@ -56,8 +58,7 @@ public class ChallengesFragment extends InfoFragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_challenge_list, container, false);
         this.recyclerView = view.findViewById(R.id.list);
         this.categoryRecyclerView = view.findViewById(R.id.category_list);
@@ -88,8 +89,17 @@ public class ChallengesFragment extends InfoFragment {
         showInfo(false, true);
         controller.getCategories(getCategoriesCallback);
 
-        populate();
+        if (PreferencesUtil.isLoggedIn(context)) {
+            populate();
+        }
         return view;
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisible) {
+        if (isVisible && challenges.isEmpty()) {
+            populate();
+        }
     }
 
     @Override

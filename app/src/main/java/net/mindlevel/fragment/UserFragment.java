@@ -18,12 +18,14 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 
 import net.mindlevel.R;
+import net.mindlevel.activity.ChallengeTreeActivity;
 import net.mindlevel.activity.EditUserActivity;
 import net.mindlevel.activity.LoginActivity;
 import net.mindlevel.api.ControllerCallback;
 import net.mindlevel.api.LoginController;
 import net.mindlevel.api.UserController;
 import net.mindlevel.impl.ProgressController;
+import net.mindlevel.model.Level;
 import net.mindlevel.model.Login;
 import net.mindlevel.model.User;
 import net.mindlevel.util.CoordinatorUtil;
@@ -55,7 +57,7 @@ public class UserFragment extends InfoFragment {
     private TextView levelView;
     private TextView descriptionView;
     private View view, imageProgressBar;
-    private FloatingActionButton editButton, signOutButton, selfButton, accomplishmentButton;
+    private FloatingActionButton editButton, signOutButton, selfButton, accomplishmentButton, challengeTreeButton;
     private Context context;
     private User user;
 
@@ -95,6 +97,16 @@ public class UserFragment extends InfoFragment {
                 Intent editIntent = new Intent(context, EditUserActivity.class);
                 editIntent.putExtra("user", user);
                 startActivityForResult(editIntent, UPDATE_USER);
+            }
+        });
+
+        challengeTreeButton = view.findViewById(R.id.challenge_tree_button);
+        challengeTreeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent challengeTreeIntent = new Intent(context, ChallengeTreeActivity.class);
+                challengeTreeIntent.putExtra("user", user);
+                startActivity(challengeTreeIntent);
             }
         });
 
@@ -190,9 +202,10 @@ public class UserFragment extends InfoFragment {
         }
 
         String capitalizedUsername = user.username.toUpperCase().substring(0, 1) + user.username.substring(1);
+        Level level = new Level(user.level);
         usernameView.setText(capitalizedUsername);
         scoreView.setText(String.valueOf(user.score));
-        levelView.setText(getLevel(user));
+        levelView.setText(level.getVisualLevel());
         descriptionView.setText(user.description);
 
         if (PreferencesUtil.getUsername(context).equals(user.username)) {
@@ -204,19 +217,6 @@ public class UserFragment extends InfoFragment {
         } else {
             buttonVisibility(true, false);
         }
-    }
-
-    private String getLevel(User user) {
-        int level = user.level;
-        StringBuilder b = new StringBuilder();
-        for (String c : Collections.nCopies(level, "✊")) {
-            b.append(c);
-        }
-        String result = b.toString();
-        if (result.isEmpty()) {
-            result = "\uD83D\uDC76";
-        }
-        return result;
     }
 
     /**
@@ -235,6 +235,7 @@ public class UserFragment extends InfoFragment {
         int selfVisibility = !isSelf ? VISIBLE : GONE;
         int selfModVisibilty = isVisible && isSelf ? VISIBLE : GONE;
         editButton.setVisibility(selfModVisibilty);
+        challengeTreeButton.setVisibility(selfModVisibilty);
         signOutButton.setVisibility(selfModVisibilty);
         accomplishmentButton.setVisibility(visibility);
         selfButton.setVisibility(selfVisibility);

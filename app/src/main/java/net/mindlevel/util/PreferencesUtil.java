@@ -11,6 +11,11 @@ public class PreferencesUtil {
         return sharedPreferences.getString("username", "");
     }
 
+    public static boolean isLoggedIn(Context context) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences("session", Context.MODE_PRIVATE);
+        return sharedPreferences.contains("username");
+    }
+
     public static String getSessionId(Context context) {
         SharedPreferences sharedPreferences = context.getSharedPreferences("session", Context.MODE_PRIVATE);
         return sharedPreferences.getString("sessionId", "");
@@ -55,7 +60,7 @@ public class PreferencesUtil {
     public static void setSessionState(String username, String sessionId, Context context) {
         SharedPreferences sharedPreferences = context.getSharedPreferences("session", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("username", username);
+        editor.putString("username", username.toLowerCase());
         editor.putString("sessionId", sessionId);
         editor.apply();
     }
