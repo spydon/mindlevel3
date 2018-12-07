@@ -25,19 +25,15 @@ import java.util.List;
 class ChallengeTreeRecyclerViewAdapter extends RecyclerView.Adapter<ChallengeTreeRecyclerViewAdapter.ViewHolder> {
 
     private final List<List<Challenge>> orderedChallenges;
-    private final List<ChallengeTreeRowRecyclerViewAdapter> rowAdapters;
     private final ChallengeTreeActivity parent;
     private final User user;
-    private LayoutInflater inflater;
 
     ChallengeTreeRecyclerViewAdapter(final List<Challenge> challenges,
                                      final User user,
                                      ChallengeTreeActivity parent) {
         this.orderedChallenges = new ArrayList <>();
-        this.rowAdapters = new ArrayList <>();
         this.parent = parent;
         this.user = user;
-        this.inflater = LayoutInflater.from(parent.getBaseContext());
         setHasStableIds(true);
 
         registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
@@ -76,27 +72,22 @@ class ChallengeTreeRecyclerViewAdapter extends RecyclerView.Adapter<ChallengeTre
     }
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
-        inflater = LayoutInflater.from(viewGroup.getContext());
-        View view = inflater.inflate(R.layout.activity_challenge_tree_row, viewGroup, false);
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.activity_challenge_tree_row, parent, false);
 
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        List<Challenge> challenges = orderedChallenges.get(position);
-        holder.item = challenges;
-        holder.levelView.setText("Level: " + new Level(challenges.get(0).levelRestriction).getVisualLevel());
-        if(rowAdapters.size() <= position) {
-            RecyclerView recyclerView = holder.view.findViewById(R.id.list);
-            ChallengeTreeRowRecyclerViewAdapter adapter =
-                    new ChallengeTreeRowRecyclerViewAdapter(challenges, user, parent);
-            recyclerView.setLayoutManager(new LinearLayoutManager(parent.getBaseContext(), LinearLayoutManager.HORIZONTAL, false));
-            recyclerView.setAdapter(adapter);
-            rowAdapters.add(adapter);
+        List<Challenge> currentChallenges = holder.challenges;
+        List<Challenge> updatedChallenges = orderedChallenges.get(position);
+        holder.levelView.setText(new Level(updatedChallenges.get(0).levelRestriction).getVisualLevel());
+        if (!currentChallenges.containsAll(updatedChallenges)) {
+            currentChallenges.clear();
+            currentChallenges.addAll(updatedChallenges);
         }
-        rowAdapters.get(position).notifyDataSetChanged();
     }
 
     @Override
@@ -106,12 +97,17 @@ class ChallengeTreeRecyclerViewAdapter extends RecyclerView.Adapter<ChallengeTre
 
     @Override
     public long getItemId(int position) {
-        return orderedChallenges.get(position).hashCode();
+        return position;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+       return position;
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
-        public List<Challenge> item;
         public final View view;
+        final List<Challenge> challenges;
         final TextView levelView;
         final RecyclerView rowView;
         final ProgressBar progressBar;
@@ -119,9 +115,16 @@ class ChallengeTreeRecyclerViewAdapter extends RecyclerView.Adapter<ChallengeTre
         ViewHolder(View view) {
             super(view);
             this.view = view;
+            this.challenges = new ArrayList <>();
             levelView = view.findViewById(R.id.level);
             rowView = view.findViewById(R.id.list);
             progressBar = view.findViewById(R.id.progress);
-        }
+            ChallengeTreeRowRecyclerViewAdapter adapter =
+                    new ChallengeTreeRowRecyclerViewAdapter(challenges, user, parent);
+            LinearLayoutManager layoutManager =
+                    new LinearLayoutManager(view.getContext(), LinearLayoutManager.HORIZONTAL, false);
+            rowView.setLayoutManager(layoutManager);
+            rowView.setAdapter(adapter);
+         }
     }
 }

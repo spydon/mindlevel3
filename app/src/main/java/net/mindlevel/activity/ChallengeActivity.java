@@ -21,6 +21,7 @@ import net.mindlevel.api.ChallengeController;
 import net.mindlevel.api.ControllerCallback;
 import net.mindlevel.impl.ProgressController;
 import net.mindlevel.model.Challenge;
+import net.mindlevel.model.Level;
 import net.mindlevel.util.CoordinatorUtil;
 import net.mindlevel.util.ImageUtil;
 import net.mindlevel.util.NetworkUtil;
@@ -79,28 +80,31 @@ public class ChallengeActivity extends AppCompatActivity {
     private ControllerCallback<Challenge> challengeCallback = new ControllerCallback<Challenge>() {
 
         @Override
-        public void onPostExecute(final Boolean success, final Challenge Challenge) {
+        public void onPostExecute(final Boolean success, final Challenge challenge) {
             showProgress(false);
 
             if (success) {
                 Toolbar toolbar = findViewById(R.id.toolbar);
                 setSupportActionBar(toolbar);
                 getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-                toolbar.setTitle(Challenge.title);
+                toolbar.setTitle(challenge.title);
 
                 TextView titleView = findViewById(R.id.title);
-                titleView.setText(Challenge.title);
+                titleView.setText(challenge.title);
+
+                TextView levelView = findViewById(R.id.level);
+                levelView.setText(new Level(challenge.levelRestriction).getVisualLevel());
 
                 TextView descriptionView = findViewById(R.id.description);
-                descriptionView.setText(Challenge.description);
+                descriptionView.setText(challenge.description);
 
                 ChipView creatorView = findViewById(R.id.creator);
-                creatorView.setLabel(Challenge.creator);
+                creatorView.setLabel(challenge.creator);
 
                 creatorView.setOnChipClicked(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        CoordinatorUtil.toUser(context, Challenge.creator);
+                        CoordinatorUtil.toUser(context, challenge.creator);
                     }
                 });
 
@@ -109,7 +113,7 @@ public class ChallengeActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         Intent uploadIntent = new Intent(context, UploadActivity.class);
-                        uploadIntent.putExtra("challenge", Challenge);
+                        uploadIntent.putExtra("challenge", challenge);
                         startActivity(uploadIntent);
                     }
                 });
@@ -119,12 +123,12 @@ public class ChallengeActivity extends AppCompatActivity {
                 accomplishmentsButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        CoordinatorUtil.toFeed(context, Challenge);
+                        CoordinatorUtil.toFeed(context, challenge);
                     }
                 });
 
                 ImageView imageView = findViewById(R.id.image);
-                String url = ImageUtil.getUrl(Challenge.image);
+                String url = ImageUtil.getUrl(challenge.image);
                 Glide.with(context)
                         .load(url)
                         .listener(new ProgressController(imageProgressView))

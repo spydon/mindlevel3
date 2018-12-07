@@ -1,16 +1,11 @@
 package net.mindlevel.activity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
 
 import net.mindlevel.R;
 import net.mindlevel.api.ChallengeController;
@@ -27,14 +22,13 @@ public class ChallengeTreeActivity extends InfoActivity {
     private SwipeRefreshLayout swipe;
     private ChallengeTreeRecyclerViewAdapter adapter;
     private ChallengeController controller;
-    private User user;
 
     @Override
     protected void onCreate(Bundle bundle) {
         super.onCreate(bundle);
         setContentView(R.layout.activity_challenge_tree);
         challenges = new ArrayList <>();
-        user = (User) getIntent().getSerializableExtra("user");
+        User user = (User) getIntent().getSerializableExtra("user");
 
         this.contentView = findViewById(R.id.list);
         this.progressView = findViewById(R.id.progress);

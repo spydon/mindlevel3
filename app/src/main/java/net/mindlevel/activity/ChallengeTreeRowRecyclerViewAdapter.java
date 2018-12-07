@@ -84,7 +84,7 @@ class ChallengeTreeRowRecyclerViewAdapter extends RecyclerView.Adapter<Challenge
     @Override
     public long getItemId(int position) {
         List<Challenge> indexed = new ArrayList<>(challenges);
-        return indexed.get(position).hashCode();
+        return indexed.get(position).id;
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {

@@ -166,5 +166,6 @@
 
     <!-- Permissions -->
     <string name="permission_sharing_denied">Denied sharing permission</string>
+    <string name="challenge_level">Level:</string>
 
 </resources>

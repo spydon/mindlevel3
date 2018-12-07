@@ -5,11 +5,15 @@ import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.util.Log;
 
+import net.mindlevel.CoordinatorActivity;
 import net.mindlevel.R;
 import net.mindlevel.api.endpoint.ChallengeEndpoint;
 import net.mindlevel.model.Accomplishment;
 import net.mindlevel.model.Category;
 import net.mindlevel.model.Challenge;
+import net.mindlevel.model.Login;
+import net.mindlevel.util.CoordinatorUtil;
+import net.mindlevel.util.PreferencesUtil;
 
 import org.apache.commons.io.FileUtils;
 
@@ -41,8 +45,9 @@ public class ChallengeController extends BackendService {
                     callback.onPostExecute(true, response.body());
                     cacheChallenges(response.body());
                 } else {
-                    // TODO: Log out if session is invalid
-                    onFailure(call, new Throwable("Could not fetch challenges remotely"));
+                    Login login = PreferencesUtil.getLogin(context);
+                    new LoginController(context).logout(login, null);
+//                    onFailure(call, new Throwable("Could not fetch challenges remotely"));
                 }
             }
 
@@ -204,6 +209,7 @@ public class ChallengeController extends BackendService {
         ArrayList<Challenge> challenges = new ArrayList<>();
         String challengesFilename = context.getString(R.string.challenges_file);
         File targetFile = new File(outputDir + "/" + challengesFilename);
+        boolean hasErrors = false;
         String marshalled;
         try {
             marshalled = FileUtils.readFileToString(targetFile, Charset.defaultCharset());
@@ -212,10 +218,21 @@ public class ChallengeController extends BackendService {
             }
         } catch (IOException e) {
             Log.w("mindlevel", "No challenges cached yet");
+            hasErrors = true;
             return challenges;
         } catch (ArrayIndexOutOfBoundsException e) {
             Log.w("mindlevel", "Wrong/corrupt format on cached file");
+            hasErrors = true;
             return challenges;
+        } catch (Exception e) {
+            Log.w("mindlevel", "Probably incompatible format on cached file");
+            hasErrors = true;
+            return challenges;
+        } finally {
+            if(hasErrors) {
+                Log.w("mindlevel", "Deleted cached file " + targetFile.getName() + " since it had errors");
+                targetFile.delete();
+            }
         }
 
         return challenges;
