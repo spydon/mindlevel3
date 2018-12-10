@@ -23,7 +23,9 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:textAlignment="center"
-        android:textSize="14sp"
+        android:textSize="15sp"
+        android:fontFamily="serif-monospace"
+        android:textStyle="bold"
         android:background="@color/fadingYellow"
         android:padding="10dp"
         android:textAppearance="?attr/textAppearanceListItem" />

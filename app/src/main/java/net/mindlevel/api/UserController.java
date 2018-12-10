@@ -280,6 +280,7 @@ public class UserController extends BackendService {
             marshalled = FileUtils.readFileToString(targetFile, Charset.defaultCharset());
         } catch (IOException e) {
             e.printStackTrace();
+            targetFile.delete();
             Log.w("mindlevel", "Failed to read user cache file");
         }
 
