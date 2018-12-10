@@ -7,14 +7,6 @@
     android:minHeight="?attr/actionBarSize"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <!-- <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/app_name"
-        android:src="@drawable/logo_source"
-        android:layout_gravity="center"
-        android:id="@+id/toolbar_title" /> -->
-
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
