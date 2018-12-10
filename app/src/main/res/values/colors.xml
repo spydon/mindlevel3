@@ -8,4 +8,5 @@
     <color name="colorLike">#ffffff</color>
     <color name="snackbar">#80000000</color>
     <color name="disabledBackground">#000</color>
+    <color name="fadingYellow">#faf6e5</color>
 </resources>
