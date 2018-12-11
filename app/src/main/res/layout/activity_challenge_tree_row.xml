@@ -35,7 +35,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
         android:elevation="4dp"
-        android:background="@drawable/shadow"
+        android:background="@drawable/bg_item"
         android:orientation="vertical">
 
         <android.support.v7.widget.RecyclerView

@@ -5,13 +5,13 @@
     android:layout_height="wrap_content"
     android:layout_margin="5dp"
     android:elevation="5dp"
-    android:background="@drawable/shadow"
+    android:background="@drawable/bg_item"
     android:orientation="vertical">
 
     <ProgressBar
         android:id="@+id/progress"
         android:visibility="visible"
-        android:background="@android:color/white"
+        android:background="@android:color/transparent"
         android:layout_width="match_parent"
         android:layout_height="50dp" />
 
@@ -26,7 +26,6 @@
         android:textSize="15sp"
         android:fontFamily="serif-monospace"
         android:textStyle="bold"
-        android:background="@color/fadingYellow"
         android:padding="10dp"
         android:textAppearance="?attr/textAppearanceListItem" />
 </LinearLayout>
