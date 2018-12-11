@@ -11,8 +11,6 @@
         android:id="@+id/image"
         android:adjustViewBounds="true"
         android:layout_centerHorizontal="true"
-        android:outlineProvider="background"
-        android:background="@drawable/rounded_outline"
         android:alpha="1"
         android:layout_height="wrap_content"
         android:layout_width="match_parent" />
