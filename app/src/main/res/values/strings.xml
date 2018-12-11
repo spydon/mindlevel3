@@ -27,6 +27,7 @@
     <string name="title_settings">Settings</string>
     <string name="title_about">About</string>
     <string name="title_challenge_tree">Challenge Tree</string>
+    <string name="title_challenge_suggestion">Suggest challenge</string>
 
     <!-- Core words -->
     <string name="user">User</string>
@@ -38,6 +39,8 @@
     <string name="hint_upload_description">Describe how you accomplished the challenge</string>
     <string name="hint_user_description">Describe yourself, or write anything really</string>
     <string name="hint_upload_title">Your title</string>
+    <string name="hint_suggestion_title">The title</string>
+    <string name="hint_suggestion_description">Describe how to accomplish the challenge</string>
 
     <!-- Login -->
     <string name="prompt_username">Username</string>
@@ -66,11 +69,13 @@
     <string name="action_upload">Upload</string>
     <string name="action_like">✊</string>
     <string name="action_share_using">Share using</string>
+    <string name="action_suggest">Suggest</string>
 
     <!-- Successful -->
     <string name="successful_upload">Upload was successful</string>
     <string name="successful_registration">Successfully registered as %1$s</string>
     <string name="successful_edit">Successful edit!</string>
+    <string name="successful_suggestion">Thanks!</string>
 
     <!-- Errors -->
     <string name="error_invalid_username">This username is too short</string>
@@ -134,6 +139,9 @@
     <string name="user_level">Level:</string>
     <string name="user_score">Score:</string>
 
+    <!-- Challenge -->
+    <string name="challenge_level">Level:</string>
+
     <!-- Tutorial-->
     <string name="tutorial">Tutorial</string>
     <string name="tutorial_description">
@@ -166,6 +174,5 @@
 
     <!-- Permissions -->
     <string name="permission_sharing_denied">Denied sharing permission</string>
-    <string name="challenge_level">Level:</string>
 
 </resources>

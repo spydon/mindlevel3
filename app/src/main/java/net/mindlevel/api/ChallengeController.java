@@ -1,6 +1,7 @@
 package net.mindlevel.api;
 
 import android.content.Context;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.util.Log;
@@ -13,6 +14,7 @@ import net.mindlevel.model.Category;
 import net.mindlevel.model.Challenge;
 import net.mindlevel.model.Login;
 import net.mindlevel.util.CoordinatorUtil;
+import net.mindlevel.util.ImageUtil;
 import net.mindlevel.util.PreferencesUtil;
 
 import org.apache.commons.io.FileUtils;
@@ -23,6 +25,9 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -185,6 +190,43 @@ public class ChallengeController extends BackendService {
                 Log.w("mindlevel", "get accomplishments for challenge call failed");
             }
         });
+    }
+
+    public void add(final Challenge challenge,
+                    final Uri path,
+                    final ControllerCallback<Void> callback) {
+        try {
+            if (path != null && !TextUtils.isEmpty(path.getPath())) {
+                byte[] bytes = ImageUtil.compressImage(path, context);
+
+                MultipartBody.Part image =
+                        MultipartBody.Part.createFormData("image", null, RequestBody.create
+                                (MediaType.parse("image/*"), bytes));
+
+                Call<Void> call = endpoint.add(challenge, image);
+                call.enqueue(new Callback<Void>() {
+                    @Override
+                    public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
+                        if (response.isSuccessful()) {
+                            callback.onPostExecute(true, response.body());
+                        } else {
+                            callback.onPostExecute(false, null);
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(@NonNull Call<Void> call, @NonNull Throwable t) {
+                        callback.onPostExecute(false, null);
+                        t.printStackTrace();
+                        Log.w("mindlevel", "suggest challenge call failed");
+                    }
+                });
+            } else {
+                callback.onPostExecute(false, null);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void cacheChallenges(List<Challenge> challenges) {

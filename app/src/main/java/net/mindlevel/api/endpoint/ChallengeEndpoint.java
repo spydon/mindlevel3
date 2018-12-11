@@ -23,6 +23,13 @@ public interface ChallengeEndpoint {
     @GET("challenge/restricted")
     Call<List<Challenge>> getAllRestricted(); // Gives all challenges, but not with all content
 
+    @Multipart
+    @POST("challenge")
+    Call<Void> add(
+            @Part("challenge") Challenge challenge,
+            @Part MultipartBody.Part image
+    );
+
     @POST("challenge")
     Call<Void> add(@Body Challenge Challenge);
 

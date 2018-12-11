@@ -15,6 +15,10 @@ public class Challenge implements Serializable {
     public final long created;
     public final boolean validated;
 
+    public Challenge(String title, String description) {
+        this(0, title, description, "", 0L, "", 0, 0, false);
+    }
+
     public Challenge(int id,
                      String title,
                      String description,

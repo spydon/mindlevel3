@@ -71,6 +71,16 @@
         </activity>
 
         <activity
+            android:name=".activity.ChallengeSuggestionActivity"
+            android:parentActivityName=".CoordinatorActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="net.mindlevel.CoordinatorActivity"/>
+        </activity>
+
+        <activity
             android:name=".activity.LoginActivity"
             android:screenOrientation="portrait"
             android:label="" />

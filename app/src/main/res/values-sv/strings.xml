@@ -83,4 +83,20 @@
     <string name="tip_new">Klicka på tipsen för att se ett nytt</string>
     <string name="and">och</string>
     <string name="title_login">Logga in</string>
+    <string name="title_challenge_suggestion">Föreslå uppdrag</string>
+    <string name="user">Användare</string>
+    <string name="challenge">Uppdrag</string>
+    <string name="accomplishment">Utförande</string>
+    <string name="contributor">Medhjälpare</string>
+    <string name="hint_suggestion_title">Titeln</string>
+    <string name="hint_suggestion_description">Beskriv hur man utför uppdraget</string>
+    <string name="integration_try_button">Testa lösenord!</string>
+    <string name="integration_default_button">Använd vanliga MindLevel</string>
+    <string name="integration_normal">Använder vanliga MindLevel</string>
+    <string name="action_share_using">Dela genom</string>
+    <string name="action_suggest">Föreslå</string>
+    <string name="tutorial_location">Tutorialen kan alltid öppnas i högra hörnet</string>
+    <string name="permission_sharing_denied">Nekade delningstillåtelse</string>
+    <string name="successful_suggestion">Tack!</string>
+    <string name="user_score">Poäng:</string>
 </resources>

@@ -4,7 +4,9 @@ package net.mindlevel.fragment;
 //import android.app.Fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,8 +14,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import net.mindlevel.R;
+import net.mindlevel.activity.ChallengeSuggestionActivity;
 import net.mindlevel.api.ChallengeController;
 import net.mindlevel.api.ControllerCallback;
 import net.mindlevel.model.Category;
@@ -68,7 +72,7 @@ public class ChallengesFragment extends InfoFragment {
         this.progressView = view.findViewById(R.id.progress);
         this.errorView = view.findViewById(R.id.error);
         this.swipe = view.findViewById(R.id.swipe_refresh_layout);
-        Context context = getContext();
+        final Context context = getContext();
 
         if (columnCount <= 1) {
             recyclerView.setLayoutManager(new LinearLayoutManager(context));
@@ -83,6 +87,15 @@ public class ChallengesFragment extends InfoFragment {
             @Override
             public void onRefresh() {
                 populate();
+            }
+        });
+
+        FloatingActionButton suggestionButton = view.findViewById(R.id.challenge_suggestion_button);
+        suggestionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent suggestionIntent = new Intent(context, ChallengeSuggestionActivity.class);
+                startActivity(suggestionIntent);
             }
         });
 

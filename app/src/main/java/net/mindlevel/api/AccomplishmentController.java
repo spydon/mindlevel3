@@ -13,6 +13,7 @@ import net.mindlevel.model.Contributors;
 import net.mindlevel.model.Like;
 import net.mindlevel.model.User;
 import net.mindlevel.util.CoordinatorUtil;
+import net.mindlevel.util.ImageUtil;
 
 import org.apache.commons.io.FileUtils;
 
@@ -40,31 +41,13 @@ public class AccomplishmentController extends BackendService {
         endpoint = retrofit.create(AccomplishmentEndpoint.class);
     }
 
-    private byte[] compressImage(Uri path) throws IOException {
-        InputStream is = context.getContentResolver().openInputStream(path);
-
-        File outputDir = context.getCacheDir();
-        File targetFile = File.createTempFile("mindlevel", ".jpg", outputDir);
-
-        byte[] bytes;
-        if (is != null) {
-            FileUtils.copyInputStreamToFile(is, targetFile);
-            File compressed = new Compressor(context).compressToFile(targetFile);
-            bytes = FileUtils.readFileToByteArray(compressed);
-        } else {
-            bytes = new byte[0];
-        }
-
-        return bytes;
-    }
-
     public void add(final Accomplishment accomplishment,
                     final Set<String> contributors,
                     final Uri path,
                     final ControllerCallback<Accomplishment> callback) {
         try {
             if (path != null && !TextUtils.isEmpty(path.getPath())) {
-                byte[] bytes =  compressImage(path);
+                byte[] bytes = ImageUtil.compressImage(path, context);
 
                 MultipartBody.Part image = MultipartBody.Part.createFormData("image", null, RequestBody.create
                         (MediaType.parse("image/*"), bytes));

@@ -18,11 +18,15 @@ import android.provider.MediaStore;
 import android.support.v4.content.FileProvider;
 import android.widget.ImageView;
 
+import org.apache.commons.io.FileUtils;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import id.zelory.compressor.Compressor;
 
 public class ImageUtil {
 
@@ -195,5 +199,23 @@ public class ImageUtil {
         }
 
         return srcBitmap;
+    }
+
+    public static byte[] compressImage(Uri path, Context context) throws IOException {
+        InputStream is = context.getContentResolver().openInputStream(path);
+
+        File outputDir = context.getCacheDir();
+        File targetFile = File.createTempFile("mindlevel", ".jpg", outputDir);
+
+        byte[] bytes;
+        if (is != null) {
+            FileUtils.copyInputStreamToFile(is, targetFile);
+            File compressed = new Compressor(context).compressToFile(targetFile);
+            bytes = FileUtils.readFileToByteArray(compressed);
+        } else {
+            bytes = new byte[0];
+        }
+
+        return bytes;
     }
 }
