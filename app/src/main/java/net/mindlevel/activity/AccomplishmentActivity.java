@@ -2,6 +2,7 @@ package net.mindlevel.activity;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -29,6 +30,7 @@ import net.mindlevel.impl.Glassbar;
 import net.mindlevel.impl.ImageLikeView;
 import net.mindlevel.impl.ProgressController;
 import net.mindlevel.model.Accomplishment;
+import net.mindlevel.model.Level;
 import net.mindlevel.model.User;
 import net.mindlevel.util.ImageUtil;
 import net.mindlevel.util.PermissionUtil;
@@ -52,6 +54,7 @@ public class AccomplishmentActivity extends AppCompatActivity {
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_accomplishment);
+        Context context = getBaseContext();
         this.activity = this;
         this.coordinator = findViewById(R.id.coordinator);
         this.contributors = new ArrayList<>();
@@ -100,9 +103,12 @@ public class AccomplishmentActivity extends AppCompatActivity {
 
         TextView titleView = findViewById(R.id.title);
         TextView scoreView = findViewById(R.id.score);
+        TextView levelView = findViewById(R.id.level);
         TextView descriptionView = findViewById(R.id.description);
         titleView.setText(accomplishment.title);
-        scoreView.setText(Integer.toString(accomplishment.score));
+        String scoreText = context.getString(R.string.title_score, String.valueOf(accomplishment.score));
+        scoreView.setText(scoreText);
+        levelView.setText(new Level(accomplishment.levelRestriction).getVisualLevel());
         descriptionView.setText(accomplishment.description);
 
         imageView.setDrawingCacheEnabled(true);

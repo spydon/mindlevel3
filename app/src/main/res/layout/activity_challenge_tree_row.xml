@@ -15,7 +15,7 @@
         android:orientation="horizontal">
 
         <TextView
-            android:text="@string/challenge_level"
+            android:text="@string/title_level"
             android:textColor="@android:color/darker_gray"
             android:textSize="8pt"
             android:layout_width="wrap_content"

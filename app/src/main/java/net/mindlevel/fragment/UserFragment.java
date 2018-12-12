@@ -33,8 +33,6 @@ import net.mindlevel.util.ImageUtil;
 import net.mindlevel.util.NetworkUtil;
 import net.mindlevel.util.PreferencesUtil;
 
-import java.util.Collections;
-
 import static android.app.Activity.RESULT_OK;
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
@@ -77,7 +75,7 @@ public class UserFragment extends InfoFragment {
 
         this.imageView = view.findViewById(R.id.image);
         this.usernameView = view.findViewById(R.id.username);
-        this.scoreView = view.findViewById(R.id.score);
+        this.scoreView = view.findViewById(R.id.score_title);
         this.levelView = view.findViewById(R.id.level);
         this.descriptionView = view.findViewById(R.id.description);
         this.progressView = view.findViewById(R.id.progress);
@@ -203,8 +201,9 @@ public class UserFragment extends InfoFragment {
 
         String capitalizedUsername = user.username.toUpperCase().substring(0, 1) + user.username.substring(1);
         Level level = new Level(user.level);
+        String scoreText = context.getString(R.string.title_score, String.valueOf(user.score));
         usernameView.setText(capitalizedUsername);
-        scoreView.setText(String.valueOf(user.score));
+        scoreView.setText(scoreText);
         levelView.setText(level.getVisualLevel());
         descriptionView.setText(user.description);
 

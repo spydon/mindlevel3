@@ -98,5 +98,5 @@
     <string name="tutorial_location">Tutorialen kan alltid öppnas i högra hörnet</string>
     <string name="permission_sharing_denied">Nekade delningstillåtelse</string>
     <string name="successful_suggestion">Tack!</string>
-    <string name="user_score">Poäng:</string>
+    <string name="title_score">Poäng: %1$s</string>
 </resources>
