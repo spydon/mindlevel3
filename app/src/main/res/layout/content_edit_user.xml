@@ -54,8 +54,14 @@
             </RelativeLayout>
 
             <LinearLayout
-                android:layout_marginEnd="@dimen/text_beside_fab"
                 android:layout_width="match_parent"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="@dimen/text_beside_fab"
+                android:background="@drawable/bg_item"
+                android:elevation="4dp"
+                android:padding="10dp"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
