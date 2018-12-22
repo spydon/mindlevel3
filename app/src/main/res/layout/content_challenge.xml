@@ -82,6 +82,7 @@
                     android:id="@+id/creator"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    app:backgroundColor="@color/colorAccent"
                     app:chip_hasAvatarIcon="false" />
 
             </LinearLayout>
