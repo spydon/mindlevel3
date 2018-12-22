@@ -113,6 +113,11 @@ public class CoordinatorActivity
 
         currentFragment = feedFragment;
 
+        if (!getText(R.string.app_integration).equals("default") &&
+                PreferencesUtil.getIntegration(this).equals("")) {
+            PreferencesUtil.setIntegration(this, getText(R.string.app_integration).toString());
+        }
+
         if (PreferencesUtil.getSessionId(getApplicationContext()).isEmpty()) {
             Intent loginIntent = new Intent(this, LoginActivity.class);
             startActivity(loginIntent);
