@@ -21,6 +21,8 @@ import android.widget.ImageView;
 
 import com.yalantis.ucrop.UCrop;
 
+import net.mindlevel.R;
+
 import org.apache.commons.io.FileUtils;
 
 import java.io.File;
@@ -180,7 +182,11 @@ public class ImageUtil {
                     path = copyImageFromContent(data.getData(), parent.getContentResolver());
                 }
 
-                UCrop cropper = UCrop.of(path, path);
+                UCrop.Options options = new UCrop.Options();
+                options.setStatusBarColor(parent.getResources().getColor(R.color.colorBarDark));
+                options.setToolbarColor(parent.getResources().getColor(R.color.colorPrimary));
+
+                UCrop cropper = UCrop.of(path, path).withOptions(options);
                 if (isSquare) {
                     cropper.withAspectRatio(1F, 1F);
                 }
