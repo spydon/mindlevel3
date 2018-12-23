@@ -83,7 +83,9 @@ class ChallengeTreeRecyclerViewAdapter extends RecyclerView.Adapter<ChallengeTre
     public void onBindViewHolder(final ViewHolder holder, int position) {
         List<Challenge> currentChallenges = holder.challenges;
         List<Challenge> updatedChallenges = orderedChallenges.get(position);
-        holder.levelView.setText(new Level(updatedChallenges.get(0).levelRestriction).getVisualLevel());
+        Level level = new Level(updatedChallenges.get(0).levelRestriction);
+        String levelText = parent.getString(R.string.title_level, level.getVisualLevel());
+        holder.levelView.setText(levelText);
         if (!currentChallenges.containsAll(updatedChallenges)) {
             currentChallenges.clear();
             currentChallenges.addAll(updatedChallenges);
