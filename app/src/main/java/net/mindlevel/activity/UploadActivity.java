@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.pchmn.materialchips.ChipsInput;
 import com.pchmn.materialchips.model.ChipInterface;
+import com.yalantis.ucrop.UCrop;
 
 import net.mindlevel.R;
 import net.mindlevel.api.AccomplishmentController;
@@ -32,7 +33,6 @@ import net.mindlevel.util.ImageUtil;
 import net.mindlevel.util.KeyboardUtil;
 import net.mindlevel.util.PreferencesUtil;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -41,7 +41,6 @@ import java.util.Set;
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 import static net.mindlevel.util.ImageUtil.PICK_IMAGE;
-import static net.mindlevel.util.ImageUtil.REQUEST_IMAGE_CAPTURE;
 
 public class UploadActivity extends AppCompatActivity {
 
@@ -76,7 +75,7 @@ public class UploadActivity extends AppCompatActivity {
         choosePicture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                utils.dispathGalleryIntent();
+                utils.dispatchGalleryIntent();
             }
         });
 
@@ -164,20 +163,12 @@ public class UploadActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == RESULT_OK) {
-            setError(false);
-            if (requestCode == REQUEST_IMAGE_CAPTURE) {
-                path = Uri.fromFile(new File(utils.getPhotoPath()));
-            } else if (requestCode == PICK_IMAGE) {
-                if (data == null) {
-                    setError(true, getString(R.string.error_image_loading));
-                    return;
-                }
-                path = data.getData();
-            }
-
-            ImageView imageView = findViewById(R.id.image);
-            utils.setImage(path, imageView);
+        ImageView imageView = findViewById(R.id.image);
+        Uri maybePath = utils.handleImageResult(requestCode, resultCode, false, data, imageView, this);
+        if (requestCode == UCrop.REQUEST_CROP && resultCode == RESULT_OK && maybePath != null) {
+            path = maybePath;
+        } else if (requestCode == PICK_IMAGE && data == null) {
+            setError(true, getString(R.string.error_image_loading));
         }
     }
 
@@ -186,7 +177,7 @@ public class UploadActivity extends AppCompatActivity {
     }
 
     private void setError(boolean isError, String error) {
-        containerView.smoothScrollTo(0,0);
+        // containerView.smoothScrollTo(0,0);
         errorView.setVisibility(isError ? VISIBLE : GONE);
         errorView.setText(error);
     }

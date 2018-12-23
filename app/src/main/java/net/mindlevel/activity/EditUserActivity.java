@@ -22,6 +22,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.yalantis.ucrop.UCrop;
 
 import net.mindlevel.R;
 import net.mindlevel.api.ControllerCallback;
@@ -33,12 +34,8 @@ import net.mindlevel.util.ImageUtil;
 import net.mindlevel.util.KeyboardUtil;
 import net.mindlevel.util.PreferencesUtil;
 
-import java.io.File;
-
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
-import static net.mindlevel.util.ImageUtil.PICK_IMAGE;
-import static net.mindlevel.util.ImageUtil.REQUEST_IMAGE_CAPTURE;
 
 /**
  * Edit a users details
@@ -56,12 +53,10 @@ public class EditUserActivity extends AppCompatActivity {
     private EditText emailView;
     private ProgressBar progressBar, progressEmail;
     private View editFormView, progressView;
-    private Button applyButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        final Activity activity = this;
         setContentView(R.layout.activity_edit_user);
         userController = new UserController(getApplicationContext());
 
@@ -78,7 +73,7 @@ public class EditUserActivity extends AppCompatActivity {
         choosePicture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                utils.dispathGalleryIntent();
+                utils.dispatchGalleryIntent();
             }
         });
 
@@ -104,7 +99,7 @@ public class EditUserActivity extends AppCompatActivity {
         descriptionView = findViewById(R.id.description);
         emailView = findViewById(R.id.email);
 
-        applyButton = findViewById(R.id.apply_button);
+        Button applyButton = findViewById(R.id.apply_button);
         applyButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -134,7 +129,6 @@ public class EditUserActivity extends AppCompatActivity {
                     .load(url)
                     .listener(new ProgressController(progressBar))
                     .into(imageView);
-
         }
         userController.getEmail(user.username, emailCallback);
     }
@@ -212,7 +206,7 @@ public class EditUserActivity extends AppCompatActivity {
         final Activity activity = this;
         Runnable endRunner = null;
         if (clear) {
-            path = null; //TODO: Set path to default image
+            path = ImageUtil.uriFromDrawable(R.drawable.default_user);
             endRunner = new Runnable() {
                 @Override
                 public void run() {
@@ -253,17 +247,9 @@ public class EditUserActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == RESULT_OK) {
-            if (requestCode == REQUEST_IMAGE_CAPTURE) {
-                path = Uri.fromFile(new File(utils.getPhotoPath()));
-            } else if (requestCode == PICK_IMAGE) {
-                if (data == null) {
-                    // TODO: Display an error
-                    return;
-                }
-                path = data.getData();
-            }
-            utils.setImage(path, imageView);
+        Uri maybePath = utils.handleImageResult(requestCode, resultCode, true, data, imageView, this);
+        if (requestCode == UCrop.REQUEST_CROP && resultCode == RESULT_OK && maybePath != null) {
+            path = maybePath;
             noImage(false);
         }
     }

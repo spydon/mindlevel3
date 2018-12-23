@@ -17,6 +17,8 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.yalantis.ucrop.UCrop;
+
 import net.mindlevel.R;
 import net.mindlevel.api.ChallengeController;
 import net.mindlevel.api.ControllerCallback;
@@ -24,12 +26,9 @@ import net.mindlevel.model.Challenge;
 import net.mindlevel.util.ImageUtil;
 import net.mindlevel.util.KeyboardUtil;
 
-import java.io.File;
-
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 import static net.mindlevel.util.ImageUtil.PICK_IMAGE;
-import static net.mindlevel.util.ImageUtil.REQUEST_IMAGE_CAPTURE;
 
 public class ChallengeSuggestionActivity extends AppCompatActivity {
 
@@ -57,7 +56,7 @@ public class ChallengeSuggestionActivity extends AppCompatActivity {
         choosePicture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                utils.dispathGalleryIntent();
+                utils.dispatchGalleryIntent();
             }
         });
 
@@ -133,20 +132,12 @@ public class ChallengeSuggestionActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == RESULT_OK) {
-            setError(false);
-            if (requestCode == REQUEST_IMAGE_CAPTURE) {
-                path = Uri.fromFile(new File(utils.getPhotoPath()));
-            } else if (requestCode == PICK_IMAGE) {
-                if (data == null) {
-                    setError(true, getString(R.string.error_image_loading));
-                    return;
-                }
-                path = data.getData();
-            }
-
-            ImageView imageView = findViewById(R.id.image);
-            utils.setImage(path, imageView);
+        ImageView imageView = findViewById(R.id.image);
+        Uri maybePath = utils.handleImageResult(requestCode, resultCode, true, data, imageView, this);
+        if (requestCode == UCrop.REQUEST_CROP && resultCode == RESULT_OK && maybePath != null) {
+            path = maybePath;
+        } else if (requestCode == PICK_IMAGE && data == null) {
+            setError(true, getString(R.string.error_image_loading));
         }
     }
 
