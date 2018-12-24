@@ -22,6 +22,7 @@
     <ProgressBar
         android:id="@+id/progress_like"
         android:visibility="gone"
+        android:elevation="5dp"
         android:layout_gravity="center"
         android:layout_alignTop="@id/image"
         android:layout_alignBottom="@id/image"
@@ -37,6 +38,7 @@
     <TextView
         android:id="@+id/image_text"
         android:visibility="gone"
+        android:elevation="5dp"
         android:gravity="center"
         android:layout_height="match_parent"
         android:layout_width="match_parent"
