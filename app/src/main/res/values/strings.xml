@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE resources [
     <!ENTITY app_name "MindLevel">
-    <!ENTITY integration "mindlevel">
+    <!ENTITY integration "default">
 ]>
 
 <resources>
@@ -68,7 +68,6 @@
     <string name="integration_title">Secret section</string>
     <string name="integration_try_button">Try password!</string>
     <string name="integration_default_button">Use normal MindLevel</string>
-    <string name="integration_default">default</string>
     <string name="integration_normal">Using normal MindLevel</string>
 
     <!-- Actions -->

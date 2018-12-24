@@ -125,8 +125,8 @@ public class CoordinatorActivity
 
         if (!PreferencesUtil.getTutorialSeen(getApplicationContext())) {
             Intent tutorialIntent = new Intent(this, TutorialActivity.class);
-            startActivity(tutorialIntent);
             PreferencesUtil.setTutorialSeen(getApplicationContext(), true);
+            startActivity(tutorialIntent);
         }
 
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
@@ -156,7 +156,6 @@ public class CoordinatorActivity
             public void onPageScrollStateChanged(int state) { /* Do nothing */ }
         });
     }
-
 
     @Override
     public void onNewIntent(Intent intent) {

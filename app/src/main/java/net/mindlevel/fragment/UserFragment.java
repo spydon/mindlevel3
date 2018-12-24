@@ -191,6 +191,7 @@ public class UserFragment extends InfoFragment {
         ProgressController loading = new ProgressController(imageProgressBar);
         if (!TextUtils.isEmpty(user.image)) {
             String url = ImageUtil.getUrl(user.image);
+            // TODO: Tries to add from destroyed activity
             Glide.with(imageView.getContext())
                     .load(url)
                     .listener(loading)

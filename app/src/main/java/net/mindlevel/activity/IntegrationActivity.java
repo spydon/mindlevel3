@@ -45,7 +45,7 @@ public class IntegrationActivity extends AppCompatActivity {
         defaultButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                integrationController.get(getString(R.string.integration_default), integrationCallback);
+                integrationController.get(getString(R.string.app_integration), integrationCallback);
             }
         });
     }
