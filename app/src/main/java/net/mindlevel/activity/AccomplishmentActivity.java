@@ -108,7 +108,7 @@ public class AccomplishmentActivity extends AppCompatActivity {
         imageView.setProgressLike(likeProgress);
         imageView.setId(accomplishment.id);
 
-        final ScrollView scrollView = findViewById(R.id.scroll);
+        final View backgroundView = findViewById(R.id.scroll);
 
         ProgressBar progressBar = findViewById(R.id.progress);
         Glide.with(this)
@@ -123,7 +123,7 @@ public class AccomplishmentActivity extends AppCompatActivity {
                     @Override
                     public void onResourceReady(Drawable resource, Transition<? super Drawable> transition) {
                         resource.setAlpha(160);
-                        scrollView.setBackground(resource);
+                        backgroundView.setBackground(resource);
                     }
                 });
 
