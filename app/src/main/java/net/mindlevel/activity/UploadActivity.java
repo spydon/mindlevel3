@@ -164,7 +164,13 @@ public class UploadActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         ImageView imageView = findViewById(R.id.image);
-        Uri maybePath = utils.handleImageResult(requestCode, resultCode, false, data, imageView, this);
+
+        boolean isSquare = false;
+        if (challengeId == 0) {
+            isSquare = true;
+        }
+
+        Uri maybePath = utils.handleImageResult(requestCode, resultCode, isSquare, data, imageView, this);
         if (requestCode == UCrop.REQUEST_CROP && resultCode == RESULT_OK && maybePath != null) {
             path = maybePath;
         } else if (requestCode == PICK_IMAGE && data == null) {
