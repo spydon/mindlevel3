@@ -121,9 +121,7 @@ public class CoordinatorActivity
         if (PreferencesUtil.getSessionId(getApplicationContext()).isEmpty()) {
             Intent loginIntent = new Intent(this, LoginActivity.class);
             startActivity(loginIntent);
-        }
-
-        if (!PreferencesUtil.getTutorialSeen(getApplicationContext())) {
+        } else if (!PreferencesUtil.getTutorialSeen(getApplicationContext())) {
             Intent tutorialIntent = new Intent(this, TutorialActivity.class);
             PreferencesUtil.setTutorialSeen(getApplicationContext(), true);
             startActivity(tutorialIntent);
