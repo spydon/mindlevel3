@@ -3,21 +3,26 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_gravity="center"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
+    android:clipToPadding="false"
+    android:padding="5dp"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
 
     <net.mindlevel.impl.ImageLikeView
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/image"
-        android:adjustViewBounds="true"
+        android:elevation="5dp"
+        android:background="@android:color/black"
         android:layout_centerHorizontal="true"
+        android:adjustViewBounds="true"
         android:alpha="1"
         android:layout_height="wrap_content"
-        android:layout_width="match_parent" />
+        android:layout_width="wrap_content" />
 
     <ProgressBar
         android:id="@+id/progress_like"
         android:visibility="gone"
+        android:elevation="5dp"
         android:layout_gravity="center"
         android:layout_alignTop="@id/image"
         android:layout_alignBottom="@id/image"
@@ -33,6 +38,7 @@
     <TextView
         android:id="@+id/image_text"
         android:visibility="gone"
+        android:elevation="5dp"
         android:gravity="center"
         android:layout_height="match_parent"
         android:layout_width="match_parent"

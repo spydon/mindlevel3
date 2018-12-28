@@ -7,9 +7,11 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -18,9 +20,17 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.target.Target;
+import com.bumptech.glide.request.transition.Transition;
 
 import net.mindlevel.R;
 import net.mindlevel.api.AccomplishmentController;
@@ -38,7 +48,10 @@ import net.mindlevel.util.PermissionUtil;
 import java.util.ArrayList;
 import java.util.List;
 
+import jp.wasabeef.glide.transformations.BlurTransformation;
+
 import static android.view.View.GONE;
+import static com.bumptech.glide.request.RequestOptions.bitmapTransform;
 
 public class AccomplishmentActivity extends AppCompatActivity {
 
@@ -95,11 +108,24 @@ public class AccomplishmentActivity extends AppCompatActivity {
         imageView.setProgressLike(likeProgress);
         imageView.setId(accomplishment.id);
 
+        final View backgroundView = findViewById(R.id.scroll);
+
         ProgressBar progressBar = findViewById(R.id.progress);
         Glide.with(this)
                 .load(url)
                 .listener(new ProgressController(progressBar))
                 .into(imageView);
+
+        Glide.with(this)
+                .load(url)
+                .apply(bitmapTransform(new BlurTransformation(25, 3)))
+                .into(new SimpleTarget<Drawable>() {
+                    @Override
+                    public void onResourceReady(Drawable resource, Transition<? super Drawable> transition) {
+                        resource.setAlpha(160);
+                        backgroundView.setBackground(resource);
+                    }
+                });
 
         TextView titleView = findViewById(R.id.title);
         TextView scoreView = findViewById(R.id.score);
@@ -108,7 +134,9 @@ public class AccomplishmentActivity extends AppCompatActivity {
         titleView.setText(accomplishment.title);
         String scoreText = context.getString(R.string.title_score, String.valueOf(accomplishment.score));
         scoreView.setText(scoreText);
-        levelView.setText(new Level(accomplishment.levelRestriction).getVisualLevel());
+        Level level = new Level(accomplishment.levelRestriction);
+        String levelText = context.getString(R.string.title_level, level.getVisualLevel());
+        levelView.setText(levelText);
         descriptionView.setText(accomplishment.description);
 
         imageView.setDrawingCacheEnabled(true);

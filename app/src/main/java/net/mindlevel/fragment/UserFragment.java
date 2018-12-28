@@ -76,7 +76,7 @@ public class UserFragment extends InfoFragment {
         this.imageView = view.findViewById(R.id.image);
         this.usernameView = view.findViewById(R.id.username);
         this.scoreView = view.findViewById(R.id.score_title);
-        this.levelView = view.findViewById(R.id.level);
+        this.levelView = view.findViewById(R.id.level_title);
         this.descriptionView = view.findViewById(R.id.description);
         this.progressView = view.findViewById(R.id.progress);
         this.errorView = view.findViewById(R.id.error);
@@ -191,6 +191,7 @@ public class UserFragment extends InfoFragment {
         ProgressController loading = new ProgressController(imageProgressBar);
         if (!TextUtils.isEmpty(user.image)) {
             String url = ImageUtil.getUrl(user.image);
+            // TODO: Tries to add from destroyed activity
             Glide.with(imageView.getContext())
                     .load(url)
                     .listener(loading)
@@ -202,9 +203,10 @@ public class UserFragment extends InfoFragment {
         String capitalizedUsername = user.username.toUpperCase().substring(0, 1) + user.username.substring(1);
         Level level = new Level(user.level);
         String scoreText = context.getString(R.string.title_score, String.valueOf(user.score));
+        String levelText = context.getString(R.string.title_level, level.getVisualLevel());
         usernameView.setText(capitalizedUsername);
         scoreView.setText(scoreText);
-        levelView.setText(level.getVisualLevel());
+        levelView.setText(levelText);
         descriptionView.setText(user.description);
 
         if (PreferencesUtil.getUsername(context).equals(user.username)) {

@@ -133,11 +133,15 @@ public class ChallengesFragment extends InfoFragment {
     }
 
     private void populate() {
-        controller.getAll(getAllCallback);
+        if (controller != null) {
+            controller.getAll(getAllCallback);
+        }
     }
 
     private void populateChallengesByCategory(Category category) {
-        controller.getChallengesByCategory(category, getAllCallback);
+        if (controller != null) {
+            controller.getChallengesByCategory(category, getAllCallback);
+        }
     }
 
     /**

@@ -6,8 +6,8 @@ android {
         applicationId "net.veglevel"
         minSdkVersion 21
         targetSdkVersion 27
-        versionCode 16
-        versionName "1.1.4"
+        versionCode 20
+        versionName "1.1.8"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
     }
@@ -36,11 +36,14 @@ dependencies {
     implementation 'com.squareup.retrofit2:retrofit:2.4.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
     implementation 'com.github.pchmn:MaterialChipsInput:1.0.8'
+    implementation 'com.github.yalantis:ucrop:2.2.2'
     implementation 'id.zelory:compressor:2.1.0'
+    implementation 'jp.wasabeef:glide-transformations:4.0.1'
 
-    implementation 'com.github.bumptech.glide:glide:4.7.1'
-    implementation 'com.github.bumptech.glide:annotations:4.7.1'
+    implementation 'com.github.bumptech.glide:glide:4.8.0'
+    implementation 'com.github.bumptech.glide:annotations:4.8.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.7.1'
+
 
     implementation group: 'commons-io', name: 'commons-io', version: '2.6'
     testImplementation 'junit:junit:4.12'

@@ -1,6 +1,7 @@
 package net.mindlevel.util;
 
 import android.app.Activity;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -18,15 +19,23 @@ import android.provider.MediaStore;
 import android.support.v4.content.FileProvider;
 import android.widget.ImageView;
 
+import com.yalantis.ucrop.UCrop;
+
+import net.mindlevel.R;
+
 import org.apache.commons.io.FileUtils;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Optional;
 
 import id.zelory.compressor.Compressor;
+
+import static android.app.Activity.RESULT_OK;
 
 public class ImageUtil {
 
@@ -56,13 +65,8 @@ public class ImageUtil {
         // Ensure that there's a camera activity to handle the intent
         if (takePictureIntent.resolveActivity(activity.getPackageManager()) != null) {
             // Create the File where the photo should go
-            File photoFile = null;
-            try {
-                photoFile = createImageFile();
-            } catch (IOException ex) {
-                // Error occurred while creating the File
-                // TODO: Handle.
-            }
+            File photoFile = createImageFile();
+
             // Continue only if the File was successfully created
             if (photoFile != null) {
                 Uri photoURI = FileProvider.getUriForFile(activity, "net.mindlevel", photoFile);
@@ -74,26 +78,52 @@ public class ImageUtil {
 
     private String currentPhotoPath;
 
-    public String getPhotoPath() {
-        return currentPhotoPath;
+    public Uri getPhotoUri() {
+        // TODO: Change to Optional<Uri> when on API 24
+        if (currentPhotoPath != null && new File(currentPhotoPath).exists()) {
+            return Uri.fromFile(new File(currentPhotoPath));
+        } else {
+            return null;
+        }
     }
 
-    public File createImageFile() throws IOException {
+    private File createImageFile() {
         // Create an image file name
         String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         File storageDir = activity.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-        File image = File.createTempFile(
-                timestamp,      /* prefix */
-                ".jpg",         /* suffix */
-                storageDir      /* directory */
-        );
+        File image = null;
+        try {
+            image = File.createTempFile(
+                    timestamp,      /* prefix */
+                    ".jpg",   /* suffix */
+                    storageDir      /* directory */
+            );
+        } catch (IOException ex) {
+            // Error occurred while creating the File
+            // TODO: Handle.
+        }
+
 
         // Save a file: path for use with ACTION_VIEW intents
         currentPhotoPath = image.getAbsolutePath();
         return image;
     }
 
-    public void dispathGalleryIntent() {
+    private Uri copyImageFromContent(Uri uri, ContentResolver contentResolver) {
+        File file = createImageFile();
+        try {
+            Bitmap bitmap = MediaStore.Images.Media.getBitmap(contentResolver, uri);
+            FileOutputStream out = new FileOutputStream(file);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
+            out.flush();
+            out.close();
+        } catch (IOException ioe) {
+            // TODO: Handle.
+        }
+        return Uri.fromFile(file);
+    }
+
+    public void dispatchGalleryIntent() {
         Intent getIntent = new Intent(Intent.ACTION_GET_CONTENT);
         getIntent.setType("image/*");
 
@@ -135,6 +165,41 @@ public class ImageUtil {
         } catch (IOException ioe) {
             // TODO: Handle.
         }
+    }
+
+    public Uri handleImageResult(int requestCode, int resultCode, boolean isSquare, Intent data, ImageView imageView,
+                                 Activity parent) {
+        Uri path = getPhotoUri();
+        if (resultCode == RESULT_OK) {
+            if (requestCode != UCrop.REQUEST_CROP) {
+                if (requestCode == REQUEST_IMAGE_CAPTURE) {
+                    path = getPhotoUri();
+                } else if (requestCode == PICK_IMAGE) {
+                    if (data == null) {
+                        // TODO: Display an error
+                        return path;
+                    }
+                    path = copyImageFromContent(data.getData(), parent.getContentResolver());
+                }
+
+                UCrop.Options options = new UCrop.Options();
+                options.setStatusBarColor(parent.getResources().getColor(R.color.colorBarDark));
+                options.setToolbarColor(parent.getResources().getColor(R.color.colorPrimary));
+
+                UCrop cropper = UCrop.of(path, path).withOptions(options);
+                if (isSquare) {
+                    cropper.withAspectRatio(1F, 1F);
+                }
+                cropper.start(parent);
+            } else {
+                setImage(path, imageView);
+            }
+        }
+        return path;
+    }
+
+    public static Uri uriFromDrawable(int res) {
+        return Uri.parse("android.resource://net.mindlevel/" + res);
     }
 
     private static int getOrientation(Context context, Uri photoUri) {

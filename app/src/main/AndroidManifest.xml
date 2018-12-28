@@ -82,6 +82,8 @@
 
         <activity
             android:name=".activity.LoginActivity"
+            android:launchMode="singleTask"
+            android:taskAffinity=""
             android:screenOrientation="portrait"
             android:label="" />
 
@@ -114,6 +116,11 @@
             android:name=".activity.PrivacyActivity"
             android:screenOrientation="portrait"
             android:label="@string/privacy_policy" />
+
+        <activity
+            android:name="com.yalantis.ucrop.UCropActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
 
         <provider
             android:name="android.support.v4.content.FileProvider"
