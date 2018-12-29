@@ -129,7 +129,7 @@ public class ChallengesFragment extends InfoFragment {
     @Override
     public void onResume() {
         super.onResume();
-        if (PreferencesUtil.getHasUploaded(getContext())) {
+        if (PreferencesUtil.getHasUploaded(getContext()) || challenges.isEmpty()) {
             populate();
             PreferencesUtil.setHasUploaded(getContext(),false);
         }
