@@ -127,6 +127,15 @@ public class ChallengesFragment extends InfoFragment {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        if (PreferencesUtil.getHasUploaded(getContext())) {
+            populate();
+            PreferencesUtil.setHasUploaded(getContext(),false);
+        }
+    }
+
+    @Override
     public void onDetach() {
         super.onDetach();
         listener = null;

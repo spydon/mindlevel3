@@ -50,6 +50,19 @@ public class PreferencesUtil {
         editor.apply();
     }
 
+    // TODO: Swap for reactive programming instead
+    public static boolean getHasUploaded(Context context) {
+        SharedPreferences pref = context.getSharedPreferences("session", Context.MODE_PRIVATE);
+        return pref.getBoolean("has_uploaded", false);
+    }
+
+    public static void setHasUploaded(Context context, boolean hasUploaded) {
+        SharedPreferences pref = context.getSharedPreferences("session", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putBoolean("has_uploaded", hasUploaded);
+        editor.apply();
+    }
+
     public static void clearSession(Context context) {
         SharedPreferences sharedPreferences = context.getSharedPreferences("session", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
