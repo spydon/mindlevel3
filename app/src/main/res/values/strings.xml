@@ -38,7 +38,7 @@
 
     <!-- Small Titles -->
     <string name="title_score">Score: %1$s</string>
-    <string name="title_level">Level:</string>
+    <string name="title_level">Level: %1$s</string>
 
     <!-- Core words -->
     <string name="user">User</string>
