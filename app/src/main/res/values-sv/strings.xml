@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">VegLevel</string>
     <string name="accessibility_user_image">Användarens bild</string>
     <string name="accomplishment_by">Av:</string>
     <string name="action_register">Registrera</string>
