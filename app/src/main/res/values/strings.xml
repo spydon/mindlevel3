@@ -8,19 +8,16 @@
     <string name="app_name">&app_name;</string>
     <string name="app_integration">&integration;</string>
     <string name="app_description">
-        In most peoples day-to-day life they perform repetitive and seemingly pointless tasks, I\'m sure that you
-        can relate. Repetitive tasks that we have grown to think that we like, things that take up a lot of our time
-        but don\'t add anything to our lives.
-        \n\nThe things that we won\'t remember when we grow old.
-        \n\nI think that most people don\'t even appreciate these parts of their lives, but it\'s not easy to find an
-        option of doing something more exciting, something that would be worth remembering.
-        \n\nThis is my attempt of giving you that option.
+        In most peoples day-to-day life they buy, cook and do a lot of things that they don\'t really reflect on, I\'m
+        sure that you can relate.\n\n
+        The point with this app is to gamify changing those things to become more environmentally sustainable and
+        subject animals to less harm.
     </string>
     <string name="backend_address">https://api.mindlevel.net/</string>
     <!-- <string name="backend_address">http://192.168.42.37:8080/</string> -->
     <string name="bucket_address">https://s3.eu-central-1.amazonaws.com/mindlevel/</string>
-    <string name="challenges_file">challenges.txt</string>
-    <string name="users_file">users.txt</string>
+    <string name="challenges_file">&integration;-challenges.txt</string>
+    <string name="users_file">&integration;-users.txt</string>
     <string name="field_delim">M-delim-M</string>
 
     <!-- Titles -->
