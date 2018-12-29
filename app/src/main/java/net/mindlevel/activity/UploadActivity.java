@@ -29,6 +29,7 @@ import net.mindlevel.model.Accomplishment;
 import net.mindlevel.model.Challenge;
 import net.mindlevel.model.User;
 import net.mindlevel.model.UserChip;
+import net.mindlevel.util.CoordinatorUtil;
 import net.mindlevel.util.ImageUtil;
 import net.mindlevel.util.KeyboardUtil;
 import net.mindlevel.util.PreferencesUtil;
@@ -196,6 +197,7 @@ public class UploadActivity extends AppCompatActivity {
             if (success) {
                 Context context = getApplicationContext();
                 Toast.makeText(context, R.string.successful_upload, Toast.LENGTH_SHORT).show();
+                PreferencesUtil.setHasUploaded(getApplicationContext(), true);
                 finish();
                 Intent accomplishmentIntent = new Intent(context, AccomplishmentActivity.class);
                 accomplishmentIntent.putExtra("accomplishment", accomplishment);
