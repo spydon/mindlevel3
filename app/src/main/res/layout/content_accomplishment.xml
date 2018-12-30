@@ -47,7 +47,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginBottom="20dp"
             android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
+            android:layout_marginEnd="@dimen/text_beside_fab"
             android:background="@drawable/bg_item"
             android:elevation="4dp"
             android:orientation="vertical"
@@ -84,12 +84,10 @@
 
                 <TextView
                     android:id="@+id/description"
+                    android:autoLink="web"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dip"
-                    android:layout_marginBottom="10dip"
-                    android:layout_marginStart="10dip"
-                    android:layout_marginEnd="@dimen/text_beside_fab" />
+                    android:layout_margin="10dip" />
 
                 <RelativeLayout
                     android:layout_width="wrap_content"
