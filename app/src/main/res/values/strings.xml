@@ -7,6 +7,7 @@
 <resources>
     <string name="app_name">&app_name;</string>
     <string name="app_integration">&integration;</string>
+    <string name="app_authority">net.&integration;.provider</string>
     <string name="app_description">
         In most peoples day-to-day life they buy, cook and do a lot of things that they don\'t really reflect on, I\'m
         sure that you can relate.\n\n

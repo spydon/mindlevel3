@@ -86,6 +86,7 @@
                 <TextView
                     android:id="@+id/description"
                     android:autoLink="web"
+                    android:textColorLink="@color/colorPrimary"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dip"
