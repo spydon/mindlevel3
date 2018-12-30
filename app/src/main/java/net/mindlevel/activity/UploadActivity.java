@@ -167,7 +167,7 @@ public class UploadActivity extends AppCompatActivity {
         ImageView imageView = findViewById(R.id.image);
 
         boolean isSquare = false;
-        if (challengeId == 0) {
+        if (challengeId == 1) {
             isSquare = true;
         }
 
