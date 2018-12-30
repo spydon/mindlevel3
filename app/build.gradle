@@ -6,8 +6,8 @@ android {
         applicationId "net.veglevel"
         minSdkVersion 21
         targetSdkVersion 27
-        versionCode 24
-        versionName "1.1.12"
+        versionCode 25
+        versionName "1.1.13"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
     }
