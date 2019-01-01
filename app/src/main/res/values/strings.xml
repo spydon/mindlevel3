@@ -7,7 +7,7 @@
 <resources>
     <string name="app_name">&app_name;</string>
     <string name="app_integration">&integration;</string>
-    <string name="app_authority">net.&integration;.provider</string>
+    <string name="app_authority">net.mindlevel.provider</string>
     <string name="app_description">
         In most peoples day-to-day life they perform repetitive and seemingly pointless tasks, I\'m sure that you
         can relate. Repetitive tasks that we have grown to think that we like, things that take up a lot of our time
