@@ -69,7 +69,7 @@ public class ImageUtil {
 
             // Continue only if the File was successfully created
             if (photoFile != null) {
-                Uri photoURI = FileProvider.getUriForFile(activity, "net.mindlevel", photoFile);
+                Uri photoURI = FileProvider.getUriForFile(activity, activity.getString(R.string.app_authority), photoFile);
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
                 activity.startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
             }

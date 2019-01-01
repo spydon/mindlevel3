@@ -34,7 +34,10 @@
             android:background="@drawable/bg_item"
             android:elevation="4dp"
             android:padding="10dp"
-            android:layout_margin="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="@dimen/text_beside_fab"
             android:orientation="vertical">
 
             <LinearLayout
@@ -43,7 +46,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dip"
                 android:layout_marginStart="10dip"
-                android:layout_marginEnd="@dimen/text_beside_fab">
+                android:layout_marginEnd="10dip">
 
                 <TextView
                     android:id="@+id/title"
@@ -89,9 +92,11 @@
 
             <TextView
                 android:id="@+id/description"
+                android:autoLink="web"
+                android:textColorLink="@color/colorPrimary"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/text_beside_fab"
+                android:layout_marginEnd="10dip"
                 android:layout_marginStart="10dip"
                 android:layout_marginBottom="10dip" />
 
