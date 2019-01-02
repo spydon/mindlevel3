@@ -120,6 +120,7 @@ public class CoordinatorActivity
 
         if (PreferencesUtil.getSessionId(getApplicationContext()).isEmpty()) {
             Intent loginIntent = new Intent(this, LoginActivity.class);
+            finish();
             startActivity(loginIntent);
         } else if (!PreferencesUtil.getTutorialSeen(getApplicationContext())) {
             Intent tutorialIntent = new Intent(this, TutorialActivity.class);
@@ -202,7 +203,7 @@ public class CoordinatorActivity
                 startActivity(tutorialIntent);
                 return true;
             case R.id.facebook_menu:
-                Intent facebookIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.facebook.com/mindlvl/"));
+                Intent facebookIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.facebook_address)));
                 startActivity(facebookIntent);
                 return true;
             case R.id.sign_out_menu:
@@ -210,6 +211,7 @@ public class CoordinatorActivity
                 Login login = PreferencesUtil.getLogin(this);
                 new LoginController(this).logout(login, null);
                 Intent loginIntent = new Intent(this, LoginActivity.class);
+                finishAndRemoveTask();
                 startActivity(loginIntent);
                 return true;
         }

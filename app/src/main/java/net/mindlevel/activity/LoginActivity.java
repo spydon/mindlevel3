@@ -26,6 +26,7 @@ import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import net.mindlevel.CoordinatorActivity;
 import net.mindlevel.R;
 import net.mindlevel.api.ControllerCallback;
 import net.mindlevel.api.IntegrationController;
@@ -279,7 +280,9 @@ public class LoginActivity extends AppCompatActivity {
             showProgress(false);
 
             if (success) {
+                Intent coordinatorIntent = new Intent(activity, CoordinatorActivity.class);
                 finishAndRemoveTask();
+                startActivity(coordinatorIntent);
             } else {
                 outerPasswordView.setError(getString(R.string.error_incorrect_password));
                 enableInput(true);
@@ -321,7 +324,7 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(aboutIntent);
                 return true;
             case R.id.facebook_menu:
-                Intent facebookIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.facebook.com/mindlvl/"));
+                Intent facebookIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.facebook_address)));
                 startActivity(facebookIntent);
                 return true;
             case R.id.tutorial_menu:
