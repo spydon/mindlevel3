@@ -20,6 +20,7 @@
     <string name="challenges_file">&integration;-challenges.txt</string>
     <string name="users_file">&integration;-users.txt</string>
     <string name="field_delim">M-delim-M</string>
+    <string name="facebook_address">https://facebook.com/veglevel/</string>
 
     <!-- Titles -->
     <string name="title_feed">Feed</string>

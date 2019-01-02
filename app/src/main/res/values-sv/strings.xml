@@ -41,7 +41,7 @@
     <string name="successful_edit">Ändringen lyckades!</string>
     <string name="successful_registration">Registreringen lyckades för %1$s</string>
     <string name="successful_upload">Uppladdningen lyckades</string>
-    <string name="terms_agree">Genom att använda MindLevel så accepterar du</string>
+    <string name="terms_agree">Genom att använda VegLevel så accepterar du</string>
     <string name="tip">Tips: %1$s</string>
     <string name="tip_contributor">Alla utförare får poäng</string>
     <string name="tip_like">Dubbelklicka på en bild för att gilla den</string>
@@ -90,8 +90,8 @@
     <string name="hint_suggestion_title">Titeln</string>
     <string name="hint_suggestion_description">Beskriv hur man utför uppdraget</string>
     <string name="integration_try_button">Testa lösenord!</string>
-    <string name="integration_default_button">Använd vanliga MindLevel</string>
-    <string name="integration_normal">Använder vanliga MindLevel</string>
+    <string name="integration_default_button">Använd vanliga VegLevel</string>
+    <string name="integration_normal">Använder vanliga VegLevel</string>
     <string name="action_share_using">Dela genom</string>
     <string name="action_suggest">Föreslå</string>
     <string name="tutorial_location">Tutorialen kan alltid öppnas i högra hörnet</string>
