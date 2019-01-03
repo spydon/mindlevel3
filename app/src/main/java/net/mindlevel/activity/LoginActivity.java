@@ -216,6 +216,10 @@ public class LoginActivity extends AppCompatActivity {
             usernameView.setError(getString(R.string.error_invalid_username));
             focusView = usernameView;
             cancel = true;
+        } else if (username.contains("@")) {
+            usernameView.setError(getString(R.string.error_email_username));
+            focusView = usernameView;
+            cancel = true;
         }
 
         if (cancel) {

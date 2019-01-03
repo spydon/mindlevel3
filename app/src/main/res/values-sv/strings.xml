@@ -98,4 +98,5 @@
     <string name="permission_sharing_denied">Nekade delningstillåtelse</string>
     <string name="successful_suggestion">Tack!</string>
     <string name="title_score">Poäng: %1$s</string>
+    <string name="error_email_username">Användarnamnet ska inte vara en e-mail</string>
 </resources>

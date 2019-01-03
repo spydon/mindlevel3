@@ -89,6 +89,7 @@
 
     <!-- Errors -->
     <string name="error_invalid_username">This username is too short</string>
+    <string name="error_email_username">Username should not be an e-mail</string>
     <string name="error_invalid_password">This password is too short</string>
     <string name="error_invalid_password2">The passwords don\'t match</string>
     <string name="error_incorrect_password">Incorrect password, did you forget to register?</string>
