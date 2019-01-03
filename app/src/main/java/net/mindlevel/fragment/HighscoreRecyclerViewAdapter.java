@@ -13,6 +13,7 @@ import com.bumptech.glide.Glide;
 import net.mindlevel.impl.ProgressController;
 import net.mindlevel.R;
 import net.mindlevel.model.Challenge;
+import net.mindlevel.model.Level;
 import net.mindlevel.model.User;
 import net.mindlevel.util.ImageUtil;
 
@@ -49,6 +50,7 @@ class HighscoreRecyclerViewAdapter extends RecyclerView.Adapter<HighscoreRecycle
         holder.positionView.setText(String.valueOf(position+1));
         holder.usernameView.setText(user.username);
         holder.scoreView.setText(String.valueOf(user.score));
+        holder.levelView.setText(new Level(user.level).getVisualLevel());
 
         ImageView imageView = holder.imageView;
         String url = ImageUtil.getUrl(holder.item.image);
@@ -87,6 +89,7 @@ class HighscoreRecyclerViewAdapter extends RecyclerView.Adapter<HighscoreRecycle
         final ImageView imageView;
         final TextView usernameView;
         final TextView scoreView;
+        final TextView levelView;
         final TextView positionView;
         final ProgressBar progressBar;
 
@@ -96,6 +99,7 @@ class HighscoreRecyclerViewAdapter extends RecyclerView.Adapter<HighscoreRecycle
             imageView = view.findViewById(R.id.image);
             usernameView = view.findViewById(R.id.username);
             scoreView = view.findViewById(R.id.score);
+            levelView = view.findViewById(R.id.level);
             positionView = view.findViewById(R.id.position);
             progressBar = view.findViewById(R.id.image_progress);
         }
