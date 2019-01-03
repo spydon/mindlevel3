@@ -91,6 +91,7 @@
 
     <!-- Errors -->
     <string name="error_invalid_username">This username is too short</string>
+    <string name="error_email_username">Username should not be an e-mail</string>
     <string name="error_invalid_password">This password is too short</string>
     <string name="error_invalid_password2">The passwords don\'t match</string>
     <string name="error_incorrect_password">Incorrect password, did you forget to register?</string>
@@ -138,7 +139,7 @@
     <string name="contributors">Contributors</string>
 
     <!-- Terms and Privacy-->
-    <string name="terms_agree">By using Mindlevel you agree to the</string>
+    <string name="terms_agree">By using &app_name; you agree to the</string>
     <string name="terms_of_service">Terms of Service</string>
     <string name="accomplishment_by">By:</string>
     <string name="hint_email">Your E-mail address</string>
