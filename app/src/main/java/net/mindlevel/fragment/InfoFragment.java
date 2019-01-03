@@ -17,7 +17,7 @@ import static android.view.View.VISIBLE;
 public abstract class InfoFragment extends Fragment {
 
     protected int shortAnimTime;
-    protected View contentView, progressView, errorView;
+    protected View infoView, contentView, progressView, errorView;
 
     protected void showInfo(boolean isError, boolean isProgress) {
         showInfo(isError, isProgress, null);
@@ -36,17 +36,17 @@ public abstract class InfoFragment extends Fragment {
             Handler handler = new Handler();
             handler.postDelayed(new Runnable() {
                 public void run() {
-                    animateToFront(contentView);
+                    animateToFront(contentView, false);
                 }
             }, 500);
         } else if (isError) {
             String errorMessage = message == null ? getString(R.string.error_network) : message;
             errorText.setText(errorMessage);
-            animateToFront(errorView);
+            animateToFront(errorView, true);
         } else if (isProgress) {
             String progressMessage = message == null ? getRandomMotivation() : message;
             progressText.setText(progressMessage);
-            animateToFront(progressView);
+            animateToFront(progressView, true);
         }
     }
 
@@ -60,7 +60,7 @@ public abstract class InfoFragment extends Fragment {
         return motivations[new Random().nextInt(motivations.length)];
     }
 
-    private void animateToFront(View view) {
+    private void animateToFront(View view, boolean isInfo) {
         if (isAdded()) {
             View[] views = {contentView, progressView, errorView};
             for (View other : views) {
@@ -68,9 +68,15 @@ public abstract class InfoFragment extends Fragment {
                     other.setVisibility(GONE);
                 }
             }
-            view.setAlpha(0);
             view.setVisibility(VISIBLE);
-            view.animate().setDuration(shortAnimTime).alpha(1);
+
+            if (!isInfo) {
+                infoView.setVisibility(GONE);
+            }
+            View frontView = isInfo ? infoView : view;
+            frontView.setAlpha(0);
+            frontView.setVisibility(VISIBLE);
+            frontView.animate().setDuration(shortAnimTime).alpha(1);
         }
     }
 }

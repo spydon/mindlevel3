@@ -81,6 +81,7 @@ public class FeedFragment extends InfoFragment {
         recyclerView.setAdapter(adapter);
 
         this.contentView = recyclerView;
+        this.infoView = view.findViewById(R.id.info_center);
         this.progressView = view.findViewById(R.id.progress);
         this.errorView = view.findViewById(R.id.error);
         this.paginationProgress = view.findViewById(R.id.progress_pagination);

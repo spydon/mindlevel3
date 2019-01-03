@@ -1,5 +1,6 @@
-package net.mindlevel.activity;
+package net.mindlevel.fragment;
 
+import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -9,7 +10,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import net.mindlevel.R;
-import net.mindlevel.fragment.ChallengesFragment;
 import net.mindlevel.model.Challenge;
 import net.mindlevel.model.Level;
 import net.mindlevel.model.User;
@@ -20,20 +20,18 @@ import java.util.List;
 
 /**
  * {@link RecyclerView.Adapter} that can display a {@link Challenge} and makes a call to the
- * specified {@link ChallengesFragment.OnListFragmentInteractionListener}.
+ * specified {@link ChallengeTreeFragment.OnListFragmentInteractionListener}.
  */
 class ChallengeTreeRecyclerViewAdapter extends RecyclerView.Adapter<ChallengeTreeRecyclerViewAdapter.ViewHolder> {
 
     private final List<List<Challenge>> orderedChallenges;
-    private final ChallengeTreeActivity parent;
-    private final User user;
+    private final ChallengeTreeFragment.OnListFragmentInteractionListener listener;
+    private User user;
 
     ChallengeTreeRecyclerViewAdapter(final List<Challenge> challenges,
-                                     final User user,
-                                     ChallengeTreeActivity parent) {
+                                     ChallengeTreeFragment.OnListFragmentInteractionListener listener) {
         this.orderedChallenges = new ArrayList <>();
-        this.parent = parent;
-        this.user = user;
+        this.listener = listener;
         setHasStableIds(true);
 
         registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
@@ -43,6 +41,10 @@ class ChallengeTreeRecyclerViewAdapter extends RecyclerView.Adapter<ChallengeTre
                 updateChallenges(challenges);
             }
         });
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     private void updateChallenges(List<Challenge> challenges) {
@@ -74,7 +76,7 @@ class ChallengeTreeRecyclerViewAdapter extends RecyclerView.Adapter<ChallengeTre
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.activity_challenge_tree_row, parent, false);
+                .inflate(R.layout.fragment_challenge_tree_row, parent, false);
 
         return new ViewHolder(view);
     }
@@ -84,7 +86,8 @@ class ChallengeTreeRecyclerViewAdapter extends RecyclerView.Adapter<ChallengeTre
         List<Challenge> currentChallenges = holder.challenges;
         List<Challenge> updatedChallenges = orderedChallenges.get(position);
         Level level = new Level(updatedChallenges.get(0).levelRestriction);
-        String levelText = parent.getString(R.string.title_level, level.getVisualLevel());
+        Context context = holder.view.getContext();
+        String levelText = context.getString(R.string.title_level, level.getVisualLevel());
         holder.levelView.setText(levelText);
         if (!currentChallenges.containsAll(updatedChallenges)) {
             currentChallenges.clear();
@@ -122,7 +125,7 @@ class ChallengeTreeRecyclerViewAdapter extends RecyclerView.Adapter<ChallengeTre
             rowView = view.findViewById(R.id.list);
             progressBar = view.findViewById(R.id.progress);
             ChallengeTreeRowRecyclerViewAdapter adapter =
-                    new ChallengeTreeRowRecyclerViewAdapter(challenges, user, parent);
+                    new ChallengeTreeRowRecyclerViewAdapter(challenges, user, listener);
             LinearLayoutManager layoutManager =
                     new LinearLayoutManager(view.getContext(), LinearLayoutManager.HORIZONTAL, false);
             rowView.setLayoutManager(layoutManager);

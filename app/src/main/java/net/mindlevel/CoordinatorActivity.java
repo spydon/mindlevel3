@@ -26,7 +26,7 @@ import net.mindlevel.activity.ChallengeActivity;
 import net.mindlevel.activity.LoginActivity;
 import net.mindlevel.activity.TutorialActivity;
 import net.mindlevel.api.LoginController;
-import net.mindlevel.fragment.ChallengesFragment;
+import net.mindlevel.fragment.ChallengeTreeFragment;
 import net.mindlevel.fragment.FeedFragment;
 import net.mindlevel.fragment.HighscoreFragment;
 import net.mindlevel.fragment.UserFragment;
@@ -44,13 +44,13 @@ import java.util.LinkedHashMap;
 
 public class CoordinatorActivity
         extends AppCompatActivity
-        implements ChallengesFragment.OnListFragmentInteractionListener,
+        implements ChallengeTreeFragment.OnListFragmentInteractionListener,
         FeedFragment.OnListFragmentInteractionListener,
         HighscoreFragment.OnListFragmentInteractionListener,
         UserFragment.OnFragmentInteractionListener {
 
     private final FeedFragment feedFragment = new FeedFragment();
-    private final ChallengesFragment challengesFragment = new ChallengesFragment();
+    private final ChallengeTreeFragment challengesFragment = new ChallengeTreeFragment();
     private final HighscoreFragment highscoreFragment = new HighscoreFragment();
     private final UserFragment userFragment = new UserFragment();
     private final LinkedHashMap<Integer, Fragment> fragments = new LinkedHashMap<>();

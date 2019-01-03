@@ -1,4 +1,4 @@
-package net.mindlevel.activity;
+package net.mindlevel.fragment;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,7 +10,6 @@ import android.widget.ProgressBar;
 import com.bumptech.glide.Glide;
 
 import net.mindlevel.R;
-import net.mindlevel.fragment.ChallengesFragment;
 import net.mindlevel.impl.ProgressController;
 import net.mindlevel.model.Challenge;
 import net.mindlevel.model.User;
@@ -21,18 +20,20 @@ import java.util.List;
 
 /**
  * {@link RecyclerView.Adapter} that can display a {@link Challenge} and makes a call to the
- * specified {@link ChallengesFragment.OnListFragmentInteractionListener}.
+ * specified {@link ChallengeTreeFragment.OnListFragmentInteractionListener}.
  */
 class ChallengeTreeRowRecyclerViewAdapter extends RecyclerView.Adapter<ChallengeTreeRowRecyclerViewAdapter.ViewHolder> {
 
     private final List<Challenge> challenges;
-    private final ChallengeTreeActivity parent;
+    private final ChallengeTreeFragment.OnListFragmentInteractionListener listener;
     private final User user;
     private LayoutInflater inflater;
 
-    ChallengeTreeRowRecyclerViewAdapter(List<Challenge> challenges, User user, ChallengeTreeActivity parent) {
+    ChallengeTreeRowRecyclerViewAdapter(List<Challenge> challenges,
+                                        User user,
+                                        ChallengeTreeFragment.OnListFragmentInteractionListener listener) {
         this.challenges = challenges;
-        this.parent = parent;
+        this.listener = listener;
         this.user = user;
         setHasStableIds(true);
     }
@@ -40,7 +41,7 @@ class ChallengeTreeRowRecyclerViewAdapter extends RecyclerView.Adapter<Challenge
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         inflater = LayoutInflater.from(parent.getContext());
-        View view = inflater.inflate(R.layout.activity_challenge_tree_item, parent, false);
+        View view = inflater.inflate(R.layout.fragment_challenge_tree_item, parent, false);
         return new ViewHolder(view);
     }
 
@@ -49,6 +50,7 @@ class ChallengeTreeRowRecyclerViewAdapter extends RecyclerView.Adapter<Challenge
         final Challenge challenge = challenges.get(position);
         holder.item = challenge;
         ImageView imageView = holder.imageView;
+        ImageView lockView = holder.lockView;
         String url = ImageUtil.getUrl(challenge.image);
         Glide.with(imageView.getContext())
                 .load(url)
@@ -60,16 +62,17 @@ class ChallengeTreeRowRecyclerViewAdapter extends RecyclerView.Adapter<Challenge
             holder.view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (parent != null) {
+                    if (listener != null) {
                         // Notify the active callbacks interface (the activity, if the
                         // fragment is attached to one) that an item has been selected.
-                        parent.onListFragmentInteraction(challenge);
+                        listener.onListFragmentInteraction(challenge);
                     }
                 }
             });
         } else {
             imageView.setAlpha(0.4f);
             imageView.setColorFilter(R.color.disabledBackground);
+            lockView.setVisibility(View.VISIBLE);
         }
     }
 
@@ -88,12 +91,14 @@ class ChallengeTreeRowRecyclerViewAdapter extends RecyclerView.Adapter<Challenge
         public Challenge item;
         public final View view;
         final ImageView imageView;
+        final ImageView lockView;
         final ProgressBar progressBar;
 
         ViewHolder(View view) {
             super(view);
             this.view = view;
             this.imageView = view.findViewById(R.id.image);
+            this.lockView = view.findViewById(R.id.lock);
             this.progressBar = view.findViewById(R.id.progress);
         }
 
