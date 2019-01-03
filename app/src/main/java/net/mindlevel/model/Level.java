@@ -4,8 +4,8 @@ import java.util.Collections;
 
 public class Level {
     public final int level;
-    private final int[] icons = {0x1F476, 0x270A, 0x1F525, 0x1F47D};
-    private final int[] stages = {0, 1, 5, 10};
+    private final int[] icons = {0x1F476, 0x270A, 0x1F525, 0x1F47D, 0x1F331};
+    private final int[] stages = {0, 1, 5, 10, 15};
 
     public Level(int level) {
         this.level = level;
