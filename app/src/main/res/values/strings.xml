@@ -20,10 +20,10 @@
     <string name="backend_address">https://api.mindlevel.net/</string>
     <!-- <string name="backend_address">http://192.168.42.37:8080/</string> -->
     <string name="bucket_address">https://s3.eu-central-1.amazonaws.com/mindlevel/</string>
-    <string name="facebook_address">https://facebook.com/mindlvl/</string>
-    <string name="challenges_file">challenges.txt</string>
-    <string name="users_file">users.txt</string>
+    <string name="challenges_file">&integration;-challenges.txt</string>
+    <string name="users_file">&integration;-users.txt</string>
     <string name="field_delim">M-delim-M</string>
+    <string name="facebook_address">https://facebook.com/mindlvl/</string>
 
     <!-- Titles -->
     <string name="title_feed">Feed</string>
@@ -69,8 +69,8 @@
     <string name="integration_description">You manage to get into the secret section, if you have gotten a password we do not take any responsibility for what content that will display after the login. You have to be an adult in all senses of the word by your countries laws to use this.</string>
     <string name="integration_title">Secret section</string>
     <string name="integration_try_button">Try password!</string>
-    <string name="integration_default_button">Use normal MindLevel</string>
-    <string name="integration_normal">Using normal MindLevel</string>
+    <string name="integration_default_button">Use normal &app_name;</string>
+    <string name="integration_normal">Using normal &app_name;</string>
 
     <!-- Actions -->
     <string name="action_sign_in">Sign in</string>
