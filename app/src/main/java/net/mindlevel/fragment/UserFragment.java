@@ -18,7 +18,6 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 
 import net.mindlevel.R;
-import net.mindlevel.activity.ChallengeTreeActivity;
 import net.mindlevel.activity.EditUserActivity;
 import net.mindlevel.activity.LoginActivity;
 import net.mindlevel.api.ControllerCallback;
@@ -55,7 +54,7 @@ public class UserFragment extends InfoFragment {
     private TextView levelView;
     private TextView descriptionView;
     private View view, imageProgressBar;
-    private FloatingActionButton editButton, signOutButton, selfButton, accomplishmentButton, challengeTreeButton;
+    private FloatingActionButton editButton, signOutButton, selfButton, accomplishmentButton;
     private Context context;
     private User user;
 
@@ -78,6 +77,7 @@ public class UserFragment extends InfoFragment {
         this.scoreView = view.findViewById(R.id.score_title);
         this.levelView = view.findViewById(R.id.level_title);
         this.descriptionView = view.findViewById(R.id.description);
+        this.infoView = view.findViewById(R.id.info_center);
         this.progressView = view.findViewById(R.id.progress);
         this.errorView = view.findViewById(R.id.error);
         this.imageProgressBar = view.findViewById(R.id.progress_image);
@@ -95,16 +95,6 @@ public class UserFragment extends InfoFragment {
                 Intent editIntent = new Intent(context, EditUserActivity.class);
                 editIntent.putExtra("user", user);
                 startActivityForResult(editIntent, UPDATE_USER);
-            }
-        });
-
-        challengeTreeButton = view.findViewById(R.id.challenge_tree_button);
-        challengeTreeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent challengeTreeIntent = new Intent(context, ChallengeTreeActivity.class);
-                challengeTreeIntent.putExtra("user", user);
-                startActivity(challengeTreeIntent);
             }
         });
 
@@ -236,7 +226,6 @@ public class UserFragment extends InfoFragment {
         int selfVisibility = !isSelf ? VISIBLE : GONE;
         int selfModVisibilty = isVisible && isSelf ? VISIBLE : GONE;
         editButton.setVisibility(selfModVisibilty);
-        challengeTreeButton.setVisibility(selfModVisibilty);
         signOutButton.setVisibility(selfModVisibilty);
         accomplishmentButton.setVisibility(visibility);
         selfButton.setVisibility(selfVisibility);

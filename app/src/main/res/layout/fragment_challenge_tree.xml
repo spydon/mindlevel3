@@ -7,13 +7,13 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
-
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:background="@color/colorChipViewBackground"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/colorChipViewBackground">
 
+        <include layout="@layout/info_center" />
         <android.support.v4.widget.SwipeRefreshLayout
             xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/swipe_refresh_layout"
@@ -27,10 +27,20 @@
                 android:layout_height="match_parent"
                 app:layoutManager="android.support.v7.widget.LinearLayoutManager"
                 tools:context="net.mindlevel.activity.ChallengeTreeActivity"
-                tools:listitem="@layout/activity_challenge_tree_row" />
+                tools:listitem="@layout/fragment_challenge_tree_row" />
 
         </android.support.v4.widget.SwipeRefreshLayout>
 
-        <include layout="@layout/info_center" />
     </LinearLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/challenge_suggestion_button"
+        android:visibility="visible"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginEnd="@dimen/fab_margin"
+        android:layout_marginBottom="@dimen/fab_margin"
+        app:srcCompat="@drawable/challenge_suggestion" />
+
 </android.support.design.widget.CoordinatorLayout>

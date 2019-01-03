@@ -63,9 +63,10 @@ public class HighscoreFragment extends InfoFragment {
         this.recyclerView = view.findViewById(R.id.list);
         recyclerView.setAdapter(adapter);
 
-        contentView = recyclerView;
-        progressView = view.findViewById(R.id.progress);
-        errorView = view.findViewById(R.id.error);
+        this.contentView = recyclerView;
+        this.infoView = view.findViewById(R.id.info_center);
+        this.progressView = view.findViewById(R.id.progress);
+        this.errorView = view.findViewById(R.id.error);
         this.swipe = view.findViewById(R.id.swipe_refresh_layout);
         Context context = getContext();
         View coordinator = contentView.getRootView();
