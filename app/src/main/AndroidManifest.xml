@@ -88,11 +88,6 @@
             android:label="" />
 
         <activity
-            android:name=".activity.ChallengeTreeActivity"
-            android:screenOrientation="portrait"
-            android:label="@string/title_challenge_tree" />
-
-        <activity
             android:name=".activity.AboutActivity"
             android:screenOrientation="portrait"
             android:label="@string/title_about" />
