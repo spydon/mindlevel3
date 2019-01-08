@@ -83,7 +83,7 @@ public class ChallengeTreeFragment extends InfoFragment {
 
     @Override
     public void setUserVisibleHint(boolean isVisible) {
-        if (isVisible && challenges.isEmpty()) {
+        if (isVisible && challenges != null && challenges.isEmpty()) {
             populate();
         }
     }
