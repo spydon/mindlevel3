@@ -50,9 +50,9 @@
                     xmlns:android="http://schemas.android.com/apk/res/android"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="15dip"
-                    android:layout_marginEnd="10dip"
-                    android:layout_marginStart="20dip"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginStart="20dp"
                     android:orientation="horizontal">
 
                     <TextView
@@ -66,8 +66,7 @@
                         xmlns:android="http://schemas.android.com/apk/res/android"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="10dip"
-                        android:padding="2dip"
+                        android:layout_marginStart="10dp"
                         android:orientation="vertical">
 
                         <TextView
@@ -83,16 +82,20 @@
                     </LinearLayout>
                 </LinearLayout>
 
+                <View
+                    style="@style/Divider"
+                    android:layout_width="200dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@android:color/darker_gray" />
+
                 <TextView
                     android:id="@+id/description"
                     android:autoLink="web"
                     android:textColorLink="@color/colorPrimary"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dip"
-                    android:layout_marginBottom="10dip"
-                    android:layout_marginEnd="30dip"
-                    android:layout_marginStart="30dip" />
+                    android:layout_margin="10dip" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

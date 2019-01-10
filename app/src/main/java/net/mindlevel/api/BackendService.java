@@ -7,8 +7,10 @@ import android.support.annotation.NonNull;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import net.mindlevel.CoordinatorActivity;
 import net.mindlevel.R;
 import net.mindlevel.activity.LoginActivity;
+import net.mindlevel.util.CoordinatorUtil;
 import net.mindlevel.util.NetworkUtil;
 import net.mindlevel.util.PreferencesUtil;
 
@@ -69,9 +71,7 @@ abstract class BackendService {
                     case 401:
                     case 403:
                         Context baseContext = context.getApplicationContext();
-                        PreferencesUtil.clearSession(baseContext);
-                        Intent loginIntent = new Intent(baseContext, LoginActivity.class);
-                        baseContext.startActivity(loginIntent);
+                        CoordinatorUtil.toLogout(baseContext);
                         break;
                 }
                 return response;

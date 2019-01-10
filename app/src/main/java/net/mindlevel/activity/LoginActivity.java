@@ -21,6 +21,7 @@ import android.view.View.OnClickListener;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ScrollView;
@@ -51,6 +52,7 @@ public class LoginActivity extends AppCompatActivity {
     private View coordinatorLayout;
     private EditText usernameView;
     private EditText passwordView;
+    private CheckBox agreeBox;
     private View progressView;
     private View loginFormView;
     private TextInputLayout outerPasswordView;
@@ -93,6 +95,7 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         outerPasswordView = findViewById(R.id.password_outer);
+        agreeBox = findViewById(R.id.agree);
 
         View tosView = findViewById(R.id.terms);
         tosView.setOnClickListener(new OnClickListener() {
@@ -192,6 +195,7 @@ public class LoginActivity extends AppCompatActivity {
         // Reset errors.
         usernameView.setError(null);
         outerPasswordView.setError(null);
+        agreeBox.setError(null);
 
         // Store values at the time of the login attempt.
         String username = usernameView.getText().toString();
@@ -219,6 +223,10 @@ public class LoginActivity extends AppCompatActivity {
         } else if (username.contains("@")) {
             usernameView.setError(getString(R.string.error_email_username));
             focusView = usernameView;
+            cancel = true;
+        } else if (!agreeBox.isChecked() && isNewUser) {
+            agreeBox.setError("");
+            focusView = agreeBox;
             cancel = true;
         }
 

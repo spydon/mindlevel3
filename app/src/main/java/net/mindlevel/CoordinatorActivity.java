@@ -175,6 +175,8 @@ public class CoordinatorActivity
             Challenge challenge = (Challenge) intent.getSerializableExtra("accomplishments_for_challenge");
             getCleanFragmentBundle(feedFragment).putSerializable("accomplishments_for_challenge", challenge);
             scrollToFragment(feedFragment);
+        } else if (intent.hasExtra("logout")) {
+            signOut();
         }
     }
 
@@ -207,12 +209,7 @@ public class CoordinatorActivity
                 startActivity(facebookIntent);
                 return true;
             case R.id.sign_out_menu:
-                PreferencesUtil.clearSession(this);
-                Login login = PreferencesUtil.getLogin(this);
-                new LoginController(this).logout(login, null);
-                Intent loginIntent = new Intent(this, LoginActivity.class);
-                finishAndRemoveTask();
-                startActivity(loginIntent);
+                signOut();
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -232,6 +229,15 @@ public class CoordinatorActivity
         } else {
             fm.popBackStackImmediate();
         }
+    }
+
+    private void signOut() {
+        PreferencesUtil.clearSession(this);
+        Login login = PreferencesUtil.getLogin(this);
+        new LoginController(this).logout(login, null);
+        Intent loginIntent = new Intent(this, LoginActivity.class);
+        finishAndRemoveTask();
+        startActivity(loginIntent);
     }
 
     private void forceWhiteTitle() {

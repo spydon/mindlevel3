@@ -4,11 +4,14 @@
     <color name="colorPrimaryDark">#295c59</color>
     <color name="colorPrimaryLight">#58b4b8ff</color>
     <color name="colorBarDark">#45938e</color>
+    <color name="colorBlue">#308fae</color>
     <color name="colorAccent">#ceddf2</color>
     <color name="background">#c7c7c7</color>
     <color name="colorLike">#ffffff</color>
     <color name="snackbar">#80000000</color>
     <color name="disabledBackground">#000</color>
+    <color name="finishedBackground">#78fcf3</color>
     <color name="fadingYellow">#faf6e5</color>
     <color name="textBackground">#8fff</color>
+    <color name="darkerGray">#353535</color>
 </resources>

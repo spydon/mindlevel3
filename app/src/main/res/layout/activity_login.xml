@@ -21,7 +21,7 @@
         <LinearLayout
             android:id="@+id/login_inner_form"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:paddingBottom="300dip"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
@@ -81,6 +81,7 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/prompt_username"
                     android:inputType="textNoSuggestions|textVisiblePassword"
+                    android:maxLength="20"
                     android:maxLines="1" />
 
                 <android.support.design.widget.TextInputLayout
@@ -119,45 +120,57 @@
                     android:text="@string/action_register"
                     android:textStyle="normal" />
 
-
                 <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
                     android:layout_gravity="center"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:text="@string/terms_agree" />
-                </LinearLayout>
-
-                <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginBottom="20dp"
-                    android:orientation="horizontal">
+                    android:layout_height="wrap_content">
 
-                    <TextView
-                        android:id="@+id/terms"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textColor="@android:color/holo_blue_dark"
-                        android:text="@string/terms_of_service" />
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="3dip"
-                        android:layout_marginEnd="3dip"
-                        android:text="@string/and" />
-                    <TextView
-                        android:id="@+id/privacy"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textColor="@android:color/holo_blue_dark"
-                        android:text="@string/privacy_policy" />
+                    <CheckBox
+                        android:id="@+id/agree"
+                        android:buttonTint="@color/darkerGray"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <LinearLayout
+                        android:id="@+id/agreement_wrapper"
+                        android:orientation="vertical"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textAlignment="center"
+                            android:text="@string/terms_agree" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginBottom="20dp"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/terms"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textColor="@android:color/holo_blue_dark"
+                                android:text="@string/terms_of_service" />
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="3dp"
+                                android:layout_marginEnd="3dp"
+                                android:text="@string/and" />
+                            <TextView
+                                android:id="@+id/privacy"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textColor="@android:color/holo_blue_dark"
+                                android:text="@string/privacy_policy" />
+                        </LinearLayout>
+                    </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>

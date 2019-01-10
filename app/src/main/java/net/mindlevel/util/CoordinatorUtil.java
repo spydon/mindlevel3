@@ -38,4 +38,10 @@ public class CoordinatorUtil {
         coordinatorIntent.putExtra("challenges_by_category", category);
         context.startActivity(coordinatorIntent);
     }
+
+    public static void toLogout(Context context) {
+        Intent coordinatorIntent = new Intent(context, CoordinatorActivity.class);
+        coordinatorIntent.putExtra("logout", true);
+        context.startActivity(coordinatorIntent);
+    }
 }
