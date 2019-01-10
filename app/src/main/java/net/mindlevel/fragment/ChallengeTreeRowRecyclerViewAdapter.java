@@ -1,5 +1,6 @@
 package net.mindlevel.fragment;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +19,8 @@ import net.mindlevel.util.ImageUtil;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.view.View.VISIBLE;
+
 /**
  * {@link RecyclerView.Adapter} that can display a {@link Challenge} and makes a call to the
  * specified {@link ChallengeTreeFragment.OnListFragmentInteractionListener}.
@@ -25,14 +28,17 @@ import java.util.List;
 class ChallengeTreeRowRecyclerViewAdapter extends RecyclerView.Adapter<ChallengeTreeRowRecyclerViewAdapter.ViewHolder> {
 
     private final List<Challenge> challenges;
+    private final List<Integer> finishedChallenges;
     private final ChallengeTreeFragment.OnListFragmentInteractionListener listener;
     private final User user;
     private LayoutInflater inflater;
 
     ChallengeTreeRowRecyclerViewAdapter(List<Challenge> challenges,
                                         User user,
+                                        List<Integer> finishedChallenges,
                                         ChallengeTreeFragment.OnListFragmentInteractionListener listener) {
         this.challenges = challenges;
+        this.finishedChallenges = finishedChallenges;
         this.listener = listener;
         this.user = user;
         setHasStableIds(true);
@@ -51,12 +57,20 @@ class ChallengeTreeRowRecyclerViewAdapter extends RecyclerView.Adapter<Challenge
         holder.item = challenge;
         ImageView imageView = holder.imageView;
         ImageView lockView = holder.lockView;
+        ImageView checkmarkView = holder.checkmarkView;
         String url = ImageUtil.getUrl(challenge.image);
-        Glide.with(imageView.getContext())
+        Context context = imageView.getContext();
+        Glide.with(context)
                 .load(url)
                 .listener(new ProgressController(holder.progressBar))
                 .into(imageView);
 
+        if (finishedChallenges.contains(challenge.id)) {
+            ((View)imageView.getParent()).setBackgroundColor(context.getResources().getColor(R.color.finishedBackground));
+            imageView.setAlpha(0.4f);
+            checkmarkView.setAlpha(0.6f);
+            checkmarkView.setVisibility(VISIBLE);
+        }
 
         if (challenge.levelRestriction <= user.level) {
             holder.view.setOnClickListener(new View.OnClickListener() {
@@ -72,7 +86,7 @@ class ChallengeTreeRowRecyclerViewAdapter extends RecyclerView.Adapter<Challenge
         } else {
             imageView.setAlpha(0.4f);
             imageView.setColorFilter(R.color.disabledBackground);
-            lockView.setVisibility(View.VISIBLE);
+            lockView.setVisibility(VISIBLE);
         }
     }
 
@@ -92,6 +106,7 @@ class ChallengeTreeRowRecyclerViewAdapter extends RecyclerView.Adapter<Challenge
         public final View view;
         final ImageView imageView;
         final ImageView lockView;
+        final ImageView checkmarkView;
         final ProgressBar progressBar;
 
         ViewHolder(View view) {
@@ -99,6 +114,7 @@ class ChallengeTreeRowRecyclerViewAdapter extends RecyclerView.Adapter<Challenge
             this.view = view;
             this.imageView = view.findViewById(R.id.image);
             this.lockView = view.findViewById(R.id.lock);
+            this.checkmarkView = view.findViewById(R.id.checkmark);
             this.progressBar = view.findViewById(R.id.progress);
         }
 

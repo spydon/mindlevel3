@@ -16,6 +16,7 @@ import net.mindlevel.activity.ChallengeSuggestionActivity;
 import net.mindlevel.api.ChallengeController;
 import net.mindlevel.api.ControllerCallback;
 import net.mindlevel.api.UserController;
+import net.mindlevel.model.Accomplishment;
 import net.mindlevel.model.Challenge;
 import net.mindlevel.model.User;
 import net.mindlevel.util.PreferencesUtil;
@@ -117,6 +118,23 @@ public class ChallengeTreeFragment extends InfoFragment {
         public void onPostExecute(final Boolean success, final User user) {
             if (success) {
                 adapter.setUser(user);
+                userController.getAccomplishments(user.username, finishedAccomplishmentsCallback);
+            } else {
+                showInfo(true, false);
+            }
+        }
+    };
+
+    private ControllerCallback<List<Accomplishment>> finishedAccomplishmentsCallback = new
+            ControllerCallback<List<Accomplishment>>() {
+        @Override
+        public void onPostExecute(Boolean isSuccess, List<Accomplishment> response) {
+            if (isSuccess) {
+                List<Integer> finishedChallengeIds = new ArrayList <>();
+                for (Accomplishment accomplishment : response) {
+                    finishedChallengeIds.add(accomplishment.challengeId);
+                }
+                adapter.setFinished(finishedChallengeIds);
                 controller.getAllRestricted(getAllCallback);
             } else {
                 showInfo(true, false);
@@ -129,16 +147,16 @@ public class ChallengeTreeFragment extends InfoFragment {
         public void onPostExecute(Boolean isSuccess, List<Challenge> response) {
             swipe.setRefreshing(false);
             if (isSuccess) {
-                 if (response.isEmpty()) {
-                     showInfo(true, false, getString(R.string.error_not_found));
-                 } else {
-                     showInfo(false, false);
-                     if (!challenges.containsAll(response) || !response.containsAll(challenges)) {
-                         challenges.clear();
-                         challenges.addAll(response);
-                         adapter.notifyDataSetChanged();
-                     }
-                 }
+                if (response.isEmpty()) {
+                    showInfo(true, false, getString(R.string.error_not_found));
+                } else {
+                    showInfo(false, false);
+                    if (!challenges.containsAll(response) || !response.containsAll(challenges)) {
+                        challenges.clear();
+                        challenges.addAll(response);
+                        adapter.notifyDataSetChanged();
+                    }
+                }
             } else {
                 showInfo(true, false);
             }
