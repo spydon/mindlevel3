@@ -19,7 +19,6 @@ import net.mindlevel.model.Like;
 public class ImageLikeView extends AppCompatImageView {
     private GestureListener gestureListener;
     private GestureDetector gestureDetector;
-    private Context context;
 
     private OnClickListener tapListener;
     private View tapSource;
@@ -46,7 +45,6 @@ public class ImageLikeView extends AppCompatImageView {
 
     private void sharedConstructing(Context context) {
         super.setClickable(true);
-        this.context = context;
         controller = new AccomplishmentController(context);
         gestureListener = new GestureListener();
         gestureDetector = new GestureDetector(context, gestureListener, null, true);

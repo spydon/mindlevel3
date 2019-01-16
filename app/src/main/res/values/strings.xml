@@ -67,7 +67,6 @@
     <string name="integration_title">Secret section</string>
     <string name="integration_try_button">Try password!</string>
     <string name="integration_default_button">Use normal &app_name;</string>
-    <string name="integration_default">&integration;</string>
     <string name="integration_normal">Using normal &app_name;</string>
 
     <!-- Actions -->

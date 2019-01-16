@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
@@ -17,6 +18,7 @@ import net.mindlevel.model.User;
 import net.mindlevel.util.ImageUtil;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import static android.view.View.VISIBLE;
@@ -58,6 +60,7 @@ class ChallengeTreeRowRecyclerViewAdapter extends RecyclerView.Adapter<Challenge
         ImageView imageView = holder.imageView;
         ImageView lockView = holder.lockView;
         ImageView checkmarkView = holder.checkmarkView;
+        TextView countView = holder.countView;
         String url = ImageUtil.getUrl(challenge.image);
         Context context = imageView.getContext();
         Glide.with(context)
@@ -70,6 +73,9 @@ class ChallengeTreeRowRecyclerViewAdapter extends RecyclerView.Adapter<Challenge
             imageView.setAlpha(0.4f);
             checkmarkView.setAlpha(0.6f);
             checkmarkView.setVisibility(VISIBLE);
+            countView.setVisibility(VISIBLE);
+            int count = Collections.frequency(finishedChallenges, challenge.id);
+            countView.setText("️🏁" + count);
         }
 
         if (challenge.levelRestriction <= user.level) {
@@ -107,6 +113,7 @@ class ChallengeTreeRowRecyclerViewAdapter extends RecyclerView.Adapter<Challenge
         final ImageView imageView;
         final ImageView lockView;
         final ImageView checkmarkView;
+        final TextView countView;
         final ProgressBar progressBar;
 
         ViewHolder(View view) {
@@ -115,6 +122,7 @@ class ChallengeTreeRowRecyclerViewAdapter extends RecyclerView.Adapter<Challenge
             this.imageView = view.findViewById(R.id.image);
             this.lockView = view.findViewById(R.id.lock);
             this.checkmarkView = view.findViewById(R.id.checkmark);
+            this.countView = view.findViewById(R.id.count);
             this.progressBar = view.findViewById(R.id.progress);
         }
 
