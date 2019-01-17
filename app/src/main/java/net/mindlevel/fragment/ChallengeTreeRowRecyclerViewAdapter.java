@@ -1,6 +1,7 @@
 package net.mindlevel.fragment;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,9 +19,9 @@ import net.mindlevel.model.User;
 import net.mindlevel.util.ImageUtil;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
+import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 
 /**
@@ -30,17 +31,14 @@ import static android.view.View.VISIBLE;
 class ChallengeTreeRowRecyclerViewAdapter extends RecyclerView.Adapter<ChallengeTreeRowRecyclerViewAdapter.ViewHolder> {
 
     private final List<Challenge> challenges;
-    private final List<Integer> finishedChallenges;
     private final ChallengeTreeFragment.OnListFragmentInteractionListener listener;
     private final User user;
     private LayoutInflater inflater;
 
     ChallengeTreeRowRecyclerViewAdapter(List<Challenge> challenges,
                                         User user,
-                                        List<Integer> finishedChallenges,
                                         ChallengeTreeFragment.OnListFragmentInteractionListener listener) {
         this.challenges = challenges;
-        this.finishedChallenges = finishedChallenges;
         this.listener = listener;
         this.user = user;
         setHasStableIds(true);
@@ -68,14 +66,23 @@ class ChallengeTreeRowRecyclerViewAdapter extends RecyclerView.Adapter<Challenge
                 .listener(new ProgressController(holder.progressBar))
                 .into(imageView);
 
-        if (finishedChallenges.contains(challenge.id)) {
+        if (challenge.levelRestriction > user.level) {
+            imageView.setAlpha(0.4f);
+            imageView.setColorFilter(R.color.disabledBackground);
+            lockView.setVisibility(VISIBLE);
+        } else if (challenge.finishCount > 0) {
             ((View)imageView.getParent()).setBackgroundColor(context.getResources().getColor(R.color.finishedBackground));
             imageView.setAlpha(0.4f);
             checkmarkView.setAlpha(0.6f);
             checkmarkView.setVisibility(VISIBLE);
             countView.setVisibility(VISIBLE);
-            int count = Collections.frequency(finishedChallenges, challenge.id);
-            countView.setText("️🏁" + count);
+            countView.setText("️🏁" + challenge.finishCount);
+        } else {
+            // Has access to the challenge but has not yet completed it
+            ((View)imageView.getParent()).setBackgroundColor(Color.TRANSPARENT);
+            imageView.setAlpha(1.0f);
+            checkmarkView.setVisibility(GONE);
+            countView.setVisibility(GONE);
         }
 
         if (challenge.levelRestriction <= user.level) {
@@ -89,10 +96,6 @@ class ChallengeTreeRowRecyclerViewAdapter extends RecyclerView.Adapter<Challenge
                     }
                 }
             });
-        } else {
-            imageView.setAlpha(0.4f);
-            imageView.setColorFilter(R.color.disabledBackground);
-            lockView.setVisibility(VISIBLE);
         }
     }
 

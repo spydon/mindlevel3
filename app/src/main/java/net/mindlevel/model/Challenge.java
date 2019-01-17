@@ -12,6 +12,7 @@ import java.util.List;
 public class Challenge implements Serializable {
     public final String title, description, image, creator;
     public final int id, levelRestriction, scoreRestriction;
+    public int finishCount;
     public final long created;
     public final boolean validated;
 
@@ -37,6 +38,7 @@ public class Challenge implements Serializable {
         this.levelRestriction = levelRestriction;
         this.scoreRestriction = scoreRestriction;
         this.validated = validated;
+        this.finishCount = 0;
     }
 
     public String toString(Context context) {
@@ -75,6 +77,6 @@ public class Challenge implements Serializable {
 
     @Override
     public int hashCode() {
-        return id;
+        return id*1000000+finishCount;
     }
 }

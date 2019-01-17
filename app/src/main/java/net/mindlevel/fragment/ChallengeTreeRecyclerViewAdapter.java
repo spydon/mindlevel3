@@ -27,7 +27,6 @@ class ChallengeTreeRecyclerViewAdapter extends RecyclerView.Adapter<ChallengeTre
     private final List<List<Challenge>> orderedChallenges;
     private final ChallengeTreeFragment.OnListFragmentInteractionListener listener;
     private User user;
-    private List<Integer> finishedChallenges;
 
     ChallengeTreeRecyclerViewAdapter(final List<Challenge> challenges,
                                      ChallengeTreeFragment.OnListFragmentInteractionListener listener) {
@@ -46,10 +45,6 @@ class ChallengeTreeRecyclerViewAdapter extends RecyclerView.Adapter<ChallengeTre
 
     public void setUser(User user) {
         this.user = user;
-    }
-
-    public void setFinished(List<Integer> finishedChallenges) {
-        this.finishedChallenges = finishedChallenges;
     }
 
     private void updateChallenges(List<Challenge> challenges) {
@@ -94,9 +89,10 @@ class ChallengeTreeRecyclerViewAdapter extends RecyclerView.Adapter<ChallengeTre
         Context context = holder.view.getContext();
         String levelText = context.getString(R.string.title_level, level.getVisualLevel());
         holder.levelView.setText(levelText);
-        if (!currentChallenges.containsAll(updatedChallenges)) {
+        if (!currentChallenges.containsAll(updatedChallenges) || !updatedChallenges.containsAll(currentChallenges)) {
             currentChallenges.clear();
             currentChallenges.addAll(updatedChallenges);
+            holder.adapter.notifyDataSetChanged();
         }
     }
 
@@ -121,6 +117,7 @@ class ChallengeTreeRecyclerViewAdapter extends RecyclerView.Adapter<ChallengeTre
         final TextView levelView;
         final RecyclerView rowView;
         final ProgressBar progressBar;
+        final ChallengeTreeRowRecyclerViewAdapter adapter;
 
         ViewHolder(View view) {
             super(view);
@@ -129,8 +126,7 @@ class ChallengeTreeRecyclerViewAdapter extends RecyclerView.Adapter<ChallengeTre
             levelView = view.findViewById(R.id.level_title);
             rowView = view.findViewById(R.id.list);
             progressBar = view.findViewById(R.id.progress);
-            ChallengeTreeRowRecyclerViewAdapter adapter =
-                    new ChallengeTreeRowRecyclerViewAdapter(challenges, user, finishedChallenges, listener);
+            adapter = new ChallengeTreeRowRecyclerViewAdapter(challenges, user, listener);
             LinearLayoutManager layoutManager =
                     new LinearLayoutManager(view.getContext(), LinearLayoutManager.HORIZONTAL, false);
             rowView.setLayoutManager(layoutManager);
