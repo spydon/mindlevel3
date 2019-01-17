@@ -119,7 +119,9 @@ public class ChallengeTreeFragment extends InfoFragment {
     }
 
     private void populate() {
-        userController.getUser(PreferencesUtil.getUsername(getContext()), userCallback);
+        if (isAdded()) {
+            userController.getUser(PreferencesUtil.getUsername(getContext()), userCallback);
+        }
     }
 
     private ControllerCallback<User> userCallback = new ControllerCallback<User>() {
