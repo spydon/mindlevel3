@@ -54,6 +54,7 @@ public class UploadActivity extends AppCompatActivity {
     private Button uploadButton;
     private Context context;
     private int challengeId = -1;
+    private Challenge challenge;
     private Uri path = null;
     private ImageUtil utils;
 
@@ -66,7 +67,7 @@ public class UploadActivity extends AppCompatActivity {
         userController = new UserController(context);
         utils = new ImageUtil(this);
 
-        final Challenge challenge = (Challenge) getIntent().getSerializableExtra("challenge");
+        this.challenge = (Challenge) getIntent().getSerializableExtra("challenge");
         challengeId = challenge.id;
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle(challenge.title);
@@ -173,6 +174,7 @@ public class UploadActivity extends AppCompatActivity {
 
         Uri maybePath = utils.handleImageResult(requestCode, resultCode, isSquare, data, imageView, this);
         if (requestCode == UCrop.REQUEST_CROP && resultCode == RESULT_OK && maybePath != null) {
+            setError(false);
             path = maybePath;
         } else if (requestCode == PICK_IMAGE && data == null) {
             setError(true, getString(R.string.error_image_loading));
@@ -199,9 +201,7 @@ public class UploadActivity extends AppCompatActivity {
                 Toast.makeText(context, R.string.successful_upload, Toast.LENGTH_SHORT).show();
                 PreferencesUtil.setHasUploaded(getApplicationContext(), true);
                 finish();
-                Intent accomplishmentIntent = new Intent(context, AccomplishmentActivity.class);
-                accomplishmentIntent.putExtra("accomplishment", accomplishment);
-                startActivity(accomplishmentIntent);
+                CoordinatorUtil.toFeed(context, challenge);
             } else {
                 setError(true, getString(R.string.error_upload_timeout));
             }

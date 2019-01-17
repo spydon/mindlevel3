@@ -275,25 +275,25 @@ public class UserController extends BackendService {
         File outputDir = context.getFilesDir(); // TODO: getDataDir?
         String ChallengesFilename = context.getString(R.string.users_file);
         File targetFile = new File(outputDir + "/" + ChallengesFilename);
-        String marshalled = "";
+        User user = null;
         try {
-            marshalled = FileUtils.readFileToString(targetFile, Charset.defaultCharset());
-        } catch (IOException e) {
+            String marshalled = FileUtils.readFileToString(targetFile, Charset.defaultCharset());
+            for(String u : marshalled.split("\n")) {
+                if (u.contains(context.getString(R.string.field_delim))) {
+                    User tmp = User.fromString(u, context);
+                    if (tmp.username.equals(username)) {
+                        user = tmp;
+                        break;
+                    }
+                }
+            }
+        } catch (Exception e) {
             e.printStackTrace();
             targetFile.delete();
             Log.w("mindlevel", "Failed to read user cache file");
         }
 
-        User user = null;
-        for(String u : marshalled.split("\n")) {
-            if (u.contains(context.getString(R.string.field_delim))) {
-                User tmp = User.fromString(u, context);
-                if (tmp.username.equals(username)) {
-                    user = tmp;
-                    break;
-                }
-            }
-        }
+
         return user;
     }
 }

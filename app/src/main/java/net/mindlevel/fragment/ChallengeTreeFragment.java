@@ -22,6 +22,7 @@ import net.mindlevel.model.User;
 import net.mindlevel.util.PreferencesUtil;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class ChallengeTreeFragment extends InfoFragment {
@@ -32,11 +33,13 @@ public class ChallengeTreeFragment extends InfoFragment {
     private ChallengeController controller;
     private UserController userController;
     private OnListFragmentInteractionListener listener;
+    private List<Integer> finishedChallengeIds;
 
     @Override
     public void onCreate(Bundle bundle) {
         super.onCreate(bundle);
         challenges = new ArrayList <>();
+        finishedChallengeIds = new ArrayList <>();
     }
 
     @Override
@@ -84,8 +87,14 @@ public class ChallengeTreeFragment extends InfoFragment {
 
     @Override
     public void setUserVisibleHint(boolean isVisible) {
-        if (isVisible && challenges != null && challenges.isEmpty()) {
-            populate();
+        if (isVisible && challenges != null) {
+            if (challenges.isEmpty()) {
+                populate();
+            } else if (PreferencesUtil.getHasUploaded(getContext())) {
+                showInfo(false, true);
+                populate();
+                PreferencesUtil.setHasUploaded(getContext(), false);
+            }
         }
     }
 
@@ -110,7 +119,9 @@ public class ChallengeTreeFragment extends InfoFragment {
     }
 
     private void populate() {
-        userController.getUser(PreferencesUtil.getUsername(getContext()), userCallback);
+        if (isAdded()) {
+            userController.getUser(PreferencesUtil.getUsername(getContext()), userCallback);
+        }
     }
 
     private ControllerCallback<User> userCallback = new ControllerCallback<User>() {
@@ -130,11 +141,10 @@ public class ChallengeTreeFragment extends InfoFragment {
         @Override
         public void onPostExecute(Boolean isSuccess, List<Accomplishment> response) {
             if (isSuccess) {
-                List<Integer> finishedChallengeIds = new ArrayList <>();
+                finishedChallengeIds.clear();
                 for (Accomplishment accomplishment : response) {
                     finishedChallengeIds.add(accomplishment.challengeId);
                 }
-                adapter.setFinished(finishedChallengeIds);
                 controller.getAllRestricted(getAllCallback);
             } else {
                 showInfo(true, false);
@@ -151,11 +161,14 @@ public class ChallengeTreeFragment extends InfoFragment {
                     showInfo(true, false, getString(R.string.error_not_found));
                 } else {
                     showInfo(false, false);
-                    if (!challenges.containsAll(response) || !response.containsAll(challenges)) {
-                        challenges.clear();
-                        challenges.addAll(response);
-                        adapter.notifyDataSetChanged();
+                    for (Challenge c : response) {
+                        int count = Collections.frequency(finishedChallengeIds, c.id);
+                        c.finishCount = count;
+                        c.hasAccess = adapter.getUser().level >= c.levelRestriction;
                     }
+                    challenges.clear();
+                    challenges.addAll(response);
+                    adapter.notifyDataSetChanged();
                 }
             } else {
                 showInfo(true, false);

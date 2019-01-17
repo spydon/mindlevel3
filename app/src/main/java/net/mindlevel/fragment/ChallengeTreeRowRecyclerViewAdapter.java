@@ -1,12 +1,14 @@
 package net.mindlevel.fragment;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
@@ -19,6 +21,7 @@ import net.mindlevel.util.ImageUtil;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 
 /**
@@ -28,19 +31,13 @@ import static android.view.View.VISIBLE;
 class ChallengeTreeRowRecyclerViewAdapter extends RecyclerView.Adapter<ChallengeTreeRowRecyclerViewAdapter.ViewHolder> {
 
     private final List<Challenge> challenges;
-    private final List<Integer> finishedChallenges;
     private final ChallengeTreeFragment.OnListFragmentInteractionListener listener;
-    private final User user;
     private LayoutInflater inflater;
 
     ChallengeTreeRowRecyclerViewAdapter(List<Challenge> challenges,
-                                        User user,
-                                        List<Integer> finishedChallenges,
                                         ChallengeTreeFragment.OnListFragmentInteractionListener listener) {
         this.challenges = challenges;
-        this.finishedChallenges = finishedChallenges;
         this.listener = listener;
-        this.user = user;
         setHasStableIds(true);
     }
 
@@ -58,6 +55,7 @@ class ChallengeTreeRowRecyclerViewAdapter extends RecyclerView.Adapter<Challenge
         ImageView imageView = holder.imageView;
         ImageView lockView = holder.lockView;
         ImageView checkmarkView = holder.checkmarkView;
+        TextView countView = holder.countView;
         String url = ImageUtil.getUrl(challenge.image);
         Context context = imageView.getContext();
         Glide.with(context)
@@ -65,14 +63,28 @@ class ChallengeTreeRowRecyclerViewAdapter extends RecyclerView.Adapter<Challenge
                 .listener(new ProgressController(holder.progressBar))
                 .into(imageView);
 
-        if (finishedChallenges.contains(challenge.id)) {
+        if (!challenge.hasAccess) {
+            imageView.setAlpha(0.4f);
+            imageView.setColorFilter(R.color.disabledBackground);
+            lockView.setVisibility(VISIBLE);
+        } else if (challenge.finishCount > 0) {
             ((View)imageView.getParent()).setBackgroundColor(context.getResources().getColor(R.color.finishedBackground));
             imageView.setAlpha(0.4f);
             checkmarkView.setAlpha(0.6f);
             checkmarkView.setVisibility(VISIBLE);
+            countView.setVisibility(VISIBLE);
+            countView.setText("️🏁" + challenge.finishCount);
+            lockView.setVisibility(GONE);
+        } else {
+            // Has access to the challenge but has not yet completed it
+            imageView.clearColorFilter();
+            imageView.setAlpha(1.0f);
+            checkmarkView.setVisibility(GONE);
+            lockView.setVisibility(GONE);
+            countView.setVisibility(GONE);
         }
 
-        if (challenge.levelRestriction <= user.level) {
+        if (challenge.hasAccess) {
             holder.view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -83,10 +95,6 @@ class ChallengeTreeRowRecyclerViewAdapter extends RecyclerView.Adapter<Challenge
                     }
                 }
             });
-        } else {
-            imageView.setAlpha(0.4f);
-            imageView.setColorFilter(R.color.disabledBackground);
-            lockView.setVisibility(VISIBLE);
         }
     }
 
@@ -107,6 +115,7 @@ class ChallengeTreeRowRecyclerViewAdapter extends RecyclerView.Adapter<Challenge
         final ImageView imageView;
         final ImageView lockView;
         final ImageView checkmarkView;
+        final TextView countView;
         final ProgressBar progressBar;
 
         ViewHolder(View view) {
@@ -115,6 +124,7 @@ class ChallengeTreeRowRecyclerViewAdapter extends RecyclerView.Adapter<Challenge
             this.imageView = view.findViewById(R.id.image);
             this.lockView = view.findViewById(R.id.lock);
             this.checkmarkView = view.findViewById(R.id.checkmark);
+            this.countView = view.findViewById(R.id.count);
             this.progressBar = view.findViewById(R.id.progress);
         }
 

@@ -12,20 +12,27 @@
     tools:showIn="@layout/activity_accomplishment">
 
     <RelativeLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <ProgressBar
-            android:id="@+id/progress"
-            android:visibility="visible"
-            android:layout_width="match_parent"
-            android:layout_height="100dp" />
-
-        <include
-            layout="@layout/image_like"
+        <LinearLayout
             android:id="@+id/image_wrapper"
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent" />
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ProgressBar
+                android:id="@+id/progress"
+                android:visibility="visible"
+                android:layout_gravity="center_horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="100dp" />
+
+            <include
+                layout="@layout/image_like"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent" />
+        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/info"
