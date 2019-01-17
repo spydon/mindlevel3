@@ -52,8 +52,12 @@ public class PreferencesUtil {
 
     // TODO: Swap for reactive programming instead
     public static boolean getHasUploaded(Context context) {
-        SharedPreferences pref = context.getSharedPreferences("session", Context.MODE_PRIVATE);
-        return pref.getBoolean("has_uploaded", false);
+        boolean hasUploaded = false;
+        if (context != null) {
+            SharedPreferences pref = context.getSharedPreferences("session", Context.MODE_PRIVATE);
+            hasUploaded = pref.getBoolean("has_uploaded", false);
+        }
+        return hasUploaded;
     }
 
     public static void setHasUploaded(Context context, boolean hasUploaded) {

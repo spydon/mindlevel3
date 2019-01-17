@@ -13,6 +13,7 @@ public class Challenge implements Serializable {
     public final String title, description, image, creator;
     public final int id, levelRestriction, scoreRestriction;
     public int finishCount;
+    public boolean hasAccess;
     public final long created;
     public final boolean validated;
 
@@ -39,6 +40,7 @@ public class Challenge implements Serializable {
         this.scoreRestriction = scoreRestriction;
         this.validated = validated;
         this.finishCount = 0;
+        this.hasAccess = false;
     }
 
     public String toString(Context context) {
@@ -77,6 +79,6 @@ public class Challenge implements Serializable {
 
     @Override
     public int hashCode() {
-        return id*1000000+finishCount;
+        return id*1000000+finishCount*1000+(hasAccess ? 1 : 0);
     }
 }

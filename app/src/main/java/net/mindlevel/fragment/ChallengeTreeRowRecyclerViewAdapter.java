@@ -32,15 +32,12 @@ class ChallengeTreeRowRecyclerViewAdapter extends RecyclerView.Adapter<Challenge
 
     private final List<Challenge> challenges;
     private final ChallengeTreeFragment.OnListFragmentInteractionListener listener;
-    private final User user;
     private LayoutInflater inflater;
 
     ChallengeTreeRowRecyclerViewAdapter(List<Challenge> challenges,
-                                        User user,
                                         ChallengeTreeFragment.OnListFragmentInteractionListener listener) {
         this.challenges = challenges;
         this.listener = listener;
-        this.user = user;
         setHasStableIds(true);
     }
 
@@ -66,7 +63,7 @@ class ChallengeTreeRowRecyclerViewAdapter extends RecyclerView.Adapter<Challenge
                 .listener(new ProgressController(holder.progressBar))
                 .into(imageView);
 
-        if (challenge.levelRestriction > user.level) {
+        if (!challenge.hasAccess) {
             imageView.setAlpha(0.4f);
             imageView.setColorFilter(R.color.disabledBackground);
             lockView.setVisibility(VISIBLE);
@@ -77,15 +74,17 @@ class ChallengeTreeRowRecyclerViewAdapter extends RecyclerView.Adapter<Challenge
             checkmarkView.setVisibility(VISIBLE);
             countView.setVisibility(VISIBLE);
             countView.setText("️🏁" + challenge.finishCount);
+            lockView.setVisibility(GONE);
         } else {
             // Has access to the challenge but has not yet completed it
-            ((View)imageView.getParent()).setBackgroundColor(Color.TRANSPARENT);
+            imageView.clearColorFilter();
             imageView.setAlpha(1.0f);
             checkmarkView.setVisibility(GONE);
+            lockView.setVisibility(GONE);
             countView.setVisibility(GONE);
         }
 
-        if (challenge.levelRestriction <= user.level) {
+        if (challenge.hasAccess) {
             holder.view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

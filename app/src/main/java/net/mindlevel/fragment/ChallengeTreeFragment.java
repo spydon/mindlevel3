@@ -162,6 +162,7 @@ public class ChallengeTreeFragment extends InfoFragment {
                     for (Challenge c : response) {
                         int count = Collections.frequency(finishedChallengeIds, c.id);
                         c.finishCount = count;
+                        c.hasAccess = adapter.getUser().level >= c.levelRestriction;
                     }
                     challenges.clear();
                     challenges.addAll(response);

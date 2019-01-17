@@ -47,6 +47,10 @@ class ChallengeTreeRecyclerViewAdapter extends RecyclerView.Adapter<ChallengeTre
         this.user = user;
     }
 
+    public User getUser() {
+        return user;
+    }
+
     private void updateChallenges(List<Challenge> challenges) {
         HashMap<Integer, List<Challenge>> mappedChallenges = new HashMap<>();
         for (Challenge c : challenges) {
@@ -126,7 +130,7 @@ class ChallengeTreeRecyclerViewAdapter extends RecyclerView.Adapter<ChallengeTre
             levelView = view.findViewById(R.id.level_title);
             rowView = view.findViewById(R.id.list);
             progressBar = view.findViewById(R.id.progress);
-            adapter = new ChallengeTreeRowRecyclerViewAdapter(challenges, user, listener);
+            adapter = new ChallengeTreeRowRecyclerViewAdapter(challenges, listener);
             LinearLayoutManager layoutManager =
                     new LinearLayoutManager(view.getContext(), LinearLayoutManager.HORIZONTAL, false);
             rowView.setLayoutManager(layoutManager);
