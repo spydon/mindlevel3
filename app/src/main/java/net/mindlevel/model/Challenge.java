@@ -72,6 +72,13 @@ public class Challenge implements Serializable {
                              validated);
     }
 
+    public static Challenge forbidden() {
+        return new Challenge(
+                -1, "Access Denied",
+                "You can't see this challenge yet, accomplish other challenges to unlock it.",
+                "user.jpg", 0L, "Community", 0, 0, true);
+    }
+
     @Override
     public boolean equals(Object m) {
         return m == this || (m instanceof Challenge && this.hashCode() == m.hashCode());

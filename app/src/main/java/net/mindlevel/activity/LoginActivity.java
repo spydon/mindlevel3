@@ -72,8 +72,8 @@ public class LoginActivity extends AppCompatActivity {
 
         // Set up the login form.
         usernameView = findViewById(R.id.username);
-        if (!PreferencesUtil.getLastUsername().isEmpty()) {
-            usernameView.setText(PreferencesUtil.getLastUsername(getApplicationContext()));
+        if (!PreferencesUtil.getLastUsername(activity).isEmpty()) {
+            usernameView.setText(PreferencesUtil.getLastUsername(activity));
         }
 
         passwordView = findViewById(R.id.password);
