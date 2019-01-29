@@ -11,6 +11,18 @@ public class PreferencesUtil {
         return sharedPreferences.getString("username", "");
     }
 
+    public static String getLastUsername(Context context) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences("login", Context.MODE_PRIVATE);
+        return sharedPreferences.getString("lastUsername", "");
+    }
+
+    public static void setLastUsername(Context context, String username) {
+        SharedPreferences pref = context.getSharedPreferences("login", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putString("lastUsername", username);
+        editor.apply();
+    }
+
     public static boolean isLoggedIn(Context context) {
         SharedPreferences sharedPreferences = context.getSharedPreferences("session", Context.MODE_PRIVATE);
         return sharedPreferences.contains("username");
