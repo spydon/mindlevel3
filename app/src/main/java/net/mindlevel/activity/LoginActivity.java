@@ -72,6 +72,9 @@ public class LoginActivity extends AppCompatActivity {
 
         // Set up the login form.
         usernameView = findViewById(R.id.username);
+        if (!PreferencesUtil.getLastUsername(activity).isEmpty()) {
+            usernameView.setText(PreferencesUtil.getLastUsername(activity));
+        }
 
         passwordView = findViewById(R.id.password);
         passwordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -292,6 +295,7 @@ public class LoginActivity extends AppCompatActivity {
             showProgress(false);
 
             if (success) {
+                PreferencesUtil.setLastUsername(getApplicationContext(), usernameView.getText().toString());
                 Intent coordinatorIntent = new Intent(activity, CoordinatorActivity.class);
                 finishAndRemoveTask();
                 startActivity(coordinatorIntent);

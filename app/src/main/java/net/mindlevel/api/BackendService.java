@@ -69,7 +69,6 @@ abstract class BackendService {
                 int code = response.code();
                 switch (code) {
                     case 401:
-                    case 403:
                         Context baseContext = context.getApplicationContext();
                         CoordinatorUtil.toLogout(baseContext);
                         break;

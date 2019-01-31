@@ -154,6 +154,8 @@ public class ChallengeController extends BackendService {
             public void onResponse(@NonNull Call<Challenge> call, @NonNull Response<Challenge> response) {
                 if (response.isSuccessful()) {
                     callback.onPostExecute(true, response.body());
+                } else if (response.code() == 403 || response.code() == 401) { // 403 Forbidden is the proper one
+                    callback.onPostExecute(false, Challenge.forbidden());
                 } else {
                     callback.onPostExecute(false, null);
                 }

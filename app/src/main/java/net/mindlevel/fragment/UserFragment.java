@@ -54,7 +54,7 @@ public class UserFragment extends InfoFragment {
     private TextView levelView;
     private TextView descriptionView;
     private View view, imageProgressBar;
-    private FloatingActionButton editButton, signOutButton, selfButton, accomplishmentButton;
+    private FloatingActionButton editButton, selfButton, accomplishmentButton;
     private Context context;
     private User user;
 
@@ -95,16 +95,6 @@ public class UserFragment extends InfoFragment {
                 Intent editIntent = new Intent(context, EditUserActivity.class);
                 editIntent.putExtra("user", user);
                 startActivityForResult(editIntent, UPDATE_USER);
-            }
-        });
-
-        signOutButton = view.findViewById(R.id.sign_out_button);
-        signOutButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                signOutButton.setActivated(false);
-                Login login = PreferencesUtil.getLogin(context);
-                loginController.logout(login, signOutCallback);
             }
         });
 
@@ -226,7 +216,6 @@ public class UserFragment extends InfoFragment {
         int selfVisibility = !isSelf ? VISIBLE : GONE;
         int selfModVisibilty = isVisible && isSelf ? VISIBLE : GONE;
         editButton.setVisibility(selfModVisibilty);
-        signOutButton.setVisibility(selfModVisibilty);
         accomplishmentButton.setVisibility(visibility);
         selfButton.setVisibility(selfVisibility);
     }

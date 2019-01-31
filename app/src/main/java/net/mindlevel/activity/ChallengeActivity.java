@@ -83,7 +83,7 @@ public class ChallengeActivity extends AppCompatActivity {
         public void onPostExecute(final Boolean success, final Challenge challenge) {
             showProgress(false);
 
-            if (success) {
+            if (success || challenge != null) {
                 Toolbar toolbar = findViewById(R.id.toolbar);
                 setSupportActionBar(toolbar);
                 getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -109,23 +109,32 @@ public class ChallengeActivity extends AppCompatActivity {
                 });
 
                 FloatingActionButton uploadButton = findViewById(R.id.upload_button);
-                uploadButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Intent uploadIntent = new Intent(context, UploadActivity.class);
-                        uploadIntent.putExtra("challenge", challenge);
-                        startActivity(uploadIntent);
-                    }
-                });
+                FloatingActionButton accomplishmentsButton = findViewById(R.id.accomplishments_button);
+                if (success) {
+                    uploadButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Intent uploadIntent = new Intent(context, UploadActivity.class);
+                            uploadIntent.putExtra("challenge", challenge);
+                            startActivity(uploadIntent);
+                        }
+                    });
 
-                FloatingActionButton accomplishmentsButton =
-                        findViewById(R.id.accomplishments_button);
-                accomplishmentsButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        CoordinatorUtil.toFeed(context, challenge);
-                    }
-                });
+                    accomplishmentsButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            CoordinatorUtil.toFeed(context, challenge);
+                        }
+                    });
+                } else {
+                    uploadButton.setVisibility(View.GONE);
+                    accomplishmentsButton.setVisibility(View.GONE);
+                }
+
+                if (!NetworkUtil.connectionCheck(context, challengeView)) {
+                    uploadButton.setVisibility(View.GONE);
+                    accomplishmentsButton.setVisibility(View.GONE);
+                }
 
                 ImageView imageView = findViewById(R.id.image);
                 String url = ImageUtil.getUrl(challenge.image);
@@ -134,10 +143,6 @@ public class ChallengeActivity extends AppCompatActivity {
                         .listener(new ProgressController(imageProgressView))
                         .into(imageView);
 
-                if (!NetworkUtil.connectionCheck(context, challengeView)) {
-                    uploadButton.setVisibility(View.GONE);
-                    accomplishmentsButton.setVisibility(View.GONE);
-                }
             } else {
                 // TODO: Show error
             }
