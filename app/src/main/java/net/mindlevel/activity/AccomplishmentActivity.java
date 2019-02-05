@@ -20,7 +20,6 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
@@ -29,9 +28,11 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
+import com.pchmn.materialchips.ChipView;
 
 import net.mindlevel.R;
 import net.mindlevel.api.AccomplishmentController;
+import net.mindlevel.api.ChallengeController;
 import net.mindlevel.api.CommentController;
 import net.mindlevel.api.ControllerCallback;
 import net.mindlevel.fragment.ContributorRecyclerViewAdapter;
@@ -40,8 +41,8 @@ import net.mindlevel.impl.ImageLikeView;
 import net.mindlevel.impl.ProgressController;
 import net.mindlevel.impl.comment.CommentRecyclerViewAdapter;
 import net.mindlevel.model.Accomplishment;
+import net.mindlevel.model.Challenge;
 import net.mindlevel.model.Comment;
-import net.mindlevel.model.Count;
 import net.mindlevel.model.Level;
 import net.mindlevel.model.User;
 import net.mindlevel.util.ImageUtil;
@@ -50,9 +51,6 @@ import net.mindlevel.util.PreferencesUtil;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 
 import jp.wasabeef.glide.transformations.BlurTransformation;
 
@@ -72,11 +70,14 @@ public class AccomplishmentActivity extends AppCompatActivity {
     private CommentController commentController;
     private EditText commentBox;
     private RecyclerView commentRecyclerView;
-    private View contributorProgress, commentProgress;
+    private View contributorProgress, commentProgress, challengeProgress;
+    private ChipView challengeChip;
+    private TextView levelView;
     private List<User> contributors;
     private List<Comment> comments;
     private Accomplishment accomplishment;
     private Comment comment;
+    private Challenge challenge;
     private long lastTimestamp = 0;
 
     @Override
@@ -95,6 +96,9 @@ public class AccomplishmentActivity extends AppCompatActivity {
         this.accomplishment = (Accomplishment) getIntent().getSerializableExtra("accomplishment");
         this.contributorProgress = findViewById(R.id.contributor_progress);
         this.commentProgress = findViewById(R.id.comment_progress);
+        this.challengeProgress = findViewById(R.id.challenge_progress);
+        this.challengeChip = findViewById(R.id.challenge_chip);
+        this.levelView = findViewById(R.id.level);
         final String url = ImageUtil.getUrl(accomplishment.image);
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle(accomplishment.title);
@@ -106,7 +110,11 @@ public class AccomplishmentActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent challengeIntent = new Intent(activity, ChallengeActivity.class);
-                challengeIntent.putExtra("challenge_id", accomplishment.challengeId);
+                if (challenge != null) {
+                    challengeIntent.putExtra("challenge", challenge);
+                } else {
+                    challengeIntent.putExtra("challenge_id", accomplishment.challengeId);
+                }
                 startActivity(challengeIntent);
             }
         });
@@ -163,14 +171,10 @@ public class AccomplishmentActivity extends AppCompatActivity {
 
         TextView titleView = findViewById(R.id.title);
         TextView scoreView = findViewById(R.id.score);
-        TextView levelView = findViewById(R.id.level);
         TextView descriptionView = findViewById(R.id.description);
         titleView.setText(accomplishment.title);
         String scoreText = context.getString(R.string.title_score, String.valueOf(accomplishment.score));
         scoreView.setText(scoreText);
-        Level level = new Level(accomplishment.levelRestriction);
-        String levelText = context.getString(R.string.title_level, level.getVisualLevel());
-        levelView.setText(levelText);
         descriptionView.setText(accomplishment.description);
 
         imageView.setDrawingCacheEnabled(true);
@@ -187,6 +191,9 @@ public class AccomplishmentActivity extends AppCompatActivity {
         commentRecyclerView.setAdapter(commentAdapter);
 
         this.commentController = new CommentController(this);
+
+        ChallengeController challengeController = new ChallengeController(this);
+        challengeController.get(accomplishment.challengeId, challengeCallback);
    }
 
     @Override
@@ -238,6 +245,31 @@ public class AccomplishmentActivity extends AppCompatActivity {
                 contributors.clear();
                 contributors.addAll(response);
                 contributorAdapter.notifyDataSetChanged();
+            }
+        }
+    };
+
+    private ControllerCallback<Challenge> challengeCallback = new ControllerCallback<Challenge>() {
+        @Override
+        public void onPostExecute(Boolean isSuccess, final Challenge response) {
+            if (isSuccess) {
+                challenge = response;
+                challengeChip.setLabel(challenge.title);
+                Level level = new Level(challenge.levelRestriction);
+                String levelText = getString(R.string.title_level, level.getVisualLevel());
+                levelView.setText(levelText);
+                challengeChip.setOnChipClicked(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent challengeIntent = new Intent(activity, ChallengeActivity.class);
+                        challengeIntent.putExtra("challenge", challenge);
+                        startActivity(challengeIntent);
+                    }
+                });
+                challengeProgress.setVisibility(GONE);
+                challengeChip.setVisibility(VISIBLE);
+            } else {
+                Log.e("mindlevel", "Failed to get challenge");
             }
         }
     };

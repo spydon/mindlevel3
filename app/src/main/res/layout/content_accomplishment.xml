@@ -58,9 +58,31 @@
                 android:textSize="8pt"
                 android:textStyle="bold" />
 
+            <RelativeLayout
+                android:layout_marginStart="10dip"
+                android:layout_marginEnd="10dip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" >
+
+                <ProgressBar
+                    android:id="@+id/challenge_progress"
+                    android:layout_width="30dip"
+                    android:layout_height="30dip"
+                    android:layout_marginStart="15dip"
+                    android:visibility="visible" />
+
+                <com.pchmn.materialchips.ChipView
+                    android:id="@+id/challenge_chip"
+                    app:backgroundColor="@color/colorAccent"
+                    app:chip_hasAvatarIcon="false"
+                    android:visibility="gone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_above="@+id/challenge_progress" />
+            </RelativeLayout>
+
             <TextView
                 android:id="@+id/level"
-                android:visibility="gone"
                 android:layout_marginStart="10dip"
                 android:layout_marginEnd="10dip"
                 android:layout_width="wrap_content"
