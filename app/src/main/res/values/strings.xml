@@ -37,6 +37,7 @@
     <string name="title_about">About</string>
     <string name="title_challenge_tree">Challenge Tree</string>
     <string name="title_challenge_suggestion">Suggest challenge</string>
+    <string name="title_chat">Chat</string>
 
     <!-- Small Titles -->
     <string name="title_score">Score: %1$s</string>
