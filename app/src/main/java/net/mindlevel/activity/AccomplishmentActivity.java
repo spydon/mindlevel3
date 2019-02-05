@@ -66,7 +66,6 @@ public class AccomplishmentActivity extends AppCompatActivity {
     private View coordinator;
     private ImageLikeView imageView;
     private Activity activity;
-    private ScheduledExecutorService scheduleTaskExecutor;
     private Handler handler = new Handler();
     private ContributorRecyclerViewAdapter contributorAdapter;
     private CommentRecyclerViewAdapter commentAdapter;
