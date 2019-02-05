@@ -15,14 +15,13 @@ import android.view.ViewGroup;
 import net.mindlevel.R;
 import net.mindlevel.api.ControllerCallback;
 import net.mindlevel.api.UserController;
+import net.mindlevel.impl.recyclers.HighscoreRecyclerViewAdapter;
 import net.mindlevel.model.User;
 import net.mindlevel.util.NetworkUtil;
 
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
-
-//import android.app.Fragment;
 
 /**
  * A fragment representing a list of Items.

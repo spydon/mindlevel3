@@ -24,7 +24,7 @@
             android:id="@+id/comment_box"
             android:hint="@string/hint_comment_box"
             android:layout_width="match_parent"
-            android:layout_height="110dp"
+            android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
             android:textSize="6pt"
             android:paddingStart="10dp"
@@ -35,7 +35,7 @@
             android:elevation="4dp"
             android:alpha="0.8"
             android:scrollbars="vertical"
-            android:maxLines="4"
+            android:imeOptions="actionSend"
             android:inputType="textMultiLine|textCapSentences|textAutoCorrect" />
 
         <ImageButton
@@ -44,8 +44,9 @@
             android:background="@color/transparent"
             android:scaleType="fitCenter"
             android:adjustViewBounds="true"
+            android:layout_centerVertical="true"
             android:layout_marginEnd="10dp"
-            android:layout_marginBottom="10dp"
+            android:layout_alignTop="@id/comment_box"
             android:layout_alignBottom="@id/comment_box"
             android:layout_alignEnd="@id/comment_box"
             android:layout_above="@id/comment_box"

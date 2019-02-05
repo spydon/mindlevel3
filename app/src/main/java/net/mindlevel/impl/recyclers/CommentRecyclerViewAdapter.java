@@ -1,4 +1,4 @@
-package net.mindlevel.impl.comment;
+package net.mindlevel.impl.recyclers;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.pchmn.materialchips.ChipView;
 
 import net.mindlevel.R;

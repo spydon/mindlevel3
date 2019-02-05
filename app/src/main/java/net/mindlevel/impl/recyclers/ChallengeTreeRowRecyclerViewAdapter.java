@@ -1,7 +1,6 @@
-package net.mindlevel.fragment;
+package net.mindlevel.impl.recyclers;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,9 +12,9 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 
 import net.mindlevel.R;
+import net.mindlevel.fragment.ChallengeTreeFragment;
 import net.mindlevel.impl.ProgressController;
 import net.mindlevel.model.Challenge;
-import net.mindlevel.model.User;
 import net.mindlevel.util.ImageUtil;
 
 import java.util.ArrayList;
@@ -28,7 +27,7 @@ import static android.view.View.VISIBLE;
  * {@link RecyclerView.Adapter} that can display a {@link Challenge} and makes a call to the
  * specified {@link ChallengeTreeFragment.OnListFragmentInteractionListener}.
  */
-class ChallengeTreeRowRecyclerViewAdapter extends RecyclerView.Adapter<ChallengeTreeRowRecyclerViewAdapter.ViewHolder> {
+public class ChallengeTreeRowRecyclerViewAdapter extends RecyclerView.Adapter<ChallengeTreeRowRecyclerViewAdapter.ViewHolder> {
 
     private final List<Challenge> challenges;
     private final ChallengeTreeFragment.OnListFragmentInteractionListener listener;

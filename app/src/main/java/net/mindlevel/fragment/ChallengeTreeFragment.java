@@ -16,6 +16,7 @@ import net.mindlevel.activity.ChallengeSuggestionActivity;
 import net.mindlevel.api.ChallengeController;
 import net.mindlevel.api.ControllerCallback;
 import net.mindlevel.api.UserController;
+import net.mindlevel.impl.recyclers.ChallengeTreeRecyclerViewAdapter;
 import net.mindlevel.model.Accomplishment;
 import net.mindlevel.model.Challenge;
 import net.mindlevel.model.User;

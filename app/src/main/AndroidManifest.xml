@@ -98,10 +98,6 @@
             android:label="@string/tutorial" />
 
         <activity
-            android:name=".activity.ChatActivity"
-            android:label="@string/title_chat" />
-
-        <activity
             android:name=".activity.IntegrationActivity"
             android:screenOrientation="portrait"
             android:label="@string/integration_title" />

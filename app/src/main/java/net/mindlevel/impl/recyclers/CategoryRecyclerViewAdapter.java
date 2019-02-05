@@ -1,4 +1,4 @@
-package net.mindlevel.fragment;
+package net.mindlevel.impl.recyclers;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -9,81 +9,76 @@ import android.view.ViewGroup;
 import com.pchmn.materialchips.ChipView;
 
 import net.mindlevel.R;
-import net.mindlevel.model.User;
-import net.mindlevel.util.CoordinatorUtil;
+import net.mindlevel.model.Category;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ContributorRecyclerViewAdapter extends RecyclerView.Adapter<ContributorRecyclerViewAdapter.ViewHolder> {
+public class CategoryRecyclerViewAdapter extends RecyclerView.Adapter<CategoryRecyclerViewAdapter.ViewHolder> {
 
-    private final List<User> contributors;
+    private final List<Category> categories;
     private LayoutInflater inflater;
     private ItemClickListener clickListener;
     private Context context;
 
-    public ContributorRecyclerViewAdapter(Context context, List<User> contributors) {
+    public CategoryRecyclerViewAdapter(Context context, List<Category> categories, ItemClickListener clickListener) {
         this.context = context;
         this.inflater = LayoutInflater.from(context);
-        this.contributors = contributors;
+        this.categories = categories;
+        this.clickListener = clickListener;
         setHasStableIds(true);
     }
 
-    // inflates the row layout from xml when needed
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = inflater.inflate(R.layout.contributor_item, parent, false);
+        View view = inflater.inflate(R.layout.fragment_category_item, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
-        final User contributor = contributors.get(position);
-        holder.chip.setLabel(contributor.username);
+    public void onBindViewHolder(final ViewHolder holder, int position) {
+        final Category category = categories.get(position);
+        holder.item = category;
+
+        holder.chip.setLabel(category.name);
         holder.chip.setOnChipClicked(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CoordinatorUtil.toUser(context, contributor);
+                clickListener.onItemClick(category);
             }
         });
     }
 
     @Override
     public int getItemCount() {
-        return contributors.size();
+        return categories.size();
     }
 
     @Override
     public long getItemId(int position) {
-        List<User> indexed = new ArrayList<>(contributors);
+        List<Category> indexed = new ArrayList<>(categories);
         return indexed.get(position).hashCode();
     }
 
     // stores and recycles views as they are scrolled off screen
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        View view;
+        Category item;
         ChipView chip;
 
         ViewHolder(View itemView) {
             super(itemView);
-            chip = itemView.findViewById(R.id.contributor);
+            this.view = itemView;
+            chip = itemView.findViewById(R.id.category_chip);
         }
 
         @Override
         public void onClick(View view) {
-            if (clickListener != null) clickListener.onItemClick(view, getAdapterPosition());
+            if (clickListener != null) clickListener.onItemClick(item);
         }
     }
 
-    public User getItem(int id) {
-        return contributors.get(id);
-    }
-
-    public void setClickListener(ItemClickListener clickListener) {
-        this.clickListener = clickListener;
-    }
-
-    // parent activity will implement this method to respond to click events
     public interface ItemClickListener {
-        void onItemClick(View view, int position);
+        void onItemClick(Category category);
     }
 }
