@@ -54,6 +54,7 @@
     <string name="hint_upload_title">Your title</string>
     <string name="hint_suggestion_title">The title</string>
     <string name="hint_suggestion_description">Describe how to accomplish the challenge</string>
+    <string name="hint_comment_box">Leave comment…</string>
 
     <!-- Login -->
     <string name="prompt_username">Username</string>
@@ -132,6 +133,10 @@
     <string name="about_email">me@lukas.fyi</string>
     <string name="about_site">http://lukas.fyi</string>
 
+    <!-- Accomplishment -->
+    <string name="accomplishment_by">By:</string>
+    <string name="challenge_title">Challenge:</string>
+
     <!-- Feed -->
     <string name="latest">Latest</string>
     <string name="feed_user">Showing accomplishments for user %1$s</string>
@@ -141,7 +146,6 @@
     <!-- Terms and Privacy-->
     <string name="terms_agree">By using &app_name; you agree to the</string>
     <string name="terms_of_service">Terms of Service</string>
-    <string name="accomplishment_by">By:</string>
     <string name="hint_email">Your E-mail address</string>
     <string name="accessibility_user_image">The user\'s image</string>
     <string name="logo">logo</string>
@@ -180,5 +184,8 @@
 
     <!-- Permissions -->
     <string name="permission_sharing_denied">Denied sharing permission</string>
+
+    <!-- Comments -->
+    <string name="comments">Comments (%1$d)</string>
 
 </resources>

@@ -8,7 +8,7 @@
     <string name="action_sign_in">Logga in</string>
     <string name="action_sign_out">Logga ut</string>
     <string name="action_upload">Ladda upp</string>
-    <string name="contributors">Utförare:</string>
+    <string name="contributors">Av:</string>
     <string name="creator">Skapare:</string>
     <string name="error_backend">Kan inte nå servern</string>
     <string name="error_field_required">Detta fält behövs</string>
@@ -21,10 +21,10 @@
     <string name="error_no_image">Ingen bild vald, använd knapparna till höger</string>
     <string name="error_not_found">Ekorrarna hittade inget</string>
     <string name="error_offline">Inte tillgänglig offline</string>
-    <string name="feed_challenge">Visa utföranden för uppdrag \"%1$s\"</string>
+    <string name="feed_challenge">Visa utföranden för utmaningen \"%1$s\"</string>
     <string name="feed_user">Visa utföranden för användare \"%1$s\"</string>
     <string name="hint_email">Din E-Mail</string>
-    <string name="hint_upload_description">Beskriv hur du utförde uppdraget</string>
+    <string name="hint_upload_description">Beskriv hur du utförde utmaningen</string>
     <string name="hint_upload_title">Lägg till titel</string>
     <string name="hint_user_description">Beskriv dig själv, eller nått</string>
     <string name="icon_thanks">Tack till Icons8 för grymma ikoner</string>
@@ -45,22 +45,22 @@
     <string name="tip">Tips: %1$s</string>
     <string name="tip_contributor">Alla utförare får poäng</string>
     <string name="tip_like">Dubbelklicka på en bild för att gilla den</string>
-    <string name="tip_points">Efter att du har klarat ett uppdrag så kan du gilla bilder</string>
+    <string name="tip_points">Efter att du har klarat en utmaning så kan du gilla bilder</string>
     <string name="title_about">Om</string>
     <string name="title_edit_profile">Ändra profil</string>
-    <string name="title_challenges">Uppdrag</string>
+    <string name="title_challenges">Utmaning</string>
     <string name="title_profile">Profil</string>
     <string name="title_settings">Inställningar</string>
     <string name="title_facebook">Vår Facebook</string>
     <string name="tutorial_description">
-        Spelets mål är enkelt - välj ett uppdrag, slutför det och ladda upp en bild av resultatet.
+        Spelets mål är enkelt - välj en utmaning, slutför det och ladda upp en bild av resultatet.
         Andra användare kan gilla dina bilder och du får poäng. För att gilla en bild, dubbelklicka på den.
     </string>
     <string name="tutorial_description_more">
-        Ju mer poäng du får och ju fler uppdrag du klarar ju fler uppdrag och andra användares uppladdningar kommer
-        du att kunna se.
+        Ju mer poäng du får och ju fler utmaningar du klarar ju fler utmaningar kommer
+        du att låsa upp.
     </string>
-    <string name="tutorial_accomplishment">Ett utförande, ett avklarat uppdrag\n(bild+text uppladdad av en
+    <string name="tutorial_accomplishment">Ett utförande, en avklarad utmaning\n(bild+text uppladdad av en
         användare)</string>
     <string name="tutorial_camera">Ta en bild med kameran</string>
     <string name="tutorial_edit">Modifera det du kollar på</string>
@@ -68,9 +68,9 @@
     <string name="tutorial_highscore">Se topp-spelare</string>
     <string name="tutorial_icons">Förklaring av ikonerna som finns i appen:</string>
     <string name="tutorial_logout">Logga ut</string>
-    <string name="tutorial_challenge">Denna tar dig till uppdragsrelaterade saker</string>
+    <string name="tutorial_challenge">Denna tar dig till utmaningsrelaterade saker</string>
     <string name="tutorial_share">Dela bilden som du kollar på</string>
-    <string name="tutorial_upload">Ladda upp en bild för ett avklarat uppdrag</string>
+    <string name="tutorial_upload">Ladda upp en bild för en avklarad utmaning</string>
     <string name="tutorial_user">Återvänd till din profil</string>
     <string name="error_no_description">Lägg till en beskrivning</string>
     <string name="error_network_login">Nätverksfel, försök att logga in.</string>
@@ -82,13 +82,13 @@
     <string name="tip_new">Klicka på tipsen för att se ett nytt</string>
     <string name="and">och</string>
     <string name="title_login">Logga in</string>
-    <string name="title_challenge_suggestion">Föreslå uppdrag</string>
+    <string name="title_challenge_suggestion">Föreslå utmaning</string>
     <string name="user">Användare</string>
-    <string name="challenge">Uppdrag</string>
+    <string name="challenge">Utmaning</string>
     <string name="accomplishment">Utförande</string>
     <string name="contributor">Medhjälpare</string>
     <string name="hint_suggestion_title">Titeln</string>
-    <string name="hint_suggestion_description">Beskriv hur man utför uppdraget</string>
+    <string name="hint_suggestion_description">Beskriv hur man utför utmaningen</string>
     <string name="integration_try_button">Testa lösenord!</string>
     <string name="integration_default_button">Använd vanliga MindLevel</string>
     <string name="integration_normal">Använder vanliga MindLevel</string>
@@ -99,4 +99,7 @@
     <string name="successful_suggestion">Tack!</string>
     <string name="title_score">Poäng: %1$s</string>
     <string name="error_email_username">Användarnamnet ska inte vara en e-mail</string>
+    <string name="comments">Kommentarer (%1$d)</string>
+    <string name="hint_comment_box">Lämna kommentar…</string>
+    <string name="challenge_title">Utmaning:</string>
 </resources>
