@@ -99,4 +99,6 @@
     <string name="successful_suggestion">Tack!</string>
     <string name="title_score">Poäng: %1$s</string>
     <string name="error_email_username">Användarnamnet ska inte vara en e-mail</string>
+    <string name="comments">Kommentarer (%1$d)</string>
+    <string name="hint_comment_box">Lämna kommentar…</string>
 </resources>

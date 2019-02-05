@@ -110,5 +110,62 @@
                     android:layout_toEndOf="@+id/contributor_by" />
             </RelativeLayout>
         </LinearLayout>
+        <LinearLayout
+            android:layout_below="@id/info"
+            android:orientation="vertical"
+            android:layout_marginStart="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginEnd="@dimen/text_beside_fab"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/comments"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <ProgressBar
+                android:id="@+id/comment_progress"
+                android:layout_width="50dp"
+                android:layout_height="50dp" />
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/comment_box"
+                    android:hint="@string/hint_comment_box"
+                    android:layout_width="match_parent"
+                    android:layout_height="110dp"
+                    android:layout_marginBottom="10dp"
+                    android:textSize="6pt"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="30dp"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:background="@drawable/bg_item"
+                    android:elevation="4dp"
+                    android:alpha="0.7"
+                    android:scrollbars="vertical"
+                    android:maxLines="4"
+                    android:inputType="textMultiLine|textCapSentences|textAutoCorrect" />
+
+                <ImageButton
+                    android:id="@+id/post_button"
+                    android:src="@drawable/send"
+                    android:background="@color/transparent"
+                    android:scaleType="fitCenter"
+                    android:adjustViewBounds="true"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_alignBottom="@id/comment_box"
+                    android:layout_alignEnd="@id/comment_box"
+                    android:layout_above="@id/comment_box"
+                    android:elevation="5dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp" />
+            </RelativeLayout>
+        </LinearLayout>
     </RelativeLayout>
 </ScrollView>

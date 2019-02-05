@@ -14,4 +14,5 @@
     <color name="fadingYellow">#faf6e5</color>
     <color name="textBackground">#8fff</color>
     <color name="darkerGray">#353535</color>
+    <color name="transparent">#00FFFFFF</color>
 </resources>

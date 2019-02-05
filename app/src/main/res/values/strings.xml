@@ -51,6 +51,7 @@
     <string name="hint_upload_title">Your title</string>
     <string name="hint_suggestion_title">The title</string>
     <string name="hint_suggestion_description">Describe how to accomplish the challenge</string>
+    <string name="hint_comment_box">Leave comment…</string>
 
     <!-- Login -->
     <string name="prompt_username">Username</string>
@@ -177,5 +178,8 @@
 
     <!-- Permissions -->
     <string name="permission_sharing_denied">Denied sharing permission</string>
+
+    <!-- Comments -->
+    <string name="comments">Comments (%1$d)</string>
 
 </resources>

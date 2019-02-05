@@ -11,7 +11,6 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -19,38 +18,44 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.DataSource;
-import com.bumptech.glide.load.engine.GlideException;
-import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;
-import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.SimpleTarget;
-import com.bumptech.glide.request.target.Target;
 import com.bumptech.glide.request.transition.Transition;
 
 import net.mindlevel.R;
 import net.mindlevel.api.AccomplishmentController;
+import net.mindlevel.api.CommentController;
 import net.mindlevel.api.ControllerCallback;
 import net.mindlevel.fragment.ContributorRecyclerViewAdapter;
 import net.mindlevel.impl.Glassbar;
 import net.mindlevel.impl.ImageLikeView;
 import net.mindlevel.impl.ProgressController;
+import net.mindlevel.impl.comment.CommentRecyclerViewAdapter;
 import net.mindlevel.model.Accomplishment;
+import net.mindlevel.model.Comment;
+import net.mindlevel.model.Count;
 import net.mindlevel.model.Level;
 import net.mindlevel.model.User;
 import net.mindlevel.util.ImageUtil;
 import net.mindlevel.util.PermissionUtil;
+import net.mindlevel.util.PreferencesUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 import jp.wasabeef.glide.transformations.BlurTransformation;
 
 import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
 import static com.bumptech.glide.request.RequestOptions.bitmapTransform;
 
 public class AccomplishmentActivity extends AppCompatActivity {
@@ -59,27 +64,40 @@ public class AccomplishmentActivity extends AppCompatActivity {
     private View coordinator;
     private ImageLikeView imageView;
     private Activity activity;
-    private ContributorRecyclerViewAdapter adapter;
-    private View contributorProgress;
+    private ScheduledExecutorService scheduleTaskExecutor;
+    private ContributorRecyclerViewAdapter contributorAdapter;
+    private CommentRecyclerViewAdapter commentAdapter;
+    private CommentController commentController;
+    private EditText commentBox;
+    private RecyclerView commentRecyclerView;
+    private View contributorProgress, commentProgress;
     private List<User> contributors;
+    private List<Comment> comments;
+    private Accomplishment accomplishment;
+    private Comment comment;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_accomplishment);
-        Context context = getBaseContext();
+        final Context context = getBaseContext();
         this.activity = this;
         this.coordinator = findViewById(R.id.coordinator);
+        this.commentBox = findViewById(R.id.comment_box);
+        this.commentRecyclerView = findViewById(R.id.comments);
         this.contributors = new ArrayList<>();
-        this.adapter = new ContributorRecyclerViewAdapter(activity, contributors);
-        final Accomplishment accomplishment = (Accomplishment) getIntent().getSerializableExtra("accomplishment");
+        this.comments = new ArrayList<>();
+        this.contributorAdapter = new ContributorRecyclerViewAdapter(activity, contributors);
+        this.commentAdapter = new CommentRecyclerViewAdapter(activity, comments);
+        this.accomplishment = (Accomplishment) getIntent().getSerializableExtra("accomplishment");
+        this.contributorProgress = findViewById(R.id.contributor_progress);
+        this.commentProgress = findViewById(R.id.comment_progress);
         final String url = ImageUtil.getUrl(accomplishment.image);
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle(accomplishment.title);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        this.contributorProgress = findViewById(R.id.contributor_progress);
         FloatingActionButton challengeButton = findViewById(R.id.fab_challenge);
         challengeButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -100,6 +118,19 @@ public class AccomplishmentActivity extends AppCompatActivity {
                 }
             }
         });
+
+        final ImageButton postButton = findViewById(R.id.post_button);
+        postButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                comment = getComment();
+                if (!comment.comment.isEmpty()) {
+                    commentProgress.setVisibility(VISIBLE);
+                    commentController.add(comment, addCommentCallback);
+                }
+            }
+        });
+
 
         TextView imageText = findViewById(R.id.image_text);
         ProgressBar likeProgress = findViewById(R.id.progress_like);
@@ -145,9 +176,37 @@ public class AccomplishmentActivity extends AppCompatActivity {
         AccomplishmentController controller = new AccomplishmentController(this);
         controller.getContributors(accomplishment.id, contributorsCallback);
 
-        RecyclerView recyclerView = findViewById(R.id.contributors);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        recyclerView.setAdapter(adapter);
+        RecyclerView contributorRecyclerView = findViewById(R.id.contributors);
+        contributorRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        contributorRecyclerView.setAdapter(contributorAdapter);
+
+        commentRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        commentRecyclerView.setAdapter(commentAdapter);
+
+        this.commentController = new CommentController(this);
+        this.scheduleTaskExecutor = Executors.newScheduledThreadPool(0);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        scheduleTaskExecutor.scheduleAtFixedRate(new Runnable() {
+            public void run() {
+                commentProgress.setVisibility(VISIBLE);
+                commentController.getThread(accomplishment.id, commentsCallback);
+            }
+        }, 0, 10, TimeUnit.SECONDS);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        scheduleTaskExecutor.shutdown();
+    }
+
+    private Comment getComment() {
+        String username = PreferencesUtil.getUsername(getApplicationContext());
+        return new Comment(accomplishment.id, commentBox.getText().toString(), username);
     }
 
     @Override
@@ -175,7 +234,34 @@ public class AccomplishmentActivity extends AppCompatActivity {
             if (isSuccess) {
                 contributors.clear();
                 contributors.addAll(response);
-                adapter.notifyDataSetChanged();
+                contributorAdapter.notifyDataSetChanged();
+            }
+        }
+    };
+
+    private ControllerCallback<List<Comment>> commentsCallback = new ControllerCallback<List<Comment>>() {
+        @Override
+        public void onPostExecute(Boolean isSuccess, List<Comment> response) {
+            if (isSuccess) {
+               commentProgress.setVisibility(GONE);
+                if (!comments.containsAll(response)) {
+                    comments.clear();
+                    comments.addAll(response);
+                    commentAdapter.notifyDataSetChanged();
+                }
+            }
+        }
+    };
+
+    private ControllerCallback<Void> addCommentCallback = new ControllerCallback<Void>() {
+        @Override
+        public void onPostExecute(Boolean isSuccess, Void response) {
+            commentProgress.setVisibility(GONE);
+            if (isSuccess) {
+                commentBox.setText("");
+                comments.add(comment);
+                commentAdapter.notifyDataSetChanged();
+                commentRecyclerView.setVisibility(VISIBLE);
             }
         }
     };
