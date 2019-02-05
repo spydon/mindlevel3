@@ -194,18 +194,22 @@ public class AccomplishmentActivity extends AppCompatActivity {
 
         ChallengeController challengeController = new ChallengeController(this);
         challengeController.get(accomplishment.challengeId, challengeCallback);
-   }
+    }
+
+    private final Runnable commentUpdate = new Runnable() {
+        public void run() {
+            refreshComments();
+            handler.postDelayed(this, 10000);
+        }
+    };
+
+    private void refreshComments() {
+        commentController.getThreadSince(accomplishment.id, lastTimestamp, commentsCallback);
+    }
 
     @Override
     protected void onStart() {
         super.onStart();
-        final Runnable commentUpdate = new Runnable() {
-            public void run() {
-                //commentProgress.setVisibility(VISIBLE);
-                commentController.getThreadSince(accomplishment.id, lastTimestamp, commentsCallback);
-                handler.postDelayed(this, 10000);
-            }
-        };
         handler.post(commentUpdate);
      }
 
@@ -296,9 +300,8 @@ public class AccomplishmentActivity extends AppCompatActivity {
             commentProgress.setVisibility(GONE);
             if (isSuccess) {
                 commentBox.setText("");
-                comments.add(comment);
-                commentAdapter.notifyDataSetChanged();
                 commentRecyclerView.setVisibility(VISIBLE);
+                refreshComments();
             }
         }
     };
