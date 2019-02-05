@@ -23,6 +23,7 @@ import android.view.MenuItem;
 import net.mindlevel.activity.AboutActivity;
 import net.mindlevel.activity.AccomplishmentActivity;
 import net.mindlevel.activity.ChallengeActivity;
+import net.mindlevel.activity.ChatActivity;
 import net.mindlevel.activity.LoginActivity;
 import net.mindlevel.activity.TutorialActivity;
 import net.mindlevel.api.LoginController;
@@ -198,6 +199,10 @@ public class CoordinatorActivity
 	        case R.id.about_menu:
 	            Intent aboutIntent = new Intent(this, AboutActivity.class);
                 startActivity(aboutIntent);
+                return true;
+	        case R.id.chat_menu:
+	            Intent chatIntent = new Intent(this, ChatActivity.class);
+                startActivity(chatIntent);
                 return true;
             case R.id.tutorial_menu:
                 Intent tutorialIntent = new Intent(this, TutorialActivity.class);

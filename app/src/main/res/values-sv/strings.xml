@@ -52,6 +52,7 @@
     <string name="title_profile">Profil</string>
     <string name="title_settings">Inställningar</string>
     <string name="title_facebook">Vår Facebook</string>
+    <string name="title_chat">Chat</string>
     <string name="tutorial_description">
         Spelets mål är enkelt - välj en utmaning, slutför det och ladda upp en bild av resultatet.
         Andra användare kan gilla dina bilder och du får poäng. För att gilla en bild, dubbelklicka på den.

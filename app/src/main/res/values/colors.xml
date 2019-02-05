@@ -11,6 +11,7 @@
     <color name="snackbar">#80000000</color>
     <color name="disabledBackground">#000</color>
     <color name="finishedBackground">#78fcf3</color>
+    <color name="commentSelf">#84E4DE</color>
     <color name="fadingYellow">#faf6e5</color>
     <color name="textBackground">#8fff</color>
     <color name="darkerGray">#353535</color>
