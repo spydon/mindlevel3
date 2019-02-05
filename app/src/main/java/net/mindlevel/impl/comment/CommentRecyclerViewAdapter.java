@@ -1,6 +1,7 @@
 package net.mindlevel.impl.comment;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,7 @@ import net.mindlevel.R;
 import net.mindlevel.model.Comment;
 import net.mindlevel.model.User;
 import net.mindlevel.util.CoordinatorUtil;
+import net.mindlevel.util.PreferencesUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,11 +25,13 @@ public class CommentRecyclerViewAdapter extends RecyclerView.Adapter<CommentRecy
     private LayoutInflater inflater;
     private ItemClickListener clickListener;
     private Context context;
+    private String username;
 
     public CommentRecyclerViewAdapter(Context context, List<Comment> comments) {
         this.context = context;
         this.inflater = LayoutInflater.from(context);
         this.comments = comments;
+        this.username = PreferencesUtil.getUsername(context);
         setHasStableIds(true);
     }
 
@@ -35,12 +39,16 @@ public class CommentRecyclerViewAdapter extends RecyclerView.Adapter<CommentRecy
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = inflater.inflate(R.layout.comment_item, parent, false);
+
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         final Comment comment = comments.get(position);
+        if (comment.username.equals(this.username)) {
+            ((View)(holder.comment.getParent())).setBackgroundColor(context.getResources().getColor(R.color.colorAccent));
+        }
         holder.comment.setText(comment.comment);
         holder.chip.setLabel(comment.username);
         holder.chip.setOnChipClicked(new View.OnClickListener() {
