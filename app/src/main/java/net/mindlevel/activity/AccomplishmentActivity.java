@@ -10,6 +10,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -17,6 +18,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -65,6 +67,7 @@ public class AccomplishmentActivity extends AppCompatActivity {
     private ImageLikeView imageView;
     private Activity activity;
     private ScheduledExecutorService scheduleTaskExecutor;
+    private Handler handler = new Handler();
     private ContributorRecyclerViewAdapter contributorAdapter;
     private CommentRecyclerViewAdapter commentAdapter;
     private CommentController commentController;
@@ -75,6 +78,7 @@ public class AccomplishmentActivity extends AppCompatActivity {
     private List<Comment> comments;
     private Accomplishment accomplishment;
     private Comment comment;
+    private long lastTimestamp = 0;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -184,24 +188,25 @@ public class AccomplishmentActivity extends AppCompatActivity {
         commentRecyclerView.setAdapter(commentAdapter);
 
         this.commentController = new CommentController(this);
-        this.scheduleTaskExecutor = Executors.newScheduledThreadPool(0);
-    }
+   }
 
     @Override
     protected void onStart() {
         super.onStart();
-        scheduleTaskExecutor.scheduleAtFixedRate(new Runnable() {
+        final Runnable commentUpdate = new Runnable() {
             public void run() {
-                commentProgress.setVisibility(VISIBLE);
-                commentController.getThread(accomplishment.id, commentsCallback);
+                //commentProgress.setVisibility(VISIBLE);
+                commentController.getThreadSince(accomplishment.id, lastTimestamp, commentsCallback);
+                handler.postDelayed(this, 10000);
             }
-        }, 0, 10, TimeUnit.SECONDS);
-    }
+        };
+        handler.post(commentUpdate);
+     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        scheduleTaskExecutor.shutdown();
+        handler.removeCallbacksAndMessages(null);
     }
 
     private Comment getComment() {
@@ -222,8 +227,7 @@ public class AccomplishmentActivity extends AppCompatActivity {
             }
             break;
         default:
-            super.onRequestPermissionsResult(requestCode, permissions,
-                    grantResults);
+            super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
     }
 
@@ -245,10 +249,12 @@ public class AccomplishmentActivity extends AppCompatActivity {
             if (isSuccess) {
                commentProgress.setVisibility(GONE);
                 if (!comments.containsAll(response)) {
-                    comments.clear();
                     comments.addAll(response);
                     commentAdapter.notifyDataSetChanged();
+                    lastTimestamp = response.get(response.size()-1).created;
                 }
+            } else {
+                Log.e("mindlevel", "Failed to get comments");
             }
         }
     };
