@@ -18,7 +18,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/bg_opacity"
         android:layout_margin="15dp"
-        android:paddingBottom="30dip"
+        android:paddingBottom="30dp"
         android:orientation="vertical">
 
         <ImageView
@@ -85,7 +85,7 @@
             android:textStyle="bold"
             android:textSize="10pt"
             android:text="@string/licences"
-            android:layout_marginTop="15dip"
+            android:layout_marginTop="15dp"
             android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />

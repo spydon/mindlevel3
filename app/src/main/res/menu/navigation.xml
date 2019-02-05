@@ -21,4 +21,9 @@
         android:icon="@drawable/user"
         android:title="@string/title_profile" />
 
+    <item
+        android:id="@+id/navigation_chat"
+        android:icon="@drawable/send"
+        android:title="@string/title_chat" />
+
 </menu>

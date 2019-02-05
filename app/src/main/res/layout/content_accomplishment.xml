@@ -50,9 +50,9 @@
 
             <TextView
                 android:id="@+id/title"
-                android:layout_marginStart="10dip"
-                android:layout_marginTop="10dip"
-                android:layout_marginEnd="10dip"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="8pt"
@@ -61,8 +61,8 @@
 
             <TextView
                 android:id="@+id/level"
-                android:layout_marginStart="10dip"
-                android:layout_marginEnd="10dip"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
@@ -70,8 +70,8 @@
                 android:id="@+id/score"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dip"
-                android:layout_marginEnd="10dip" />
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp" />
 
             <TextView
                 android:id="@+id/description"
@@ -79,11 +79,11 @@
                 android:textColorLink="@color/colorPrimary"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dip" />
+                android:layout_margin="10dp" />
 
             <RelativeLayout
-                android:layout_marginStart="10dip"
-                android:layout_marginEnd="10dip"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" >
 
@@ -92,15 +92,15 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_marginEnd="5dip"
+                    android:layout_marginEnd="5dp"
                     android:text="@string/challenge_title"
                     android:textStyle="bold" />
 
                 <ProgressBar
                     android:id="@+id/challenge_progress"
-                    android:layout_width="30dip"
-                    android:layout_height="30dip"
-                    android:layout_marginTop="5dip"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="5dp"
                     android:layout_toEndOf="@id/challenge_title" />
 
                 <com.pchmn.materialchips.ChipView
@@ -116,24 +116,24 @@
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dip"
-                android:layout_marginEnd="10dip"
-                android:layout_marginBottom="10dip">
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp">
 
                 <TextView
                     android:id="@+id/contributor_by"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_marginEnd="5dip"
+                    android:layout_marginEnd="5dp"
                     android:text="@string/accomplishment_by"
                     android:textStyle="bold" />
 
                 <ProgressBar
                     android:id="@+id/contributor_progress"
-                    android:layout_width="30dip"
-                    android:layout_height="30dip"
-                    android:layout_marginTop="5dip"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="5dp"
                     android:layout_toEndOf="@+id/contributor_by"
                     android:visibility="visible" />
 
