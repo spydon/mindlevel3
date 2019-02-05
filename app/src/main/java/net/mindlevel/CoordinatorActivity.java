@@ -27,6 +27,7 @@ import net.mindlevel.activity.LoginActivity;
 import net.mindlevel.activity.TutorialActivity;
 import net.mindlevel.api.LoginController;
 import net.mindlevel.fragment.ChallengeTreeFragment;
+import net.mindlevel.fragment.ChatFragment;
 import net.mindlevel.fragment.FeedFragment;
 import net.mindlevel.fragment.HighscoreFragment;
 import net.mindlevel.fragment.UserFragment;
@@ -53,6 +54,7 @@ public class CoordinatorActivity
     private final ChallengeTreeFragment challengesFragment = new ChallengeTreeFragment();
     private final HighscoreFragment highscoreFragment = new HighscoreFragment();
     private final UserFragment userFragment = new UserFragment();
+    private final ChatFragment chatFragment = new ChatFragment();
     private final LinkedHashMap<Integer, Fragment> fragments = new LinkedHashMap<>();
     private final Deque<Fragment> fragmentHistory = new ArrayDeque<>();
 
@@ -110,6 +112,7 @@ public class CoordinatorActivity
         fragments.put(R.id.navigation_challenges, challengesFragment);
         fragments.put(R.id.navigation_highscore, highscoreFragment);
         fragments.put(R.id.navigation_profile, userFragment);
+        fragments.put(R.id.navigation_chat, chatFragment);
 
         currentFragment = feedFragment;
 

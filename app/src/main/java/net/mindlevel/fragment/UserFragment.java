@@ -19,13 +19,10 @@ import com.bumptech.glide.Glide;
 
 import net.mindlevel.R;
 import net.mindlevel.activity.EditUserActivity;
-import net.mindlevel.activity.LoginActivity;
 import net.mindlevel.api.ControllerCallback;
-import net.mindlevel.api.LoginController;
 import net.mindlevel.api.UserController;
 import net.mindlevel.impl.ProgressController;
 import net.mindlevel.model.Level;
-import net.mindlevel.model.Login;
 import net.mindlevel.model.User;
 import net.mindlevel.util.CoordinatorUtil;
 import net.mindlevel.util.ImageUtil;
@@ -45,8 +42,6 @@ import static android.view.View.VISIBLE;
 public class UserFragment extends InfoFragment {
 
     private UserController controller;
-    private LoginController loginController;
-
     private View coordinator;
     private ImageView imageView;
     private TextView usernameView;
@@ -82,10 +77,7 @@ public class UserFragment extends InfoFragment {
         this.errorView = view.findViewById(R.id.error);
         this.imageProgressBar = view.findViewById(R.id.progress_image);
         this.context = getContext();
-
         this.controller = new UserController(context);
-        this.loginController = new LoginController(context);
-
         this.shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
 
         editButton = view.findViewById(R.id.edit_button);
@@ -229,16 +221,6 @@ public class UserFragment extends InfoFragment {
             } else {
                 showInfo(true, false);
             }
-        }
-    };
-
-    private ControllerCallback<Void> signOutCallback = new ControllerCallback<Void>() {
-
-        @Override
-        public void onPostExecute(final Boolean success, final Void nothing) {
-            PreferencesUtil.clearSession(context);
-            Intent loginIntent = new Intent(getContext(), LoginActivity.class);
-            startActivity(loginIntent);
         }
     };
 

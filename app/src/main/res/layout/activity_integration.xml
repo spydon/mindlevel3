@@ -16,7 +16,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="15dp"
-        android:paddingBottom="30dip"
+        android:paddingBottom="30dp"
         android:orientation="vertical">
 
         <TextView
@@ -32,7 +32,7 @@
         <TextView
             android:id="@+id/description"
             android:text="@string/integration_description"
-            android:layout_marginBottom="20dip"
+            android:layout_marginBottom="20dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 

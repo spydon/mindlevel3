@@ -1,15 +1,15 @@
-package net.mindlevel.fragment;
+package net.mindlevel.impl.recyclers;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
+import net.mindlevel.fragment.FeedFragment;
 import net.mindlevel.impl.ImageLikeView;
 import net.mindlevel.impl.ProgressController;
 import net.mindlevel.R;
@@ -17,22 +17,20 @@ import net.mindlevel.model.Accomplishment;
 import net.mindlevel.util.ImageUtil;
 
 import java.util.ArrayList;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.TreeSet;
 
 /**
  * {@link RecyclerView.Adapter} that can display a {@link Accomplishment} and makes a call to the
  * specified {@link FeedFragment.OnListFragmentInteractionListener}.
  */
-class FeedRecyclerViewAdapter extends RecyclerView.Adapter<FeedRecyclerViewAdapter.ViewHolder> {
+public class FeedRecyclerViewAdapter extends RecyclerView.Adapter<FeedRecyclerViewAdapter.ViewHolder> {
 
     private final Set<Accomplishment> items;
     private final FeedFragment.OnListFragmentInteractionListener listener;
     private View view;
 
-    FeedRecyclerViewAdapter(Set<Accomplishment> items,
+    public FeedRecyclerViewAdapter(Set<Accomplishment> items,
                             FeedFragment.OnListFragmentInteractionListener listener) {
         this.items = items;
         this.listener = listener;

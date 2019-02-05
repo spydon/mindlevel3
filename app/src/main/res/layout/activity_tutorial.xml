@@ -16,7 +16,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="15dp"
-        android:paddingBottom="30dip"
+        android:paddingBottom="30dp"
         android:orientation="vertical">
 
         <TextView
@@ -32,21 +32,21 @@
         <TextView
             android:id="@+id/description"
             android:text="@string/tutorial_description"
-            android:layout_marginBottom="10dip"
+            android:layout_marginBottom="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
         <TextView
             android:id="@+id/description_more"
             android:text="@string/tutorial_description_more"
-            android:layout_marginBottom="20dip"
+            android:layout_marginBottom="20dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dip"
+            android:layout_marginBottom="10dp"
             android:gravity="center_horizontal"
             android:text="@string/tutorial_icons"
             android:textStyle="bold" />

@@ -1,4 +1,4 @@
-package net.mindlevel.fragment;
+package net.mindlevel.impl.recyclers;
 
 import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,6 +10,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import net.mindlevel.R;
+import net.mindlevel.fragment.ChallengeTreeFragment;
 import net.mindlevel.model.Challenge;
 import net.mindlevel.model.Level;
 import net.mindlevel.model.User;
@@ -22,14 +23,14 @@ import java.util.List;
  * {@link RecyclerView.Adapter} that can display a {@link Challenge} and makes a call to the
  * specified {@link ChallengeTreeFragment.OnListFragmentInteractionListener}.
  */
-class ChallengeTreeRecyclerViewAdapter extends RecyclerView.Adapter<ChallengeTreeRecyclerViewAdapter.ViewHolder> {
+public class ChallengeTreeRecyclerViewAdapter extends RecyclerView.Adapter<ChallengeTreeRecyclerViewAdapter.ViewHolder> {
 
     private final List<List<Challenge>> orderedChallenges;
     private final ChallengeTreeFragment.OnListFragmentInteractionListener listener;
     private User user;
 
-    ChallengeTreeRecyclerViewAdapter(final List<Challenge> challenges,
-                                     ChallengeTreeFragment.OnListFragmentInteractionListener listener) {
+    public ChallengeTreeRecyclerViewAdapter(final List<Challenge> challenges,
+                                            ChallengeTreeFragment.OnListFragmentInteractionListener listener) {
         this.orderedChallenges = new ArrayList <>();
         this.listener = listener;
         setHasStableIds(true);

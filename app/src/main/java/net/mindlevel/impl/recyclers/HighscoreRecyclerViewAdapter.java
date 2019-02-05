@@ -1,4 +1,4 @@
-package net.mindlevel.fragment;
+package net.mindlevel.impl.recyclers;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
+import net.mindlevel.fragment.HighscoreFragment;
 import net.mindlevel.impl.ProgressController;
 import net.mindlevel.R;
 import net.mindlevel.model.Challenge;
@@ -25,12 +26,12 @@ import java.util.Set;
  * {@link RecyclerView.Adapter} that can display a {@link Challenge} and makes a call to the
  * specified {@link HighscoreFragment.OnListFragmentInteractionListener}.
  */
-class HighscoreRecyclerViewAdapter extends RecyclerView.Adapter<HighscoreRecyclerViewAdapter.ViewHolder> {
+public class HighscoreRecyclerViewAdapter extends RecyclerView.Adapter<HighscoreRecyclerViewAdapter.ViewHolder> {
 
     private final Set<User> users;
     private final HighscoreFragment.OnListFragmentInteractionListener listener;
 
-    HighscoreRecyclerViewAdapter(Set<User> users, HighscoreFragment.OnListFragmentInteractionListener listener) {
+    public HighscoreRecyclerViewAdapter(Set<User> users, HighscoreFragment.OnListFragmentInteractionListener listener) {
         this.users = users;
         this.listener = listener;
         setHasStableIds(true);

@@ -21,6 +21,7 @@ import net.mindlevel.api.ChallengeController;
 import net.mindlevel.api.ControllerCallback;
 import net.mindlevel.api.UserController;
 import net.mindlevel.impl.Glassbar;
+import net.mindlevel.impl.recyclers.FeedRecyclerViewAdapter;
 import net.mindlevel.model.Accomplishment;
 import net.mindlevel.model.Challenge;
 import net.mindlevel.util.NetworkUtil;
@@ -256,24 +257,24 @@ public class FeedFragment extends InfoFragment {
 
     private ControllerCallback<List<Accomplishment>> getPaginationCallback = new
             ControllerCallback<List<Accomplishment>>() {
-        @Override
-        public void onPostExecute(Boolean isSuccess, List<Accomplishment> response) {
-            showPaginationProgress(false);
-            if (getActivity() != null) {
-                if (isSuccess) {
-                    if (response.isEmpty() && accomplishments.isEmpty()) {
-                        showInfo(true, false, getString(R.string.error_not_found));
-                    } else if (!response.isEmpty()){
-                        int preSize = accomplishments.size();
-                        accomplishments.addAll(response);
-                        //adapter.notifyDataSetChanged();
-                        adapter.notifyItemRangeChanged(preSize, response.size());
-                        showInfo(false, false);
+                @Override
+                public void onPostExecute(Boolean isSuccess, List<Accomplishment> response) {
+                    showPaginationProgress(false);
+                    if (getActivity() != null) {
+                        if (isSuccess) {
+                            if (response.isEmpty() && accomplishments.isEmpty()) {
+                                showInfo(true, false, getString(R.string.error_not_found));
+                            } else if (!response.isEmpty()){
+                                int preSize = accomplishments.size();
+                                accomplishments.addAll(response);
+                                //adapter.notifyDataSetChanged();
+                                adapter.notifyItemRangeChanged(preSize, response.size());
+                                showInfo(false, false);
+                            }
+                        } else {
+                            showInfo(true, false);
+                        }
                     }
-                } else {
-                    showInfo(true, false);
                 }
-            }
-        }
-    };
+            };
 }
