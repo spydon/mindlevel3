@@ -1,4 +1,4 @@
-package net.mindlevel.impl.recyclers;
+package net.mindlevel.impl.recycler;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -46,11 +46,17 @@ public class CommentRecyclerViewAdapter extends RecyclerView.Adapter<CommentRecy
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         final Comment comment = comments.get(position);
+
         if (comment.username.equals(this.username)) {
             holder.chip.setChipBackgroundColor(context.getResources().getColor(R.color.commentSelf));
             holder.container.setGravity(Gravity.END);
             holder.container.setPadding(30, 0, 0, 0);
+        } else {
+            holder.chip.setChipBackgroundColor(context.getResources().getColor(R.color.commentOther));
+            holder.container.setGravity(Gravity.START);
+            holder.container.setPadding(0, 0, 0, 0);
         }
+
         holder.comment.setText(comment.comment);
         holder.chip.setLabel(comment.username);
         holder.chip.setOnChipClicked(new View.OnClickListener() {

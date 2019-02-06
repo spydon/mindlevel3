@@ -16,13 +16,14 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
 import net.mindlevel.R;
 import net.mindlevel.api.CommentController;
 import net.mindlevel.api.ControllerCallback;
-import net.mindlevel.impl.recyclers.CommentRecyclerViewAdapter;
+import net.mindlevel.impl.recycler.CommentRecyclerViewAdapter;
 import net.mindlevel.model.Comment;
 import net.mindlevel.util.NetworkUtil;
 import net.mindlevel.util.PreferencesUtil;
@@ -38,17 +39,16 @@ public class ChatFragment extends InfoFragment {
     private final static int UPDATE_INTERVAL = 3000;
     private Context context;
     private View view;
-    private ScrollView scroll;
     private Handler handler = new Handler();
     private CommentRecyclerViewAdapter commentAdapter;
     private CommentController commentController;
+    private LinearLayoutManager commentLayoutManager;
     private EditText commentBox;
     private RecyclerView commentRecyclerView;
     private View commentProgress;
     private List<Comment> comments;
     private Comment comment;
     private long lastTimestamp;
-    private boolean shouldBottomFocus = true;
 
     public ChatFragment() {
         if (getArguments() == null) {
@@ -66,8 +66,6 @@ public class ChatFragment extends InfoFragment {
         this.infoView = view.findViewById(R.id.info_center);
         this.progressView = view.findViewById(R.id.progress);
         this.errorView = view.findViewById(R.id.error);
-
-        this.scroll = (ScrollView) contentView;
 
         this.commentBox = view.findViewById(R.id.comment_box);
         this.commentRecyclerView = view.findViewById(R.id.comments);
@@ -93,6 +91,18 @@ public class ChatFragment extends InfoFragment {
 
         commentRecyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
         commentRecyclerView.setAdapter(commentAdapter);
+        this.commentLayoutManager = new LinearLayoutManager(context);
+        commentLayoutManager.setStackFromEnd(true);
+        commentRecyclerView.setLayoutManager(commentLayoutManager);
+        commentRecyclerView.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
+            @Override
+            public void onLayoutChange(View view, int left, int top, int right, int bottom,
+                                       int oldLeft, int oldTop, int oldRight, int oldBottom) {
+                if (bottom < oldBottom) {
+                    scrollToBottom();
+                }
+            }
+        });
 
         commentBox.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -107,15 +117,16 @@ public class ChatFragment extends InfoFragment {
         this.commentController = new CommentController(context);
 
         commentAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+            private boolean isFirst = true;
+
             @Override
             public void onChanged() {
                 super.onChanged();
-
-                //if (shouldBottomFocus) {
-                //    shouldBottomFocus = false;
-                //}
-                scroll.fullScroll(View.FOCUS_DOWN);
-                commentRecyclerView.scrollToPosition(comments.size()-1);
+                if (!isFirst) {
+                    scrollToBottom();
+                } else {
+                    isFirst = false;
+                }
             }
         });
 
@@ -150,6 +161,15 @@ public class ChatFragment extends InfoFragment {
         handler.removeCallbacksAndMessages(null);
     }
 
+    private void scrollToBottom() {
+        commentRecyclerView.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                commentLayoutManager.smoothScrollToPosition(commentRecyclerView, null, comments.size());
+            }
+        },200);
+    }
+
     private Comment getComment() {
         String username = PreferencesUtil.getUsername(context);
         return new Comment(CHAT_THREAD_ID, commentBox.getText().toString(), username);
@@ -180,7 +200,6 @@ public class ChatFragment extends InfoFragment {
             if (isSuccess) {
                 commentBox.setText("");
                 commentRecyclerView.setVisibility(VISIBLE);
-                shouldBottomFocus = true;
                 refreshComments();
             }
         }
