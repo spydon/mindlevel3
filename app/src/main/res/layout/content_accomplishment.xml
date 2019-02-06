@@ -11,7 +11,8 @@
     tools:context="net.mindlevel.activity.AccomplishmentActivity"
     tools:showIn="@layout/activity_accomplishment">
 
-    <RelativeLayout
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -42,7 +43,6 @@
             android:layout_marginBottom="20dp"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="@dimen/text_beside_fab"
-            android:layout_below="@+id/image_wrapper"
             android:background="@drawable/bg_item"
             android:elevation="4dp"
             android:orientation="vertical"
@@ -145,14 +145,21 @@
             </RelativeLayout>
         </LinearLayout>
 
-        <include
-            layout="@layout/content_comments"
-            android:layout_marginStart="10dp"
-            android:layout_marginBottom="10dp"
-            android:layout_marginEnd="@dimen/text_beside_fab"
-            android:layout_height="wrap_content"
+        <LinearLayout
+            android:id="@+id/content"
+            android:layout_gravity="bottom"
             android:layout_width="wrap_content"
-            android:layout_below="@id/info" />
+            android:layout_height="wrap_content">
 
-    </RelativeLayout>
+            <include
+                layout="@layout/content_comments"
+                android:layout_marginStart="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginEnd="@dimen/text_beside_fab"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content" />
+
+        </LinearLayout>
+
+    </LinearLayout>
 </ScrollView>

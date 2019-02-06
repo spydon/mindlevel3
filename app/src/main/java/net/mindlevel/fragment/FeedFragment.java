@@ -21,7 +21,7 @@ import net.mindlevel.api.ChallengeController;
 import net.mindlevel.api.ControllerCallback;
 import net.mindlevel.api.UserController;
 import net.mindlevel.impl.Glassbar;
-import net.mindlevel.impl.recyclers.FeedRecyclerViewAdapter;
+import net.mindlevel.impl.recycler.FeedRecyclerViewAdapter;
 import net.mindlevel.model.Accomplishment;
 import net.mindlevel.model.Challenge;
 import net.mindlevel.util.NetworkUtil;

@@ -15,7 +15,7 @@ import android.view.ViewGroup;
 import net.mindlevel.R;
 import net.mindlevel.api.ControllerCallback;
 import net.mindlevel.api.UserController;
-import net.mindlevel.impl.recyclers.HighscoreRecyclerViewAdapter;
+import net.mindlevel.impl.recycler.HighscoreRecyclerViewAdapter;
 import net.mindlevel.model.User;
 import net.mindlevel.util.NetworkUtil;
 
