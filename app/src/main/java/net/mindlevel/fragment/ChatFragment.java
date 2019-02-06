@@ -16,8 +16,6 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import net.mindlevel.R;
@@ -107,26 +105,22 @@ public class ChatFragment extends InfoFragment {
         commentBox.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
-                if (actionId == EditorInfo.IME_ACTION_SEND) {
+                if (actionId == EditorInfo.IME_ACTION_SEND || actionId == EditorInfo.IME_ACTION_DONE
+                        || (keyEvent != null && keyEvent.getKeyCode() == KeyEvent.KEYCODE_ENTER
+                                && keyEvent.getAction() == KeyEvent.ACTION_DOWN)) {
                     postButton.callOnClick();
                 }
-                return false;
+                return true;
             }
         });
 
         this.commentController = new CommentController(context);
 
         commentAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
-            private boolean isFirst = true;
-
             @Override
             public void onChanged() {
                 super.onChanged();
-                if (!isFirst) {
-                    scrollToBottom();
-                } else {
-                    isFirst = false;
-                }
+                scrollToBottom();
             }
         });
 
@@ -198,7 +192,7 @@ public class ChatFragment extends InfoFragment {
         public void onPostExecute(Boolean isSuccess, Void response) {
             commentProgress.setVisibility(GONE);
             if (isSuccess) {
-                commentBox.setText("");
+                commentBox.getText().clear();
                 commentRecyclerView.setVisibility(VISIBLE);
                 refreshComments();
             }
