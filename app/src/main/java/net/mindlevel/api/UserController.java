@@ -10,6 +10,7 @@ import net.mindlevel.R;
 import net.mindlevel.api.endpoint.UserEndpoint;
 import net.mindlevel.model.Accomplishment;
 import net.mindlevel.model.Login;
+import net.mindlevel.model.Notification;
 import net.mindlevel.model.User;
 import net.mindlevel.model.UserExtra;
 import net.mindlevel.util.PreferencesUtil;
@@ -135,6 +136,52 @@ public class UserController extends BackendService {
                 callback.onPostExecute(false, null);
                 t.printStackTrace();
                 Log.w("mindlevel", "getAccomplishments for user call failed");
+            }
+        });
+    }
+
+    public void getNotifications(final String username, final ControllerCallback<List<Notification>> callback) {
+        Call<List<Notification>> notificationsCall = endpoint.getNotifications(username);
+
+        notificationsCall.enqueue(new Callback<List<Notification>>() {
+            @Override
+            public void onResponse(@NonNull Call<List<Notification>> call,
+                                   @NonNull Response<List<Notification>> notificationsResponse) {
+                if (notificationsResponse.isSuccessful()) {
+                    List<Notification> notifications = notificationsResponse.body();
+                    callback.onPostExecute(true, notifications);
+                } else {
+                    callback.onPostExecute(false, null);
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<List<Notification>> call, @NonNull Throwable t) {
+                callback.onPostExecute(false, null);
+                t.printStackTrace();
+                Log.w("mindlevel", "getNotifications for user call failed");
+            }
+        });
+    }
+
+    public void deleteNotification(final String username, final int id, final ControllerCallback<Void> callback) {
+        Call<Void> deleteCall = endpoint.deleteNotification(username, id);
+
+        deleteCall.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
+                if (response.isSuccessful()) {
+                    callback.onPostExecute(true, null);
+                } else {
+                    callback.onPostExecute(false, null);
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<Void> call, @NonNull Throwable t) {
+                callback.onPostExecute(false, null);
+                t.printStackTrace();
+                Log.w("mindlevel", "delete notification failed");
             }
         });
     }

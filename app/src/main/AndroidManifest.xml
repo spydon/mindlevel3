@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          android:installLocation="internalOnly"
           package="net.mindlevel">
 
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <uses-feature android:name="android.hardware.camera" android:required="false" />
 
@@ -25,26 +28,19 @@
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
-
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
 
-        <receiver
-            android:name=".service.BootReceiver"
-            android:enabled="true"
-            android:exported="true">
+        <receiver android:name=".service.BootReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED"/>
-            </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.ACTION_POWER_CONNECTED"/>
+                <action android:name="net.mindlevel.service.APP_STARTUP"/>
             </intent-filter>
         </receiver>
 
-        <service
-            android:name=".service.NotificationService"
-            android:exported="false"/>
+        <service android:name=".service.NotificationService"
+                 android:permission="android.permission.BIND_JOB_SERVICE"/>
 
         <activity
             android:name=".activity.ChallengeActivity"
