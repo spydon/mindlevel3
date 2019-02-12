@@ -50,8 +50,8 @@ public class ChallengeActivity extends AppCompatActivity {
             toolbar.setTitle(challenge.title);
             challengeCallback.onPostExecute(true, challenge);
         } else if (getIntent().hasExtra("challenge_id")) {
-            int ChallengeId = getIntent().getIntExtra("challenge_id", -1);
-            controller.get(ChallengeId, challengeCallback);
+            int challengeId = getIntent().getIntExtra("challenge_id", -1);
+            controller.get(challengeId, challengeCallback);
         }
     }
 

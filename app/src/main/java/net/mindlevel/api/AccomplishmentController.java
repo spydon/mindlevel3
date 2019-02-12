@@ -41,6 +41,27 @@ public class AccomplishmentController extends BackendService {
         endpoint = retrofit.create(AccomplishmentEndpoint.class);
     }
 
+    public void get(int id, final ControllerCallback<Accomplishment> callback) {
+        Call<Accomplishment> call = endpoint.get(id);
+        call.enqueue(new Callback<Accomplishment>() {
+            @Override
+            public void onResponse(@NonNull Call<Accomplishment> call, @NonNull Response<Accomplishment> response) {
+                if (response.isSuccessful()) {
+                    callback.onPostExecute(true, response.body());
+                } else {
+                    callback.onPostExecute(false, null);
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<Accomplishment> call, @NonNull Throwable t) {
+                callback.onPostExecute(false, null);
+                t.printStackTrace();
+                Log.w("mindlevel", "getAccomplishment call failed");
+            }
+        });
+    }
+
     public void add(final Accomplishment accomplishment,
                     final Set<String> contributors,
                     final Uri path,

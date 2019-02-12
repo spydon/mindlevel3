@@ -2,6 +2,7 @@ package net.mindlevel.api.endpoint;
 
 import net.mindlevel.model.Accomplishment;
 import net.mindlevel.model.Login;
+import net.mindlevel.model.Notification;
 import net.mindlevel.model.User;
 import net.mindlevel.model.UserExtra;
 
@@ -10,6 +11,7 @@ import java.util.List;
 import okhttp3.MultipartBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
@@ -26,6 +28,12 @@ public interface UserEndpoint {
 
     @GET("user/{user}/accomplishment")
     Call<List<Accomplishment>> getAccomplishments(@Path("user") String user);
+
+    @GET("user/{user}/notification")
+    Call<List<Notification>> getNotifications(@Path("user") String user);
+
+    @DELETE("user/{user}/notification/{id}")
+    Call<Void> deleteNotification(@Path("user") String user, @Path("id") int id);
 
     @GET("user/{user}/email")
     Call<String> getEmail(@Path("user") String user);

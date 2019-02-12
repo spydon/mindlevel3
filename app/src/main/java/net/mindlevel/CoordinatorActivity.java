@@ -3,10 +3,14 @@ package net.mindlevel;
 // TODO: Change back to non-support lib
 
 import android.app.ActivityManager.TaskDescription;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -14,6 +18,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -35,6 +40,8 @@ import net.mindlevel.model.Accomplishment;
 import net.mindlevel.model.Challenge;
 import net.mindlevel.model.Login;
 import net.mindlevel.model.User;
+import net.mindlevel.service.BootReceiver;
+import net.mindlevel.service.NotificationService;
 import net.mindlevel.util.ImageUtil;
 import net.mindlevel.util.PreferencesUtil;
 
@@ -106,6 +113,8 @@ public class CoordinatorActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_coordinator);
 
+        createNotificationChannel();
+        startNotificationService();
         forceWhiteTitle();
 
         fragments.put(R.id.navigation_feed, feedFragment);
@@ -279,5 +288,30 @@ public class CoordinatorActivity
             selectedFragment.onResume();
         }
         currentFragment = selectedFragment;
+    }
+
+    private void createNotificationChannel() {
+        // Create the NotificationChannel, but only on API 26+ because
+        // the NotificationChannel class is new and not in the support library
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = getString(R.string.app_name);
+            String description = getString(R.string.app_description);
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel(name.toString(), name, importance);
+            channel.setDescription(description);
+            // Register the channel with the system; you can't change the importance
+            // or other notification behaviors after this
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
+    }
+
+    private void startNotificationService() {
+        String filterName = "net.mindlevel.service.APP_STARTUP";
+        Intent intent = new Intent(filterName);
+        IntentFilter filter = new IntentFilter(filterName);
+        LocalBroadcastManager broadcastManager = LocalBroadcastManager.getInstance(this);
+        broadcastManager.registerReceiver(new BootReceiver(), filter);
+        LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
     }
 }
