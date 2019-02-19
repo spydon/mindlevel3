@@ -1,8 +1,6 @@
 package net.mindlevel.activity;
 
 import android.Manifest;
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -16,7 +14,6 @@ import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -60,7 +57,7 @@ import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 import static com.bumptech.glide.request.RequestOptions.bitmapTransform;
 
-public class AccomplishmentActivity extends AppCompatActivity {
+public class AccomplishmentActivity extends InfoActivity {
 
     private static final int SHARE_PERMISSION = 101;
     private View coordinator;
@@ -72,7 +69,7 @@ public class AccomplishmentActivity extends AppCompatActivity {
     private CommentController commentController;
     private EditText commentBox;
     private RecyclerView commentRecyclerView;
-    private View contributorProgress, commentProgress, challengeProgress, progressView, accomplishmentView;
+    private View contributorProgress, commentProgress, challengeProgress;
     private ChipView challengeChip;
     private TextView levelView;
     private List<User> contributors;
@@ -89,8 +86,10 @@ public class AccomplishmentActivity extends AppCompatActivity {
         final Context context = getBaseContext();
         this.activity = this;
         this.accomplishment = null;
-        this.accomplishmentView = findViewById(R.id.accomplishment_content);
-        this.progressView = findViewById(R.id.progress);
+
+        // For the info center
+        initializeViews();
+
         this.coordinator = findViewById(R.id.coordinator);
         this.commentBox = findViewById(R.id.comment_box);
         this.commentRecyclerView = findViewById(R.id.comments);
@@ -107,7 +106,7 @@ public class AccomplishmentActivity extends AppCompatActivity {
         AccomplishmentController accomplishmentController = new AccomplishmentController(context);
         this.commentController = new CommentController(this);
 
-        showProgress(true);
+        showInfo(false, true);
         if (getIntent().hasExtra("accomplishment")) {
             Accomplishment accomplishment = (Accomplishment) getIntent().getSerializableExtra("accomplishment");
             accomplishmentCallback.onPostExecute(true, accomplishment);
@@ -115,28 +114,6 @@ public class AccomplishmentActivity extends AppCompatActivity {
             int accomplishmentId = getIntent().getIntExtra("accomplishment_id", -1);
             accomplishmentController.get(accomplishmentId, accomplishmentCallback);
         }
-    }
-
-    private void showProgress(final boolean show) {
-        int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
-
-        accomplishmentView.setVisibility(show ? View.GONE : View.VISIBLE);
-        accomplishmentView.animate().setDuration(shortAnimTime).alpha(
-                show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                accomplishmentView.setVisibility(show ? View.GONE : View.VISIBLE);
-            }
-        });
-
-        progressView.setVisibility(show ? View.VISIBLE : View.GONE);
-        progressView.animate().setDuration(shortAnimTime).alpha(
-                show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                progressView.setVisibility(show ? View.VISIBLE : View.GONE);
-            }
-        });
     }
 
     private void setAccomplishment(Accomplishment accomplishment) {
@@ -263,14 +240,14 @@ public class AccomplishmentActivity extends AppCompatActivity {
 
         @Override
         public void onPostExecute(final Boolean success, final Accomplishment accomplishment) {
-            showProgress(false);
 
             if (success || accomplishment != null) {
+                showInfo(false, false);
                 setAccomplishment(accomplishment);
                 Toolbar toolbar = findViewById(R.id.toolbar);
                 setSupportActionBar(toolbar);
                 getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-                toolbar.setTitle(accomplishment.title);
+                getSupportActionBar().setTitle(accomplishment.title);
 
                 final String url = ImageUtil.getUrl(accomplishment.image);
 
@@ -332,7 +309,7 @@ public class AccomplishmentActivity extends AppCompatActivity {
                             @Override
                             public void onResourceReady(Drawable resource, Transition<? super Drawable> transition) {
                                 resource.setAlpha(160);
-                                accomplishmentView.setBackground(resource);
+                                contentView.setBackground(resource);
                             }
                         });
 
@@ -362,7 +339,7 @@ public class AccomplishmentActivity extends AppCompatActivity {
                 ChallengeController challengeController = new ChallengeController(activity);
                 challengeController.get(accomplishment.challengeId, challengeCallback);
             } else {
-                // TODO: Show error
+                showInfo(true, false);
             }
         }
     };

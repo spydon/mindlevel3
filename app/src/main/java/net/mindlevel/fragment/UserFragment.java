@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -44,6 +45,7 @@ public class UserFragment extends InfoFragment {
     private UserController controller;
     private View coordinator;
     private ImageView imageView;
+    private LinearLayout userInfoView;
     private TextView usernameView;
     private TextView scoreView;
     private TextView levelView;
@@ -71,6 +73,7 @@ public class UserFragment extends InfoFragment {
         this.usernameView = view.findViewById(R.id.username);
         this.scoreView = view.findViewById(R.id.score_title);
         this.levelView = view.findViewById(R.id.level_title);
+        this.userInfoView = view.findViewById(R.id.user_info);
         this.descriptionView = view.findViewById(R.id.description);
         this.infoView = view.findViewById(R.id.info_center);
         this.progressView = view.findViewById(R.id.progress);
@@ -172,7 +175,8 @@ public class UserFragment extends InfoFragment {
             loading.hide();
         }
 
-        String capitalizedUsername = user.username.toUpperCase().substring(0, 1) + user.username.substring(1);
+        String username = user.username;
+        String capitalizedUsername = username.toUpperCase().substring(0, 1) + username.substring(1);
         Level level = new Level(user.level);
         String scoreText = context.getString(R.string.title_score, String.valueOf(user.score));
         String levelText = context.getString(R.string.title_level, level.getVisualLevel());
@@ -180,6 +184,9 @@ public class UserFragment extends InfoFragment {
         scoreView.setText(scoreText);
         levelView.setText(levelText);
         descriptionView.setText(user.description);
+        if (username.length() > 15) {
+            userInfoView.setOrientation(LinearLayout.VERTICAL);
+        }
 
         if (PreferencesUtil.getUsername(context).equals(user.username)) {
             if (NetworkUtil.isConnected(context)) {

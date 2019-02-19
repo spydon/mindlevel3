@@ -2,9 +2,7 @@ package net.mindlevel.activity;
 
 // TODO: Change back to non-support lib
 
-import android.app.Activity;
 import android.os.Handler;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
@@ -19,7 +17,15 @@ import static android.view.View.VISIBLE;
 public abstract class InfoActivity extends AppCompatActivity {
 
     protected int shortAnimTime;
-    protected View contentView, progressView, errorView;
+    protected View infoView, contentView, progressView, errorView;
+
+    protected void initializeViews() {
+        View rootView = findViewById(android.R.id.content);
+        infoView = rootView.findViewById(R.id.info_center);
+        contentView = rootView.findViewById(R.id.content);
+        progressView = rootView.findViewById(R.id.progress);
+        errorView = rootView.findViewById(R.id.error);
+    }
 
     protected void showInfo(boolean isError, boolean isProgress) {
         showInfo(isError, isProgress, null);
@@ -34,17 +40,17 @@ public abstract class InfoActivity extends AppCompatActivity {
             Handler handler = new Handler();
             handler.postDelayed(new Runnable() {
                 public void run() {
-                    animateToFront(contentView);
+                    animateToFront(contentView, false);
                 }
             }, 500);
         } else if (isError) {
             String errorMessage = message == null ? getString(R.string.error_network) : message;
             errorText.setText(errorMessage);
-            animateToFront(errorView);
+            animateToFront(errorView, true);
         } else if (isProgress) {
             String progressMessage = message == null ? getRandomMotivation() : message;
             progressText.setText(progressMessage);
-            animateToFront(progressView);
+            animateToFront(progressView, true);
         }
     }
 
@@ -58,15 +64,21 @@ public abstract class InfoActivity extends AppCompatActivity {
         return motivations[new Random().nextInt(motivations.length)];
     }
 
-    private void animateToFront(View view) {
+    private void animateToFront(View view, boolean isInfo) {
         View[] views = {contentView, progressView, errorView};
         for (View other : views) {
             if (view != other) {
                 other.setVisibility(GONE);
             }
         }
-        view.setAlpha(0);
         view.setVisibility(VISIBLE);
-        view.animate().setDuration(shortAnimTime).alpha(1);
+
+        if (!isInfo) {
+            infoView.setVisibility(GONE);
+        }
+        View frontView = isInfo ? infoView : view;
+        frontView.setAlpha(0);
+        frontView.setVisibility(VISIBLE);
+        frontView.animate().setDuration(shortAnimTime).alpha(1);
     }
 }

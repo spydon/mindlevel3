@@ -27,12 +27,17 @@ import java.util.List;
 public class NotificationService extends JobIntentService {
     public static final int JOB_ID = 1016;
     public static final String ACTION_ID = "LOCAL ENQUEUE";
+    public static final int INTERVAL_TIME = 1800*1000; // Check every half an hour
     private UserController userController;
     private Context context;
 
-
     public static void enqueueWork(Context context, Intent work) {
-        enqueueWork(context, NotificationService.class, JOB_ID, work);
+        long lastTimestamp = PreferencesUtil.getLastNotificationTime(context);
+        long currentTimestamp = System.currentTimeMillis();
+        if(lastTimestamp+INTERVAL_TIME-30 < currentTimestamp) {
+            PreferencesUtil.setLastNotificationTime(context, currentTimestamp);
+            enqueueWork(context, NotificationService.class, JOB_ID, work);
+        }
     }
 
     @Override
@@ -127,28 +132,34 @@ public class NotificationService extends JobIntentService {
                 targetIdName = "challenge_id";
                 break;
             case COMMENT:
-                icon = R.drawable.send;
+                icon = R.drawable.logo;
                 activityClass = AccomplishmentActivity.class;
                 targetIdName = "accomplishment_id";
                 break;
+            case CHAT:
+                icon = R.drawable.send;
+                activityClass = CoordinatorActivity.class;
+                targetIdName = "chat";
+                break;
+            case OTHER:
+                // Default values are already filled in
+                break;
         }
+
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
+        Intent current = new Intent(context, activityClass);
+        current.putExtra(targetIdName, notification.targetId);
+        stackBuilder.addParentStack(activityClass);
+        stackBuilder.addNextIntent(current);
+
+        PendingIntent pendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
 
         notificationBuilder
                 .setSmallIcon(icon)
                 .setContentTitle(notification.title)
                 .setContentText(notification.description)
+                .setContentIntent(pendingIntent)
                 .setAutoCancel(true);
-
-        // Build an artificial back stack so that the back button doesn't close the application
-        Intent resultIntent = new Intent(context, activityClass);
-        resultIntent.putExtra(targetIdName, notification.targetId);
-        TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
-        stackBuilder.addParentStack(CoordinatorActivity.class);
-
-        // Adds the Intent that starts the Activity to the top of the stack
-        stackBuilder.addNextIntent(resultIntent);
-        PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
-        notificationBuilder.setContentIntent(resultPendingIntent);
 
         NotificationManager notificationManager =
                 (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);

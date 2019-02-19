@@ -33,6 +33,18 @@ public class PreferencesUtil {
         return sharedPreferences.getString("sessionId", "");
     }
 
+    public static long getLastNotificationTime(Context context) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences("session", Context.MODE_PRIVATE);
+        return sharedPreferences.getLong("lastNotificationTime", 0L);
+    }
+
+    public static void setLastNotificationTime(Context context, long lastNotificationTime) {
+        SharedPreferences pref = context.getSharedPreferences("session", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putLong("lastNotificationTime", lastNotificationTime);
+        editor.apply();
+    }
+
     public static String getIntegration(Context context) {
         SharedPreferences sharedPreferences = context.getSharedPreferences("integration", Context.MODE_PRIVATE);
         return sharedPreferences.getString("integration", "");
