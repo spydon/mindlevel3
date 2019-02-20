@@ -14,6 +14,7 @@ import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -89,6 +90,9 @@ public class AccomplishmentActivity extends InfoActivity {
 
         // For the info center
         initializeViews();
+
+        contentView = findViewById(R.id.content);
+        contentView.setNestedScrollingEnabled(false);
 
         this.coordinator = findViewById(R.id.coordinator);
         this.commentBox = findViewById(R.id.comment_box);
