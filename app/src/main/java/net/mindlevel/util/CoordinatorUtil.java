@@ -39,6 +39,12 @@ public class CoordinatorUtil {
         context.startActivity(coordinatorIntent);
     }
 
+    public static void toChat(Context context, Category category) {
+        Intent coordinatorIntent = new Intent(context, CoordinatorActivity.class);
+        coordinatorIntent.putExtra("chat", category);
+        context.startActivity(coordinatorIntent);
+    }
+
     public static void toLogout(Context context) {
         Intent coordinatorIntent = new Intent(context, CoordinatorActivity.class);
         coordinatorIntent.putExtra("logout", true);

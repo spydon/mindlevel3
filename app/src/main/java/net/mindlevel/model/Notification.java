@@ -43,7 +43,7 @@ public class Notification implements Serializable {
     }
 
     public enum Type {
-        COMMENT("comment"), ACCOMPLISHMENT("accomplishment"), CHALLENGE("challenge"), OTHER("other");
+        COMMENT("comment"), ACCOMPLISHMENT("accomplishment"), CHALLENGE("challenge"), CHAT("chat"), OTHER("other");
 
         private String type;
 

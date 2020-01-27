@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/coordinator"
-    android:layout_width="fill_parent"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="net.mindlevel.activity.AccomplishmentActivity">
 
@@ -22,7 +22,7 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/progress_center" />
+    <include layout="@layout/info_center" />
     <include layout="@layout/content_accomplishment" />
 
     <android.support.design.widget.FloatingActionButton

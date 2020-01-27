@@ -21,7 +21,7 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/progress_center" />
+    <include layout="@layout/info_center" />
     <include layout="@layout/content_challenge" />
 
     <android.support.design.widget.FloatingActionButton

@@ -12,6 +12,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
@@ -41,7 +42,6 @@ import net.mindlevel.model.Challenge;
 import net.mindlevel.model.Login;
 import net.mindlevel.model.User;
 import net.mindlevel.service.BootReceiver;
-import net.mindlevel.service.NotificationService;
 import net.mindlevel.util.ImageUtil;
 import net.mindlevel.util.PreferencesUtil;
 
@@ -178,6 +178,8 @@ public class CoordinatorActivity
             User user = (User) intent.getSerializableExtra("user");
             getCleanFragmentBundle(userFragment).putSerializable("user", user);
             scrollToFragment(userFragment);
+        } else if (intent.hasExtra("chat")) {
+            scrollToFragment(chatFragment);
         } else if (intent.hasExtra("accomplishments_for_user")) {
             String username = intent.getStringExtra("accomplishments_for_user");
             getCleanFragmentBundle(feedFragment).putString("accomplishments_for_user", username);
@@ -280,14 +282,20 @@ public class CoordinatorActivity
         scrollToFragment(userFragment);
     }
 
-    private void scrollToFragment(Fragment selectedFragment) {
-        int fragmentOrderId = Arrays.asList(fragments.values().toArray()).indexOf(selectedFragment);
-        boolean isResumed = selectedFragment.isResumed();
-        viewPager.setCurrentItem(fragmentOrderId, true);
-        if (isResumed && currentFragment != selectedFragment) {
-            selectedFragment.onResume();
-        }
-        currentFragment = selectedFragment;
+    private void scrollToFragment(final Fragment selectedFragment) {
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                int fragmentOrderId = Arrays.asList(fragments.values().toArray()).indexOf(selectedFragment);
+                boolean isResumed = selectedFragment.isResumed();
+                viewPager.setCurrentItem(fragmentOrderId, true);
+                if (isResumed && currentFragment != selectedFragment) {
+                    selectedFragment.onResume();
+                }
+                currentFragment = selectedFragment;
+            }
+        }, 0);
     }
 
     private void createNotificationChannel() {
